@@ -18,4 +18,3 @@ space.o: space.c space.h
 
 game_loop.o: game_loop.c
 	gcc -g -c -Wall game_loop.c
-
