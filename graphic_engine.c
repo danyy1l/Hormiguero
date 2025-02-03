@@ -102,13 +102,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       obj = ' ';
 
     if (id_act != NO_ID) {
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  | m0^     %2d|", (int)id_act);
+      sprintf(str, "  | m0^     %2d |", (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c     |", obj);
+      sprintf(str, "  |     %c      |", obj);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +------------+");
       screen_area_puts(ge->map, str);
     }
 
@@ -120,9 +120,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     if (id_next != NO_ID) {
       sprintf(str, "        v");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |         %2d|", (int)id_next);
+      sprintf(str, "  |        %2d |", (int)id_next);
       screen_area_puts(ge->map, str);
       sprintf(str, "  |     %c     |", obj);
       screen_area_puts(ge->map, str);
@@ -147,7 +147,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   screen_area_clear(ge->help);
   sprintf(str, " The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, "     North(n), South(s), East(e), West(w), Quit(q)");
+  sprintf(str, " North(n), South(s), East(e), West(w), Quit(q)");
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
