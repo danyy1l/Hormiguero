@@ -232,7 +232,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       screen_area_puts(ge->map, str);
       sprintf(str, "|         %2d |   <   | m0^     %2d |   >   |         %2d |",(int)id_west, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
-      sprintf(str, "|     %c      |       |     %c      |       |     %c      |", obj, obj);
+      sprintf(str, "|     %c      |       |     %c      |       |     %c      |", obj, obj, obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "+------------+        +------------+        +------------+");
       screen_area_puts(ge->map, str);
