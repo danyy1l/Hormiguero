@@ -17,7 +17,7 @@
 
 #define CMD_LENGHT 30
 
-char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"q", "Quit"}, {"n", "North"}, {"b", "South"}, {"e", "East"}, {"w", "West"}};
+char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"q", "Quit"}, {"n", "North"}, {"s", "South"}, {"e", "East"}, {"w", "West"}};
 
 /**
  * @brief Command

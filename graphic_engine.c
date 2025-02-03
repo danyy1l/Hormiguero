@@ -66,7 +66,7 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 }
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID, ply_loc = NO_ID;
   Space *space_act = NULL;
   char obj = '\0';
   char str[255];
@@ -135,6 +135,10 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     sprintf(str, "  Object location:%d", (int)obj_loc);
     screen_area_puts(ge->descript, str);
   }
+  if ((ply_loc = game_get_player_location(game)) != NO_ID) {
+    sprintf(str, "  Player location:%d", (int)ply_loc);
+    screen_area_puts(ge->descript, str);
+  }
 
   /* Paint in the banner area */
   screen_area_puts(ge->banner, "    The anthill game ");
@@ -143,7 +147,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   screen_area_clear(ge->help);
   sprintf(str, " The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, "     next or n, back or b, exit or e");
+  sprintf(str, "     North(n), South(s), East(e), West(w), Quit(q)");
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
@@ -153,5 +157,5 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Dump to the terminal */
   screen_paint();
-  printf("prompt:> ");
+  printf("prompt => ");
 }
