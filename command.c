@@ -2,9 +2,9 @@
  * @brief It implements the command interpreter
  *
  * @file command.c
- * @author Profesores PPROG
+ * @author Danyyil Shykerynets 
  * @version 0
- * @date 27-01-2025
+ * @date 03-02-2025
  * @copyright GNU Public License
  */
 
@@ -17,7 +17,7 @@
 
 #define CMD_LENGHT 30
 
-char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "Exit"}, {"n", "Next"}, {"b", "Back"}};
+char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"q", "Quit"}, {"n", "North"}, {"b", "South"}, {"e", "East"}, {"w", "West"}};
 
 /**
  * @brief Command

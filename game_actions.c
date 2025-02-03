@@ -2,7 +2,7 @@
  * @brief It implements the game update through user actions
  *
  * @file game.c
- * @author Profesores PPROG
+ * @author Danyyil Shykerynets 
  * @version 0
  * @date 27-01-2025
  * @copyright GNU Public License
@@ -22,9 +22,13 @@ void game_actions_unknown(Game *game);
 
 void game_actions_exit(Game *game);
 
-void game_actions_next(Game *game);
+void game_actions_north(Game *game);
 
-void game_actions_back(Game *game);
+void game_actions_south(Game *game);
+
+void game_actions_east(Game *game);
+
+void game_actions_west(Game *game);
 
 /**
    Game actions implementation
@@ -46,13 +50,22 @@ Status game_actions_update(Game *game, Command *command) {
       game_actions_exit(game);
       break;
 
-    case NEXT:
-      game_actions_next(game);
+    case NORTH:
+      game_actions_north(game);
       break;
 
-    case BACK:
-      game_actions_back(game);
+    case SOUTH:
+      game_actions_south(game);
       break;
+
+    case EAST:
+      game_actions_east(game);
+      break;
+
+    case WEST:
+      game_actions_west(game);
+      break;
+
 
     default:
       break;
@@ -69,12 +82,30 @@ void game_actions_unknown(Game *game) {}
 
 void game_actions_exit(Game *game) {}
 
-void game_actions_next(Game *game) {
+void game_actions_north(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
   space_id = game_get_player_location(game);
   if (space_id == NO_ID) {
+    return;
+  }
+
+  current_id = space_get_north(game_get_space(game, space_id));
+  if (current_id != NO_ID) {
+    game_set_player_location(game, current_id);
+  }
+
+  return;
+}
+
+void game_actions_south(Game *game) {
+  Id current_id = NO_ID;
+  Id space_id = NO_ID;
+
+  space_id = game_get_player_location(game);
+
+  if (NO_ID == space_id) {
     return;
   }
 
@@ -86,7 +117,7 @@ void game_actions_next(Game *game) {
   return;
 }
 
-void game_actions_back(Game *game) {
+void game_actions_east(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
@@ -96,7 +127,25 @@ void game_actions_back(Game *game) {
     return;
   }
 
-  current_id = space_get_north(game_get_space(game, space_id));
+  current_id = space_get_east(game_get_space(game, space_id));
+  if (current_id != NO_ID) {
+    game_set_player_location(game, current_id);
+  }
+
+  return;
+}
+
+void game_actions_west(Game *game) {
+  Id current_id = NO_ID;
+  Id space_id = NO_ID;
+
+  space_id = game_get_player_location(game);
+
+  if (NO_ID == space_id) {
+    return;
+  }
+
+  current_id = space_get_west(game_get_space(game, space_id));
   if (current_id != NO_ID) {
     game_set_player_location(game, current_id);
   }
