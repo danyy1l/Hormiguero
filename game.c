@@ -55,7 +55,7 @@ Status game_create_from_file(Game *game, char *filename) {
 
   /* The player and the object are located in the first space */
   game_set_player_location(game, game_get_space_id_at(game, 0));
-  game_set_object_location(game, game_get_space_id_at(game, 0));
+  game_set_object_location(game, game_get_space_id_at(game, 9));
 
   return OK;
 }
@@ -172,15 +172,15 @@ char *objcheck(char *objs, Game *game){
 
 
     if (game_get_object_location(game) == id_south)
-      objs[2] = '*';
-    else
-      objs[2] = ' ';
-
-
-    if (game_get_object_location(game) == id_east)
       objs[3] = '*';
     else
       objs[3] = ' ';
+
+
+    if (game_get_object_location(game) == id_east)
+      objs[2] = '*';
+    else
+      objs[2] = ' ';
 
 
     if (game_get_object_location(game) == id_west)
