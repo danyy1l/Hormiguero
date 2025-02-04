@@ -4,7 +4,7 @@
  * @file game.c
  * @author Danyyil Shykerynets 
  * @version 0
- * @date 27-01-2025
+ * @date 04-02-2025
  * @copyright GNU Public License
  */
 

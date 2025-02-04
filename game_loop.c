@@ -2,9 +2,9 @@
  * @brief It defines the game loop
  *
  * @file game_loop.c
- * @author Profesores PPROG
+ * @author Danyyil Shykerynets
  * @version 0
- * @date 27-01-2025
+ * @date 04-02-2025
  * @copyright GNU Public License
  */
 

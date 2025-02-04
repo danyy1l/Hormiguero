@@ -4,7 +4,7 @@
  * @file graphic_engine.c
  * @author Danyyil Shykerynets
  * @version 0
- * @date 03-02-2025
+ * @date 04-02-2025
  * @copyright GNU Public License
  */
 
@@ -68,13 +68,18 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, obj_loc = NO_ID, ply_loc = NO_ID;
   Space *space_act = NULL;
-  char obj = '\0';
-  char str[5*WORD_SIZE];
+  char objs[OBJ_NUM];
+  char str[WORD_SIZE];
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
   int dir_check = 0;
   //Each direction sums a binary value so that if theres a space north and west
   //it'd be equivalent to 1010 (NESW) = 10 in decimal
+
+  /*Objects array => [ Ply Pos, N, E, S, W ]  */
+  for(int i=0; i<OBJ_NUM; i++){
+    objs[i] = '*';
+  }
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
@@ -85,183 +90,225 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     id_east = space_get_east(space_act);
     id_west = space_get_west(space_act);
 
-    if (game_get_object_location(game) == id_act)
-      obj = '*';
-    else
-      obj = ' ';
-
-    if (game_get_object_location(game) == id_north)
-      obj = '*';
-    else
-      obj = ' ';
-
     if (id_north != NO_ID) {
       dir_check += 8;
     }
-
-    if (game_get_object_location(game) == id_south)
-      obj = '*';
-    else
-      obj = ' ';
-
-    if (id_south != NO_ID) {
-      dir_check += 2;
-    }
-
-    if (game_get_object_location(game) == id_east)
-      obj = '*';
-    else
-      obj = ' ';
 
     if (id_east != NO_ID) {
       dir_check += 4;
     }
 
-    if (game_get_object_location(game) == id_west)
-      obj = '*';
-    else
-      obj = ' ';
+    if (id_south != NO_ID) {
+      dir_check += 2;
+    }
 
     if (id_west != NO_ID) {
       dir_check += 1;
     }
 
+    /*TODO: Revisar aparicion objs*/
+    objcheck(objs, game);
+
     /*TODO: Mejorar esto*/
     switch(dir_check){
     case 1:
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                       ");
+      screen_area_puts(ge->map, str);
+
       if (id_act != NO_ID) {
-      sprintf(str, "+------------+        +------------+");
+      sprintf(str, "-------+        +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "|         %2d |   <   | m0^     %2d |",(int)id_west, (int)id_act);
+      sprintf(str, "     %2d|   <    | m0^      %2d|",(int)id_west, (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "|     %c      |       |     %c      |", obj, obj);
+      sprintf(str, "%c      |        |     %c      |", objs[4], objs[0]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "+------------+        +------------+");
+      sprintf(str, "-------+        +------------+");
       screen_area_puts(ge->map, str);
       }
       break;
     case 2:
-      if (id_act != NO_ID) {
-      sprintf(str, "                +------------+");
+      sprintf(str, "                              ");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^     %2d |", (int)id_act);
+      sprintf(str, "                              ");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c      |", obj);
+      sprintf(str, "                              ");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                +------------+");
+      sprintf(str, "                       ");
       screen_area_puts(ge->map, str);
-      }
 
-      sprintf(str, "                      v");
-      screen_area_puts(ge->map, str);
+      if (id_act != NO_ID) {
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |        %2d |", (int)id_south);
+      sprintf(str, "                | m0^      %2d|", (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |     %c      |", objs[0]);
       screen_area_puts(ge->map, str);
-      break;
-    case 3:
-      if (id_act != NO_ID) {
-      sprintf(str, "+------------+        +------------+");
-      screen_area_puts(ge->map, str);
-      sprintf(str, "|         %2d |   <   | m0^     %2d |",(int)id_west, (int)id_act);
-      screen_area_puts(ge->map, str);
-      sprintf(str, "|     %c      |       |     %c      |", obj, obj);
-      screen_area_puts(ge->map, str);
-      sprintf(str, "+------------+        +------------+");
+      sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
       }
 
       sprintf(str, "                       v");
       screen_area_puts(ge->map, str);
+      sprintf(str, "                +------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                |          %2d|", (int)id_south);
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                |      %c     |", objs[3]);
+      screen_area_puts(ge->map, str);
+      break;
+    case 3:
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                       ");
+      screen_area_puts(ge->map, str);
+
+
+      if (id_act != NO_ID) {
+      sprintf(str, "----------+        +------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "       %2d  |   <   | m0^      %2d|",(int)id_west, (int)id_act);
+      screen_area_puts(ge->map, str);
+      sprintf(str, "   %c       |       |     %c      |", objs[4], objs[0]);
+      screen_area_puts(ge->map, str);
+      sprintf(str, "----------+        +------------+");
+      screen_area_puts(ge->map, str);
+      }
+
+      sprintf(str, "                        v");
+      screen_area_puts(ge->map, str);
       sprintf(str, "                 +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                 |        %2d |", (int)id_south);
+      sprintf(str, "                 |         %2d|", (int)id_south);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                 |     %c     |", obj);
+      sprintf(str, "                 |     %c     |", objs[3]);
       screen_area_puts(ge->map, str);
       break;
     case 4:
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                       ");
+      screen_area_puts(ge->map, str);
+
       if (id_act != NO_ID) {
-      sprintf(str, "                +------------+        +------------+");
+      sprintf(str, "                +------------+        +----------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^     %2d |   >    |         %2d |",(int)id_act, (int)id_east);
+      sprintf(str, "               | m0^      %2d|   >    |        %2d",(int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c      |        |     %c      |", obj, obj);
+      sprintf(str, "               |     %c      |        |     %c    ", objs[0], objs[2]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                +------------+        +------------+");
+      sprintf(str, "                +------------+        +----------");
       screen_area_puts(ge->map, str);
       }
       break;
     case 5:
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                      ");
+      screen_area_puts(ge->map, str);
+
       if (id_act != NO_ID) {
-      sprintf(str, "+------------+        +------------+        +------------+");
+      sprintf(str, "-------+        +------------+        +--------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "|         %2d |   <   | m0^     %2d |   >   |         %2d |",(int)id_west, (int)id_act, (int)id_east);
+      sprintf(str, "     %2d|   <    | m0^      %2d|    >   |      %2d ",(int)id_west, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
-      sprintf(str, "|     %c      |       |     %c      |       |     %c      |", obj, obj, obj);
+      sprintf(str, " %c     |        |     %c      |        |     %c   ", objs[4], objs[0], objs[2]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "+------------+        +------------+        +------------+");
+      sprintf(str, "-------+        +------------+        +--------");
       screen_area_puts(ge->map, str);
       }
       break;
     case 6:
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                       ");
+      screen_area_puts(ge->map, str);
+
       if (id_act != NO_ID) {
-      sprintf(str, "                +------------+        +------------+");
+      sprintf(str, "                +------------+        +----------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^     %2d |   >   |         %2d |",(int)id_act, (int)id_east);
+      sprintf(str, "                | m0^      %2d|   >   |        %2d",(int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c      |       |     %c      |", obj, obj);
+      sprintf(str, "                |     %c      |       |     %c    ", objs[0], objs[2]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                +------------+        +------------+");
+      sprintf(str, "                +------------+        +----------");
       screen_area_puts(ge->map, str);
       }
       
-      sprintf(str, "                      v");
+      sprintf(str, "                       v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
       sprintf(str, "                |        %2d |", (int)id_south);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |     %c     |", objs[3]);
       break;
     case 7:
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                              ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                       ");
+      screen_area_puts(ge->map, str);
+
       if (id_act != NO_ID) {
-      sprintf(str, "+------------+        +------------+        +------------+");
+      sprintf(str, "--------+        +------------+        +--------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "|         %2d |   <   | m0^     %2d |   >   |         %2d |",(int)id_west, (int)id_act, (int)id_east);
+      sprintf(str, "      %2d|   <    | m0^      %2d|    >   |      %2d",(int)id_west, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
-      sprintf(str, "|     %c      |       |     %c      |       |     %c      |", obj, obj, obj);
+      sprintf(str, "  %c     |        |     %c      |        |     %c  ", objs[4], objs[0], objs[2]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "+------------+        +------------+        +------------+");
+      sprintf(str, "--------+        +------------+        +--------");
       screen_area_puts(ge->map, str);
       }
       
-      sprintf(str, "                      v");
+      sprintf(str, "                       v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |        %2d |", (int)id_south);
+      sprintf(str, "                |         %2d|", (int)id_south);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |     %c     |", objs[3]);
       break;
     case 8:
-      sprintf(str, "                |         %2d|", (int)id_north);
+      sprintf(str, "                |          %2d|", (int)id_north);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |      %c     |", objs[1]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                +-----------+");
+      sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                      ^");
+      sprintf(str, "                       ^");
       screen_area_puts(ge->map, str);
 
       if (id_act != NO_ID) {
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^     %2d |", (int)id_act);
+      sprintf(str, "                | m0^      %2d|", (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c      |", obj);
+      sprintf(str, "                |     %c      |", objs[0]);
       screen_area_puts(ge->map, str);
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
@@ -270,184 +317,185 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     case 9:
       sprintf(str, "                |         %2d|", (int)id_north);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |     %c     |", objs[1]);
       screen_area_puts(ge->map, str);
       sprintf(str, "                +-----------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                      ^");
+      sprintf(str, "                       ^");
       screen_area_puts(ge->map, str);
 
       if (id_act != NO_ID) {
-      sprintf(str, "+------------+        +------------+");
+      sprintf(str, "----------+        +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "|         %2d |   <   | m0^     %2d |",(int)id_west, (int)id_act);
+      sprintf(str, "        %2d|   <   | m0^      %2d|",(int)id_west, (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "|     %c      |       |     %c      |", obj, obj);
+      sprintf(str, "   %c      |       |     %c      |", objs[4], objs[0]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "+------------+        +------------+");
+      sprintf(str, "----------+        +------------+");
       screen_area_puts(ge->map, str);
       }
       break;
     case 10:
-      sprintf(str, "                |         %2d|", (int)id_north);
+      sprintf(str, "                |          %2d|", (int)id_north);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |      %c     |", objs[1]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                +-----------+");
+      sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                      ^");
+      sprintf(str, "                       ^");
       screen_area_puts(ge->map, str);
 
       if (id_act != NO_ID) {
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^     %2d |", (int)id_act);
+      sprintf(str, "                | m0^      %2d|", (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c      |", obj);
+      sprintf(str, "                |     %c      |", objs[0]);
       screen_area_puts(ge->map, str);
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
       }
       
-      sprintf(str, "                      v");
+      sprintf(str, "                       v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |        %2d |", (int)id_south);
+      sprintf(str, "                |          %2d|", (int)id_south);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |     %c      |", objs[3]);
       screen_area_puts(ge->map, str);
       break;
     case 11:
       sprintf(str, "                |         %2d|", (int)id_north);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |     %c     |", objs[1]);
       screen_area_puts(ge->map, str);
       sprintf(str, "                +-----------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                      ^");
+      sprintf(str, "                       ^");
       screen_area_puts(ge->map, str);
 
       if (id_act != NO_ID) {
-      sprintf(str, "+------------+        +------------+");
+      sprintf(str, "----------+        +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "|         %2d |   <   | m0^     %2d |",(int)id_west, (int)id_act);
+      sprintf(str, "        %2d|   <   | m0^      %2d|",(int)id_west, (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "|     %c      |       |     %c      |", obj, obj);
+      sprintf(str, "   %c      |       |     %c      |", objs[4], objs[0]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "+------------+        +------------+");
+      sprintf(str, "----------+        +------------+");
       screen_area_puts(ge->map, str);
       }
 
-      sprintf(str, "                       v");
+      sprintf(str, "                        v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                 +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                 |        %2d |", (int)id_south);
+      sprintf(str, "                 |          %2d|", (int)id_south);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                 |     %c     |", obj);
+      sprintf(str, "                 |      %c     |", objs[3]);
       screen_area_puts(ge->map, str);
       break;
     case 12:
       
-      sprintf(str, "                |         %2d|", (int)id_north);
+      sprintf(str, "                |          %2d|", (int)id_north);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |      %c     |", objs[1]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                +-----------+");
+      sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                      ^");
+      sprintf(str, "                       ^");
       screen_area_puts(ge->map, str);
 
       if (id_act != NO_ID) {
-      sprintf(str, "                +------------+        +------------+");
+      sprintf(str, "                +------------+        +----------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^     %2d |   >    |         %2d |",(int)id_act, (int)id_east);
+      sprintf(str, "                | m0^      %2d|   >    |        %2d",(int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c      |        |     %c      |", obj, obj);
+      sprintf(str, "                |     %c      |        |     %c    ", objs[0], objs[2]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                +------------+        +------------+");
+      sprintf(str, "                +------------+        +----------");
       screen_area_puts(ge->map, str);
       }
       break;
     case 13:
-      sprintf(str, "                |         %2d|", (int)id_north);
+      sprintf(str, "                |          %2d|", (int)id_north);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |     %c      |", objs[1]);
       screen_area_puts(ge->map, str);
       sprintf(str, "                +-----------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                      ^");
+      sprintf(str, "                       ^");
       screen_area_puts(ge->map, str);
 
       if (id_act != NO_ID) {
-      sprintf(str, "+------------+         +------------+        +------------+");
+      sprintf(str, "----------+         +------------+        +----------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "|         %2d |   <   | m0^     %2d |   >    |         %2d |",(int)id_west, (int)id_act, (int)id_east);
+      sprintf(str, "        %2d|   <   | m0^      %2d|   >    |        %2d",(int)id_west, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
-      sprintf(str, "|     %c      |       |     %c      |        |     %c      |", obj, obj, obj);
+      sprintf(str, "   %c      |       |     %c      |        |     %c    ", objs[4], objs[0], objs[2]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "+------------+         +------------+        +------------+");
+      sprintf(str, "----------+         +------------+        +----------");
       screen_area_puts(ge->map, str);
       }
       break;
     case 14:
-      sprintf(str, "                |         %2d|", (int)id_north);
+      sprintf(str, "                |          %2d|", (int)id_north);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |      %c     |", objs[1]);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                +-----------+");
+      sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                      ^");
+      sprintf(str, "                       ^");
       screen_area_puts(ge->map, str);
 
       if (id_act != NO_ID) {
       sprintf(str, "                +------------+        +---------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^     %2d|   >    |      %2d", (int)id_act, (int)id_east);
+      sprintf(str, "                | m0^      %2d|   >    |      %2d", (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |        |         ", obj);
+      sprintf(str, "                |     %c      |        |     %c  ", objs[0], objs[2]);
       screen_area_puts(ge->map, str);
       sprintf(str, "                +------------+        +---------");
       screen_area_puts(ge->map, str);
       }
       
-      sprintf(str, "                      v");
+      sprintf(str, "                       v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |        %2d |", (int)id_south);
+      sprintf(str, "                |          %2d|", (int)id_south);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+      sprintf(str, "                |     %c      |", objs[3]);
+      screen_area_puts(ge->map, str);
       break;
     case 15:
-      sprintf(str, "                |         %2d|", (int)id_north);
+      sprintf(str, "                |          %2d|", (int)id_north);
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
-      screen_area_puts(ge->map, str);
-      sprintf(str, "                +-----------+");
-      screen_area_puts(ge->map, str);
-      sprintf(str, "                      ^");
-      screen_area_puts(ge->map, str);
-
-      if (id_act != NO_ID) {
-      sprintf(str, "+------------+        +------------+        +------------+");
-      screen_area_puts(ge->map, str);
-      sprintf(str, "|         %2d |   <   | m0^     %2d |   >   |         %2d |",(int)id_west, (int)id_act, (int)id_east);
-      screen_area_puts(ge->map, str);
-      sprintf(str, "|     %c      |       |     %c      |       |     %c      |", obj, obj, obj);
-      screen_area_puts(ge->map, str);
-      sprintf(str, "+------------+        +------------+        +------------+");
-      screen_area_puts(ge->map, str);
-      }
-      
-      sprintf(str, "                      v");
+      sprintf(str, "                |      %c     |", objs[1]);
       screen_area_puts(ge->map, str);
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |        %2d |", (int)id_south);
+      sprintf(str, "                       ^");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                |     %c     |", obj);
+
+      if (id_act != NO_ID) {
+      sprintf(str, "-------+        +------------+        +--------");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "     %2d|   <    | m0^      %2d|    >   |      %2d",(int)id_west, (int)id_act, (int)id_east);
+      screen_area_puts(ge->map, str);
+      sprintf(str, " %c     |        |     %c      |        |     %c  ", objs[4], objs[0], objs[2]);
+      screen_area_puts(ge->map, str);
+      sprintf(str, "-------+        +------------+        +--------");
+      screen_area_puts(ge->map, str);
+      }
+      
+      sprintf(str, "                       v");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                +------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                |          %2d|", (int)id_south);
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                |     %c      |", objs[3]);
       screen_area_puts(ge->map, str);
       break;
     default:

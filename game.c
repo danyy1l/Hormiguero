@@ -2,9 +2,9 @@
  * @brief It implements the game structure
  *
  * @file game.c
- * @author Profesores PPROG
+ * @author Danyyil Shykerynets
  * @version 0
- * @date 27-01-2025
+ * @date 03-02-2025
  * @copyright GNU Public License
  */
 
@@ -109,6 +109,8 @@ Status game_set_object_location(Game *game, Id id) {
 
   game->object_location = id;
   space_set_object(game_get_space(game, id), TRUE);
+
+  return OK;
 }
 
 Command* game_get_last_command(Game *game) { return game->last_cmd; }
@@ -144,6 +146,52 @@ void game_print(Game *game) {
 /**
    Implementation of private functions
 */
+
+
+char *objcheck(char *objs, Game *game){
+  
+  Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID;
+  Space *space_act = NULL;
+
+  if( (id_act = game_get_player_location(game)) != NO_ID ){
+    space_act = game_get_space(game, id_act);
+    id_north = space_get_north(space_act);
+    id_south = space_get_south(space_act);
+    id_east = space_get_east(space_act);
+    id_west = space_get_west(space_act);
+
+    if (game_get_object_location(game) == id_act)
+      objs[0] = '*';
+    else
+      objs[0] = ' ';
+
+    if (game_get_object_location(game) == id_north)
+      objs[1] = '*';
+    else
+      objs[1] = ' ';
+
+
+    if (game_get_object_location(game) == id_south)
+      objs[2] = '*';
+    else
+      objs[2] = ' ';
+
+
+    if (game_get_object_location(game) == id_east)
+      objs[3] = '*';
+    else
+      objs[3] = ' ';
+
+
+    if (game_get_object_location(game) == id_west)
+      objs[4] = '*';
+    else
+      objs[4] = ' ';
+
+  }
+
+  return objs;
+}
 
 Status game_load_spaces(Game *game, char *filename) {
   FILE *file = NULL;

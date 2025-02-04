@@ -2,9 +2,9 @@
  * @brief It defines the game interface
  *
  * @file game.h
- * @author Profesores PPROG
+ * @author Danyyil Shykerynets
  * @version 0
- * @date 27-01-2025
+ * @date 04-02-2025
  * @copyright GNU Public License
  */
 
@@ -25,6 +25,18 @@ typedef struct _Game {
   Command *last_cmd;
   Bool finished;
 } Game;
+
+/**
+ * @brief Funcion que revisa si hay objetos en los alrededores del jugador
+ * @author Danyyil Shykerynets
+ * 
+ * @param objs
+ * Array con chars de los objetos en los alrededores en el orden: [PlayerLocation, N, E, S, W]
+ * @param game
+ * Estructura juego con las posiciones necesarias para el desarrollo
+ * @return Array de chars de los objetos, ' ' si no hay, '*' si hay * 
+ */
+char *objcheck(char *objs, Game *game);
 
 Status game_create(Game *game);
 
