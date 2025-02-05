@@ -17,6 +17,7 @@
 #include "libscreen.h"
 #include "space.h"
 #include "types.h"
+#include "game_reader.h"
 
 #define WIDTH_MAP 48
 #define WIDTH_DES 29
@@ -106,8 +107,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       dir_check += 1;
     }
 
-    /*TODO: Revisar aparicion objs*/
-    objcheck(objs, game);
+    obj_check(objs, game);
 
     /*TODO: Mejorar esto*/
     switch(dir_check){

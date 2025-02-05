@@ -36,23 +36,9 @@ typedef struct _Game {
  * Estructura juego con las posiciones necesarias para el desarrollo
  * @return Array de chars de los objetos, ' ' si no hay, '*' si hay * 
  */
-char *objcheck(char *objs, Game *game);
-
 Status game_create(Game *game);
 
-Status game_create_from_file(Game *game, char *filename);
-
 Status game_destroy(Game *game);
-
-Space *game_get_space(Game *game, Id id);
-
-Id game_get_player_location(Game *game);
-
-Status game_set_player_location(Game *game, Id id);
-
-Id game_get_object_location(Game *game);
-
-Status game_set_object_location(Game *game, Id id);
 
 Command* game_get_last_command(Game *game);
 

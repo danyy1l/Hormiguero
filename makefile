@@ -1,4 +1,4 @@
-anthill: command.o game_actions.o game.o graphic_engine.o space.o game_loop.o
+anthill: command.o game_actions.o game_reader.o game.o graphic_engine.o space.o game_loop.o
 	gcc -o anthill *.o -lscreen -L. 
 
 command.o: command.c
@@ -6,6 +6,9 @@ command.o: command.c
 
 game_actions.o: game_actions.c
 	gcc -g -c -Wall game_actions.c
+
+game_reader.o: game_reader.c
+	gcc -g -c -Wall game_reader.c
 
 game.o: game.c
 	gcc -g -c -Wall game.c
