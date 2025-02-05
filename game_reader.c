@@ -9,6 +9,7 @@
  */
 
 #include "game.h"
+#include "player.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,8 +29,6 @@ Id game_get_space_id_at(Game *game, int position);
  * Game Implementation
  */
 
-
-
 Space *game_get_space(Game *game, Id id) {
   int i = 0;
 
@@ -46,20 +45,9 @@ Space *game_get_space(Game *game, Id id) {
   return NULL;
 }
 
-Status game_set_player_location(Game *game, Id id) {
-  if (id == NO_ID) {
-    return ERROR;
-  }
-
-  game->player_location = id;
-
-  return OK;
-}
-
-Id game_get_player_location(Game *game) { return game->player_location; }
-
 
 Status game_set_object_location(Game *game, Id id) {
+
   if (id == NO_ID) {
     return ERROR;
   }
@@ -82,19 +70,18 @@ Status game_create_from_file(Game *game, char *filename) {
   }
 
   /* The player and the object are located in the first space */
-  game_set_player_location(game, game_get_space_id_at(game, 0));
+  player_set_location(game, game_get_space_id_at(game, 0));
   game_set_object_location(game, game_get_space_id_at(game, 9));
 
   return OK;
 }
-
 
 char *obj_check(char *objs, Game *game){
   
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID;
   Space *space_act = NULL;
 
-  if( (id_act = game_get_player_location(game)) != NO_ID ){
+  if( (id_act = player_get_location(game)) != NO_ID ){
     space_act = game_get_space(game, id_act);
     id_north = space_get_north(space_act);
     id_south = space_get_south(space_act);

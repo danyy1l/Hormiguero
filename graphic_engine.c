@@ -18,6 +18,7 @@
 #include "space.h"
 #include "types.h"
 #include "game_reader.h"
+#include "player.h"
 
 #define WIDTH_MAP 48
 #define WIDTH_DES 29
@@ -84,7 +85,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
-  if ((id_act = game_get_player_location(game)) != NO_ID) {
+  if ((id_act = player_get_location(game)) != NO_ID) {
     space_act = game_get_space(game, id_act);
     id_north = space_get_north(space_act);
     id_south = space_get_south(space_act);
@@ -509,7 +510,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     sprintf(str, "  Object location:%d", (int)obj_loc);
     screen_area_puts(ge->descript, str);
   }
-  if( (ply_loc = game_get_player_location(game)) != NO_ID) {
+  if( (ply_loc = player_get_location(game)) != NO_ID) {
     sprintf(str, "  Player location:%d", (int)ply_loc);
     screen_area_puts(ge->descript, str);
   }
