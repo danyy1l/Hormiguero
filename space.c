@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "object.h"
+
 /**
  * @brief Space
  *
@@ -26,7 +28,7 @@ struct _Space {
   Id south;                 /*!< Id of the space at the south */
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
-  Bool object;              /*!< Whether the space has an object or not */
+  Id object;              /*!< Whether the space has an object or not */
 };
 
 /** space_create allocates memory for a new space
@@ -158,7 +160,7 @@ Status space_set_object(Space* space, Bool value) {
   return OK;
 }
 
-Bool space_get_object(Space* space) {
+Id space_get_object(Space* space) {
   if (!space) {
     return FALSE;
   }
