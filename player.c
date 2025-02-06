@@ -38,7 +38,7 @@ Player *player_create(Id id, Id location, char *name, Id object){
   output->object = object;
 
   return output;
-};
+}
 
 void player_destroy(Player *player){
 

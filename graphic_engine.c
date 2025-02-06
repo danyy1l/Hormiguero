@@ -74,12 +74,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   char str[WORD_SIZE];
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
-  int dir_check = 0;
-  //Each direction sums a binary value so that if theres a space north and west
-  //it'd be equivalent to 1010 (NESW) = 10 in decimal
+  int i, dir_check = 0;
+  /*Each direction sums a binary value so that if theres a space north and west
+  it'd be equivalent to 1010 (NESW) = 10 in decimal*/
 
   /*Objects array => [ Ply Pos, N, E, S, W ]  */
-  for(int i=0; i<OBJ_NUM; i++){
+  for(i=0; i<OBJ_NUM; i++){
     objs[i] = '*';
   }
 
