@@ -3,7 +3,7 @@ CFLAGS=-g -c -Wall -ansi -pedantic
 CC=gcc
 CLIB=-lscreen -L.
 
-anthill: command.o game_actions.o game_reader.o player.o game.o graphic_engine.o space.o game_loop.o
+anthill: command.o game_actions.o game_reader.o player.o object.o game.o graphic_engine.o space.o game_loop.o
 	$(CC) -o $(EXE) *.o $(CLIB)
 
 command.o: command.c
@@ -17,6 +17,9 @@ game_reader.o: game_reader.c
 
 player.o: player.c
 	$(CC) $(CFLAGS) player.c
+
+object.o: object.c
+	$(CC) $(CFLAGS) object.c
 
 game.o: game.c
 	$(CC) $(CFLAGS) game.c

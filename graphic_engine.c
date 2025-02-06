@@ -19,6 +19,7 @@
 #include "types.h"
 #include "game_reader.h"
 #include "player.h"
+#include "object.h"
 
 #define WIDTH_MAP 48
 #define WIDTH_DES 29
@@ -80,7 +81,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /*Objects array => [ Ply Pos, N, E, S, W ]  */
   for(i=0; i<OBJ_NUM; i++){
-    objs[i] = '*';
+    objs[i] = ' ';
   }
 
   /* Paint the in the map area */
@@ -108,7 +109,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       dir_check += 1;
     }
 
-    obj_check(objs, game);
+    game_object_check(objs, game);
 
     /*TODO: Mejorar esto*/
     switch(dir_check){
@@ -506,7 +507,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  if( (obj_loc = game_get_object_location(game)) != NO_ID) {
+  if( (obj_loc = object_get_location(game)) != NO_ID) {
     sprintf(str, "  Object location:%d", (int)obj_loc);
     screen_area_puts(ge->descript, str);
   }
@@ -532,5 +533,5 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Dump to the terminal */
   screen_paint();
-  printf("prompt => ");
+  printf("Prompt => ");
 }

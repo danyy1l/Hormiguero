@@ -62,5 +62,6 @@ Status player_set_location(Game *game, Id id) {
 }
 
 void player_print(Player *player){
-  printf("Player ID: %ld\nPlayer location: %ld\nPlayer name: %s\nPlayer object: %ld", player->id, player->location, player->name, player->object);
+  if( player )
+    printf("Player ID: %ld\nPlayer location: %ld\nPlayer name: %s\nPlayer object: %ld", player->id, player->location, player->name, player->object);
 }
