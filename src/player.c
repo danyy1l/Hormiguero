@@ -1,0 +1,75 @@
+/**
+ * @brief It implements the player module
+ *
+ * @file player.c
+ * @author Danyyil Shykerynets
+ * @version 0
+ * @date 05-02-2025
+ * @copyright GNU Public License
+ */
+
+#include "player.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct _Player {
+
+  Id id;
+  Id location;
+  char name[WORD_SIZE + 1];
+  Id object;
+
+};
+
+Player *player_create(){
+  
+  Player *output = NULL;
+
+  if( !(output = (Player*)calloc(1, sizeof(Player))) )
+    return NULL;
+
+  return output;
+}
+
+void player_destroy(Player *player){
+
+  if( player ){
+    free(player);
+    player = NULL;
+  }
+
+}
+
+Status player_set_id(Player *player, Id id){
+
+  if( !player || id == NO_ID ) { return ERROR; }
+
+  player->id = id;
+
+  return OK;
+
+}
+
+Id player_get_location(Player *player) { 
+  
+  if( !player ) { return NO_ID; }
+  
+  return player->location; 
+}
+
+Status player_set_location(Player *player, Id id) {
+  if (id == NO_ID || !player) {
+    return ERROR;
+  }
+
+  player->location = id;
+
+  return OK;
+}
+
+void player_print(Player *player){
+  if( player )
+    printf("Player ID: %ld\nPlayer location: %ld\nPlayer name: %s\nPlayer object: %ld", player->id, player->location, player->name, player->object);
+}
