@@ -15,6 +15,7 @@
 #include <string.h>
 
 #include "game.h"
+#include "space.h"
 #include "player.h"
 #include "object.h"
 
@@ -58,8 +59,8 @@ Status game_create_from_file(Game *game, char *filename) {
   }
 
   /* The player and the object are located in the first space */
-  player_set_location(game, game_get_space_id_at(game, 0));
-  object_set_location(game, game_get_space_id_at(game, 9));
+  player_set_location(game->player, game_get_space_id_at(game, 0));
+  object_set_location(game->object, game_get_space_id_at(game, 9));
 
   return OK;
 }
@@ -142,4 +143,49 @@ Id game_get_space_id_at(Game *game, int position) {
   }
 
   return space_get_id(game->spaces[position]);
+}
+
+char *game_object_check(char *objs, Game *game){
+  
+  Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID;
+  Space *space_act = NULL;
+
+  if( (id_act = player_get_location(game->player)) != NO_ID ){
+    space_act = game_get_space(game, id_act);
+    id_north = space_get_north(space_act);
+    id_south = space_get_south(space_act);
+    id_east = space_get_east(space_act);
+    id_west = space_get_west(space_act);
+
+    if (object_get_location(game->object) == id_act)
+      objs[0] = '*';
+    else
+      objs[0] = ' ';
+
+    if (object_get_location(game->object) == id_north)
+      objs[1] = '*';
+    else
+      objs[1] = ' ';
+
+
+    if (object_get_location(game->object) == id_south)
+      objs[3] = '*';
+    else
+      objs[3] = ' ';
+
+
+    if (object_get_location(game->object) == id_east)
+      objs[2] = '*';
+    else
+      objs[2] = ' ';
+
+
+    if (object_get_location(game->object) == id_west)
+      objs[4] = '*';
+    else
+      objs[4] = ' ';
+
+  }
+
+  return objs;
 }

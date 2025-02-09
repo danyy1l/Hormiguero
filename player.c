@@ -23,19 +23,12 @@ struct _Player {
 
 };
 
-Player *player_create(Id id, Id location, char *name, Id object){
+Player *player_create(){
   
   Player *output = NULL;
-  
-  if(!name || id == NO_ID || location == NO_ID){ return NULL; }
 
   if( !(output = (Player*)calloc(1, sizeof(Player))) )
     return NULL;
-
-  output->id = id;
-  output->location = location;
-  strcpy(output->name, name);
-  output->object = object;
 
   return output;
 }
@@ -49,14 +42,29 @@ void player_destroy(Player *player){
 
 }
 
-Id player_get_location(Game *game) { return game->player_location; }
+Status player_set_id(Player *player, Id id){
 
-Status player_set_location(Game *game, Id id) {
-  if (id == NO_ID) {
+  if( !player || id == NO_ID ) { return ERROR; }
+
+  player->id = id;
+
+  return OK;
+
+}
+
+Id player_get_location(Player *player) { 
+  
+  if( !player ) { return NO_ID; }
+  
+  return player->location; 
+}
+
+Status player_set_location(Player *player, Id id) {
+  if (id == NO_ID || !player) {
     return ERROR;
   }
 
-  game->player_location = id;
+  player->location = id;
 
   return OK;
 }

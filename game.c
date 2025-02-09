@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "player.h"
+#include "object.h"
+
 /**
    Game interface implementation
 */
@@ -21,13 +24,16 @@
 Status game_create(Game *game) {
   int i;
 
+  if( !game ) { return ERROR; }
+
   for (i = 0; i < MAX_SPACES; i++) {
     game->spaces[i] = NULL;
   }
 
+  if( !(game->player = player_create()) ) { return ERROR; }
+  if( !(game->object = object_create(OBJECT_ID)) ) { return ERROR; }
+
   game->n_spaces = 0;
-  game->player_location = NO_ID;
-  game->object_location = NO_ID;
   game->last_cmd = command_create();
   game->finished = FALSE;
 
@@ -72,6 +78,8 @@ void game_print(Game *game) {
     space_print(game->spaces[i]);
   }
 
-  printf("=> Object location: %d\n", (int)game->object_location);
-  printf("=> Player location: %d\n", (int)game->player_location);
+  printf("=> Object location: ");
+  object_print(game->object);
+  printf("=> Player location: ");
+  player_print(game->player);
 }

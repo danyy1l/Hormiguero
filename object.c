@@ -1,119 +1,110 @@
 /**
- * @brief Implementacion de la funcionalidad del modulo Object
+ * @brief Implementa 
  *
- * @file object.c
- * @author Danyyil Shykerynets
+ * @file game.c
+ * @author Anthony Eduardo Alvarado Carbajal
  * @version 0
  * @date 06-02-2025
  * @copyright GNU Public License
  */
 
-#include "object.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "object.h"
 
-#include "player.h"
-#include "game_reader.h"
-
+/**
+ * @brief Object
+ * Esta estructura define los elementos del objeto 
+ */
 struct _Object{
-
-  Id id;
-  char icon;
-  char name[WORD_SIZE+1];
-
+  Id id;                            /*!< Número de id del objeto*/
+  char name[WORD_SIZE + 1];         /*!< Nombre del objeto*/
+  Id location;                      /*!< Id del espacio donde esta el objeto*/
 };
 
-Object *object_create(Id id, char icon, char *name){
+Object* object_create(Id id){
+  Object *newObject = NULL;
 
-  Object *output = NULL;
-  
-  if(!name || id == NO_ID ){ return NULL; }
-
-  if( !(output = (Object*)calloc(1, sizeof(Object))) )
+  if (id == NO_ID)
     return NULL;
 
-  output->id = id;
-  output->icon = icon;
-  strcpy(output->name, name);
+  newObject = (Object *) malloc(sizeof (Object));
+  if (newObject == NULL)
+    return NULL;
 
-  return output;
-
+  newObject->id = id;
+  newObject->name[0] = '\0';
+  return newObject;
 }
 
-void object_destroy(Object *object){
 
-  if( object ){
-    free(object);
-    object = NULL;
-  }
-
-}
-
-Status object_set_location(Game *game, Id id) {
-
-  if (id == NO_ID) {
+Status object_destroy(Object* object){
+  if (!object)
     return ERROR;
-  }
 
-  game->object_location = id;
-  space_set_object(game_get_space(game, id), TRUE);
+  free(object);
+  object = NULL;
+  return OK;
+}
+
+
+Id object_get_id(Object* object){
+  if (!object)
+    return NO_ID;
+
+  return object->id;
+}
+
+Status object_set_location(Object *object, Id id){
+
+  if( id == NO_ID || !object )  {return ERROR;}
+
+  object->location = id;
+
+  return OK;
+
+}
+
+Id object_get_location(Object *object){
+  if( !object ) { return NO_ID; }
+
+  return object->location;
+
+}
+
+Status object_set_id(Object* object, Id id){
+  if(!object||id==NO_ID)
+    return ERROR;
+
+  object->id=id;
+  return OK;
+}
+
+
+Status object_set_name(Object* object, char* name) {
+  if (!object || !name)
+    return ERROR;
+
+  if (!strcpy(object->name, name))
+    return ERROR;
 
   return OK;
 }
 
-Id object_get_location(Game *game) { return game->object_location; }
 
-void object_print(Object *object){
+const char * object_get_name(Object* object) {
+  if (!object)
+    return NULL;
 
-  if( object ){
-    printf("Object ID: %ld\nObject name: %s\nObject icon: %c", object->id, object->name, object->icon);
-  }
-
+  return object->name;
 }
 
-char *game_object_check(char *objs, Game *game){
-  
-  Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID;
-  Space *space_act = NULL;
 
-  if( (id_act = player_get_location(game)) != NO_ID ){
-    space_act = game_get_space(game, id_act);
-    id_north = space_get_north(space_act);
-    id_south = space_get_south(space_act);
-    id_east = space_get_east(space_act);
-    id_west = space_get_west(space_act);
+Status object_print(Object* object){
+  if (!object)
+    return ERROR;
 
-    if (object_get_location(game) == id_act)
-      objs[0] = '*';
-    else
-      objs[0] = ' ';
-
-    if (object_get_location(game) == id_north)
-      objs[1] = '*';
-    else
-      objs[1] = ' ';
-
-
-    if (object_get_location(game) == id_south)
-      objs[3] = '*';
-    else
-      objs[3] = ' ';
-
-
-    if (object_get_location(game) == id_east)
-      objs[2] = '*';
-    else
-      objs[2] = ' ';
-
-
-    if (object_get_location(game) == id_west)
-      objs[4] = '*';
-    else
-      objs[4] = ' ';
-
-  }
-
-  return objs;
+  fprintf(stdout, "-->object (id: %ld; name: %s)\n", object->id, object->name);
+  return OK;
 }

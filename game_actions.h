@@ -2,9 +2,9 @@
  * @brief It defines the game update interface
  *
  * @file game.h
- * @author Danyyil Shykerynets
+ * @author Anthony Eduardo Alvarado Carbajal
  * @version 0
- * @date 03-02-2025
+ * @date 04-02-2025
  * @copyright GNU Public License
  */
 
@@ -15,6 +15,13 @@
 #include "game.h"
 #include "types.h"
 
+/**
+ * @brief Actualiza las acciones del juego
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a Game
+ * @param cmd Un puntero a Command
+ * @return OK, si todo va bien o ERROR si hay algún fallo
+ */
 Status game_actions_update(Game *game, Command *cmd);
 
 #endif

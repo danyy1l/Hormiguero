@@ -10,7 +10,6 @@
 
 #include "game_actions.h"
 #include "game_reader.h"
-#include "player.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -88,14 +87,14 @@ void game_actions_north(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  space_id = player_get_location(game);
+  space_id = player_get_location(game->player);
   if (space_id == NO_ID) {
     return;
   }
 
   current_id = space_get_north(game_get_space(game, space_id));
   if (current_id != NO_ID) {
-    player_set_location(game, current_id);
+    player_set_location(game->player, current_id);
   }
 
   return;
@@ -105,7 +104,7 @@ void game_actions_south(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  space_id = player_get_location(game);
+  space_id = player_get_location(game->player);
 
   if (NO_ID == space_id) {
     return;
@@ -113,7 +112,7 @@ void game_actions_south(Game *game) {
 
   current_id = space_get_south(game_get_space(game, space_id));
   if (current_id != NO_ID) {
-    player_set_location(game, current_id);
+    player_set_location(game->player, current_id);
   }
 
   return;
@@ -123,7 +122,7 @@ void game_actions_east(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  space_id = player_get_location(game);
+  space_id = player_get_location(game->player);
 
   if (NO_ID == space_id) {
     return;
@@ -131,7 +130,7 @@ void game_actions_east(Game *game) {
 
   current_id = space_get_east(game_get_space(game, space_id));
   if (current_id != NO_ID) {
-    player_set_location(game, current_id);
+    player_set_location(game->player, current_id);
   }
 
   return;
@@ -141,7 +140,7 @@ void game_actions_west(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  space_id = player_get_location(game);
+  space_id = player_get_location(game->player);
 
   if (NO_ID == space_id) {
     return;
@@ -149,7 +148,7 @@ void game_actions_west(Game *game) {
 
   current_id = space_get_west(game_get_space(game, space_id));
   if (current_id != NO_ID) {
-    player_set_location(game, current_id);
+    player_set_location(game->player, current_id);
   }
 
   return;

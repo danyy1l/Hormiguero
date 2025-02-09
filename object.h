@@ -1,78 +1,98 @@
 /**
- * @brief Definiciones de la funcionalidad relacionada a los objetos
- *
+ * @brief Define los interfaces del objeto
  * @file object.h
- * @author Danyyil Shykerynets
+ * @author Anthony Eduardo Alvarado Carbajal
  * @version 0
- * @date 06-02-2025
+ * @date 05-02-2024
  * @copyright GNU Public License
  */
-
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include "game.h"
+#include "types.h"
+#include "space.h"
+#define OBJECT_ID 45
 
 /**
- * @brief Estructura objeto que contendra el ID y nombre del objeto
+ * @brief Object
+ * Esta estructura almacena toda la información del objeto
  */
 typedef struct _Object Object;
 
 /**
- * @brief Crea un objeto nuevo
- * 
- * @param 
- *  Los parametros son los datos a introducir en el objeto a crear
- * @return Devuelve un puntero a una estructura objeto
+ * @brief Crea un objeto
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param id el número id para el nuevo objeto
+ * @return un nuevo objeto,inicializado
  */
-Object *object_create(Id id, char icon, char* name);
+Object* object_create(Id id);
 
 /**
- * @brief Crea un objeto nuevo
- * 
- * @param object
- * Puntero al objeto a liberar
+ * @brief Destruye un objeto
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param object Un puntero a Object
+ * @return OK, si todo va bien o ERROR si hay algún fallo
  */
-void object_destroy(Object *object);
+Status object_destroy(Object* object);
 
 /**
- * @brief Establece la ubicacion del objeto en el id de entrada
- * 
- * @param id
- *  ID del espacio en el que colocar el objeto
- * @param game
- *  Estructura de la partida actual
- * @return Devuelve OK en caso de exito y ERROR en caso contrario
+ * @brief Obtiene el id del objeto
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param object Un puntero a objeto 
+ * @return el id del objeto
  */
-Status object_set_location(Game *game, Id id);
+Id object_get_id(Object* object);
 
 /**
- * @brief Crea un jugador nuevo
- * 
- * @param id
- * Id del objeto a localizar
- * @param game
- * Estructura de la partida actual 
- * @return Devuelve el ID de la ubicacion del objeto
+ * @brief Establece un id para el objeto
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param object Un puntero a object
+ * @param id el identificador del objeto
+ * @return OK, si todo va bien o ERROR si hay algún fallo
  */
-Id object_get_location(Game *game);
+Status object_set_id(Object* object, Id id);
 
 /**
- * @brief Imprime los datos del objeto 
- * @param object
- * Puntero a la estructura del objeto cuyos datos quiero imprimir
+ * @brief Establece un nuevo nombre para el objeto
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param object Un puntero a Object
+ * @param name Una cadena con el nombre del objeto
+ * @return OK, si todo va bien o ERROR si hay algún fallo
  */
-void object_print(Object *object);
+Status object_set_name(Object* object, char* name);
 
 /**
- * @brief Funcion que revisa si hay objetos en los alrededores del jugador
- * 
- * @param objs
- * Array con chars de los objetos en los alrededores en el orden: [PlayerLocation, N, E, S, W]
- * @param game
- * Estructura juego con las posiciones necesarias para el desarrollo
- * @return Array de chars de los objetos, ' ' si no hay, '*' si hay
+ * @brief Obtiene el nombre del objecto
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param object Un puntero a Object
+ * @return Una cadena que es el nombre del objeto
  */
-char *game_object_check(char *objs, Game *game);
+const char* object_get_name(Object* object);
+
+/**
+ * @brief Obtiene la ubicacion del objeto
+ * 
+ * @param object Puntero al objeto a localizar
+ *  Estructura juego con los datos de espacios, objetoes y objetos
+ * @return Devuelve el id del espacio en el que se ubica el objeto
+ */
+Id object_get_location(Object *object);
+
+/**
+ * @brief Establece la ubicacion del objeto
+ * 
+ * @param id Id del espacio inicial del objeto
+ * @param object Puntero al objecto
+ * @return OK en caso de que no haya errores, ERROR en caso contrario
+ */
+Status object_set_location(Object *object, Id id);
+
+/**
+ * @brief Imprime el objeto
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param object Un puntero a Object
+ * @return OK, si todo va bien o ERROR si hay algún fallo
+ */
+Status object_print(Object* object);
 
 #endif

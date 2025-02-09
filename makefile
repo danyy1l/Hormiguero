@@ -35,3 +35,6 @@ game_loop.o: game_loop.c
 
 clean: 
 	rm *.o -f $(EXE) 
+
+run: 
+	@$(MAKE) && ./$(EXE) $(EXE).dat

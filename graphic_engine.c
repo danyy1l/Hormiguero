@@ -69,7 +69,7 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 }
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
-  Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, obj_loc = NO_ID, ply_loc = NO_ID;
+  Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, object_location = NO_ID, player_location = NO_ID;
   Space *space_act = NULL;
   char objs[OBJ_NUM];
   char str[WORD_SIZE];
@@ -86,7 +86,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
-  if ((id_act = player_get_location(game)) != NO_ID) {
+  if ((id_act = player_get_location(game->player)) != NO_ID) {
     space_act = game_get_space(game, id_act);
     id_north = space_get_north(space_act);
     id_south = space_get_south(space_act);
@@ -507,12 +507,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  if( (obj_loc = object_get_location(game)) != NO_ID) {
-    sprintf(str, "  Object location:%d", (int)obj_loc);
+  if( (object_location = object_get_location(game->object)) != NO_ID) {
+    sprintf(str, "  Object location:%d", (int)object_location);
     screen_area_puts(ge->descript, str);
   }
-  if( (ply_loc = player_get_location(game)) != NO_ID) {
-    sprintf(str, "  Player location:%d", (int)ply_loc);
+  if( (player_location = player_get_location(game->player)) != NO_ID) {
+    sprintf(str, "  Player location:%d", (int)player_location);
     screen_area_puts(ge->descript, str);
   }
 
