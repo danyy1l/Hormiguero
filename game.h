@@ -37,21 +37,52 @@ typedef struct _Game {
 Status game_create(Game *game);
 
 
+/**
+ * @brief Destruye el juego liberando la memoria reservada
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a Game
+ * @return OK, si todo va bien o ERROR si hay algún fallo
+ */
 Status game_destroy(Game *game);
 
-
+/**
+ * @brief El juego obtiene el último comando utilizado
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a Game 
+ * @return Un puntero a Command
+ */
 Command* game_get_last_command(Game *game);
 
-
+/**
+ * @brief El juego define el último comando utilizado
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a Game 
+ * @return OK, si todo va bien o ERROR si hay algún fallo
+ */
 Status game_set_last_command(Game *game, Command *command);
 
-
+/**
+ * @brief El juego define el último comando utilizado
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a Game 
+ * @return OK, si todo va bien o ERROR si hay algún fallo
+ */
 Bool game_get_finished(Game *game);
 
-
+/**
+ * @brief Se define el fin del juego
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a Game 
+ * @param finished EL valor TRUE o FALSE
+ * @return OK, si todo va bien o ERROR si hay algún fallo
+ */
 Status game_set_finished(Game *game, Bool finished);
 
-
+/**
+ * @brief Imprime el juego
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a Game 
+ */
 void game_print(Game *game);
 
 #endif

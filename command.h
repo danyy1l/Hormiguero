@@ -43,7 +43,7 @@ Status command_destroy(Command* command);
   * @author Anthony Eduardo Alvarado Carbajal
   * @param command un puntero a Command 
   *
-  * @param code un valor de Commandcode, ya sea NO_CMD,UNKNOWN,EXIT,NEXT o BACK
+  * @param code un valor de Commandcode, ya sea NO_CMD,UNKNOWN,EXIT,NORTH,EAST,SOUTH,WEST
   * @return Ok si todo va bien o ERROR si hay un fallo
 */
 Status command_set_code(Command* command, CommandCode code);
@@ -52,7 +52,7 @@ Status command_set_code(Command* command, CommandCode code);
   * @brief Obtiene un codigo a través del comando
   * @author Anthony Eduardo Alvarado Carbajal
   * @param command un puntero a Command
-  * @return NO_CMD,UNKNOWN,EXIT,NEXT o BACK
+  * @return NO_CMD,UNKNOWN,EXIT,NORTH,EAST,SOUTH,WEST
 */
 CommandCode command_get_code(Command* command);
 

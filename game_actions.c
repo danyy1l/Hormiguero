@@ -19,16 +19,52 @@
    Private functions
 */
 
+/**
+ * @brief Realiza la accion al recibir un commando "UNKNOWN"
+ * 
+ * @param game Estructura de la partida actual
+ * No hace nada
+ */
 void game_actions_unknown(Game *game);
 
+/**
+ * @brief Realiza la accion al recibir un commando "EXIT"
+ * 
+ * @param game Estructura de la partida actual
+ * Abandona la partida
+ */
 void game_actions_exit(Game *game);
 
+/**
+ * @brief Realiza la accion al recibir un commando "NORTH"
+ * 
+ * @param game Estructura de la partida actual
+ * Mueve al jugador al sur en caso de que se puede
+ */
 void game_actions_north(Game *game);
 
+/**
+ * @brief Realiza la accion al recibir un commando "SOUTH"
+ * 
+ * @param game Estructura de la partida actual
+ * Mueve al jugador al sur en caso de que sea posible
+ */
 void game_actions_south(Game *game);
 
+/**
+ * @brief Realiza la accion al recibir un commando "EAST"
+ * 
+ * @param game Estructura de la partida actual
+ * Se mueve hacia el este en caso de que sea posible
+ */
 void game_actions_east(Game *game);
 
+/**
+ * @brief Realiza la accion al recibir un commando "WEST"
+ * 
+ * @param game Estructura de la partida actual
+ * Se mueve hacia el oeste en caso posible
+ */
 void game_actions_west(Game *game);
 
 /**
