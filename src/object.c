@@ -105,6 +105,6 @@ Status object_print(Object* object){
   if (!object)
     return ERROR;
 
-  fprintf(stdout, "-->object (id: %ld; name: %s)\n", object->id, object->name);
+  fprintf(stdout, "-->object (id: %ld; name: %s)", object->id, object->name);
   return OK;
 }
