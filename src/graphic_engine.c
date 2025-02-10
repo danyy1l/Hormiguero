@@ -71,8 +71,8 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, object_location = NO_ID, player_location = NO_ID;
   Space *space_act = NULL;
-  char objs[OBJ_NUM];
-  char str[WORD_SIZE];
+  char objs[OBJ_NUM], str[WORD_SIZE];
+  char object_taken = ' ';
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
   int i, dir_check = 0;
@@ -110,6 +110,10 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     }
 
     game_object_check(objs, game);
+    if( player_get_object(game->player) != NO_ID )
+      object_taken = '*';
+    else
+      object_taken = ' ';
 
     /*TODO: Mejorar esto*/
     switch(dir_check){
@@ -126,7 +130,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "-------+        +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "     %2d|   <    | m0^      %2d|",(int)id_west, (int)id_act);
+      sprintf(str, "     %2d|   <    | m0^%c     %2d|",(int)id_west, object_taken, (int)id_act);
       screen_area_puts(ge->map, str);
       sprintf(str, "%c      |        |     %c      |", objs[4], objs[0]);
       screen_area_puts(ge->map, str);
@@ -147,7 +151,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^      %2d|", (int)id_act);
+      sprintf(str, "                | m0^%c     %2d|", object_taken, (int)id_act);
       screen_area_puts(ge->map, str);
       sprintf(str, "                |     %c      |", objs[0]);
       screen_area_puts(ge->map, str);
@@ -178,7 +182,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "----------+        +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "       %2d  |   <   | m0^      %2d|",(int)id_west, (int)id_act);
+      sprintf(str, "       %2d  |   <   | m0^%c     %2d|",(int)id_west, object_taken, (int)id_act);
       screen_area_puts(ge->map, str);
       sprintf(str, "   %c       |       |     %c      |", objs[4], objs[0]);
       screen_area_puts(ge->map, str);
@@ -208,7 +212,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "                +------------+        +----------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "               | m0^      %2d|   >    |        %2d",(int)id_act, (int)id_east);
+      sprintf(str, "               | m0^%c     %2d|   >    |        %2d",object_taken, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
       sprintf(str, "               |     %c      |        |     %c    ", objs[0], objs[2]);
       screen_area_puts(ge->map, str);
@@ -229,7 +233,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "-------+        +------------+        +--------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "     %2d|   <    | m0^      %2d|    >   |      %2d ",(int)id_west, (int)id_act, (int)id_east);
+      sprintf(str, "     %2d|   <    | m0^%c     %2d|    >   |      %2d ",(int)id_west, object_taken, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
       sprintf(str, " %c     |        |     %c      |        |     %c   ", objs[4], objs[0], objs[2]);
       screen_area_puts(ge->map, str);
@@ -250,7 +254,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "                +------------+        +----------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^      %2d|   >   |        %2d",(int)id_act, (int)id_east);
+      sprintf(str, "                | m0^%c     %2d|   >   |        %2d",object_taken, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
       sprintf(str, "                |     %c      |       |     %c    ", objs[0], objs[2]);
       screen_area_puts(ge->map, str);
@@ -279,7 +283,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "--------+        +------------+        +--------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "      %2d|   <    | m0^      %2d|    >   |      %2d",(int)id_west, (int)id_act, (int)id_east);
+      sprintf(str, "      %2d|   <    | m0^%c     %2d|    >   |      %2d",(int)id_west, object_taken, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
       sprintf(str, "  %c     |        |     %c      |        |     %c  ", objs[4], objs[0], objs[2]);
       screen_area_puts(ge->map, str);
@@ -308,7 +312,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^      %2d|", (int)id_act);
+      sprintf(str, "                | m0^%c     %2d|", object_taken, (int)id_act);
       screen_area_puts(ge->map, str);
       sprintf(str, "                |     %c      |", objs[0]);
       screen_area_puts(ge->map, str);
@@ -329,7 +333,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "----------+        +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "        %2d|   <   | m0^      %2d|",(int)id_west, (int)id_act);
+      sprintf(str, "        %2d|   <   | m0^%c     %2d|",(int)id_west, object_taken, (int)id_act);
       screen_area_puts(ge->map, str);
       sprintf(str, "   %c      |       |     %c      |", objs[4], objs[0]);
       screen_area_puts(ge->map, str);
@@ -350,7 +354,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "                +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^      %2d|", (int)id_act);
+      sprintf(str, "                | m0^%c     %2d|", object_taken, (int)id_act);
       screen_area_puts(ge->map, str);
       sprintf(str, "                |     %c      |", objs[0]);
       screen_area_puts(ge->map, str);
@@ -380,7 +384,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "----------+        +------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "        %2d|   <   | m0^      %2d|",(int)id_west, (int)id_act);
+      sprintf(str, "        %2d|   <   | m0^%c     %2d|",(int)id_west, object_taken, (int)id_act);
       screen_area_puts(ge->map, str);
       sprintf(str, "   %c      |       |     %c      |", objs[4], objs[0]);
       screen_area_puts(ge->map, str);
@@ -411,7 +415,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "                +------------+        +----------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^      %2d|   >    |        %2d",(int)id_act, (int)id_east);
+      sprintf(str, "                | m0^%c     %2d|   >    |        %2d",object_taken, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
       sprintf(str, "                |     %c      |        |     %c    ", objs[0], objs[2]);
       screen_area_puts(ge->map, str);
@@ -432,7 +436,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "----------+         +------------+        +----------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "        %2d|   <   | m0^      %2d|   >    |        %2d",(int)id_west, (int)id_act, (int)id_east);
+      sprintf(str, "        %2d|   <   | m0^%c     %2d|   >    |        %2d",(int)id_west, object_taken, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
       sprintf(str, "   %c      |       |     %c      |        |     %c    ", objs[4], objs[0], objs[2]);
       screen_area_puts(ge->map, str);
@@ -453,7 +457,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "                +------------+        +---------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "                | m0^      %2d|   >    |      %2d", (int)id_act, (int)id_east);
+      sprintf(str, "                | m0^%c     %2d|   >    |      %2d", object_taken, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
       sprintf(str, "                |     %c      |        |     %c  ", objs[0], objs[2]);
       screen_area_puts(ge->map, str);
@@ -483,7 +487,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       if (id_act != NO_ID) {
       sprintf(str, "-------+        +------------+        +--------");
       screen_area_puts(ge->map, str);
-      sprintf(str, "     %2d|   <    | m0^      %2d|    >   |      %2d",(int)id_west, (int)id_act, (int)id_east);
+      sprintf(str, "     %2d|   <    | m0^%c     %2d|    >   |      %2d",(int)id_west, object_taken, (int)id_act, (int)id_east);
       screen_area_puts(ge->map, str);
       sprintf(str, " %c     |        |     %c      |        |     %c  ", objs[4], objs[0], objs[2]);
       screen_area_puts(ge->map, str);

@@ -157,30 +157,30 @@ char *game_object_check(char *objs, Game *game){
     id_east = space_get_east(space_act);
     id_west = space_get_west(space_act);
 
-    if (object_get_location(game->object) == id_act)
+    if (object_get_location(game->object) == id_act && player_get_object(game->player) == NO_ID)
       objs[0] = '*';
     else
       objs[0] = ' ';
 
-    if (object_get_location(game->object) == id_north)
+    if (object_get_location(game->object) == id_north && player_get_object(game->player) == NO_ID)
       objs[1] = '*';
     else
       objs[1] = ' ';
 
 
-    if (object_get_location(game->object) == id_south)
+    if (object_get_location(game->object) == id_south && player_get_object(game->player) == NO_ID)
       objs[3] = '*';
     else
       objs[3] = ' ';
 
 
-    if (object_get_location(game->object) == id_east)
+    if (object_get_location(game->object) == id_east && player_get_object(game->player) == NO_ID)
       objs[2] = '*';
     else
       objs[2] = ' ';
 
 
-    if (object_get_location(game->object) == id_west)
+    if (object_get_location(game->object) == id_west && player_get_object(game->player) == NO_ID)
       objs[4] = '*';
     else
       objs[4] = ' ';
