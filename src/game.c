@@ -47,6 +47,8 @@ Status game_destroy(Game *game) {
     space_destroy(game->spaces[i]);
   }
 
+  player_destroy(game->player);
+  object_destroy(game->object);
   command_destroy(game->last_cmd);
 
   return OK;
