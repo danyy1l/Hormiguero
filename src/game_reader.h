@@ -34,6 +34,7 @@ Status game_create_from_file(Game *game, char *filename);
 
 /**
  * @brief Funcion que revisa si hay objetos en los alrededores del jugador
+ * @author Danyyil Shykerynets
  * 
  * @param objs
  * Array con chars de los objetos en los alrededores en el orden: [PlayerLocation, N, E, S, W]

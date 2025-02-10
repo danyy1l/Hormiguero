@@ -33,12 +33,16 @@ Player *player_create(){
   return output;
 }
 
-void player_destroy(Player *player){
+Status player_destroy(Player *player){
 
   if( player ){
     free(player);
     player = NULL;
-  }
+    return OK;
+
+  }else
+    return ERROR;
+
 
 }
 
@@ -69,7 +73,10 @@ Status player_set_location(Player *player, Id id) {
   return OK;
 }
 
-void player_print(Player *player){
-  if( player )
+Status player_print(Player *player){
+  if( player ){
     printf("Player ID: %ld\nPlayer location: %ld\nPlayer name: %s\nPlayer object: %ld", player->id, player->location, player->name, player->object);
+    return OK;
+  }else
+    return ERROR;
 }

@@ -93,7 +93,7 @@ Status object_set_name(Object* object, char* name) {
 }
 
 
-const char * object_get_name(Object* object) {
+const char *object_get_name(Object* object) {
   if (!object)
     return NULL;
 

@@ -10,7 +10,6 @@
 #define OBJECT_H
 
 #include "types.h"
-#include "space.h"
 #define OBJECT_ID 45
 
 /**

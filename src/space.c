@@ -21,14 +21,14 @@
  *
  * This struct stores all the information of a space.
  */
-struct _Space {
+struct _Space { 
   Id id;                    /*!< Id number of the space, it must be unique */
   char name[WORD_SIZE + 1]; /*!< Name of the space */
   Id north;                 /*!< Id of the space at the north */
   Id south;                 /*!< Id of the space at the south */
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
-  Id object;              /*!< Whether the space has an object or not */
+  Object *object;           /*!< Whether the space has an object or not */
 };
 
 /** space_create allocates memory for a new space
@@ -152,17 +152,17 @@ Id space_get_west(Space* space) {
   return space->west;
 }
 
-Status space_set_object(Space* space, Bool value) {
+Status space_set_object(Space* space, Object *object) {
   if (!space) {
     return ERROR;
   }
-  space->object = value;
+  space->object = object;
   return OK;
 }
 
-Id space_get_object(Space* space) {
+Object *space_get_object(Space* space) {
   if (!space) {
-    return FALSE;
+    return NULL;
   }
   return space->object;
 }
