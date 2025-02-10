@@ -68,6 +68,22 @@ void game_actions_east(Game *game);
 void game_actions_west(Game *game);
 
 /**
+ * @brief Realiza la accion al recibir un commando "TAKE"
+ * 
+ * @param game Estructura de la partida actual
+ * Recibe el objeto de la casilla del jugador y lo lleva consigo hasta recibir un DROP
+ */
+void game_actions_take(Game *game);
+
+/**
+ * @brief Realiza la accion al recibir un commando "DROP"
+ * 
+ * @param game Estructura de la partida actual
+ * Suelta el objeto del inventario del jugador en caso de haberlo
+ */
+void game_actions_drop(Game *game);
+
+/**
    Game actions implementation
 */
 
@@ -103,6 +119,9 @@ Status game_actions_update(Game *game, Command *command) {
       game_actions_west(game);
       break;
 
+    case DROP:
+      game_actions_drop(game);
+      break;
 
     default:
       break;
@@ -188,4 +207,20 @@ void game_actions_west(Game *game) {
   }
 
   return;
+}
+
+void game_actions_drop(Game *game){
+
+  if( player_get_object(game->player) != NO_ID ){
+    
+    Id space_id = NO_ID;
+
+    space_id = player_get_location(game->player);
+
+    player_set_object(game->player, NO_ID);
+    object_set_location(game->object, space_id);
+  }
+
+return;
+
 }

@@ -30,6 +30,8 @@ Player *player_create(){
   if( !(output = (Player*)calloc(1, sizeof(Player))) )
     return NULL;
 
+  output->object = NO_ID;
+
   return output;
 }
 
@@ -71,6 +73,22 @@ Status player_set_location(Player *player, Id id) {
   player->location = id;
 
   return OK;
+}
+
+Status player_set_object(Player *player, Id id){
+
+  if( !player ){ return ERROR; }
+
+  player->object = id;
+
+  return OK;
+}
+
+Id player_get_object(Player *player){
+
+  if( !player ) { return NO_ID; }
+  
+  return player->object;
 }
 
 Status player_print(Player *player){

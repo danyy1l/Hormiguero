@@ -57,6 +57,15 @@ Id player_get_id(Player* player);
 Status player_set_id(Player* player, Id id);
 
 /**
+ * @brief Obtiene el nombre del playero
+ * @author Danyyil Shykerynets
+ * 
+ * @param player Un puntero a player
+ * @return Una cadena que es el nombre del objeto
+ */
+const char* player_get_name(Player* player);
+
+/**
  * @brief Establece un nuevo nombre para el objeto
  * @author Danyyil Shykerynets
  * 
@@ -65,15 +74,6 @@ Status player_set_id(Player* player, Id id);
  * @return OK, si todo va bien o ERROR si hay algún fallo
  */
 Status player_set_name(Player* player, char* name);
-
-/**
- * @brief Obtiene el nombre del playero
- * @author Danyyil Shykerynets
- * 
- * @param player Un puntero a player
- * @return Una cadena que es el nombre del objeto
- */
-const char* player_get_name(Player* player);
 
 /**
  * @brief Obtiene la ubicacion del jugador
@@ -94,6 +94,26 @@ Id player_get_location(Player *player);
  * @return OK en caso de que no haya errores, ERROR en caso contrario
  */
 Status player_set_location(Player *player, Id id);
+
+/**
+ * @brief Recibe el id del objeto que lleva el jugador (NO_ID en caso de no llevar)
+ * @author Danyyil Shykerynets
+ * 
+ * @param player Puntero a la estructura del jugador
+ * @return Devuelve el id del objeto que lleva el jugador
+ */
+Id player_get_object(Player *player);
+
+/**
+ * @brief Establece el id del objeto en la estructura jugador
+ * Analogamente es "agregar" un objeto con cierto id al inventario del jugador
+ * @author Danyyil Shykerynets
+ * 
+ * @param player Jugador al que darle el objeto
+ * @param id id del objeto que anadir al inventario
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status player_set_object(Player *player, Id id);
 
 /**
  * @brief Imprime los datos del jugador

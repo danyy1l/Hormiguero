@@ -34,7 +34,7 @@ game_loop.o: game_loop.c
 	$(CC) $(CFLAGS) game_loop.c
 
 clean: 
-	rm *.o -f $(EXE) 
+	rm -f *.o $(EXE) 
 
 run: 
 	@$(MAKE) && ./$(EXE) $(EXE).dat

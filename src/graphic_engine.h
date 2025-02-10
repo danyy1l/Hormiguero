@@ -2,9 +2,9 @@
  * @brief It defines the textual graphic engine interface
  *
  * @file graphic_engine.h
- * @author Profesores PPROG
+ * @author Anthony Eduardo Alvarado Carbajal
  * @version 0
- * @date 27-01-2025
+ * @date 10-02-2025
  * @copyright GNU Public License
  */
 
