@@ -1,10 +1,10 @@
 /**
  * @brief It implements the game update through user actions
  *
- * @file game.c
- * @author Danyyil Shykerynets 
- * @version 0
- * @date 04-02-2025
+ * @file game_actions.c
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @version 7
+ * @date 11-02-2025
  * @copyright GNU Public License
  */
 

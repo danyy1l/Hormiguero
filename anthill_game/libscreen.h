@@ -2,8 +2,8 @@
  * @brief It defines the screen interface
  *
  * @file libscreen.h
- * @author Profesores PPROG
- * @version 3.5
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @version 7
  * @date 26-01-2024
  * @copyright GNU Public License
  */

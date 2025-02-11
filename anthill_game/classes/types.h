@@ -2,8 +2,8 @@
  * @brief It defines common types for the whole project
  *
  * @file types.h
- * @author Danyyil Shykerynets
- * @version 0
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @version 7
  * @date 04-02-2025
  * @copyright GNU Public License
  */
