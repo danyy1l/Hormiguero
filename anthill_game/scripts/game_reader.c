@@ -14,10 +14,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../classes/space.h"
+#include "../classes/player.h"
+#include "../classes/object.h"
 #include "game.h"
-#include "space.h"
-#include "player.h"
-#include "object.h"
 
 /**
  * Private functions

@@ -11,7 +11,7 @@
 #ifndef GRAPHIC_ENGINE_H
 #define GRAPHIC_ENGINE_H
 
-#include "game.h"
+#include "../scripts/game.h"
 /**
  * @brief Estructura para implementar al TAD Graphic_engine. 
  * Definida en graphic_engine.c

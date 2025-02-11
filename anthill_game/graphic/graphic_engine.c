@@ -13,13 +13,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "command.h"
-#include "libscreen.h"
-#include "space.h"
-#include "types.h"
-#include "game_reader.h"
-#include "player.h"
-#include "object.h"
+#include "../classes/space.h"
+#include "../classes/player.h"
+#include "../classes/object.h"
+#include "../classes/types.h"
+#include "../scripts/command.h"
+#include "../scripts/game_reader.h"
+#include "../libscreen.h"
 
 #define WIDTH_MAP 48
 #define WIDTH_DES 29

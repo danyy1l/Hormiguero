@@ -11,9 +11,9 @@
 #ifndef GAME_ACTIONS_H
 #define GAME_ACTIONS_H
 
+#include "../classes/types.h"
 #include "command.h"
 #include "game.h"
-#include "types.h"
 
 /**
  * @brief Actualiza las acciones del juego

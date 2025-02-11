@@ -11,11 +11,11 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "../classes/player.h"
+#include "../classes/object.h"
+#include "../classes/space.h"
+#include "../classes/types.h"
 #include "command.h"
-#include "player.h"
-#include "object.h"
-#include "space.h"
-#include "types.h"
 
 #define MAX_SPACES 100
 
