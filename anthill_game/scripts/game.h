@@ -36,7 +36,6 @@ typedef struct _Game {
  */
 Status game_create(Game *game);
 
-
 /**
  * @brief Destruye el juego liberando la memoria reservada
  * @author Anthony Eduardo Alvarado Carbajal

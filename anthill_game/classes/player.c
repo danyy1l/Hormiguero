@@ -15,16 +15,13 @@
 #include <string.h>
 
 struct _Player {
-
-  Id id;
-  Id location;
-  char name[WORD_SIZE + 1];
-  Id object;
-
+  Id id;                      /*!<-ID del jugador*/
+  Id location;                /*!<-ID del espacio en el que se ubica el jugador*/
+  char name[WORD_SIZE + 1];   /*!<-Nombre del jugador*/
+  Id object;                  /*!<-ID del objeto que porta el jugador*/
 };
 
 Player *player_create(){
-  
   Player *output = NULL;
 
   if( !(output = (Player*)calloc(1, sizeof(Player))) )
@@ -36,7 +33,6 @@ Player *player_create(){
 }
 
 Status player_destroy(Player *player){
-
   if( player ){
     free(player);
     player = NULL;
@@ -44,22 +40,17 @@ Status player_destroy(Player *player){
 
   }else
     return ERROR;
-
-
 }
 
 Status player_set_id(Player *player, Id id){
-
   if( !player || id == NO_ID ) { return ERROR; }
 
   player->id = id;
 
   return OK;
-
 }
 
 Id player_get_location(Player *player) { 
-  
   if( !player ) { return NO_ID; }
   
   return player->location; 
@@ -76,7 +67,6 @@ Status player_set_location(Player *player, Id id) {
 }
 
 Status player_set_object(Player *player, Id id){
-
   if( !player ){ return ERROR; }
 
   player->object = id;
@@ -85,7 +75,6 @@ Status player_set_object(Player *player, Id id){
 }
 
 Id player_get_object(Player *player){
-
   if( !player ) { return NO_ID; }
   
   return player->object;

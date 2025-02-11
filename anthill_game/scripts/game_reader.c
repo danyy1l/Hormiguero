@@ -19,20 +19,6 @@
 #include "../classes/object.h"
 #include "game.h"
 
-/**
- * Private functions
- */
-
-Status game_load_spaces(Game *game, char *filename);
-
-Status game_add_space(Game *game, Space *space);
-
-Id game_get_space_id_at(Game *game, int position);
-
-/**
- * Game Implementation
- */
-
 Space *game_get_space(Game *game, Id id) {
   int i = 0;
 
@@ -48,27 +34,6 @@ Space *game_get_space(Game *game, Id id) {
 
   return NULL;
 }
-
-Status game_create_from_file(Game *game, char *filename) {
-  if (game_create(game) == ERROR) {
-    return ERROR;
-  }
-
-  if (game_load_spaces(game, filename) == ERROR) {
-    return ERROR;
-  }
-
-  /* The player and the object are located in the first space */
-  player_set_location(game->player, game_get_space_id_at(game, 0));
-  object_set_location(game->object, game_get_space_id_at(game, 9));
-
-  return OK;
-}
-
-/**
- * Implementation of private functions
- */
-
 
 Status game_load_spaces(Game *game, char *filename) {
   FILE *file = NULL;
@@ -103,7 +68,7 @@ Status game_load_spaces(Game *game, char *filename) {
       toks = strtok(NULL, "|");
       west = atol(toks);
 #ifdef DEBUG
-      printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
+printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
 #endif
       space = space_create(id);
       if (space != NULL) {
@@ -116,13 +81,13 @@ Status game_load_spaces(Game *game, char *filename) {
       }
     }
   }
-
+  
   if (ferror(file)) {
     status = ERROR;
   }
 
   fclose(file);
-
+  
   return status;
 }
 
@@ -133,7 +98,7 @@ Status game_add_space(Game *game, Space *space) {
 
   game->spaces[game->n_spaces] = space;
   game->n_spaces++;
-
+  
   return OK;
 }
 
@@ -141,26 +106,42 @@ Id game_get_space_id_at(Game *game, int position) {
   if (position < 0 || position >= game->n_spaces) {
     return NO_ID;
   }
-
+  
   return space_get_id(game->spaces[position]);
+}
+
+Status game_create_from_file(Game *game, char *filename) {
+  if (game_create(game) == ERROR) {
+    return ERROR;
+  }
+
+  if (game_load_spaces(game, filename) == ERROR) {
+    return ERROR;
+  }
+
+  /* The player and the object are located in the first space */
+  player_set_location(game->player, game_get_space_id_at(game, 0));
+  object_set_location(game->object, game_get_space_id_at(game, 9));
+
+  return OK;
 }
 
 char *game_object_check(char *objs, Game *game){
   
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID;
   Space *space_act = NULL;
-
+  
   if( (id_act = player_get_location(game->player)) != NO_ID ){
     space_act = game_get_space(game, id_act);
     id_north = space_get_north(space_act);
     id_south = space_get_south(space_act);
     id_east = space_get_east(space_act);
     id_west = space_get_west(space_act);
-
+    
     if (object_get_location(game->object) == id_act && player_get_object(game->player) == NO_ID)
-      objs[0] = '*';
+    objs[0] = '*';
     else
-      objs[0] = ' ';
+    objs[0] = ' ';
 
     if (object_get_location(game->object) == id_north && player_get_object(game->player) == NO_ID)
       objs[1] = '*';

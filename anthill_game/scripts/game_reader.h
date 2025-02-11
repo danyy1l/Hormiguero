@@ -23,6 +23,34 @@
 Space *game_get_space(Game *game, Id id);
 
 /**
+ * @brief Crea el array de espacios del mapa, tomando el archivo proporcionado
+ * anthill.dat esta como predeterminado
+ * @author Profesores PPROG
+ * @param game Estructura de la partida actual
+ * @param filename Nombre del archivo del que extraer el mapa
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status game_load_spaces(Game *game, char *filename);
+
+/**
+ * @brief Crea un espacio nuevo en el array de espacios
+ * @author Profesores PPROG
+ * @param game Estructura de la partida actual
+ * @param space Estructura del espacio a agregar en el array
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status game_add_space(Game *game, Space *space);
+
+/**
+ * @brief Obtiene del espacio en cierta posicion del array de espacios de la partida
+ * @author Profesores PPROG
+ * @param game Estructura de la partida actual
+ * @param position Coordenada del array a la que acceder en el array de espacios
+ * @return Id del espacio que buscabamos
+ */
+Id game_get_space_id_at(Game *game, int position);
+
+/**
  * @brief Crea el juego partiendo de un fichero
  * @author Anthony Eduardo Alvarado Carbajal
  * @param game Un puntero a Game 
@@ -41,7 +69,6 @@ Status game_create_from_file(Game *game, char *filename);
  * Estructura juego con las posiciones necesarias para el desarrollo
  * @return Array de chars de los objetos, ' ' si no hay, '*' si hay
  */
-
 char *game_object_check(char *objs, Game *game);
 
 #endif

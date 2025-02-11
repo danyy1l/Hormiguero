@@ -35,14 +35,6 @@ Object* object_create(Id id);
 Status object_destroy(Object* object);
 
 /**
- * @brief Obtiene el id del objeto
- * @author Anthony Eduardo Alvarado Carbajal
- * @param object Un puntero a objeto 
- * @return el id del objeto
- */
-Id object_get_id(Object* object);
-
-/**
  * @brief Establece un id para el objeto
  * @author Anthony Eduardo Alvarado Carbajal
  * @param object Un puntero a object
@@ -50,6 +42,14 @@ Id object_get_id(Object* object);
  * @return OK, si todo va bien o ERROR si hay algún fallo
  */
 Status object_set_id(Object* object, Id id);
+
+/**
+ * @brief Obtiene el id del objeto
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param object Un puntero a objeto 
+ * @return el id del objeto
+ */
+Id object_get_id(Object* object);
 
 /**
  * @brief Establece un nuevo nombre para el objeto
@@ -69,15 +69,6 @@ Status object_set_name(Object* object, char* name);
 const char* object_get_name(Object* object);
 
 /**
- * @brief Obtiene la ubicacion del objeto
- * 
- * @param object Puntero al objeto a localizar
- *  Estructura juego con los datos de espacios, objetoes y objetos
- * @return Devuelve el id del espacio en el que se ubica el objeto
- */
-Id object_get_location(Object *object);
-
-/**
  * @brief Establece la ubicacion del objeto
  * 
  * @param id Id del espacio inicial del objeto
@@ -85,6 +76,15 @@ Id object_get_location(Object *object);
  * @return OK en caso de que no haya errores, ERROR en caso contrario
  */
 Status object_set_location(Object *object, Id id);
+
+/**
+ * @brief Obtiene la ubicacion del objeto
+ * 
+ * @param object Puntero al objeto a localizar
+ *  Estructura juego con los datos de espacios, objetoes y objetos
+ * @return Devuelve el id del espacio en el que se ubica el objeto
+ */
+Id object_get_location(Object *object);
 
 /**
  * @brief Imprime el objeto

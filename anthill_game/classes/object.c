@@ -38,7 +38,6 @@ Object* object_create(Id id){
   return newObject;
 }
 
-
 Status object_destroy(Object* object){
   if (!object)
     return ERROR;
@@ -46,31 +45,6 @@ Status object_destroy(Object* object){
   free(object);
   object = NULL;
   return OK;
-}
-
-
-Id object_get_id(Object* object){
-  if (!object)
-    return NO_ID;
-
-  return object->id;
-}
-
-Status object_set_location(Object *object, Id id){
-
-  if( id == NO_ID || !object )  {return ERROR;}
-
-  object->location = id;
-
-  return OK;
-
-}
-
-Id object_get_location(Object *object){
-  if( !object ) { return NO_ID; }
-
-  return object->location;
-
 }
 
 Status object_set_id(Object* object, Id id){
@@ -81,6 +55,26 @@ Status object_set_id(Object* object, Id id){
   return OK;
 }
 
+Id object_get_id(Object* object){
+  if (!object)
+    return NO_ID;
+
+  return object->id;
+}
+
+Status object_set_location(Object *object, Id id){
+  if( id == NO_ID || !object )  {return ERROR;}
+
+  object->location = id;
+
+  return OK;
+}
+
+Id object_get_location(Object *object){
+  if( !object ) { return NO_ID; }
+
+  return object->location;
+}
 
 Status object_set_name(Object* object, char* name) {
   if (!object || !name)
