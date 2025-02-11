@@ -1,9 +1,9 @@
 /**
- * @brief Implementa 
+ * @brief Implementa la funcionalidad de los objetos
  *
- * @file game.c
+ * @file object.c
  * @author Anthony Eduardo Alvarado Carbajal
- * @version 0
+ * @version 7
  * @date 06-02-2025
  * @copyright GNU Public License
  */

@@ -3,7 +3,7 @@
  *
  * @file space.h
  * @author Danyyil Shykerynets
- * @version 0
+ * @version 7
  * @date 03-02-2025
  * @copyright GNU Public License
  */

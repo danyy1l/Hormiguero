@@ -3,7 +3,7 @@
  *
  * @file player.c
  * @author Danyyil Shykerynets
- * @version 0
+ * @version 7
  * @date 05-02-2025
  * @copyright GNU Public License
  */

@@ -2,7 +2,7 @@
  * @brief Define los interfaces del objeto
  * @file object.h
  * @author Anthony Eduardo Alvarado Carbajal
- * @version 0
+ * @version 7
  * @date 05-02-2024
  * @copyright GNU Public License
  */

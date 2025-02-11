@@ -1,10 +1,9 @@
 /**
  * @brief Contiene la funcionalidad necesaria para la carga de los espacios
- * TODO: Añadir objetos y jugadores
  * 
  * @file game_reader.h
  * @author Danyyil Shykerynets
- * @version 0
+ * @version 7
  * @date 05-02-2025
  * @copyright GNU Public License
  */

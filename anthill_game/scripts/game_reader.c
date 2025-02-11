@@ -1,9 +1,9 @@
 /**
- * @brief It implements the game structure
+ * @brief It implements the game reading functionality
  *
- * @file game.c
+ * @file game_reader.c
  * @author Danyyil Shykerynets
- * @version 0
+ * @version 7
  * @date 03-02-2025
  * @copyright GNU Public License
  */

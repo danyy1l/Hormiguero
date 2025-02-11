@@ -3,8 +3,8 @@
  *
  * @file graphic_engine.h
  * @author Anthony Eduardo Alvarado Carbajal
- * @version 0
- * @date 10-02-2025
+ * @version 7
+ * @date 11-02-2025
  * @copyright GNU Public License
  */
 
