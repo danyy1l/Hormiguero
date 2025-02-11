@@ -14,9 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../classes/player.h"
-#include "../classes/object.h"
-
 /**
    Game interface implementation
 */

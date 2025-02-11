@@ -20,8 +20,8 @@
 #define MAX_SPACES 100
 
 typedef struct _Game {
-  Player *player;             /*!< Número id de localización del jugador*/
-  Object *object;             /*!< Número id de localización del objeto*/
+  Player *player;             /*!< Puntero a la estructura del jugador de la partida*/
+  Object *object;             /*!< Puntero a la estructura del objeto de la partida*/
   Space *spaces[MAX_SPACES];  /*!< Array estático de un número limitado de espacios*/
   int n_spaces;               /*!< Número de espacios*/
   Command *last_cmd;          /*!< Puntero al comando*/

@@ -14,8 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "object.h"
-
 /**
  * @brief Space
  *

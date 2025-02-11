@@ -10,6 +10,7 @@
 #define OBJECT_H
 
 #include "types.h"
+
 #define OBJECT_ID 45
 
 /**
