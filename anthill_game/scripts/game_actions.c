@@ -31,8 +31,8 @@ Status game_actions_update(Game *game, Command *command) {
       game_actions_unknown(game);
       break;
 
-    case EXIT:
-      game_actions_exit(game);
+    case QUIT:
+      game_actions_quit(game);
       break;
 
     case NORTH:
@@ -75,7 +75,7 @@ Status game_actions_update(Game *game, Command *command) {
 
 void game_actions_unknown(Game *game) {}
 
-void game_actions_exit(Game *game) {}
+void game_actions_quit(Game *game) {}
 
 void game_actions_north(Game *game) {
   Id current_id = NO_ID;

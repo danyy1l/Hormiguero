@@ -38,7 +38,7 @@ void game_actions_unknown(Game *game);
  * @param game Estructura de la partida actual
  * Abandona la partida
  */
-void game_actions_exit(Game *game);
+void game_actions_quit(Game *game);
 
 /**
  * @brief Realiza la accion al recibir un commando "NORTH"

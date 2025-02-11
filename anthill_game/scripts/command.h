@@ -19,7 +19,7 @@
 
 typedef enum { CMDS, CMDL } CommandType;
 
-typedef enum { NO_CMD = -1, UNKNOWN, EXIT, NORTH, SOUTH, EAST, WEST, TAKE, DROP} CommandCode;
+typedef enum { NO_CMD = -1, UNKNOWN, QUIT, NORTH, SOUTH, EAST, WEST, TAKE, DROP} CommandCode;
 
 typedef struct _Command Command;
 
