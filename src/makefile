@@ -38,3 +38,6 @@ clean:
 
 run: 
 	@$(MAKE) && ./$(EXE) $(EXE).dat
+
+runv:
+	@$(MAKE) && valgrind --leak-check=full ./$(EXE) $(EXE).dat

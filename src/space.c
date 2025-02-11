@@ -52,7 +52,7 @@ Space* space_create(Id id) {
   newSpace->south = NO_ID;
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
-  newSpace->object = FALSE;
+  newSpace->object = NULL;
 
   return newSpace;
 }
@@ -62,6 +62,8 @@ Status space_destroy(Space* space) {
     return ERROR;
   }
 
+  free(space->object);
+  space->object = NULL;
   free(space);
   space = NULL;
   return OK;
