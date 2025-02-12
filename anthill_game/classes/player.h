@@ -15,14 +15,13 @@
 
 /**
  * @brief Estructura de datos del jugador, id, nombre, location y objeto portado
-@author Danyyil Shykerynets*/
-
+ * @author Danyyil Shykerynets
+ */
 typedef struct _Player Player;
 
 /**
  * @brief Crea un jugador nuevo
  * @author Danyyil Shykerynets
- * 
  * 
  * @return Devuelve un puntero a una estructura jugador
  */

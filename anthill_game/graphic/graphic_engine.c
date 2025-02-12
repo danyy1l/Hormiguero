@@ -110,13 +110,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       dir_check += 1;
     }
 
+    /*object_taken represents the object close to the player indicating that it is in their inventory*/
     game_object_check(objs, game);
     if( player_get_object(game->player) != NO_ID )
       object_taken = '*';
     else
       object_taken = ' ';
 
-    /*TODO: Mejorar esto*/
     switch(dir_check){
     case 1:
       sprintf(str, "                              ");
