@@ -33,10 +33,10 @@ Status game_actions_update(Game *game, Command *cmd);
 void game_actions_unknown(Game *game);
 
 /**
- * @brief Realiza la accion al recibir un commando "EXIT"
+ * @brief Realiza la accion al recibir un commando "QUIT"
  * @author Anthony Eduardo Alvarado Carbajal
  * @param game Estructura de la partida actual
- * Abandona la partida
+ * Detiene el bucle de actualizacion del juego, terminando la partida
  */
 void game_actions_quit(Game *game);
 

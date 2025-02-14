@@ -27,6 +27,9 @@ Player *player_create(){
   if( !(output = (Player*)calloc(1, sizeof(Player))) )
     return NULL;
 
+  output->id = NO_ID;
+  output->location = NO_ID;
+  output->name[0] = '\0';
   output->object = NO_ID;
 
   return output;
