@@ -32,8 +32,8 @@ game.o: scripts/game.c
 graphic_engine.o: graphic/graphic_engine.c
 	$(CC) $(CFLAGS) graphic/graphic_engine.c
 
-game_loop.o: src/game_loop.c
-	$(CC) $(CFLAGS) src/game_loop.c
+game_loop.o: main/game_loop.c
+	$(CC) $(CFLAGS) main/game_loop.c
 
 #CLEAN .o AND EXE
 clean: 
