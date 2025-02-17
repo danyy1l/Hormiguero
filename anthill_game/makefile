@@ -1,39 +1,39 @@
 EXE=anthill
 CFLAGS=-g -c -Wall -ansi -pedantic
 CC=gcc
-CLIB=-lscreen -L.
+CLIB=-lscreen -L./lib/
 
 ##############################################################################################################
 
 anthill: player.o object.o space.o command.o game_actions.o game_reader.o game.o graphic_engine.o game_loop.o
 	$(CC) -o $(EXE) *.o $(CLIB)
 
-player.o: classes/player.c
-	$(CC) $(CFLAGS) classes/player.c
+player.o: src/player.c
+	$(CC) $(CFLAGS) src/player.c
 
-object.o: classes/object.c
-	$(CC) $(CFLAGS) classes/object.c
+object.o: src/object.c
+	$(CC) $(CFLAGS) src/object.c
 
-space.o: classes/space.c
-	$(CC) $(CFLAGS) classes/space.c
+space.o: src/space.c
+	$(CC) $(CFLAGS) src/space.c
 
-command.o: scripts/command.c
-	$(CC) $(CFLAGS) scripts/command.c
+command.o: src/command.c
+	$(CC) $(CFLAGS) src/command.c
 
-game_actions.o: scripts/game_actions.c
-	$(CC) $(CFLAGS) scripts/game_actions.c
+game_actions.o: src/game_actions.c
+	$(CC) $(CFLAGS) src/game_actions.c
 
-game_reader.o: scripts/game_reader.c
-	$(CC) $(CFLAGS) scripts/game_reader.c
+game_reader.o: src/game_reader.c
+	$(CC) $(CFLAGS) src/game_reader.c
 
-game.o: scripts/game.c
-	$(CC) $(CFLAGS) scripts/game.c
+game.o: src/game.c
+	$(CC) $(CFLAGS) src/game.c
 
-graphic_engine.o: graphic/graphic_engine.c
-	$(CC) $(CFLAGS) graphic/graphic_engine.c
+graphic_engine.o: src/graphic_engine.c
+	$(CC) $(CFLAGS) src/graphic_engine.c
 
-game_loop.o: main/game_loop.c
-	$(CC) $(CFLAGS) main/game_loop.c
+game_loop.o: src/game_loop.c
+	$(CC) $(CFLAGS) src/game_loop.c
 
 #CLEAN .o AND EXE
 clean: 

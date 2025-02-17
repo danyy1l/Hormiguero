@@ -11,7 +11,7 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include "../classes/types.h"
+#include "types.h"
 
 #define N_CMDT 2
 #define N_CMD 9

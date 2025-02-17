@@ -8,8 +8,8 @@
  * @copyright GNU Public License
  */
 
-#include "game_actions.h"
-#include "game_reader.h"
+#include "../include/game_actions.h"
+#include "../include/game_reader.h"
 
 #include <stdio.h>
 #include <stdlib.h>

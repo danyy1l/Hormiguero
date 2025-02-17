@@ -8,18 +8,18 @@
  * @copyright GNU Public License
  */
 
-#include "graphic_engine.h"
+#include "../include/graphic_engine.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../classes/space.h"
-#include "../classes/player.h"
-#include "../classes/object.h"
-#include "../classes/types.h"
-#include "../scripts/command.h"
-#include "../scripts/game_reader.h"
-#include "../libscreen.h"
+#include "../include/space.h"
+#include "../include/player.h"
+#include "../include/object.h"
+#include "../include/types.h"
+#include "../include/command.h"
+#include "../include/game_reader.h"
+#include "../include/libscreen.h"
 
 #define WIDTH_MAP 48
 #define WIDTH_DES 29

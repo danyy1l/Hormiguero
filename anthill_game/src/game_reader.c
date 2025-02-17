@@ -8,15 +8,15 @@
  * @copyright GNU Public License
  */
 
-#include "game_reader.h"
+#include "../include/game_reader.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "../classes/space.h"
-#include "../classes/player.h"
-#include "../classes/object.h"
+#include "../include/space.h"
+#include "../include/player.h"
+#include "../include/object.h"
 
 Space *game_get_space(Game *game, Id id) {
   int i = 0;

@@ -11,12 +11,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../classes/player.h"
-#include "../scripts/command.h"
-#include "../scripts/game_actions.h"
-#include "../scripts/game_reader.h"
-#include "../scripts/game.h"
-#include "../graphic/graphic_engine.h"
+#include "../include/player.h"
+#include "../include/command.h"
+#include "../include/game_actions.h"
+#include "../include/game_reader.h"
+#include "../include/game.h"
+#include "../include/graphic_engine.h"
 
 int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name);
 
