@@ -1,7 +1,4 @@
 # Instrucciones para la ejecución del juego
-
-Enlace al repositorio: https://github.com/danyy1l/Hormiguero
-
 Dirigirse a la carpeta anthill_game/ 
  
 ### Comandos de terminal:
