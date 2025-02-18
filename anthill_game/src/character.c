@@ -1,0 +1,122 @@
+/**
+ * @brief Implementacion del TAD Character
+ *
+ * @file character.c
+ * @author Danyyil Shykerynets
+ * @version 1
+ * @date 18-02-2025
+ * @copyright GNU Public License
+ */
+
+#include "../include/character.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define GDESC_SIZE 6
+
+struct _Character{
+  Id id;
+  char name[WORD_SIZE];
+  char gdesc[GDESC_SIZE];
+  int health;
+  Bool friendly;
+  char message[WORD_SIZE];
+};
+
+Character* character_create(){
+  Character* character = NULL;
+
+  if( !(character = (Character*)calloc(1,sizeof(Character))) )
+    return NULL;
+
+  character->id = NO_ID;
+  character->health = 0;
+  character->friendly = TRUE;
+  /*No hace falta inicializar los strings porque calloc inicializa a \0 todas sus entradas*/
+  return character;
+}
+
+Status character_destroy(Character* character){
+  if(character){
+    free(character);
+    character = NULL;
+    return OK;
+  }
+  else
+    return ERROR;
+}
+
+Id character_get_id(Character* character){ return character->id; }
+
+Status character_set_id(Character* character, Id id){
+  if(!character || id == NO_ID)
+    return ERROR;
+
+  character->id = id;
+
+  return OK;
+}
+
+char* character_get_name(Character* character){ return character->name; }
+
+Status character_set_name(Character* character, char* name){
+  if(!character || !name)
+    return ERROR;
+
+  strcpy(character->name, name);
+  
+  return OK;
+}
+
+char* character_get_gdesc(Character* character){ return character->gdesc; }
+
+Status character_set_gdesc(Character* character, char* gdesc){
+  if(!character || !gdesc)
+    return ERROR;
+
+  strcpy(character->gdesc, gdesc);
+  
+  return OK;
+}
+
+int character_get_health(Character* character){ return character->health; }
+
+Status character_set_health(Character* character, int health){
+  if(!character)
+    return ERROR;
+    
+  character->health = health;
+
+  return OK;
+}
+
+Bool character_get_friendly(Character* character){ return character->friendly; }
+
+Status character_set_friendly(Character* character, Bool friendly){
+  if( !character )
+    return ERROR;
+
+  character->friendly = friendly;
+
+  return OK;
+}
+
+char* character_get_message(Character* character){ return character->message; }
+
+Status character_set_message(Character* character, char* message){
+  if(!character || !message)
+    return ERROR;
+
+  strcpy(character->message, message);
+  
+  return OK;  
+}
+
+void character_print(Character* c){
+  if( !c )
+    return;
+
+  fprintf(stdout,"Character with ID: %ld\nName: %s\nGraphic Desc: %s\nHealth: %d\nFriendliness: %d\nMessage: %s\n", c->id, c->name, c->gdesc, c->health, c->friendly, c->message);
+}

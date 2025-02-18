@@ -8,6 +8,7 @@
  * @copyright GNU Public License
  */
 
+#include "../include/game.h"
 #include "../include/game_actions.h"
 #include "../include/game_reader.h"
 
@@ -63,8 +64,8 @@ Status game_actions_update(Game *game, Command *command) {
       break;
   }
 
-  if( player_get_object(game->player) != NO_ID )
-    object_set_location(game->object, player_get_location(game->player));
+  if( player_get_object(game_get_player(game)) != NO_ID )
+    object_set_location(game_get_object(game), player_get_location(game_get_player(game)));
 
   return OK;
 }
@@ -81,14 +82,14 @@ void game_actions_north(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  space_id = player_get_location(game->player);
+  space_id = player_get_location(game_get_player(game));
   if (space_id == NO_ID) {
     return;
   }
 
   current_id = space_get_north(game_get_space(game, space_id));
   if (current_id != NO_ID) {
-    player_set_location(game->player, current_id);
+    player_set_location(game_get_player(game), current_id);
   }
 
   return;
@@ -98,7 +99,7 @@ void game_actions_south(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  space_id = player_get_location(game->player);
+  space_id = player_get_location(game_get_player(game));
 
   if (NO_ID == space_id) {
     return;
@@ -106,7 +107,7 @@ void game_actions_south(Game *game) {
 
   current_id = space_get_south(game_get_space(game, space_id));
   if (current_id != NO_ID) {
-    player_set_location(game->player, current_id);
+    player_set_location(game_get_player(game), current_id);
   }
 
   return;
@@ -116,7 +117,7 @@ void game_actions_east(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  space_id = player_get_location(game->player);
+  space_id = player_get_location(game_get_player(game));
 
   if (NO_ID == space_id) {
     return;
@@ -124,7 +125,7 @@ void game_actions_east(Game *game) {
 
   current_id = space_get_east(game_get_space(game, space_id));
   if (current_id != NO_ID) {
-    player_set_location(game->player, current_id);
+    player_set_location(game_get_player(game), current_id);
   }
 
   return;
@@ -134,7 +135,7 @@ void game_actions_west(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
-  space_id = player_get_location(game->player);
+  space_id = player_get_location(game_get_player(game));
 
   if (NO_ID == space_id) {
     return;
@@ -142,24 +143,24 @@ void game_actions_west(Game *game) {
 
   current_id = space_get_west(game_get_space(game, space_id));
   if (current_id != NO_ID) {
-    player_set_location(game->player, current_id);
+    player_set_location(game_get_player(game), current_id);
   }
 
   return;
 }
 
 void game_actions_take(Game *game){
-  if( player_get_object(game->player) == NO_ID && player_get_location(game->player) == object_get_location(game->object)){
+  if( player_get_object(game_get_player(game)) == NO_ID && player_get_location(game_get_player(game)) == object_get_location(game_get_object(game))){
 
-    player_set_object(game->player, object_get_id(game->object));
-    object_set_location(game->object, player_get_location(game->player));
+    player_set_object(game_get_player(game), object_get_id(game_get_object(game)));
+    object_set_location(game_get_object(game), player_get_location(game_get_player(game)));
   }
 }
 
 void game_actions_drop(Game *game){
-  if( player_get_object(game->player) != NO_ID ){
+  if( player_get_object(game_get_player(game)) != NO_ID ){
 
-    player_set_object(game->player, NO_ID);
-    object_set_location(game->object, player_get_location(game->player));
+    player_set_object(game_get_player(game), NO_ID);
+    object_set_location(game_get_object(game), player_get_location(game_get_player(game)));
   }
 }

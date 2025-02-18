@@ -41,12 +41,12 @@ Object* object_create(Id id){
 }
 
 Status object_destroy(Object* object){
-  if (!object)
+  if(!object){  
+    free(object);
+    object = NULL;
+    return OK;
+  }else
     return ERROR;
-
-  free(object);
-  object = NULL;
-  return OK;
 }
 
 Status object_set_id(Object* object, Id id){

@@ -13,7 +13,6 @@
 
 #define WORD_SIZE 1000
 #define NO_ID -1
-#define OBJ_NUM 5
 
 typedef long Id;
 

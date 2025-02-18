@@ -13,14 +13,7 @@
 
 #include "game.h"
 
-/**
- * @brief EL juego obtiene el espacio definido
- * @author Danyyil Shykerynets
- * @param game Un puntero a Game
- * @param Id el número id del espacio
- * @return OK, si todo va bien o ERROR si hay algún fallo
- */
-Space *game_get_space(Game *game, Id id);
+#define OBJ_NUM 5
 
 /**
  * @brief Crea el array de espacios del mapa, tomando el archivo proporcionado
@@ -33,31 +26,13 @@ Space *game_get_space(Game *game, Id id);
 Status game_load_spaces(Game *game, char *filename);
 
 /**
- * @brief Crea un espacio nuevo en el array de espacios
- * @author Danyyil Shykerynets
- * @param game Estructura de la partida actual
- * @param space Estructura del espacio a agregar en el array
- * @return OK en caso de exito, ERROR en caso contrario
- */
-Status game_add_space(Game *game, Space *space);
-
-/**
- * @brief Obtiene del espacio en cierta posicion del array de espacios de la partida
- * @author Danyyil Shykerynets
- * @param game Estructura de la partida actual
- * @param position Coordenada del array a la que acceder en el array de espacios
- * @return Id del espacio que buscabamos
- */
-Id game_get_space_id_at(Game *game, int position);
-
-/**
  * @brief Crea el juego partiendo de un fichero
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game 
  * @param filename una cadena con el nombre del fichero
  * @return OK, si todo va bien o ERROR si hay algun fallo
  */
-Status game_create_from_file(Game *game, char *filename);
+Game* game_create_from_file(char *filename);
 
 /**
  * @brief Funcion que revisa si hay objetos en los alrededores del jugador

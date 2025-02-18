@@ -46,13 +46,12 @@ Command* command_create() {
 }
 
 Status command_destroy(Command* command) {
-  if (!command) {
+  if(command){
+    free(command);
+    command = NULL;
+    return OK;
+  }else
     return ERROR;
-  }
-
-  free(command);
-  command = NULL;
-  return OK;
 }
 
 Status command_set_code(Command* command, CommandCode code) {

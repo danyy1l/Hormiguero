@@ -19,14 +19,7 @@
 
 #define MAX_SPACES 100
 
-typedef struct _Game {
-  Player *player;             /*!< Puntero a la estructura del jugador de la partida*/
-  Object *object;             /*!< Puntero a la estructura del objeto de la partida*/
-  Space *spaces[MAX_SPACES];  /*!< Array estático de un número limitado de espacios*/
-  int n_spaces;               /*!< Número de espacios*/
-  Command *last_cmd;          /*!< Puntero al comando*/
-  Bool finished;              /*!< Valor de TRUE o FALSE*/
-} Game;
+typedef struct _Game Game;
 
 /**
  * @brief Crea el juego reservando la memoria 
@@ -34,7 +27,7 @@ typedef struct _Game {
  * @param game Un puntero a Game
  * @return OK, si todo va bien o ERROR si hay algún fallo
  */
-Status game_create(Game *game);
+Game* game_create();
 
 /**
  * @brief Destruye el juego liberando la memoria reservada
@@ -83,5 +76,50 @@ Status game_set_finished(Game *game, Bool finished);
  * @param game Un puntero a Game 
  */
 void game_print(Game *game);
+
+/**
+ * @brief Obtiene el puntero del jugador de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @return Puntero a la estructura player de la partida "game" 
+ */
+Player *game_get_player(Game* game);
+
+/**
+ * @brief Obtiene el puntero de objeto de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @return Puntero a la estructura objeto de la partida "game" 
+ */
+Object* game_get_object(Game *game);
+
+int game_get_n_spaces(Game* game);
+
+/**
+ * @brief Crea un espacio nuevo en el array de espacios
+ * @author Danyyil Shykerynets
+ * @param game Estructura de la partida actual
+ * @param space Estructura del espacio a agregar en el array
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status game_add_space(Game *game, Space *space);
+
+/**
+ * @brief EL juego obtiene el espacio definido
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param Id el número id del espacio
+ * @return OK, si todo va bien o ERROR si hay algún fallo
+ */
+Space *game_get_space(Game *game, Id id);
+
+/**
+ * @brief Obtiene del espacio en cierta posicion del array de espacios de la partida
+ * @author Danyyil Shykerynets
+ * @param game Estructura de la partida actual
+ * @param position Coordenada del array a la que acceder en el array de espacios
+ * @return Id del espacio que buscabamos
+ */
+Id game_get_space_id_at(Game *game, int position);
 
 #endif

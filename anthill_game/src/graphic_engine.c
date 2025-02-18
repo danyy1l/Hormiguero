@@ -13,13 +13,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/space.h"
-#include "../include/player.h"
-#include "../include/object.h"
-#include "../include/types.h"
 #include "../include/command.h"
 #include "../include/game_reader.h"
 #include "../include/libscreen.h"
+#include "../include/object.h"
+#include "../include/player.h"
+#include "../include/space.h"
+#include "../include/types.h"
 
 #define WIDTH_MAP 48
 #define WIDTH_DES 29
@@ -84,7 +84,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
-  if ((id_act = player_get_location(game->player)) != NO_ID) {
+  if ((id_act = player_get_location(game_get_player(game))) != NO_ID) {
     space_act = game_get_space(game, id_act);
     id_north = space_get_north(space_act);
     id_south = space_get_south(space_act);
@@ -112,7 +112,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
     /*object_taken represents the object close to the player indicating that it is in their inventory*/
     game_object_check(objs, game);
-    if( player_get_object(game->player) != NO_ID )
+    if( player_get_object(game_get_player(game)) != NO_ID )
       object_taken = '*';
     else
       object_taken = ' ';
@@ -512,11 +512,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  if( (object_location = object_get_location(game->object)) != NO_ID) {
+  if( (object_location = object_get_location(game_get_object(game))) != NO_ID) {
     sprintf(str, "  Object location:%d", (int)object_location);
     screen_area_puts(ge->descript, str);
   }
-  if( (player_location = player_get_location(game->player)) != NO_ID) {
+  if( (player_location = player_get_location(game_get_player(game))) != NO_ID) {
     sprintf(str, "  Player location:%d", (int)player_location);
     screen_area_puts(ge->descript, str);
   }

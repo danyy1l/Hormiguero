@@ -18,22 +18,6 @@
 #include "../include/player.h"
 #include "../include/object.h"
 
-Space *game_get_space(Game *game, Id id) {
-  int i = 0;
-
-  if (id == NO_ID) {
-    return NULL;
-  }
-
-  for (i = 0; i < game->n_spaces; i++) {
-    if (id == space_get_id(game->spaces[i])) {
-      return game->spaces[i];
-    }
-  }
-
-  return NULL;
-}
-
 Status game_load_spaces(Game *game, char *filename) {
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
@@ -90,27 +74,9 @@ printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
   return status;
 }
 
-Status game_add_space(Game *game, Space *space) {
-  if ((space == NULL) || (game->n_spaces >= MAX_SPACES)) {
-    return ERROR;
-  }
-
-  game->spaces[game->n_spaces] = space;
-  game->n_spaces++;
-  
-  return OK;
-}
-
-Id game_get_space_id_at(Game *game, int position) {
-  if (position < 0 || position >= game->n_spaces) {
-    return NO_ID;
-  }
-  
-  return space_get_id(game->spaces[position]);
-}
-
-Status game_create_from_file(Game *game, char *filename) {
-  if (game_create(game) == ERROR) {
+Game* game_create_from_file(char *filename) {
+  Game* game = NULL;
+  if (!(game = game_create())) {
     return ERROR;
   }
 
@@ -119,10 +85,10 @@ Status game_create_from_file(Game *game, char *filename) {
   }
 
   /* The player and the object are located in the first space */
-  player_set_location(game->player, game_get_space_id_at(game, 0));
-  object_set_location(game->object, game_get_space_id_at(game, 9));
+  player_set_location(game_get_player(game), game_get_space_id_at(game, 0));
+  object_set_location(game_get_object(game), game_get_space_id_at(game, 9));
 
-  return OK;
+  return game;
 }
 
 char *game_object_check(char *objs, Game *game){
@@ -130,37 +96,37 @@ char *game_object_check(char *objs, Game *game){
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID;
   Space *space_act = NULL;
   
-  if( (id_act = player_get_location(game->player)) != NO_ID ){
+  if( (id_act = player_get_location(game_get_player(game))) != NO_ID ){
     space_act = game_get_space(game, id_act);
     id_north = space_get_north(space_act);
     id_south = space_get_south(space_act);
     id_east = space_get_east(space_act);
     id_west = space_get_west(space_act);
     
-    if (object_get_location(game->object) == id_act && player_get_object(game->player) == NO_ID)
+    if (object_get_location(game_get_object(game)) == id_act && player_get_object(game_get_player(game)) == NO_ID)
     objs[0] = '*';
     else
     objs[0] = ' ';
 
-    if (object_get_location(game->object) == id_north && player_get_object(game->player) == NO_ID)
+    if (object_get_location(game_get_object(game)) == id_north && player_get_object(game_get_player(game)) == NO_ID)
       objs[1] = '*';
     else
       objs[1] = ' ';
 
 
-    if (object_get_location(game->object) == id_south && player_get_object(game->player) == NO_ID)
+    if (object_get_location(game_get_object(game)) == id_south && player_get_object(game_get_player(game)) == NO_ID)
       objs[3] = '*';
     else
       objs[3] = ' ';
 
 
-    if (object_get_location(game->object) == id_east && player_get_object(game->player) == NO_ID)
+    if (object_get_location(game_get_object(game)) == id_east && player_get_object(game_get_player(game)) == NO_ID)
       objs[2] = '*';
     else
       objs[2] = ' ';
 
 
-    if (object_get_location(game->object) == id_west && player_get_object(game->player) == NO_ID)
+    if (object_get_location(game_get_object(game)) == id_west && player_get_object(game_get_player(game)) == NO_ID)
       objs[4] = '*';
     else
       objs[4] = ' ';
