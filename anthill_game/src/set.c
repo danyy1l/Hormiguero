@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "set.h"
+#include ".../include/set.h"
 
 struct _Set{
     Id ids[MAX_IDS];     /*!< Array de ids de los objetos del conjunto */
