@@ -19,12 +19,13 @@
 */
 
 struct _Game{
-  Player *player;             /*!< Puntero a la estructura del jugador de la partida*/
-  Object *object;             /*!< Puntero a la estructura del objeto de la partida*/
-  Space *spaces[MAX_SPACES];  /*!< Array estático de un número limitado de espacios*/
-  int n_spaces;               /*!< Número de espacios*/
-  Command *last_cmd;          /*!< Puntero al comando*/
-  Bool finished;              /*!< Valor de TRUE o FALSE*/
+  Player *player;                         /*!< Puntero a la estructura del jugador de la partida*/
+  Object *object[OBJECTS_NUM];            /*!< Puntero a array de objetos de la partida*/
+  Character *characters[CHARACTERS_NUM];  /*!< Puntero a array de personajes en la partida*/
+  Space *spaces[MAX_SPACES];              /*!< Array estático de un número limitado de espacios*/
+  int n_spaces;                           /*!< Número de espacios*/
+  Command *last_cmd;                      /*!< Puntero al comando*/
+  Bool finished;                          /*!< Valor de TRUE o FALSE*/
 };
 
 /**
