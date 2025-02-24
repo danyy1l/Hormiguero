@@ -10,6 +10,8 @@
 
 #include "types.h"
 
+#define CHARACTERS_NUM 3
+
  /**
  * @brief Estructura character con campos:
  * ID, name, descripcion grafica, vida, friendly y un mensaje

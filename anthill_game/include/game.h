@@ -11,6 +11,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "character.h"
 #include "player.h"
 #include "object.h"
 #include "space.h"

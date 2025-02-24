@@ -12,6 +12,7 @@
 #include "types.h"
 
 #define OBJECT_ID 45
+#define OBJECTS_NUM 5
 
 /**
  * @brief Object
