@@ -12,6 +12,7 @@
 #define PLAYER_H
 
 #include "types.h"
+#include "object.h"
 
 /**
  * @brief Estructura de datos del jugador, id, nombre, location y objeto portado
@@ -99,9 +100,9 @@ Status player_set_location(Player *player, Id id);
  * @author Danyyil Shykerynets
  * 
  * @param player Puntero a la estructura del jugador
- * @return Devuelve el id del objeto que lleva el jugador
+ * @return Devuelve el objeto que lleva el jugador
  */
-Id player_get_object(Player *player);
+Object* player_get_object(Player *player);
 
 /**
  * @brief Establece el id del objeto en la estructura jugador
@@ -113,6 +114,25 @@ Id player_get_object(Player *player);
  * @return OK en caso de exito, ERROR en caso contrario
  */
 Status player_set_object(Player *player, Id id);
+
+/**
+ * @brief Recibe la vida del jugador
+ * @author Danyyil Shykerynets
+ * 
+ * @param player Puntero a la estructura del jugador
+ * @return Devuelve un int con la vida del jugador, -1 en caso de error
+ */
+int player_get_health(Player* player);
+
+/**
+ * @brief Establece la vida en la estructura jugador
+ * @author Danyyil Shykerynets
+ * 
+ * @param player Jugador al que apunta player
+ * @param health Nueva vida del jugador
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status player_set_health(Player *player, int health);
 
 /**
  * @brief Imprime los datos del jugador

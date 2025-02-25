@@ -27,9 +27,6 @@ struct _Object{
 Object* object_create(Id id){
   Object *newObject = NULL;
 
-  if (id == NO_ID)
-    return NULL;
-
   newObject = (Object *) malloc(sizeof (Object));
   if (newObject == NULL)
     return NULL;

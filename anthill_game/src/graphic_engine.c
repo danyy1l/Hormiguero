@@ -112,7 +112,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
     /*object_taken represents the object close to the player indicating that it is in their inventory*/
     game_object_check(objs, game);
-    if( player_get_object(game_get_player(game)) != NO_ID )
+    if( object_get_id(player_get_object(game_get_player(game))) != NO_ID )
       object_taken = '*';
     else
       object_taken = ' ';
@@ -512,7 +512,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  if( (object_location = object_get_location(game_get_object(game))) != NO_ID) {
+  if( (object_location = object_get_location(game_get_object(game, OBJECT_ID))) != NO_ID) {
     sprintf(str, "  Object location:%d", (int)object_location);
     screen_area_puts(ge->descript, str);
   }

@@ -88,4 +88,20 @@ void game_actions_take(Game *game);
  */
 void game_actions_drop(Game *game);
 
+/**
+ * @brief Realiza la accion al recibir un commando "ATTACK"
+ * @author Danyyil Shykerynets
+ * @param game Estructura de la partida actual
+ * Ataca al personaje que haya en la misma casilla
+ */
+void game_actions_attack(Game *game);
+
+/**
+ * @brief Realiza la accion al recibir un commando "CHAT"
+ * @author Danyyil Shykerynets
+ * @param game Estructura de la partida actual
+ * Recibe el mensaje del personaje de la casilla en la que nos encontremos, en caso de que lo haya
+ */
+void game_actions_chat(Game *game);
+
 #endif

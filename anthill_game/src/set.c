@@ -71,7 +71,7 @@ Status set_del_value(Set *set,Id id){
   int i;
 
   if (!set|| id==NO_ID){
-    return NULL;
+    return ERROR;
   }
 
   for(i=0;i<MAX_IDS;i++){
@@ -93,7 +93,7 @@ Bool set_find_object(Set *set, Id id){
   }
 
   for (i=0;i<MAX_IDS;i++){
-    if(set->ids[i]=id){
+    if(set->ids[i]==id){
       return TRUE;
     }
   }
@@ -102,7 +102,7 @@ Bool set_find_object(Set *set, Id id){
 
 Id *set_id_object(Set *set){
   if (!set){
-    return NO_ID;
+    return NULL;
   }
 
   return set->ids;

@@ -159,10 +159,29 @@ Status space_set_object(Space* space, Object *object);
 Object *space_get_object(Space* space);
 
 /**
+ * @brief It sets a character in a space
+ * @author Danyyil Shykerynets
+ *
+ * @param space a pointer to the space
+ * @param character_id The ID of the character to set in the space
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status space_set_character(Space *space, Id character_id);
+
+/**
+ * @brief It gets whether the space has a character or not
+ * @author Danyyil Shykerynets
+ *
+ * @param space a pointer to the space
+ * @return The ID of the character in the space, if none, returns NO_ID
+ */
+Id space_get_character_id(Space *space);
+
+/**
  * @brief It prints the space information
  * @author Danyyil Shykerynets
  *
- * This fucntion shows the id and name of the space, the spaces that surrounds it and wheter it has an object or not.
+ * This fucntion shows the id and name of the space, the spaces that surrounds it, whether it has an object and whether there is a character
  * @param space a pointer to the space
  * @return OK, if everything goes well or ERROR if there was some mistake
  */

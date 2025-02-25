@@ -26,6 +26,7 @@ struct _Space {
   Id south;                 /*!< Id of the space at the south */
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
+  Id character_id;          /*!< Id of the character in the space, NO_ID if no characters*/
   Object *object;           /*!< Whether the space has an object or not */
 };
 
@@ -165,6 +166,21 @@ Object *space_get_object(Space* space) {
   return space->object;
 }
 
+Status space_set_character(Space *space, Id character_id){
+  if( !space ){
+    return ERROR;
+  }
+  space->character_id = character_id;
+  return OK;
+}
+
+Id space_get_character_id(Space *space){
+  if( !space ){
+    return NO_ID;
+  }
+  return space->character_id;
+}
+
 Status space_print(Space* space) {
   Id idaux = NO_ID;
 
@@ -207,6 +223,13 @@ Status space_print(Space* space) {
     fprintf(stdout, "---> Object in the space.\n");
   } else {
     fprintf(stdout, "---> No object in the space.\n");
+  }
+
+  /* 4. Print if there is a character in the space or not*/
+  if (space_get_character_id(space) != NO_ID){
+    fprintf(stdout, "---> Character in the space with ID: %ld.\n", space_get_character_id(space));
+  } else {
+    fprintf(stdout, "---> No character in the space.\n");
   }
 
   return OK;

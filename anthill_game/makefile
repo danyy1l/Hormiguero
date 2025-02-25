@@ -5,7 +5,7 @@ CLIB=-lscreen -L./lib/
 
 ##############################################################################################################
 
-anthill: player.o object.o space.o command.o character.o game_actions.o game_reader.o game.o graphic_engine.o game_loop.o
+anthill: player.o object.o space.o command.o character.o set.o game_actions.o game_reader.o game.o graphic_engine.o game_loop.o
 	$(CC) -o $(EXE) *.o $(CLIB)
 
 player.o: src/player.c
@@ -22,6 +22,9 @@ command.o: src/command.c
 
 character.o: src/character.c
 	$(CC) $(CFLAGS) src/character.c
+
+set.o: src/set.c
+	$(CC) $(CFLAGS) src/set.c
 
 game_actions.o: src/game_actions.c
 	$(CC) $(CFLAGS) src/game_actions.c

@@ -87,12 +87,13 @@ void game_print(Game *game);
 Player *game_get_player(Game* game);
 
 /**
- * @brief Obtiene el puntero de objeto de la estructura game
+ * @brief Obtiene el puntero de un objeto con cierto id de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game
+ * @param id Id del objeto que se quiere obtener
  * @return Puntero a la estructura objeto de la partida "game" 
  */
-Object* game_get_object(Game *game);
+Object* game_get_object(Game *game, Id id);
 
 int game_get_n_spaces(Game* game);
 

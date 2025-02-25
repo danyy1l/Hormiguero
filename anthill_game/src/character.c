@@ -18,7 +18,7 @@
 
 struct _Character{
   Id id;
-  char name[WORD_SIZE];
+  char name[WORD_SIZE];     /*<! */
   char gdesc[GDESC_SIZE];
   int health;
   Bool friendly;
@@ -32,7 +32,7 @@ Character* character_create(){
     return NULL;
 
   character->id = NO_ID;
-  character->health = 0;
+  character->health = 1;
   character->friendly = TRUE;
   /*No hace falta inicializar los strings porque calloc inicializa a \0 todas sus entradas*/
   return character;
@@ -48,7 +48,10 @@ Status character_destroy(Character* character){
     return ERROR;
 }
 
-Id character_get_id(Character* character){ return character->id; }
+Id character_get_id(Character* character){ 
+  if( !character ){ return NO_ID; }
+  return character->id; 
+}
 
 Status character_set_id(Character* character, Id id){
   if(!character || id == NO_ID)
@@ -59,7 +62,10 @@ Status character_set_id(Character* character, Id id){
   return OK;
 }
 
-char* character_get_name(Character* character){ return character->name; }
+char* character_get_name(Character* character){ 
+  if( !character ){ return NULL; }
+  return character->name; 
+}
 
 Status character_set_name(Character* character, char* name){
   if(!character || !name)
@@ -70,7 +76,10 @@ Status character_set_name(Character* character, char* name){
   return OK;
 }
 
-char* character_get_gdesc(Character* character){ return character->gdesc; }
+char* character_get_gdesc(Character* character){ 
+  if( !character ){ return NULL; }
+  return character->gdesc; 
+}
 
 Status character_set_gdesc(Character* character, char* gdesc){
   if(!character || !gdesc)
@@ -81,7 +90,10 @@ Status character_set_gdesc(Character* character, char* gdesc){
   return OK;
 }
 
-int character_get_health(Character* character){ return character->health; }
+int character_get_health(Character* character){ 
+  if( !character ){ return -1; }
+  return character->health; 
+}
 
 Status character_set_health(Character* character, int health){
   if(!character)
@@ -92,7 +104,10 @@ Status character_set_health(Character* character, int health){
   return OK;
 }
 
-Bool character_get_friendly(Character* character){ return character->friendly; }
+Bool character_get_friendly(Character* character){ 
+  if( !character ){ return FALSE; }
+  return character->friendly; 
+}
 
 Status character_set_friendly(Character* character, Bool friendly){
   if( !character )
@@ -103,7 +118,10 @@ Status character_set_friendly(Character* character, Bool friendly){
   return OK;
 }
 
-char* character_get_message(Character* character){ return character->message; }
+char* character_get_message(Character* character){ 
+  if( !character ){ return NULL; }
+  return character->message; 
+}
 
 Status character_set_message(Character* character, char* message){
   if(!character || !message)
