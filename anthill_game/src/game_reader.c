@@ -74,7 +74,7 @@ printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
   return status;
 }
 
-Status game_load_objects(Game *game, char *filename) {
+Status game_load_objects(Game *game, char *filename){
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
@@ -104,7 +104,76 @@ Status game_load_objects(Game *game, char *filename) {
       printf("Leido: %ld|%s|%ld\n", id, name, location);
   #endif
       object = object_create(id);
+      object_set_name(object, name);
+      object_set_location(object, location);
+      game_add_object(game, object);
       space_set_object(game_get_space(game, location), object);
+    }
+  }
+  
+  if (ferror(file)) {
+    status = ERROR;
+  }
+
+  fclose(file);
+  
+  return status;
+}
+
+Status game_load_characters(Game *game, char *filename){
+  FILE *file = NULL;
+  char line[WORD_SIZE] = "";
+  char name[WORD_SIZE] = "";
+  char gdesc[GDESC_SIZE] = "";
+  char message[WORD_SIZE] = "";
+  char *toks = NULL;
+  int health;
+  Bool friendly;
+  Id id = NO_ID, location = NO_ID;
+
+  Character *character = NULL;
+  Status status = OK;
+
+  if (!filename) {
+    return ERROR;
+  }
+
+  file = fopen(filename, "r");
+  if (file == NULL) {
+    return ERROR;
+  }
+
+  while (fgets(line, WORD_SIZE, file)) {
+    if (strncmp("#c:", line, 3) == 0) {
+      toks = strtok(line + 3, "|");
+      id = atol(toks);
+      toks = strtok(NULL, "|");
+      strcpy(name, toks);
+      toks = strtok(NULL, "|");
+      strcpy(gdesc, toks);
+      toks = strtok(NULL, "|");
+      health = atoi(toks);
+      toks = strtok(NULL, "|");
+      friendly = atoi(toks);
+      toks = strtok(NULL, "|");
+      strcpy(message, toks);
+      toks = strtok(NULL, "|");
+      location = atol(toks);
+
+  #ifndef DEBUG
+      printf("Leido: %ld|%s|%s|%d|%d|%s|%ld\n", id, name, gdesc, health, friendly, message, location);
+  #endif
+      if( !(character = character_create()) ){ return ERROR; }
+      if( !character_set_id(character, id) ){ return ERROR; }
+      if( !character_set_location(character, location) ){ return ERROR; }
+      if( !character_set_name(character, name) ){ return ERROR; }
+      if( !character_set_gdesc(character, gdesc) ){ return ERROR; }
+      if( !character_set_health(character, health) ){ return ERROR; }
+      if( !character_set_friendly(character, friendly) ){ return ERROR; }
+      if( !character_set_message(character, message) ){ return ERROR; }
+
+      game_add_character(game, character);
+      space_set_character(game_get_space(game, location), character_get_id(character));
     }
   }
   
@@ -129,11 +198,16 @@ Game* game_create_from_file(char *filename) {
     return ERROR;
   }
   printf("Spaces created");
+  
   if(game_load_objects(game, filename) == ERROR){
     return ERROR;
   }
-
   printf("Objects loaded\n");
+  
+  if(game_load_characters(game, filename) == ERROR){
+    return ERROR;
+  }
+  printf("Characters loaded\n");  
   /* The player is located in the first space */
   player_set_location(game_get_player(game), game_get_space_id_at(game, 0));
 

@@ -73,8 +73,8 @@ Status game_actions_update(Game *game, Command *command) {
       break;
   }
 
-  if( object_get_id(player_get_object(game_get_player(game))) != NO_ID )
-    object_set_location(game_get_object(game, object_get_id(player_get_object(game_get_player(game)))), player_get_location(game_get_player(game)));
+  if( player_get_object(game_get_player(game)))
+    object_set_location(game_get_object(game, object_get_id( player_get_object(game_get_player(game)))), player_get_location(game_get_player(game)));
 
   return OK;
 }
@@ -160,19 +160,15 @@ void game_actions_west(Game *game) {
 
 void game_actions_take(Game *game){
   Space *current_space = game_get_space(game, player_get_location(game_get_player(game)));
-  if( object_get_id(player_get_object(game_get_player(game))) == NO_ID && player_get_location(game_get_player(game)) == object_get_location(game_get_object(game, space_get_id(current_space)))){
-
-    player_set_object(game_get_player(game), object_get_id(space_get_object(current_space)));
-    object_set_location(space_get_object(current_space), player_get_location(game_get_player(game)));
+  if( player_get_object(game_get_player(game)) == NULL && space_get_object(current_space) ){
+    player_set_object(game_get_player(game), space_get_object(current_space));
   }
 }
 
-void game_actions_drop(Game *game){
-  Space *current_space = game_get_space(game, player_get_location(game_get_player(game)));
-  if( object_get_id(player_get_object(game_get_player(game))) != NO_ID ){
 
-    player_set_object(game_get_player(game), NO_ID);
-    object_set_location(game_get_object(game, space_get_id(current_space)), player_get_location(game_get_player(game)));
+void game_actions_drop(Game *game){
+  if( player_get_object(game_get_player(game) )){
+    player_set_object(game_get_player(game), NULL);
   }
 }
 /*TODO*/

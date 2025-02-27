@@ -10,8 +10,6 @@
 
 #include "types.h"
 
-#define CHARACTERS_NUM 3
-
  /**
  * @brief Estructura character con campos:
  * ID, name, descripcion grafica, vida, friendly y un mensaje
@@ -50,6 +48,23 @@ Id character_get_id(Character* character);
  * @return Devuelve OK en caso de exito y ERROR en caso contrario
  */
 Status character_set_id(Character* character, Id id);
+
+/**
+ * @brief Obtiene la ubicacion de un personaje
+ * @author Danyyil Shykerynets
+ * @param character Puntero al personaje objetivo
+ * @return Devuelve el location del personaje objetivo
+ */
+Id character_get_location(Character* character);
+
+/**
+ * @brief Establece la ubicacion de un personaje
+ * @author Danyyil Shykerynets
+ * @param character Puntero al personaje objetivo
+ * @param location Ubicacion a establecer en el personaje
+ * @return Devuelve OK en caso de exito y ERROR en caso contrario
+ */
+Status character_set_location(Character* character, Id location);
 
 /**
  * @brief Obtiene el nombre de un personaje

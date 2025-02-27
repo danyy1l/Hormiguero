@@ -12,7 +12,11 @@
 #define TYPES_H
 
 #define WORD_SIZE 1000
+#define GDESC_SIZE 6
 #define NO_ID -1
+
+#define CHARACTERS_NUM 2
+#define OBJECTS_NUM 4
 
 typedef long Id;
 

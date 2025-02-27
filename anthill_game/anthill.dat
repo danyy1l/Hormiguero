@@ -8,7 +8,11 @@
 #s:43|Pasillo7|-1|53|-1|33
 #s:16|Agujero|15|-1|-1|-1
 #s:53|Despensa|-1|-1|-1|43
-#o:20|Grain|11
-#o:30|Crumb|53
-#o:40|Cookie|14
-#o:50|Wheat|16
+
+#o:10|Grain|11
+#o:20|Crumb|53
+#o:30|Cookie|14
+#o:40|Seed|16
+
+#c:100|Ant|^0m|5|1|Hello!|53
+#c:200|Spider|/\00/\|10|0|!!!|14

@@ -26,6 +26,26 @@
 Status game_load_spaces(Game *game, char *filename);
 
 /**
+ * @brief Crea el array de objetos del mapa, tomando el archivo proporcionado
+ * anthill.dat esta como predeterminado
+ * @author Danyyil Shykerynets
+ * @param game Estructura de la partida actual
+ * @param filename Nombre del archivo del que extraer el mapa
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status game_load_objects(Game *game, char *filename);
+
+/**
+ * @brief Crea el array de personajes del mapa, tomando el archivo proporcionado
+ * anthill.dat esta como predeterminado
+ * @author Danyyil Shykerynets
+ * @param game Estructura de la partida actual
+ * @param filename Nombre del archivo del que extraer el mapa
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status game_load_characters(Game *game, char *filename);
+
+/**
  * @brief Crea el juego partiendo de un fichero
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game 

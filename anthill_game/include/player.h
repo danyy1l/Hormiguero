@@ -105,15 +105,15 @@ Status player_set_location(Player *player, Id id);
 Object* player_get_object(Player *player);
 
 /**
- * @brief Establece el id del objeto en la estructura jugador
+ * @brief Establece un objeto en la estructura jugador
  * Analogamente es "agregar" un objeto con cierto id al inventario del jugador
  * @author Danyyil Shykerynets
  * 
  * @param player Jugador al que darle el objeto
- * @param id id del objeto que anadir al inventario
+ * @param object Objeto que anadir al inventario
  * @return OK en caso de exito, ERROR en caso contrario
  */
-Status player_set_object(Player *player, Id id);
+Status player_set_object(Player *player, Object* object);
 
 /**
  * @brief Recibe la vida del jugador

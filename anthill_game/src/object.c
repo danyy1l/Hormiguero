@@ -38,7 +38,7 @@ Object* object_create(Id id){
 }
 
 Status object_destroy(Object* object){
-  if(!object){  
+  if(object){  
     free(object);
     object = NULL;
     return OK;

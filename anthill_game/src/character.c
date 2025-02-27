@@ -3,8 +3,8 @@
  *
  * @file character.c
  * @author Danyyil Shykerynets
- * @version 1
- * @date 18-02-2025
+ * @version 2
+ * @date 27-02-2025
  * @copyright GNU Public License
  */
 
@@ -14,15 +14,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define GDESC_SIZE 6
-
 struct _Character{
-  Id id;
-  char name[WORD_SIZE];     /*<! */
-  char gdesc[GDESC_SIZE];
-  int health;
-  Bool friendly;
-  char message[WORD_SIZE];
+  Id id;                    /*!< ID of the character*/
+  Id location;              /*!< ID of the locations of this character*/
+  char name[WORD_SIZE];     /*!< String containing name of the character*/
+  char gdesc[GDESC_SIZE];   /*!< String containing gdesc of the character*/
+  int health;               /*!< Int containing health of character*/
+  Bool friendly;            /*!< Sympathy of the character*/
+  char message[WORD_SIZE];  /*!< String containing message of the character*/
 };
 
 Character* character_create(){
@@ -58,6 +57,20 @@ Status character_set_id(Character* character, Id id){
     return ERROR;
 
   character->id = id;
+
+  return OK;
+}
+
+Id character_get_location(Character* character){ 
+  if( !character ){ return NO_ID; }
+  return character->location; 
+}
+
+Status character_set_location(Character* character, Id location){
+  if(!character || location == NO_ID)
+    return ERROR;
+
+  character->location = location;
 
   return OK;
 }

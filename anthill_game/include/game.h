@@ -87,6 +87,15 @@ void game_print(Game *game);
 Player *game_get_player(Game* game);
 
 /**
+ * @brief Establece un nuevo objeto en el array de objetos de la partida
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param object Objeto a establecer en la partida
+ * @return OK en caso de exito, ERROR en caso contrario 
+ */
+Status game_add_object(Game* game, Object* object);
+
+/**
  * @brief Obtiene el puntero de un objeto con cierto id de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game
@@ -95,7 +104,23 @@ Player *game_get_player(Game* game);
  */
 Object* game_get_object(Game *game, Id id);
 
-int game_get_n_spaces(Game* game);
+/**
+ * @brief Establece un nuevo personaje en el array de personajes de la partida
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param character Personaje a establecer en la partida
+ * @return OK en caso de exito, ERROR en caso contrario 
+ */
+Status game_add_character(Game* game, Character* character);
+
+/**
+ * @brief Obtiene el puntero de un personaje con cierto id de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param id Id del personaje que se quiere obtener
+ * @return Puntero a la estructura objeto de la partida "game" 
+ */
+Character* game_get_character(Game* game, Id id);
 
 /**
  * @brief Crea un espacio nuevo en el array de espacios
