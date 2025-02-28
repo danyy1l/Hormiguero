@@ -30,6 +30,8 @@ make runv
 - West (w): Moverse a la casilla a la izquierda.<br>
 - Take (t): Coger el objeto que haya en la casilla en la que nos encontremos.<br>
 - Drop (d): Soltar el objeto si lo tenemos cogido.<br>
+- Attack (a): Ataca al personaje de la casilla si no es friendly<br>
+- Chat (c): Conversa con el personaje de la casilla si es friendly<br>
 - Quit (q): Cerrar el juego.<br>
 
 ## License
