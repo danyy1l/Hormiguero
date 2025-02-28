@@ -1,18 +1,22 @@
 /**
  * @brief It implements the space module
- *
  * @file space.c
- * @author Danyyil Shykerynets
- * @version 7
- * @date 04-02-2025
+ * @author Danyyil Shykerynets 
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @version 8
+ * @date 24-02-2025
  * @copyright GNU Public License
  */
 
 #include "../include/space.h"
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+
+/*Eliminar funciones object y susituir por otras funciones set ya que el campo tipo object ya no existe  */
 
 /**
  * @brief Space
@@ -27,7 +31,7 @@ struct _Space {
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
   Id character_id;          /*!< Id of the character in the space, NO_ID if no characters*/
-  Object *object;           /*!< Whether the space has an object or not */
+  Set *objects;           /*!< Whether the space has an object or not (borrar el comentario)*/
 };
 
 /** space_create allocates memory for a new space
@@ -51,13 +55,19 @@ Space* space_create(Id id) {
   newSpace->south = NO_ID;
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
-  newSpace->object = NULL;
+  newSpace->character_id=NO_ID;
+  newSpace->objects = set_create();
+  if(newSpace->objects==NULL){
+    free(newSpace);
+    return NULL;
+  }
 
   return newSpace;
 }
 
 Status space_destroy(Space* space) {
   if(space){
+   set_destroy(space->objects);
     free(space);
     space = NULL;
     return OK;
@@ -239,7 +249,7 @@ Status space_print(Space* space) {
   }
 
   /* 3. Print if there is an object in the space or not */
-  if (space_get_object(space)) {
+  if (space_find_object(space,idaux)) {
     fprintf(stdout, "---> Object in the space.\n");
   } else {
     fprintf(stdout, "---> No object in the space.\n");
@@ -254,3 +264,4 @@ Status space_print(Space* space) {
 
   return OK;
 }
+
