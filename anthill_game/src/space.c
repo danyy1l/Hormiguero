@@ -150,19 +150,40 @@ Id space_get_west(Space* space) {
   return space->west;
 }
 
-Status space_set_object(Space* space, Object *object) {
-  if (!space) {
+Status space_add_object(Space* space, Id id){
+  if (!space|| id==NO_ID){
     return ERROR;
   }
-  space->object = object;
+  
+  set_add_value(space->objects,id);
   return OK;
 }
 
-Object *space_get_object(Space* space) {
-  if (!space) {
+Status space_del_object(Space* space, Id id){
+  if (!space|| id== NO_ID){
+    return ERROR;
+  }
+  
+  set_del_value(space->objects,id);
+  return OK;
+}
+
+Bool space_find_object(Space* space,Id id){
+  if (!space){
+    return FALSE;
+  }
+  if (set_find_object(space->objects,id)==TRUE){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+Id* space_id_object(Space *space){
+  if (!space){
     return NULL;
   }
-  return space->object;
+  
+  return (set_id_object(space->objects));
 }
 
 Status space_set_character(Space *space, Id character_id){
