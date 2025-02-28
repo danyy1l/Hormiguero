@@ -566,7 +566,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   last_cmd = command_get_code(game_get_last_command(game));
   sprintf(str, " %s (%s)", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
   screen_area_puts(ge->feedback, str);
-  if( last_cmd == CHAT ){
+  if( last_cmd == CHAT && character_get_location(game_get_character(game, space_get_character_id(space_act))) == player_get_location(game_get_player(game))){
     sprintf(str, " %s: %s",character_get_name(game_get_character(game, space_get_character_id(space_act))), character_get_message( game_get_character(game, space_get_character_id(space_act)) ));
     screen_area_puts(ge->feedback, str);
   }
