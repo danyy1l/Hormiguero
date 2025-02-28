@@ -3,6 +3,7 @@
  *
  * @file space.h
  * @author Danyyil Shykerynets
+ * @author Anthony Eduardo Alvarado Carbajal
  * @version 7
  * @date 03-02-2025
  * @copyright GNU Public License
@@ -13,6 +14,7 @@
 
 #include "object.h"
 #include "types.h"
+#include "set.h"
 
 typedef struct _Space Space;
 
@@ -140,23 +142,39 @@ Status space_set_west(Space* space, Id id);
 Id space_get_west(Space* space);
 
 /**
- * @brief It sets whether the space has an object or not
- * @author Danyyil Shykerynets
- *
- * @param space a pointer to the space
- * @param object A pointer to the object to add to the space
- * @return OK, if everything goes well or ERROR if there was some mistake
+ * @brief Adds an object to the space
+ * @author Anthony Eduardo Alvarado Carbajal 
+ * @param space A pointer to the space 
+ * @param id a number id 
+ * @return OK, if everything goes well, or ERROR if there is a mistake
  */
-Status space_set_object(Space* space, Object *object);
+Status space_add_object(Space * space, Id id);
 
 /**
- * @brief It gets whether the space has an object or not
- * @author Danyyil Shykerynets
- *
- * @param space a pointer to the space
- * @return A pointer to the object in the space
+ * @brief Deletes an object in the space
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param space A pointer to the space 
+ * @param id a number id 
+ * @return OK, if everything goes well, or ERROR if there is a mistake
  */
-Object *space_get_object(Space* space);
+Status space_del_object(Space *space, Id id);
+
+/**
+ * @brief Get the id of the object
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param space A pointer to the space 
+ * @return the object id 
+ */
+Id* space_id_object(Space* space);
+
+/**
+ * @brief verifies if an object exists 
+ * @author Anthony Eduardo Alvarado Carbajal 
+ * @param space A pointer to the space 
+ * @param id a number id of space
+ * @return TRUE, if everything goes well, or FALSE if there is a mistake 
+ */
+Bool space_find_object(Space* space,Id id);
 
 /**
  * @brief It sets a character in a space
@@ -181,7 +199,7 @@ Id space_get_character_id(Space *space);
  * @brief It prints the space information
  * @author Danyyil Shykerynets
  *
- * This fucntion shows the id and name of the space, the spaces that surrounds it, whether it has an object and whether there is a character
+ * This fucntion shows the id and name of the space, the spaces that surrounds it and wheter it has an object or not.
  * @param space a pointer to the space
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
