@@ -37,7 +37,8 @@ char *cmd_to_str[N_CMD][N_CMDT] = {
  * This struct stores all the information related to a command.
  */
 struct _Command {
-  CommandCode code; /*!< Name of the command */
+  CommandCode code;               /*!< Name of the command */
+  char object[WORD_SIZE];
 };
 
 /** space_create allocates memory for a new space
@@ -105,6 +106,10 @@ Status command_get_user_input(Command* command) {
       } else {
         i++;
       }
+    }
+    if( cmd == TAKE ){
+      token = strtok(input, " ");
+      strcpy(command->object, token);
     }
     return command_set_code(command, cmd);
   }

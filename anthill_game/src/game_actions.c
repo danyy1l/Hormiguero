@@ -11,7 +11,6 @@
 #include "../include/game.h"
 #include "../include/game_actions.h"
 #include "../include/game_reader.h"
-#include "time.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,13 +53,13 @@ Status game_actions_update(Game *game, Command *command) {
       break;
 
     case TAKE:
-      game_actions_take(game);
+      game_actions_take(game, command);
       break;
 
     case DROP:
       game_actions_drop(game);
       break;
-/*
+
     case ATTACK:
       game_actions_attack(game);
       break;
@@ -68,7 +67,7 @@ Status game_actions_update(Game *game, Command *command) {
     case CHAT:
       game_actions_chat(game);
       break;
-*/
+
     default:
       break;
   }
@@ -83,100 +82,146 @@ Status game_actions_update(Game *game, Command *command) {
    Calls implementation for each action
 */
 
-void game_actions_unknown(Game *game) {}
+Status game_actions_unknown(Game *game) { return ERROR; }
 
 void game_actions_quit(Game *game) {}
 
-void game_actions_north(Game *game) {
+Status game_actions_north(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
   space_id = player_get_location(game_get_player(game));
-  if (space_id == NO_ID) {
-    return;
+
+  if (NO_ID == space_id) {
+    return ERROR;
   }
 
   current_id = space_get_north(game_get_space(game, space_id));
   if (current_id != NO_ID) {
     player_set_location(game_get_player(game), current_id);
-  }
+  }else
+    return ERROR;
 
-  return;
+  return OK;
 }
 
-void game_actions_south(Game *game) {
+Status game_actions_south(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
   space_id = player_get_location(game_get_player(game));
 
   if (NO_ID == space_id) {
-    return;
+    return ERROR;
   }
 
   current_id = space_get_south(game_get_space(game, space_id));
   if (current_id != NO_ID) {
     player_set_location(game_get_player(game), current_id);
-  }
+  }else
+    return ERROR;
 
-  return;
+  return OK;
 }
 
-void game_actions_east(Game *game) {
+Status game_actions_east(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
   space_id = player_get_location(game_get_player(game));
 
   if (NO_ID == space_id) {
-    return;
+    return ERROR;
   }
 
   current_id = space_get_east(game_get_space(game, space_id));
   if (current_id != NO_ID) {
     player_set_location(game_get_player(game), current_id);
-  }
+  }else
+    return ERROR;
 
-  return;
+  return OK;
 }
 
-void game_actions_west(Game *game) {
+Status game_actions_west(Game *game) {
   Id current_id = NO_ID;
   Id space_id = NO_ID;
 
   space_id = player_get_location(game_get_player(game));
 
   if (NO_ID == space_id) {
-    return;
+    return ERROR;
   }
 
   current_id = space_get_west(game_get_space(game, space_id));
   if (current_id != NO_ID) {
     player_set_location(game_get_player(game), current_id);
-  }
+  }else
+    return ERROR;
 
-  return;
+  return OK;
 }
 
-void game_actions_take(Game *game){
+Status game_actions_take(Game *game, Command *command){
   Space *current_space = game_get_space(game, player_get_location(game_get_player(game)));
+  /*Object* object;*/
+
+  if( !command )
+    return ERROR;
+
   if( player_get_object(game_get_player(game)) == NULL && space_get_object(current_space) ){
     player_set_object(game_get_player(game), space_get_object(current_space));
-  }
+    return OK;
+  }else
+    return ERROR;
 }
 
 
-void game_actions_drop(Game *game){
+Status game_actions_drop(Game *game){
   if( player_get_object(game_get_player(game) )){
     player_set_object(game_get_player(game), NULL);
-  }
+    return OK;
+  }else
+    return ERROR;
 }
-/*TODO*/
-/*
-void game_actions_attack(Game *game){
-  if( player_get_location(game_get_player(game)) == character_get_location(game_get_character(game)) ){
 
-    character_set_health(game_get_character(game)) -= 
+Status game_actions_attack(Game *game){
+  Player* player = game_get_player(game);
+  Space *current_space = game_get_space(game, player_get_location(player));
+  Character* character = game_get_character(game, space_get_character_id(current_space));
+  int num;
+
+  if( !character )
+    return ERROR;
+
+  if( (player_get_location(player) == character_get_location(character)) && !(character_get_friendly( character )) ){
+    num = rand() % 10;
+    if( num < 5 )
+      player_set_health(player, player_get_health(player) - 1);
+    else
+      character_set_health(character, character_get_health(character) - 1);
   }
+
+  if( player_get_health(player) == 0 ){
+    printf("You died!\n");
+    game_set_finished(game, TRUE);
+  }
+  
+  if( character_get_health(character) == 0 ){
+    printf("You killed the spider!\n");
+    game_remove_character(game, character_get_id(character));
+  }
+  return OK;
 }
-*/
+
+Status game_actions_chat(Game *game){
+  Player* player = game_get_player(game);
+  Space *current_space = game_get_space(game, player_get_location(player));
+  Character* character = game_get_character(game, space_get_character_id(current_space));
+
+  if( (player_get_location(player) == character_get_location(character)) && (character_get_friendly( character )) ){
+    return OK;
+  }
+
+  return ERROR;
+}

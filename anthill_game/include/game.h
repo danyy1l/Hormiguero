@@ -114,6 +114,23 @@ Object* game_get_object(Game *game, Id id);
 Status game_add_character(Game* game, Character* character);
 
 /**
+ * @brief Reduce el numero de personajes en 1 de la partida
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param character_id ID del personaje a destruir
+ * @return OK en caso de exito, ERROR en caso contrario 
+ */
+Status game_remove_character(Game *game, Id character_id);
+
+/**
+ * @brief Devuelve el numero de personajes en la partida
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @return INT con numero de personajes vivos en la partida
+ */
+int game_get_n_characters(Game* game);
+
+/**
  * @brief Obtiene el puntero de un personaje con cierto id de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game

@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "../include/player.h"
 #include "../include/command.h"
@@ -27,6 +28,8 @@ void game_loop_cleanup(Game *game, Graphic_engine *gengine);
 int main(int argc, char *argv[]) {
   Game *game = NULL;
   Graphic_engine *gengine;
+
+  srand(time(NULL));
 
   if (argc < 2) {
     fprintf(stderr, "Use: %s <game_data_file>\n", argv[0]);

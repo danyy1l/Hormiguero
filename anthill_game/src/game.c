@@ -64,10 +64,10 @@ Status game_destroy(Game *game) {
     space_destroy(game->spaces[i]);
   }
 
-  for(i=0; i<OBJECTS_NUM; i++)
+  for(i=0; i<game->n_objects; i++)
     object_destroy(game->objects[i]);
 
-  for(i=0; i<CHARACTERS_NUM; i++)
+  for(i=0; i<game->n_characters; i++)
     character_destroy(game->characters[i]);
 
   player_destroy(game->player);
@@ -133,17 +133,34 @@ Status game_add_character(Game *game, Character* character){
   return OK;
 }
 
+Status game_remove_character(Game *game, Id character_id){
+  if( !game )
+    return ERROR;
+
+  character_destroy(game_get_character(game, character_id));
+  space_set_character( game_get_space(game, player_get_location(game_get_player(game))), NO_ID );
+  game->n_characters--;
+  return OK;
+}
+
 Character* game_get_character(Game *game, Id id){
   int i;
   if( !game )
-    return NULL;
-
+  return NULL;
+  
   for(i=0; i<CHARACTERS_NUM; i++){
     if( character_get_id(game->characters[i]) == id )
-      return game->characters[i];
+    return game->characters[i];
   }
-
+  
   return NULL;
+}
+
+int game_get_n_characters(Game* game){
+  if( !game )
+    return -1;
+
+  return game->n_characters;
 }
 
 Space *game_get_space(Game *game, Id id) {

@@ -30,7 +30,7 @@ Status game_actions_update(Game *game, Command *cmd);
  * @param game Estructura de la partida actual
  * No hace nada
  */
-void game_actions_unknown(Game *game);
+Status game_actions_unknown(Game *game);
 
 /**
  * @brief Realiza la accion al recibir un commando "QUIT"
@@ -46,7 +46,7 @@ void game_actions_quit(Game *game);
  * @param game Estructura de la partida actual
  * Mueve al jugador al sur en caso de que se puede
  */
-void game_actions_north(Game *game);
+Status game_actions_north(Game *game);
 
 /**
  * @brief Realiza la accion al recibir un commando "SOUTH"
@@ -54,7 +54,7 @@ void game_actions_north(Game *game);
  * @param game Estructura de la partida actual
  * Mueve al jugador al sur en caso de que sea posible
  */
-void game_actions_south(Game *game);
+Status game_actions_south(Game *game);
 
 /**
  * @brief Realiza la accion al recibir un commando "EAST"
@@ -62,7 +62,7 @@ void game_actions_south(Game *game);
  * @param game Estructura de la partida actual
  * Se mueve hacia el este en caso de que sea posible
  */
-void game_actions_east(Game *game);
+Status game_actions_east(Game *game);
 
 /**
  * @brief Realiza la accion al recibir un commando "WEST"
@@ -70,7 +70,7 @@ void game_actions_east(Game *game);
  * @param game Estructura de la partida actual
  * Se mueve hacia el oeste en caso posible
  */
-void game_actions_west(Game *game);
+Status game_actions_west(Game *game);
 
 /**
  * @brief Realiza la accion al recibir un commando "TAKE"
@@ -78,7 +78,7 @@ void game_actions_west(Game *game);
  * @param game Estructura de la partida actual
  * Recibe el objeto de la casilla del jugador y lo lleva consigo hasta recibir un DROP
  */
-void game_actions_take(Game *game);
+Status game_actions_take(Game *game, Command* command);
 
 /**
  * @brief Realiza la accion al recibir un commando "DROP"
@@ -86,7 +86,7 @@ void game_actions_take(Game *game);
  * @param game Estructura de la partida actual
  * Suelta el objeto del inventario del jugador en caso de haberlo
  */
-void game_actions_drop(Game *game);
+Status game_actions_drop(Game *game);
 
 /**
  * @brief Realiza la accion al recibir un commando "ATTACK"
@@ -94,14 +94,14 @@ void game_actions_drop(Game *game);
  * @param game Estructura de la partida actual
  * Ataca al personaje que haya en la misma casilla
  */
-void game_actions_attack(Game *game);
+Status game_actions_attack(Game *game);
 
 /**
  * @brief Realiza la accion al recibir un commando "CHAT"
  * @author Danyyil Shykerynets
  * @param game Estructura de la partida actual
- * Recibe el mensaje del personaje de la casilla en la que nos encontremos, en caso de que lo haya
+ * Imprime el mensaje del personaje de la casilla en la que nos encontremos, en caso de que lo haya
  */
-void game_actions_chat(Game *game);
+Status game_actions_chat(Game *game);
 
 #endif

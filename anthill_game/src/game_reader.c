@@ -159,7 +159,6 @@ Status game_load_characters(Game *game, char *filename){
       strcpy(message, toks);
       toks = strtok(NULL, "|");
       location = atol(toks);
-
   #ifndef DEBUG
       printf("Leido: %ld|%s|%s|%d|%d|%s|%ld\n", id, name, gdesc, health, friendly, message, location);
   #endif
@@ -210,6 +209,7 @@ Game* game_create_from_file(char *filename) {
   printf("Characters loaded\n");  
   /* The player is located in the first space */
   player_set_location(game_get_player(game), game_get_space_id_at(game, 0));
+  player_set_health(game_get_player(game), 10);
 
   return game;
 }

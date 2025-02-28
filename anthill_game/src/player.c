@@ -33,6 +33,7 @@ Player *player_create(){
   output->location = NO_ID;
   output->name[0] = '\0';
   output->object = NULL;
+  output->health = 1;
 
   return output;
 }

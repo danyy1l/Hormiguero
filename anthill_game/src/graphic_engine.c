@@ -69,12 +69,11 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 }
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
-  Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, object_location = NO_ID, player_location = NO_ID, character_location = NO_ID;
+  Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, player_location = NO_ID;
   Space *space_act = NULL;
   Object* object;
   Character* character;
-  char objs[OBJ_NUM], str[WORD_SIZE];
-  char object_taken = ' ';
+  char objs[OBJ_NUM], str[WORD_SIZE], object_taken = ' ';
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
   int i, id_count, dir_check = 0;
@@ -519,6 +518,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   if( (player_location = player_get_location(game_get_player(game))) != NO_ID) {
     sprintf(str, "  Player location: %d", (int)player_location);
     screen_area_puts(ge->descript, str);
+    sprintf(str, "  Player health: %d", player_get_health(game_get_player(game)));
+    screen_area_puts(ge->descript, str);
     screen_area_puts(ge->descript, " ");
   }
 
@@ -526,19 +527,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   for(i=0; i<OBJECTS_NUM; i++){
     id_count += 10;
     object = game_get_object(game, id_count);
-    if( (object_location = object_get_location(object)) != NO_ID){
-      sprintf(str, "  %s location: %d", object_get_name(object), (int)object_location);
+    if( object ){
+      sprintf(str, "  %s location: %d", object_get_name(object), (int)object_get_location(object));
       screen_area_puts(ge->descript, str);
     }
   }
   screen_area_puts(ge->descript, " ");
 
   id_count = 0;
-  for(i=0; i<CHARACTERS_NUM; i++){
+  for(i=0; i<game_get_n_characters(game); i++){
     id_count += 100;
     character = game_get_character(game, id_count);
-    if( (character_location = character_get_location(character)) != NO_ID){
-      sprintf(str, "  %s: %d", character_get_gdesc(character), (int)character_location);
+    if( character ){
+      sprintf(str, "  %s: %d | %d", character_get_gdesc(character), (int)character_get_location(character), character_get_health(character));
       screen_area_puts(ge->descript, str);
     }
   }
@@ -565,6 +566,10 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   last_cmd = command_get_code(game_get_last_command(game));
   sprintf(str, " %s (%s)", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
   screen_area_puts(ge->feedback, str);
+  if( last_cmd == CHAT ){
+    sprintf(str, " %s: %s",character_get_name(game_get_character(game, space_get_character_id(space_act))), character_get_message( game_get_character(game, space_get_character_id(space_act)) ));
+    screen_area_puts(ge->feedback, str);
+  }
 
   /* Dump to the terminal */
   screen_paint();
