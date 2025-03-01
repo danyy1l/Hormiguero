@@ -14,8 +14,8 @@
 #include "../include/set.h"
 
 struct _Set{
-    Id ids[MAX_IDS];     /*!< Array de ids de los objetos del conjunto */
-    int n_ids;          /*!< El número de objetos del conjunto */
+  Id ids[MAX_IDS];     /*!< Array de ids de los objetos del conjunto */
+  int n_ids;          /*!< El número de objetos del conjunto */
 };
 
 Set *set_create(){
@@ -44,7 +44,6 @@ Status set_destroy(Set* set){
     return ERROR;
   }
   free(set);
-
   set=NULL;
 
   return OK;
@@ -56,6 +55,11 @@ Status set_add_value(Set *set, Id id){
   if (!set||id==NO_ID){
     return ERROR;
   }
+
+  /*
+  set->ids[ set->n_ids ] = id;
+  set->n_ids++;
+  */
 
   for(i=0;i<MAX_IDS;i++){
     if(set->ids[i]==NO_ID){
