@@ -4,8 +4,8 @@
  * @file space.h
  * @author Danyyil Shykerynets
  * @author Anthony Eduardo Alvarado Carbajal
- * @version 7
- * @date 03-02-2025
+ * @version 8
+ * @date 24-02-2025
  * @copyright GNU Public License
  */
 
