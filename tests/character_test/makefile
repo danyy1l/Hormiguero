@@ -14,7 +14,7 @@ character.o: character.c
 	$(CC) $(CFLAGS) character.c
 
 run:
-	$(MAKE) && valgrind --leak-check=full --track-origins=yes ./$(EXE)
+	$(MAKE); valgrind --leak-check=full ./$(EXE)
 
 clean:
 	rm -rf *.o $(EXE)
