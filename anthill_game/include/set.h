@@ -34,6 +34,22 @@ Set *set_create();
 Status set_destroy(Set *set);
 
 /**
+ * @brief Obtiene el numero de ids del set
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param set Un puntero a Set
+ * @return el número de ids
+ */
+int set_get_nids(Set* set);
+
+/**
+ * @brief Establece el numero de ids del set
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param set Un puntero a Set
+ * @return OK, si todo va bien, o ERROR si existe algún fallo
+ */
+Status set_set_nids(Set* set, int n);
+
+/**
  * @brief Añade el valor del un Set
  * @author Anthony Eduardo Alvarado Carbajal
  * @param set un puntero a Set
