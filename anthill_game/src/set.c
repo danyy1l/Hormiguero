@@ -49,6 +49,23 @@ Status set_destroy(Set* set){
   return OK;
 }
 
+int set_get_nids(Set* set){
+  if (!set){
+    return -1;
+  }
+
+  return set->n_ids;
+}
+
+Status set_set_nids(Set* set, int n){
+  if (!set){
+    return ERROR;
+  }
+
+  set->n_ids=n;
+  return OK;
+}
+
 Status set_add_value(Set *set, Id id){
 
   int i;
