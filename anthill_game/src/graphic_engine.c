@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "../include/command.h"
 #include "../include/game_reader.h"
@@ -73,12 +74,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   Space *space_act = NULL;
   Object* object;
   Character* character;
-  char objs[OBJ_NUM], str[WORD_SIZE], object_taken = ' ';
   CommandCode last_cmd = UNKNOWN;
+  char action_return[STATUS_SIZE];
+  char objs[OBJ_NUM], str[WORD_SIZE], object_taken = ' ';
   extern char *cmd_to_str[N_CMD][N_CMDT];
   int i, id_count, dir_check = 0;
-
-  int object_take;
 
   /*Objects array => [ Ply Pos, N, E, S, W ]  */
   for(i=0; i<OBJ_NUM; i++){
@@ -114,7 +114,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     }
 
     /*object_taken represents the object close to the player indicating that it is in their inventory*/
-    game_object_check(objs, game);
+    /*TODO Pintar objetos
+    game_object_check(objs, game);*/
     if( object_get_id(player_get_object(game_get_player(game))) != NO_ID )
       object_taken = '*';
     else
@@ -539,17 +540,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     id_count += 100;
     character = game_get_character(game, id_count);
     if( character ){
-      sprintf(str, "  %s: %d | %d", character_get_gdesc(character), (int)character_get_location(character), character_get_health(character));
+      sprintf(str, "  %s: %d", character_get_gdesc(character), (int)character_get_location(character));
       screen_area_puts(ge->descript, str);
+      sprintf(str, "  HP: %d", character_get_health(character));
+      screen_area_puts(ge->descript, str);
+      screen_area_puts(ge->descript, " ");
     }
   }
 
   if( player_get_object(game_get_player(game) ))
-    object_take = 1;
+    sprintf(str, "  Player has object");
   else
-    object_take = 0;
+  sprintf(str, "  Player has no object");
 
-  sprintf(str, "  Have object: %d", object_take);
   screen_area_puts(ge->descript, str);
 
   /* Paint in the banner area */
@@ -564,7 +567,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint in the feedback area */
   last_cmd = command_get_code(game_get_last_command(game));
-  sprintf(str, " %s (%s)", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
+  if( command_get_output(game_get_last_command(game)) == OK )
+    strcpy(action_return,"Ok");
+  else
+    strcpy(action_return,"Error");
+  sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
   screen_area_puts(ge->feedback, str);
   if( last_cmd == CHAT && character_get_location(game_get_character(game, space_get_character_id(space_act))) == player_get_location(game_get_player(game))){
     sprintf(str, " %s: %s",character_get_name(game_get_character(game, space_get_character_id(space_act))), character_get_message( game_get_character(game, space_get_character_id(space_act)) ));

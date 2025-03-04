@@ -107,7 +107,7 @@ Status game_load_objects(Game *game, char *filename){
       object_set_name(object, name);
       object_set_location(object, location);
       game_add_object(game, object);
-      space_set_object(game_get_space(game, location), object);
+      space_add_object(game_get_space(game, location), id);
     }
   }
   
@@ -214,8 +214,10 @@ Game* game_create_from_file(char *filename) {
   return game;
 }
 
-char *game_object_check(char *objs, Game *game){
+/*char *game_object_check(char *objs, Game *game){
   
+  TODO PINTAR OBJETOS
+
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID;
   Space *space_act = NULL;
   
@@ -226,7 +228,7 @@ char *game_object_check(char *objs, Game *game){
     id_east = space_get_east(space_act);
     id_west = space_get_west(space_act);
     
-    if (space_get_object(space_act) != NULL && object_get_id(player_get_object(game_get_player(game))) == NO_ID)
+    if (space_find_object(space_act) != NULL && object_get_id(player_get_object(game_get_player(game))) == NO_ID)
     objs[0] = '*';
     else
     objs[0] = ' ';
@@ -257,4 +259,4 @@ char *game_object_check(char *objs, Game *game){
   }
 
   return objs;
-}
+}*/

@@ -13,6 +13,7 @@
 
 #define WORD_SIZE 1000
 #define GDESC_SIZE 6
+#define STATUS_SIZE 6
 #define NO_ID -1
 
 #define CHARACTERS_NUM 2

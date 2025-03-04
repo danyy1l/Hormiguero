@@ -105,6 +105,15 @@ Status game_add_object(Game* game, Object* object);
 Object* game_get_object(Game *game, Id id);
 
 /**
+ * @brief Obtiene el puntero de un objeto con cierto nombre de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param name Nombre del objeto que se quiere obtener
+ * @return Puntero a la estructura objeto de la partida "game" 
+ */
+Object* game_get_object_by_name(Game *game, char* name);
+
+/**
  * @brief Establece un nuevo personaje en el array de personajes de la partida
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game

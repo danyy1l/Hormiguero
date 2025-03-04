@@ -38,7 +38,8 @@ char *cmd_to_str[N_CMD][N_CMDT] = {
  */
 struct _Command {
   CommandCode code;               /*!< Name of the command */
-  char object[WORD_SIZE];
+  Status output;                  /*!< Return of executed command, either OK or ERROR*/
+  char arguments[WORD_SIZE];         /*!< Name of the object desired to take*/
 };
 
 /** space_create allocates memory for a new space
@@ -54,6 +55,8 @@ Command* command_create() {
 
   /* Initialization of an empty command*/
   newCommand->code = NO_CMD;
+  newCommand->arguments[0] = '\0';
+  newCommand->output = ERROR;
 
   return newCommand;
 }
@@ -107,13 +110,38 @@ Status command_get_user_input(Command* command) {
         i++;
       }
     }
-    if( cmd == TAKE ){
-      token = strtok(input, " ");
-      strcpy(command->object, token);
+    
+    if( (token = strtok(NULL, " \n")) ){ 
+      strcpy(command->arguments, token);
     }
+    
     return command_set_code(command, cmd);
   }
   else
     return command_set_code(command, QUIT);
-  
+}
+
+/********************************************************* */
+
+Status command_get_output(Command *command){
+  if(!command)
+    return ERROR;
+
+  return command->output;
+}
+
+Status command_set_output(Command *command, Status new_output){
+  if(!command)
+    return ERROR;
+
+  command->output = new_output;
+
+  return OK;
+}
+
+char* command_get_arguments(Command *command){
+  if( !command )
+    return NULL;
+
+  return command->arguments;
 }

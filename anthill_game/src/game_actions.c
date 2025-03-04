@@ -37,35 +37,59 @@ Status game_actions_update(Game *game, Command *command) {
       break;
 
     case NORTH:
-      game_actions_north(game);
+      if( game_actions_north(game) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
       break;
 
     case SOUTH:
-      game_actions_south(game);
+      if( game_actions_south(game) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
       break;
 
     case EAST:
-      game_actions_east(game);
+      if( game_actions_east(game) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
       break;
 
     case WEST:
-      game_actions_west(game);
+      if( game_actions_west(game) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
       break;
 
     case TAKE:
-      game_actions_take(game, command);
+      if( game_actions_take(game, command) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
       break;
 
     case DROP:
-      game_actions_drop(game);
+      if( game_actions_drop(game) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
       break;
 
     case ATTACK:
-      game_actions_attack(game);
+      if( game_actions_attack(game) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
       break;
 
     case CHAT:
-      game_actions_chat(game);
+      if( game_actions_chat(game) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
       break;
 
     default:
@@ -163,17 +187,17 @@ Status game_actions_west(Game *game) {
 }
 
 Status game_actions_take(Game *game, Command *command){
-  Space *current_space = game_get_space(game, player_get_location(game_get_player(game)));
-  /*Object* object;*/
+  Object* object = game_get_object_by_name(game, command_get_arguments(command));
 
   if( !command )
     return ERROR;
 
-  if( player_get_object(game_get_player(game)) == NULL && space_get_object(current_space) ){
-    player_set_object(game_get_player(game), space_get_object(current_space));
+  if( player_get_object(game_get_player(game)) == NULL && object_get_location(object) == player_get_location(game_get_player(game)) ){
+    player_set_object(game_get_player(game), object);
     return OK;
-  }else
-    return ERROR;
+  }
+  
+  return ERROR;
 }
 
 
@@ -200,7 +224,8 @@ Status game_actions_attack(Game *game){
       player_set_health(player, player_get_health(player) - 1);
     else
       character_set_health(character, character_get_health(character) - 1);
-  }
+  }else
+    return ERROR;
 
   if( player_get_health(player) == 0 ){
     printf("You died!\n");

@@ -76,5 +76,30 @@ CommandCode command_get_code(Command* command);
 */
 Status command_get_user_input(Command* command);
 
+/**
+  * @brief Obtiene el output del ultimo comando
+  * @author Danyyil Shykerynets
+  * @param command un puntero a Command
+  * @return OK si el comando se ejecuto o ERROR si no
+*/
+Status command_get_output(Command *command);
+
+/**
+  * @brief Cambia el output del ultimo comando
+  * @author Danyyil Shykerynets
+  * @param command un puntero a Command
+  * @return OK si se ha cambiado con exito o ERROR si no
+*/
+Status command_set_output(Command *command, Status new_output);
+
+/**
+  * @brief Obtiene el el argumento adicional del ultimo comando
+  * @author Danyyil Shykerynets
+  * @param command un puntero a Command
+  * @return un string con los argumentos que se hayan añadido al comando
+  * Ejemplo: si el comando es take grain, devuelve grain
+*/
+char* command_get_arguments(Command *command);
+
 #endif
 

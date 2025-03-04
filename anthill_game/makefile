@@ -9,9 +9,9 @@ CLIB=-lscreen -L./lib/
 # $^ son todos los archivos que se encuentran a la derecha de ':' (dependencias)
 ########################################################################
 
-all: anthill
+all: $(EXE) clear
 
-anthill: player.o object.o space.o command.o character.o set.o game_actions.o game_reader.o game.o graphic_engine.o game_loop.o
+$(EXE): player.o object.o space.o command.o character.o set.o game_actions.o game_reader.o game.o graphic_engine.o game_loop.o
 	$(CC) -o $@ $^ $(CLIB)
 
 player.o: src/player.c
@@ -47,6 +47,11 @@ graphic_engine.o: src/graphic_engine.c
 game_loop.o: src/game_loop.c
 	$(CC) $(CFLAGS) $<
 
+#CLEAN .o
+
+clear:
+	rm -f *.o
+
 #CLEAN .o AND EXE
 clean: 
 	rm -f *.o $(EXE) 
@@ -57,4 +62,4 @@ run:
 
 #RUN WITH VALGRIND TO CHECK MEMLEAKS
 runv:
-	@$(MAKE) && valgrind --leak-check=full ./$(EXE) $(EXE).dat
+	@$(MAKE) && valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(EXE) $(EXE).dat
