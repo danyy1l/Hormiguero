@@ -544,7 +544,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       screen_area_puts(ge->descript, str);
       sprintf(str, "  HP: %d", character_get_health(character));
       screen_area_puts(ge->descript, str);
-      screen_area_puts(ge->descript, " ");
     }
   }
 

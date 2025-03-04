@@ -39,7 +39,7 @@ char *cmd_to_str[N_CMD][N_CMDT] = {
 struct _Command {
   CommandCode code;               /*!< Name of the command */
   Status output;                  /*!< Return of executed command, either OK or ERROR*/
-  char arguments[WORD_SIZE];         /*!< Name of the object desired to take*/
+  char arguments[WORD_SIZE];      /*!< Name of the object desired to take*/
 };
 
 /** space_create allocates memory for a new space
@@ -120,8 +120,6 @@ Status command_get_user_input(Command* command) {
   else
     return command_set_code(command, QUIT);
 }
-
-/********************************************************* */
 
 Status command_get_output(Command *command){
   if(!command)
