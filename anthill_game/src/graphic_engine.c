@@ -25,9 +25,9 @@
 #define WIDTH_MAP 48
 #define WIDTH_DES 29
 #define WIDTH_BAN 23
-#define HEIGHT_MAP 13
+#define HEIGHT_MAP 29
 #define HEIGHT_BAN 1
-#define HEIGHT_HLP 2
+#define HEIGHT_HLP 3
 #define HEIGHT_FDB 3
 
 struct _Graphic_engine {
@@ -517,32 +517,36 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   /* Paint in the description area */
   screen_area_clear(ge->descript);
   if( (player_location = player_get_location(game_get_player(game))) != NO_ID) {
-    sprintf(str, "  Player location: %d", (int)player_location);
+    sprintf(str, "  Player: ");
     screen_area_puts(ge->descript, str);
-    sprintf(str, "  Player health: %d", player_get_health(game_get_player(game)));
+    sprintf(str, "    Location: %d", (int)player_location);
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "    Health: %d", player_get_health(game_get_player(game)));
     screen_area_puts(ge->descript, str);
     screen_area_puts(ge->descript, " ");
   }
 
+  sprintf(str, "  Objects: ");
+  screen_area_puts(ge->descript, str);
   id_count = 0;
   for(i=0; i<OBJECTS_NUM; i++){
     id_count += 10;
     object = game_get_object(game, id_count);
     if( object ){
-      sprintf(str, "  %s location: %d", object_get_name(object), (int)object_get_location(object));
+      sprintf(str, "    %s: %d", object_get_name(object), (int)object_get_location(object));
       screen_area_puts(ge->descript, str);
     }
   }
   screen_area_puts(ge->descript, " ");
 
+  sprintf(str, "  Characters: ");
+  screen_area_puts(ge->descript, str);
   id_count = 0;
   for(i=0; i<game_get_n_characters(game); i++){
     id_count += 100;
     character = game_get_character(game, id_count);
     if( character ){
-      sprintf(str, "  %s: %d", character_get_gdesc(character), (int)character_get_location(character));
-      screen_area_puts(ge->descript, str);
-      sprintf(str, "  HP: %d", character_get_health(character));
+      sprintf(str, "    %s: %d  (%d HP)", character_get_gdesc(character), (int)character_get_location(character), character_get_health(character));
       screen_area_puts(ge->descript, str);
     }
   }
@@ -561,7 +565,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   screen_area_clear(ge->help);
   sprintf(str, " The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, " North(n), South(s), East(e), West(w), Take(t), Drop(d), Quit(q)");
+  sprintf(str, " North(n), South(s), East(e), West(w), Take(t), Drop(d), Attack(a), ");
+  screen_area_puts(ge->help, str);
+  sprintf(str, " Chat(c), Quit(q)");
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
