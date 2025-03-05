@@ -31,7 +31,7 @@ struct _Space {
   Id east;                  /*!< Id of the space at the east */
   Id west;                  /*!< Id of the space at the west */
   Id character_id;          /*!< Id of the character in the space, NO_ID if no characters*/
-  Set *objects;           /*!< Whether the space has an object or not (borrar el comentario)*/
+  Set *objects;             /*!< Conjunto de objetos que hay en el espacio*/
 };
 
 /** space_create allocates memory for a new space
