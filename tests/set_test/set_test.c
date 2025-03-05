@@ -11,8 +11,9 @@
 #include <stdlib.h>
 #include "test.h"
 #include "set.h"
+#include "set_test.h"
 
-#define MAX_TESTS 30
+#define MAX_TESTS 17
 
  /** 
   * @brief Main function for SET unit tests. 
@@ -28,7 +29,7 @@ int main(int argc, char** argv){
   int all = 1;
 
   if (argc < 2) {
-    printf("Running all test for module Space:\n");
+    printf("Running all test for module Set:\n");
   } else {
     test = atoi(argv[1]);
     all = 0;
@@ -74,14 +75,14 @@ int main(int argc, char** argv){
   void test2_set_create(){
     Set *s;
     s=set_create();
-    PRINT_TEST_RESULT(s);
+    PRINT_TEST_RESULT(s != NULL);
     set_destroy(s);
   }
 
   void test1_set_get_nids(){
     Set *s;
     s=set_create();
-    PRINT_TEST_RESULT(set_get_nids(s)==1);
+    PRINT_TEST_RESULT(set_get_nids(s)==0);
     set_destroy(s);
   }
 
@@ -123,6 +124,7 @@ int main(int argc, char** argv){
   void test1_set_del_value(){
     Set *s;
     s=set_create();
+    set_add_value(s,20);
     PRINT_TEST_RESULT(set_del_value(s,20)==OK);
     set_destroy(s);
   }
@@ -138,34 +140,35 @@ int main(int argc, char** argv){
     PRINT_TEST_RESULT(set_del_value(s,NO_ID)==ERROR);
     set_destroy(s);
   }
-  test1_set_find_object(){
+  void test1_set_find_object(){
     Set *s;
     s=set_create();
-    PRINT_TEST_RESULT(set_find_object(s,10)==OK);
+    set_add_value(s, 10);
+    PRINT_TEST_RESULT(set_find_object(s,10)==TRUE);
     set_destroy(s);
   }
   
   void test2_set_find_object(){
     Set *s=NULL;
-    PRINT_TEST_RESULT(set_find_object(s,10)==ERROR);
+    PRINT_TEST_RESULT(set_find_object(s,10)==FALSE);
   }
 
   void test3_set_find_object(){
     Set *s;
     s=set_create();
-    PRINT_TEST_RESULT(set_find_object(s,NO_ID)==ERROR);
+    PRINT_TEST_RESULT(set_find_object(s,NO_ID)==FALSE);
     set_destroy(s);
   }
 
   void test1_set_id_object(){
     Set *s;
     s=set_create();
-    PRINT_TEST_RESULT(set_id_object(s)==OK);
+    PRINT_TEST_RESULT(set_id_object(s)!=NULL);
     set_destroy(s);
   }
 
   void test2_set_id_object(){
     Set *s=NULL;
-    PRINT_TEST_RESULT(set_id_object(s)==ERROR);
+    PRINT_TEST_RESULT(set_id_object(s)==NULL);
   }
  

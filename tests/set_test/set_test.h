@@ -57,39 +57,39 @@ void test2_set_set_nids();
  * @pre A number ID
  * @post Output==OK
  */
-void test1_add_value();
+void test1_set_add_value();
 /** 
  * @test Test the value addition
  * @pre A pointer to set = NULL
  * @post Output==ERROR
 */
-void test2_add_value();
+void test2_set_add_value();
 
 /** 
  * @test Test the value addition
  * @pre A number ID = NO_ID
  * @post Output==ERROR
 */
-void test3_add_value();
+void test3_set_add_value();
 /** 
  * @test Test the value removal
  * @pre A pointer to set 
  * @pre A number ID
  * @post Output==OK
 */
-void test1_del_Value();
+void test1_set_del_value();
 /** 
  * @test Test the value removal
  * @pre A pointer to set = NULL 
  * @post Output==ERROR
 */
-void test2_del_value();
+void test2_set_del_value();
 /** 
  * @test Test the value removal
  * @pre A number ID = NO_ID
  * @post Output==ERROR
 */
-void test3_del_value();
+void test3_set_del_value();
 
 /**
  * @test It tests the search for the object
@@ -102,14 +102,14 @@ void test1_set_find_object();
 /**
  * @test It tests the search for the object
  * @pre A pointer to set = NULL
- * @post Output==ERROR
+ * @post Output==FALSE
  */
 void test2_set_find_object();
 
 /**
  * @test It tests the search for the object
  * @pre A number ID = NO_ID
- * @post Output==ERROR
+ * @post Output==FALSE
  */
 void test3_set_find_object();
 
@@ -117,17 +117,15 @@ void test3_set_find_object();
  * @test Test the id setting
  * @pre A pointer to set
  * @pre A pointer to set
- * @post Output==TRUE
+ * @post Output != NULL
  */
 void test1_set_id_object();
 
 /**
- * @test It tests the search for the object
+ * @test Test the id setting
  * @pre A pointer to set = NULL
- * @post Output==ERROR
+ * @post Output==NULL
  */
 void test2_set_id_object();
 
-
-
- #endif
+#endif
