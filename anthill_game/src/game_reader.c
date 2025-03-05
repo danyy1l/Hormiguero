@@ -22,10 +22,12 @@ Status game_load_spaces(Game *game, char *filename) {
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
+  char gdesc[GDESC_MAX][GDESC_SIZE];
   char *toks = NULL;
   Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
   Space *space = NULL;
   Status status = OK;
+  int i;
 
   if (!filename) {
     return ERROR;
@@ -50,6 +52,10 @@ Status game_load_spaces(Game *game, char *filename) {
       south = atol(toks);
       toks = strtok(NULL, "|");
       west = atol(toks);
+      for(i=0; i<GDESC_MAX;i++){
+        toks = strtok(NULL; "|");
+        strcpy(gdesc[i], toks);
+      }
 #ifdef DEBUG
 printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
 #endif
@@ -60,6 +66,7 @@ printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
         space_set_east(space, east);
         space_set_south(space, south);
         space_set_west(space, west);
+        space_set_gdesc(space, gdesc);
         game_add_space(game, space);
       }
     }

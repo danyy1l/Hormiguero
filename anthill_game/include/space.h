@@ -205,4 +205,10 @@ Id space_get_character_id(Space *space);
  */
 Status space_print(Space* space);
 
+Status space_set_gdesc(Space* space, char** gdesc);
+
+char** space_get_gdesc(Space* space);
+
+Status space_gdesc_print(Space* space);
+
 #endif

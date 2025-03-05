@@ -24,14 +24,15 @@
  * This struct stores all the information of a space.
  */
 struct _Space { 
-  Id id;                    /*!< Id number of the space, it must be unique */
-  char name[WORD_SIZE + 1]; /*!< Name of the space */
-  Id north;                 /*!< Id of the space at the north */
-  Id south;                 /*!< Id of the space at the south */
-  Id east;                  /*!< Id of the space at the east */
-  Id west;                  /*!< Id of the space at the west */
-  Id character_id;          /*!< Id of the character in the space, NO_ID if no characters*/
-  Set *objects;             /*!< Conjunto de objetos que hay en el espacio*/
+  Id id;                              /*!< Id number of the space, it must be unique */
+  char name[WORD_SIZE + 1];           /*!< Name of the space */
+  char gdesc[GDESC_MAX][GDESC_SIZE];  /*!< Graphic description of the array*/
+  Id north;                           /*!< Id of the space at the north */
+  Id south;                           /*!< Id of the space at the south */
+  Id east;                            /*!< Id of the space at the east */
+  Id west;                            /*!< Id of the space at the west */
+  Id character_id;                    /*!< Id of the character in the space, NO_ID if no characters*/
+  Set *objects;                       /*!< Conjunto de objetos que hay en el espacio*/
 };
 
 /** space_create allocates memory for a new space
@@ -265,3 +266,27 @@ Status space_print(Space* space) {
   return OK;
 }
 
+Status space_set_gdesc(Space* space, char** gdesc){
+  int i;
+
+  if( !space || !gdesc)
+    return ERROR;
+
+  for(i=0; i<GDESC_MAX; i++){
+    strcpy(space->gdesc[i], gdesc[i]);
+  }
+
+  return OK;
+}
+
+char** space_get_gdesc(Space* space){
+  if( !space )
+    return NULL;
+
+  return space->gdesc;
+}
+
+Status space_gdesc_print(Space* space){
+  printf("Hi");
+  return OK;
+}
