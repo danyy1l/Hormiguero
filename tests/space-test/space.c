@@ -283,7 +283,12 @@ Status space_set_gdesc(Space *space, char* name,int pos){
    } else {
      fprintf(stdout, "---> No character in the space.\n");
    }
-   
+  
+    /*5. Print gdesc */
+   fprintf(stdout,"---> Graphical description");
+   for(i=0;i<WORD_SIZE_1;i++){
+    fprintf(stdout,"%s\n",space_get_gdesc(space,i));
+   }
    return OK;
  }
  
