@@ -13,8 +13,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define WORD_SIZE_1 5
-#define WORD_SIZE_2 9
 
 /*Eliminar funciones object y susituir por otras funciones set ya que el campo tipo object ya no existe  */
 
@@ -32,7 +30,7 @@ struct _Space {
   Id west;                  /*!< Id of the space at the west */
   Id character_id;          /*!< Id of the character in the space, NO_ID if no characters*/
   Set *objects;             /*!< Array of objects*/
-  char gdesc[WORD_SIZE_1][WORD_SIZE_2];
+  char gdesc[GDESC_MAX][GDESC_SIZE];
 };
 
 /** space_create allocates memory for a new space
@@ -63,7 +61,7 @@ int i;
     free(newSpace);
     return NULL;
   }
-  for(i=0;i<WORD_SIZE_1;i++){
+  for(i=0;i<GDESC_MAX;i++){
   strcpy(newSpace->gdesc[i],"");
 }
 
@@ -234,6 +232,7 @@ return OK;
 
 Status space_print(Space* space) {
   Id idaux = NO_ID;
+  int i;
 
   /* Error Control */
   if (!space) {
@@ -285,7 +284,7 @@ Status space_print(Space* space) {
 
   /*5. Print gdesc */
   fprintf(stdout,"---> Graphical description");
-  for(i=0;i<WORD_SIZE_1;i++){
+  for(i=0;i<GDESC_MAX;i++){
   fprintf(stdout,"%s\n",space_get_gdesc(space,i));
   }
   return OK;

@@ -2,9 +2,9 @@
  * @brief It defines common types for the whole project
  *
  * @file types.h
- * @author Profesores PPROG
- * @version 0.0
- * @date 27-01-2025
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @version 7
+ * @date 04-02-2025
  * @copyright GNU Public License
  */
 
@@ -12,7 +12,13 @@
 #define TYPES_H
 
 #define WORD_SIZE 1000
+#define GDESC_SIZE 10
+#define GDESC_MAX 5
+#define STATUS_SIZE 6
 #define NO_ID -1
+
+#define CHARACTERS_NUM 3
+#define OBJECTS_NUM 4
 
 typedef long Id;
 

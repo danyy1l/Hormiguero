@@ -286,7 +286,6 @@
   s = space_create(1);
   space_set_gdesc(s, "ggdesc",0);
   space_set_gdesc(s,"gdesc",1);
-  printf("%s\n%s\n", space_get_gdesc(s, 0), space_get_gdesc(s, 1));
   PRINT_TEST_RESULT(strcmp(space_get_gdesc(s,1),"gdesc")==0);
   space_destroy(s);
  }
