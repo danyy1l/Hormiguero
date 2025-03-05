@@ -33,7 +33,7 @@ Character* character_create(){
   character->id = NO_ID;
   character->health = 1;
   character->friendly = TRUE;
-  /*No hace falta inicializar los strings porque calloc inicializa a \0 todas sus entradas*/
+  strcpy(character->gdesc, "      ");
   return character;
 }
 

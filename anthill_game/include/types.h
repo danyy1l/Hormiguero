@@ -12,7 +12,7 @@
 #define TYPES_H
 
 #define WORD_SIZE 1000
-#define GDESC_SIZE 6
+#define GDESC_SIZE 7
 #define STATUS_SIZE 6
 #define NO_ID -1
 
