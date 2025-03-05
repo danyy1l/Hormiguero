@@ -54,16 +54,4 @@ Status game_load_characters(Game *game, char *filename);
  */
 Game* game_create_from_file(char *filename);
 
-/**
- * @brief Funcion que revisa si hay objetos en los alrededores del jugador
- * @author Danyyil Shykerynets
- * 
- * @param objs
- * Array con chars de los objetos en los alrededores en el orden: [PlayerLocation, N, E, S, W]
- * @param game
- * Estructura juego con las posiciones necesarias para el desarrollo
- * @return Array de chars de los objetos, ' ' si no hay, '*' si hay
- */
-char *game_object_check(char *objs, Game *game);
-
 #endif

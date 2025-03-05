@@ -233,7 +233,6 @@ Status game_actions_attack(Game *game){
   }
   
   if( character_get_health(character) == 0 ){
-    printf("You killed the spider!\n");
     game_remove_character(game, character_get_id(character));
   }
   return OK;

@@ -22,7 +22,6 @@ Status game_load_spaces(Game *game, char *filename) {
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
-  char gdesc[GDESC_MAX][GDESC_SIZE];
   char *toks = NULL;
   Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
   Space *space = NULL;
@@ -42,6 +41,10 @@ Status game_load_spaces(Game *game, char *filename) {
     if (strncmp("#s:", line, 3) == 0) {
       toks = strtok(line + 3, "|");
       id = atol(toks);
+
+      if( !(space = space_create(id)))
+        return ERROR;
+
       toks = strtok(NULL, "|");
       strcpy(name, toks);
       toks = strtok(NULL, "|");
@@ -52,23 +55,19 @@ Status game_load_spaces(Game *game, char *filename) {
       south = atol(toks);
       toks = strtok(NULL, "|");
       west = atol(toks);
-      for(i=0; i<GDESC_MAX;i++){
-        toks = strtok(NULL; "|");
-        strcpy(gdesc[i], toks);
+      for(i=0; i<GDESC_MAX; i++){
+        toks = strtok(NULL, "|");
+        space_set_gdesc(space, toks, i);
       }
 #ifdef DEBUG
 printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
 #endif
-      space = space_create(id);
-      if (space != NULL) {
-        space_set_name(space, name);
-        space_set_north(space, north);
-        space_set_east(space, east);
-        space_set_south(space, south);
-        space_set_west(space, west);
-        space_set_gdesc(space, gdesc);
-        game_add_space(game, space);
-      }
+      space_set_name(space, name);
+      space_set_north(space, north);
+      space_set_east(space, east);
+      space_set_south(space, south);
+      space_set_west(space, west);
+      game_add_space(game, space);
     }
   }
   
@@ -107,7 +106,7 @@ Status game_load_objects(Game *game, char *filename){
       strcpy(name, toks);
       toks = strtok(NULL, "|");
       location = atol(toks);
-  #ifndef DEBUG
+  #ifdef DEBUG
       printf("Leido: %ld|%s|%ld\n", id, name, location);
   #endif
       object = object_create(id);
@@ -166,17 +165,17 @@ Status game_load_characters(Game *game, char *filename){
       strcpy(message, toks);
       toks = strtok(NULL, "|");
       location = atol(toks);
-  #ifndef DEBUG
+  #ifdef DEBUG
       printf("Leido: %ld|%s|%s|%d|%d|%s|%ld\n", id, name, gdesc, health, friendly, message, location);
   #endif
       if( !(character = character_create()) ){ return ERROR; }
-      if( !character_set_id(character, id) ){ return ERROR; }
-      if( !character_set_location(character, location) ){ return ERROR; }
-      if( !character_set_name(character, name) ){ return ERROR; }
-      if( !character_set_gdesc(character, gdesc) ){ return ERROR; }
-      if( !character_set_health(character, health) ){ return ERROR; }
-      if( !character_set_friendly(character, friendly) ){ return ERROR; }
-      if( !character_set_message(character, message) ){ return ERROR; }
+      character_set_id(character, id);
+      character_set_location(character, location);
+      character_set_name(character, name);
+      character_set_gdesc(character, gdesc);
+      character_set_health(character, health);
+      character_set_friendly(character, friendly);
+      character_set_message(character, message);
 
       game_add_character(game, character);
       space_set_character(game_get_space(game, location), character_get_id(character));
@@ -194,16 +193,16 @@ Status game_load_characters(Game *game, char *filename){
 
 Game* game_create_from_file(char *filename) {
   Game* game = NULL;
-  printf("Initialized");
+  printf("Initialized\n");
   if (!(game = game_create())) {
     return ERROR;
   }
-  printf("Game created");
+  printf("Game created\n");
 
   if (game_load_spaces(game, filename) == ERROR) {
     return ERROR;
   }
-  printf("Spaces created");
+  printf("Spaces created\n");
   
   if(game_load_objects(game, filename) == ERROR){
     return ERROR;
@@ -220,50 +219,3 @@ Game* game_create_from_file(char *filename) {
 
   return game;
 }
-
-/*char *game_object_check(char *objs, Game *game){
-  
-  TODO PINTAR OBJETOS
-
-  Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID;
-  Space *space_act = NULL;
-  
-  if( (id_act = player_get_location(game_get_player(game))) != NO_ID ){
-    space_act = game_get_space(game, id_act);
-    id_north = space_get_north(space_act);
-    id_south = space_get_south(space_act);
-    id_east = space_get_east(space_act);
-    id_west = space_get_west(space_act);
-    
-    if (space_find_object(space_act) != NULL && object_get_id(player_get_object(game_get_player(game))) == NO_ID)
-    objs[0] = '*';
-    else
-    objs[0] = ' ';
-
-    if (space_get_object(game_get_space(game, id_north)) != NULL && object_get_id(player_get_object(game_get_player(game))) == NO_ID)
-      objs[1] = '*';
-    else
-      objs[1] = ' ';
-
-
-    if (space_get_object(game_get_space(game, id_south)) != NULL && object_get_id(player_get_object(game_get_player(game))) == NO_ID)
-      objs[3] = '*';
-    else
-      objs[3] = ' ';
-
-
-    if (space_get_object(game_get_space(game, id_east)) != NULL && object_get_id(player_get_object(game_get_player(game))) == NO_ID)
-      objs[2] = '*';
-    else
-      objs[2] = ' ';
-
-
-    if (space_get_object(game_get_space(game, id_west)) != NULL && object_get_id(player_get_object(game_get_player(game))) == NO_ID)
-      objs[4] = '*';
-    else
-      objs[4] = ' ';
-
-  }
-
-  return objs;
-}*/

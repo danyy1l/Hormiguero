@@ -1,5 +1,5 @@
 EXE=anthill
-CFLAGS=-g -c -Wall -ansi -pedantic
+CFLAGS=-g -c -Wall -pedantic
 CC=gcc
 CLIB=-lscreen -L./lib/
 

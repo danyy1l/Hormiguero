@@ -2,7 +2,7 @@
  * @brief It implements the space module
  * @file space.c
  * @author Danyyil Shykerynets 
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Anthony Eduardo Alvarado
  * @version 8
  * @date 24-02-2025
  * @copyright GNU Public License
@@ -10,35 +10,34 @@
 
 #include "../include/space.h"
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-
 /*Eliminar funciones object y susituir por otras funciones set ya que el campo tipo object ya no existe  */
 
 /**
- * @brief Space
- *
- * This struct stores all the information of a space.
- */
+* @brief Space
+*
+* This struct stores all the information of a space.
+*/
 struct _Space { 
-  Id id;                              /*!< Id number of the space, it must be unique */
-  char name[WORD_SIZE + 1];           /*!< Name of the space */
-  char gdesc[GDESC_MAX][GDESC_SIZE];  /*!< Graphic description of the array*/
-  Id north;                           /*!< Id of the space at the north */
-  Id south;                           /*!< Id of the space at the south */
-  Id east;                            /*!< Id of the space at the east */
-  Id west;                            /*!< Id of the space at the west */
-  Id character_id;                    /*!< Id of the character in the space, NO_ID if no characters*/
-  Set *objects;                       /*!< Conjunto de objetos que hay en el espacio*/
+  Id id;                    /*!< Id number of the space, it must be unique */
+  char name[WORD_SIZE + 1]; /*!< Name of the space */
+  Id north;                 /*!< Id of the space at the north */
+  Id south;                 /*!< Id of the space at the south */
+  Id east;                  /*!< Id of the space at the east */
+  Id west;                  /*!< Id of the space at the west */
+  Id character_id;          /*!< Id of the character in the space, NO_ID if no characters*/
+  Set *objects;             /*!< Array of objects*/
+  char gdesc[GDESC_MAX][GDESC_SIZE];
 };
 
 /** space_create allocates memory for a new space
- *  and initializes its members
- */
+*  and initializes its members
+*/
 Space* space_create(Id id) {
+int i;
   Space* newSpace = NULL;
 
   /* Error control */
@@ -62,13 +61,16 @@ Space* space_create(Id id) {
     free(newSpace);
     return NULL;
   }
+  for(i=0;i<GDESC_MAX;i++){
+  strcpy(newSpace->gdesc[i],"");
+}
 
   return newSpace;
 }
 
 Status space_destroy(Space* space) {
   if(space){
-   set_destroy(space->objects);
+  set_destroy(space->objects);
     free(space);
     space = NULL;
     return OK;
@@ -212,6 +214,22 @@ Id space_get_character_id(Space *space){
   return space->character_id;
 }
 
+char* space_get_gdesc(Space *space, int pos){
+  if (!space){
+    return NULL;
+  }
+  return space->gdesc[pos];
+}
+
+Status space_set_gdesc(Space *space, char* name, int pos){
+  if (!space||!name){
+    return ERROR;
+  }
+
+  strcpy(space->gdesc[pos], name);
+  return OK;
+}
+
 Status space_print(Space* space) {
   Id idaux = NO_ID;
 
@@ -262,31 +280,6 @@ Status space_print(Space* space) {
   } else {
     fprintf(stdout, "---> No character in the space.\n");
   }
-
-  return OK;
-}
-
-Status space_set_gdesc(Space* space, char** gdesc){
-  int i;
-
-  if( !space || !gdesc)
-    return ERROR;
-
-  for(i=0; i<GDESC_MAX; i++){
-    strcpy(space->gdesc[i], gdesc[i]);
-  }
-
-  return OK;
-}
-
-char** space_get_gdesc(Space* space){
-  if( !space )
-    return NULL;
-
-  return space->gdesc;
-}
-
-Status space_gdesc_print(Space* space){
-  printf("Hi");
+  
   return OK;
 }

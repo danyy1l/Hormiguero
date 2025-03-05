@@ -38,13 +38,11 @@ Character* character_create(){
 }
 
 Status character_destroy(Character* character){
-  if(character){
+  if( character ){
     free(character);
     character = NULL;
-    return OK;
   }
-  else
-    return ERROR;
+  return OK;
 }
 
 Id character_get_id(Character* character){ 
@@ -90,7 +88,7 @@ Status character_set_name(Character* character, char* name){
 }
 
 char* character_get_gdesc(Character* character){ 
-  if( !character ){ return NULL; }
+  if( !character ){ return "      "; }
   return character->gdesc; 
 }
 
