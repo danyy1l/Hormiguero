@@ -903,6 +903,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   else
     sprintf(str, "  Player has %s (%ld)", object_get_name(player_get_object(game_get_player(game))), object_get_id(player_get_object(game_get_player(game))) );
   screen_area_puts(ge->descript, str);
+  screen_area_puts(ge->descript, " ");
 
   /* Paint in the banner area */
   screen_area_puts(ge->banner, "    The anthill game ");
@@ -922,9 +923,10 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     strcpy(action_return,"Error");
   sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
   screen_area_puts(ge->feedback, str);
-  if( last_cmd == CHAT && character_get_location(game_get_character(game, space_get_character_id(space_act))) == player_get_location(game_get_player(game))){
-    sprintf(str, " %s: %s",character_get_name(game_get_character(game, space_get_character_id(space_act))), character_get_message( game_get_character(game, space_get_character_id(space_act)) ));
-    screen_area_puts(ge->feedback, str);
+  
+  if( last_cmd == CHAT && character_get_friendly(game_get_character(game, space_get_character_id(space_act))) ){
+    sprintf(str, "  %s: %s",character_get_name(game_get_character(game, space_get_character_id(space_act))), character_get_message( game_get_character(game, space_get_character_id(space_act)) ));
+    screen_area_puts(ge->descript, str);
   }
 
   /* Dump to the terminal */
