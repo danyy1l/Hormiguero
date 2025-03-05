@@ -225,14 +225,14 @@
   space_destroy(s);
  }
 
- void test2_space_set_gdesc(){
+ void test2_space_add_object(){
   Space *s=NULL;
   PRINT_TEST_RESULT(space_add_object(s,2)==ERROR);
  }
 
- void test3_spac_add_object(){
+ void test3_space_add_object(){
   Space*s;
-  space_create(2);
+  s = space_create(2);
   PRINT_TEST_RESULT(space_add_object(s,NO_ID)==ERROR);
   space_destroy(s);
  }
@@ -251,6 +251,7 @@
 
  void test3_space_del_object(){
   Space*s;
+  s = space_create(1);
   PRINT_TEST_RESULT(space_del_object(s,NO_ID)==ERROR);
   space_destroy(s);
  }
@@ -283,7 +284,9 @@
  void test1_space_get_gdesc() {
   Space *s;
   s = space_create(1);
+  space_set_gdesc(s, "ggdesc",0);
   space_set_gdesc(s,"gdesc",1);
+  printf("%s\n%s\n", space_get_gdesc(s, 0), space_get_gdesc(s, 1));
   PRINT_TEST_RESULT(strcmp(space_get_gdesc(s,1),"gdesc")==0);
   space_destroy(s);
  }
