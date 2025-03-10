@@ -20,9 +20,9 @@
 
 struct _Game{
   Player *player;                         /*!< Puntero a la estructura del jugador de la partida*/
-  Object *objects[OBJECTS_NUM];            /*!< Puntero a array de objetos de la partida*/
+  Object *objects[MAX_OBJECTS];            /*!< Puntero a array de objetos de la partida*/
   int n_objects;                          /*!< Almacena el numero de objetos en la partida*/
-  Character *characters[CHARACTERS_NUM];  /*!< Puntero a array de personajes en la partida*/
+  Character *characters[MAX_CHARACTERS];  /*!< Puntero a array de personajes en la partida*/
   int n_characters;                       /*!< Almacena el numero de personajes*/
   Space *spaces[MAX_SPACES];              /*!< Array estático de un número limitado de espacios*/
   int n_spaces;                           /*!< Número de espacios*/
@@ -63,10 +63,10 @@ Status game_destroy(Game *game) {
     space_destroy(game->spaces[i]);
   }
 
-  for(i=0; i<OBJECTS_NUM; i++)
+  for(i=0; i<game->n_objects; i++)
     object_destroy(game->objects[i]);
 
-  for(i=0; i<CHARACTERS_NUM; i++){
+  for(i=0; i<game->n_characters; i++){
     character_destroy(game->characters[i]);
   }
 
@@ -116,7 +116,7 @@ Object* game_get_object(Game *game, Id id){
   if(!game)
     return NULL;
 
-  for(i=0; i<OBJECTS_NUM; i++){
+  for(i=0; i<game->n_objects; i++){
     if( object_get_id(game->objects[i]) == id )
       return game->objects[i];
   }
@@ -129,12 +129,28 @@ Object* game_get_object_by_name(Game *game, char* name){
   if( !game )
     return NULL;
 
-  for(i=0; i<OBJECTS_NUM; i++){
+  for(i=0; i<game->n_objects; i++){
     if( !strcasecmp(object_get_name(game->objects[i]), name) )
       return game->objects[i];
   }
 
   return NULL;
+}
+
+int game_get_n_objects(Game* game){
+  if( !game )
+    return -1;
+
+  return game->n_objects;
+}
+
+Status game_set_n_objects(Game* game, int n_objects){
+  if(!game)
+    return ERROR;
+
+  game->n_objects = n_objects;
+
+  return OK;
 }
 
 Status game_add_character(Game *game, Character* character){
@@ -175,6 +191,15 @@ int game_get_n_characters(Game* game){
     return -1;
 
   return game->n_characters;
+}
+
+Status game_set_n_characters(Game* game, int n_characters){
+  if(!game)
+    return ERROR;
+
+  game->n_characters = n_characters;
+
+  return OK;
 }
 
 Space *game_get_space(Game *game, Id id) {

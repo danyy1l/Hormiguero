@@ -17,8 +17,8 @@
 #define STATUS_SIZE 6
 #define NO_ID -1
 
-#define CHARACTERS_NUM 3
-#define OBJECTS_NUM 4
+#define MAX_OBJECTS 100
+#define MAX_CHARACTERS 100
 
 typedef long Id;
 

@@ -114,6 +114,23 @@ Object* game_get_object(Game *game, Id id);
 Object* game_get_object_by_name(Game *game, char* name);
 
 /**
+ * @brief Obtiene el numero de objetos de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @return INT con numero de objetos de la partida "game" 
+ */
+int game_get_n_objects(Game* game);
+
+/**
+ * @brief Establece el numero de objetos de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param n_objects Numero de objetos a establecer
+ * @return OK en caso de exito, ERROR en caso contrario 
+ */
+Status game_set_n_objects(Game* game, int n_objects);
+
+/**
  * @brief Establece un nuevo personaje en el array de personajes de la partida
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game
@@ -138,6 +155,15 @@ Status game_remove_character(Game *game, Id character_id);
  * @return INT con numero de personajes vivos en la partida
  */
 int game_get_n_characters(Game* game);
+
+/**
+ * @brief Establece el numero de personajes de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param n_objects Numero de personajes a establecer
+ * @return OK en caso de exito, ERROR en caso contrario 
+ */
+Status game_set_n_characters(Game* game, int n_characters);
 
 /**
  * @brief Obtiene el puntero de un personaje con cierto id de la estructura game

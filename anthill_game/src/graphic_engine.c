@@ -124,6 +124,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     else
       strcpy(character_gdesc, character_get_gdesc(game_get_character(game, space_get_character_id(space_act))) );
 
+    for(i=0; i<GDESC_MAX;i++)
+      if( strlen(space_get_gdesc(space_act, i)) < 9 ){
+        space_set_gdesc(space_act, "         ", i);
+      if( strlen(space_get_gdesc(space_north, i)) < 9 )
+        space_set_gdesc(space_north, "         ", i);
+      if( strlen(space_get_gdesc(space_south, i)) < 9 )
+        space_set_gdesc(space_south, "         ", i);
+      if( strlen(space_get_gdesc(space_east, i)) < 9 )
+        space_set_gdesc(space_east, "         ", i);
+      if( strlen(space_get_gdesc(space_west, i)) < 9 )
+        space_set_gdesc(space_west, "         ", i);
+    }
+
     switch(dir_check){
     case 1:
       sprintf(str, "                               ");
@@ -205,7 +218,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       screen_area_puts(ge->map, str);
       }
 
-      sprintf(str, "                           v");
+      sprintf(str, "                            v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                    +---------------+");
       screen_area_puts(ge->map, str);
@@ -263,7 +276,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->map, str);
       }
 
-      sprintf(str, "                           v");
+      sprintf(str, "                            v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                    +---------------+");
       screen_area_puts(ge->map, str);
@@ -407,7 +420,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->map, str);
       }
       
-      sprintf(str, "                           v");
+      sprintf(str, "                            v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                    +---------------+");
       screen_area_puts(ge->map, str);
@@ -469,7 +482,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->map, str);
       }
       
-      sprintf(str, "                           v");
+      sprintf(str, "                            v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                    +---------------+");
       screen_area_puts(ge->map, str);
@@ -593,7 +606,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->map, str);
       }
       
-      sprintf(str, "                           v");
+      sprintf(str, "                            v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                    +---------------+");
       screen_area_puts(ge->map, str);
@@ -647,7 +660,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->map, str);
       }
 
-      sprintf(str, "                           v");
+      sprintf(str, "                            v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                    +---------------+");
       screen_area_puts(ge->map, str);
@@ -780,7 +793,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->map, str);
       }
       
-      sprintf(str, "                           v");
+      sprintf(str, "                            v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                    +---------------+");
       screen_area_puts(ge->map, str);
@@ -838,7 +851,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         screen_area_puts(ge->map, str);
       }
       
-      sprintf(str, "                           v");
+      sprintf(str, "                            v");
       screen_area_puts(ge->map, str);
       sprintf(str, "                    +---------------+");
       screen_area_puts(ge->map, str);
@@ -874,14 +887,18 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   sprintf(str, "  Objects: ");
   screen_area_puts(ge->descript, str);
+  i=0;
   id_count = 0;
-  for(i=0; i<OBJECTS_NUM; i++){
-    id_count += 10;
+  while(i < game_get_n_objects(game)){
     object = game_get_object(game, id_count);
     if( object ){
       sprintf(str, "    %s: %d", object_get_name(object), (int)object_get_location(object));
       screen_area_puts(ge->descript, str);
-    }
+      i++;
+      id_count++;
+    }else
+      id_count++;
+
   }
   screen_area_puts(ge->descript, " ");
 

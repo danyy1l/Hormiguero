@@ -81,6 +81,7 @@ printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
 }
 
 Status game_load_objects(Game *game, char *filename){
+  int i;
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
@@ -98,6 +99,7 @@ Status game_load_objects(Game *game, char *filename){
     return ERROR;
   }
 
+  i=0;
   while (fgets(line, WORD_SIZE, file)) {
     if (strncmp("#o:", line, 3) == 0) {
       toks = strtok(line + 3, "|");
@@ -114,9 +116,12 @@ Status game_load_objects(Game *game, char *filename){
       object_set_location(object, location);
       game_add_object(game, object);
       space_add_object(game_get_space(game, location), id);
+      i++;
     }
   }
   
+  game_set_n_objects(game, i);
+
   if (ferror(file)) {
     status = ERROR;
   }
@@ -127,6 +132,7 @@ Status game_load_objects(Game *game, char *filename){
 }
 
 Status game_load_characters(Game *game, char *filename){
+  int i;
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
@@ -149,6 +155,7 @@ Status game_load_characters(Game *game, char *filename){
     return ERROR;
   }
 
+  i=0;
   while (fgets(line, WORD_SIZE, file)) {
     if (strncmp("#c:", line, 3) == 0) {
       toks = strtok(line + 3, "|");
@@ -179,9 +186,12 @@ Status game_load_characters(Game *game, char *filename){
 
       game_add_character(game, character);
       space_set_character(game_get_space(game, location), character_get_id(character));
+      i++;
     }
   }
   
+  game_set_n_characters(game, i);
+
   if (ferror(file)) {
     status = ERROR;
   }
