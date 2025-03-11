@@ -72,13 +72,14 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, player_location = NO_ID;
   Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL;
+  char **space_act_objects = NULL, **space_north_objects = NULL, **space_south_objects = NULL, **space_east_objects = NULL, **space_west_objects = NULL;
   Object* object;
   Character* character;
   CommandCode last_cmd = UNKNOWN;
   char action_return[STATUS_SIZE], character_gdesc[GDESC_SIZE];
   char str[WORD_SIZE], foo, foo1;
   extern char *cmd_to_str[N_CMD][N_CMDT];
-  int i, id_count, dir_check = 0;
+  int i, id_count, object_count, dir_check = 0;
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
@@ -118,12 +119,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     else
       foo = ' ';
 
-    strcpy(character_gdesc, "\0");
+    /*Los personajes ocupan un maximo de 6 caracteres, si no hay personaje, sustituyo la gdesc por 6 espacios*/
     if( space_get_character_id(space_act) == NO_ID )
       strcpy(character_gdesc, "      ");
     else
       strcpy(character_gdesc, character_get_gdesc(game_get_character(game, space_get_character_id(space_act))) );
 
+    /*Caso especial: Si el espacio no tiene gdesc, relleno los 5 campos con 9 espacios*/
     for(i=0; i<GDESC_MAX;i++)
       if( strlen(space_get_gdesc(space_act, i)) < 9 ){
         space_set_gdesc(space_act, "         ", i);

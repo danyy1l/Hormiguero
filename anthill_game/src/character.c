@@ -33,7 +33,7 @@ Character* character_create(){
   character->id = NO_ID;
   character->health = 1;
   character->friendly = TRUE;
-  strcpy(character->gdesc, "      ");
+  /* Calloc inicializa gdesc a \0 */
   return character;
 }
 

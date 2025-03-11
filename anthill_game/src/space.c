@@ -22,22 +22,22 @@
 * This struct stores all the information of a space.
 */
 struct _Space { 
-  Id id;                    /*!< Id number of the space, it must be unique */
-  char name[WORD_SIZE + 1]; /*!< Name of the space */
-  Id north;                 /*!< Id of the space at the north */
-  Id south;                 /*!< Id of the space at the south */
-  Id east;                  /*!< Id of the space at the east */
-  Id west;                  /*!< Id of the space at the west */
-  Id character_id;          /*!< Id of the character in the space, NO_ID if no characters*/
-  Set *objects;             /*!< Array of objects*/
-  char gdesc[GDESC_MAX][GDESC_SIZE];
+  Id id;                              /*!< Id number of the space, it must be unique */
+  char name[WORD_SIZE + 1];           /*!< Name of the space */
+  Id north;                           /*!< Id of the space at the north */
+  Id south;                           /*!< Id of the space at the south */
+  Id east;                            /*!< Id of the space at the east */
+  Id west;                            /*!< Id of the space at the west */
+  Id character_id;                    /*!< Id of the character in the space, NO_ID if no characters*/
+  Set *objects;                       /*!< Array of objects*/
+  char gdesc[GDESC_MAX][GDESC_SIZE];  /*!< 5x9 Array containing space's graphic desc*/
 };
 
 /** space_create allocates memory for a new space
 *  and initializes its members
 */
 Space* space_create(Id id) {
-int i;
+  int i;
   Space* newSpace = NULL;
 
   /* Error control */
@@ -61,6 +61,8 @@ int i;
     free(newSpace);
     return NULL;
   }
+
+  /*Si en el .dat el espacio no tiene gdesc definido, al pintar la partida, aparecerán estos espacios*/
   for(i=0;i<GDESC_MAX;i++){
   strcpy(newSpace->gdesc[i],"");
 }
