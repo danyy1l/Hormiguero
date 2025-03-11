@@ -160,13 +160,21 @@
  Status space_del_object(Space *space, Id id);
  
  /**
-  * @brief Get the id of the object
+  * @brief Gets the objects in the space
   * @author Anthony Eduardo Alvarado Carbajal
   * @param space A pointer to the space 
-  * @return the object id 
+  * @return Array of object ids in the space
   */
  Id* space_id_object(Space* space);
  
+ /**
+  * @brief Get the set of objects of the space
+  * @author Anthony Eduardo Alvarado Carbajal
+  * @param space A pointer to the space
+  * @return Object set in space struct
+  */
+ Set* space_get_set_objects(Space* space);
+
  /**
   * @brief verifies if an object exists 
   * @author Anthony Eduardo Alvarado Carbajal 

@@ -198,7 +198,14 @@ Id* space_id_object(Space *space){
     return NULL;
   }
   
-  return (set_id_object(space->objects));
+  return set_id_object(space->objects);
+}
+
+Set* space_get_set_objects(Space* space){
+  if( !space )
+    return NULL;
+
+  return space->objects;
 }
 
 Status space_set_character(Space *space, Id character_id){

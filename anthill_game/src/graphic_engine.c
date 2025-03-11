@@ -72,14 +72,14 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, player_location = NO_ID;
   Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL;
-  char **space_act_objects = NULL, **space_north_objects = NULL, **space_south_objects = NULL, **space_east_objects = NULL, **space_west_objects = NULL;
+  /*char **space_act_objects = NULL, **space_north_objects = NULL, **space_south_objects = NULL, **space_east_objects = NULL, **space_west_objects = NULL;*/
   Object* object;
   Character* character;
   CommandCode last_cmd = UNKNOWN;
   char action_return[STATUS_SIZE], character_gdesc[GDESC_SIZE];
-  char str[WORD_SIZE], foo, foo1;
+  char str[WORD_SIZE], friendly[__WORDSIZE], foo, foo1;
   extern char *cmd_to_str[N_CMD][N_CMDT];
-  int i, id_count, object_count, dir_check = 0;
+  int i, id_count, dir_check = 0;
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
@@ -139,6 +139,38 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
         space_set_gdesc(space_west, "         ", i);
     }
 
+/*  TODO: Hacer algo con esta basura
+    object_count = set_get_nids(space_get_set_objects(space_act));
+    for(i=0; i<object_count; i++){
+      if( !(space_act_objects = (char**)calloc(1, sizeof(char*))) ){ return; }
+      if( !(space_act_objects[i] = (char*)calloc(__WORDSIZE, sizeof(char)))) { return; } 
+      strcpy(space_act_objects[i], object_get_name( game_get_object(game, space_id_object(space_act)[i]) ));
+    }
+    object_count = set_get_nids(space_get_set_objects(space_north));
+    for(i=0; i<object_count; i++){
+      if( !(space_north_objects = (char**)calloc(1, sizeof(char*))) ){ return; }
+      if( !(space_north_objects[i] = (char*)calloc(__WORDSIZE, sizeof(char)))) { return; } 
+      strcpy(space_north_objects[i], object_get_name( game_get_object(game, space_id_object(space_north)[i]) ));
+    }
+    object_count = set_get_nids(space_get_set_objects(space_south));
+    for(i=0; i<object_count; i++){
+      if( !(space_south_objects = (char**)calloc(1, sizeof(char*))) ){ return; }
+      if( !(space_south_objects[i] = (char*)calloc(__WORDSIZE, sizeof(char)))) { return; } 
+      strcpy(space_south_objects[i], object_get_name( game_get_object(game, space_id_object(space_south)[i]) ));
+    }
+    object_count = set_get_nids(space_get_set_objects(space_east));
+    for(i=0; i<object_count; i++){
+      if( !(space_east_objects = (char**)calloc(1, sizeof(char*))) ){ return; }
+      if( !(space_east_objects[i] = (char*)calloc(__WORDSIZE, sizeof(char)))) { return; } 
+      strcpy(space_east_objects[i], object_get_name( game_get_object(game, space_id_object(space_east)[i]) ));
+    }
+    object_count = set_get_nids(space_get_set_objects(space_west));
+    for(i=0; i<object_count; i++){
+      if( !(space_west_objects = (char**)calloc(1, sizeof(char*))) ){ return; }
+      if( !(space_west_objects[i] = (char*)calloc(__WORDSIZE, sizeof(char)))) { return; } 
+      strcpy(space_west_objects[i], object_get_name( game_get_object(game, space_id_object(space_west)[i]) ));
+    }
+*/
     switch(dir_check){
     case 1:
       sprintf(str, "                               ");
@@ -880,9 +912,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   if( (player_location = player_get_location(game_get_player(game))) != NO_ID) {
     sprintf(str, "  Player: ");
     screen_area_puts(ge->descript, str);
-    sprintf(str, "    Location: %d", (int)player_location);
+    sprintf(str, "   Location: %d", (int)player_location);
     screen_area_puts(ge->descript, str);
-    sprintf(str, "    Health: %d", player_get_health(game_get_player(game)));
+    sprintf(str, "   Health: %d", player_get_health(game_get_player(game)));
     screen_area_puts(ge->descript, str);
     screen_area_puts(ge->descript, " ");
   }
@@ -894,7 +926,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   while(i < game_get_n_objects(game)){
     object = game_get_object(game, id_count);
     if( object ){
-      sprintf(str, "    %s: %d", object_get_name(object), (int)object_get_location(object));
+      sprintf(str, "   %s: %d", object_get_name(object), (int)object_get_location(object));
       screen_area_puts(ge->descript, str);
       i++;
       id_count++;
@@ -909,7 +941,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   id_count = 100;
   for(i=0; i<game_get_n_characters(game); i++, id_count+=100){
     if( (character = game_get_character(game, id_count)) ){
-      sprintf(str, "    %s: %d  (%d HP)", character_get_gdesc(character), (int)character_get_location(character), character_get_health(character));
+      if( character_get_friendly(character) ){ strcpy(friendly, "Friend"); }
+      else{ strcpy(friendly, "Enemy"); }
+      sprintf(str, "   %s: %d  (%d HP) %s", character_get_gdesc(character), (int)character_get_location(character), character_get_health(character), friendly);
       screen_area_puts(ge->descript, str);
     }else
       i--;
