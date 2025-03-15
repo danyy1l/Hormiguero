@@ -10,6 +10,7 @@ Ejecuta el juego una vez compilados los archivos
 ```bash
 ./anthill anthill.dat
 ```
+Es posible jugar en otro mapa, cambiando en el makefile EXE=castle
 ```bash
 ./castle castle.dat
 ```
