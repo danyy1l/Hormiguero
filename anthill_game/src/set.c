@@ -39,12 +39,10 @@ Set *set_create(){
 }
 
 Status set_destroy(Set* set){
-
-  if (!set){
-    return ERROR;
+  if (set){
+    free(set);
+    set=NULL;
   }
-  free(set);
-  set=NULL;
 
   return OK;
 }

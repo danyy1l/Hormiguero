@@ -203,6 +203,7 @@ Status game_actions_take(Game *game, Command *command){
 
 Status game_actions_drop(Game *game){
   if( player_get_object(game_get_player(game) )){
+    object_set_location(game_get_object(game, object_get_id( player_get_object(game_get_player(game)))), player_get_location(game_get_player(game)));
     player_set_object(game_get_player(game), NULL);
     return OK;
   }else

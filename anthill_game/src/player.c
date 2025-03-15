@@ -42,10 +42,8 @@ Status player_destroy(Player *player){
   if( player ){
     free(player);
     player = NULL;
-    return OK;
-
-  }else
-    return ERROR;
+  }  
+  return OK;
 }
 
 Status player_set_id(Player *player, Id id){

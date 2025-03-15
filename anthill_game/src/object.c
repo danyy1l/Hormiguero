@@ -41,9 +41,8 @@ Status object_destroy(Object* object){
   if(object){  
     free(object);
     object = NULL;
-    return OK;
-  }else
-    return ERROR;
+  }
+  return OK;
 }
 
 Status object_set_id(Object* object, Id id){

@@ -72,12 +72,12 @@ Space* space_create(Id id) {
 
 Status space_destroy(Space* space) {
   if(space){
-  set_destroy(space->objects);
+    set_destroy(space->objects);
     free(space);
     space = NULL;
-    return OK;
-  }else
-    return ERROR;
+  }
+
+  return OK;
 }
 
 Id space_get_id(Space* space) {

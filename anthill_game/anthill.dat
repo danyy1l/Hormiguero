@@ -9,9 +9,9 @@
 #s:43|Pasillo7|-1|53|-1|33|::____/  |:/       |/  o8o0* |____     |::::\____|
 #s:53|Despensa|-1|-1|-1|43|    V    |  \(")/  |  -(_)-  |o/(_-_)\o|o o\_/o o|
 
-#o:1|Grain|11
-#o:2|Crumb|13
-#o:3|Cookie|14
+#o:1|Grain|33
+#o:2|Crumb|43
+#o:3|Cookie|53
 #o:4|Seed|16
 
 #c:100|Antlion| ^0m  |5|1|Hello!|53
