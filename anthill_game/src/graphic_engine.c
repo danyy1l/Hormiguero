@@ -62,6 +62,9 @@ void print_objects(Game* game, Id id, char* str){
     }
   }
 
+  if(i!=id_count && strlen(foo) < LINE_SPACE)
+    strcat(foo, ",");
+
   /*LINE_SPACE es el numero de espacios que tiene de ancho las casillas, que son 15 menos 2 de los laterales que ya los imprime otra funcion*/
   while(strlen(foo) < LINE_SPACE){
     strcat(foo, " ");
@@ -161,16 +164,16 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       strcpy(character_gdesc, character_get_gdesc(game_get_character(game, space_get_character_id(space_act))) );
 
     /*Caso especial: Si el espacio no tiene gdesc, relleno los 5 campos con 9 espacios*/
-    for(i=0; i<GDESC_MAX;i++)
-      if( strlen(space_get_gdesc(space_act, i)) < 9 ){
+    for(i=0; i<GDESC_MAX;i++){
+      if( space_act && strlen(space_get_gdesc(space_act, i)) < (GDESC_SIZE - 1) )
         space_set_gdesc(space_act, "         ", i);
-      if( strlen(space_get_gdesc(space_north, i)) < 9 )
+      if( space_north && strlen(space_get_gdesc(space_north, i)) < (GDESC_SIZE - 1) )
         space_set_gdesc(space_north, "         ", i);
-      if( strlen(space_get_gdesc(space_south, i)) < 9 )
+      if( space_south && strlen(space_get_gdesc(space_south, i)) < (GDESC_SIZE - 1) )
         space_set_gdesc(space_south, "         ", i);
-      if( strlen(space_get_gdesc(space_east, i)) < 9 )
+      if( space_east && strlen(space_get_gdesc(space_east, i)) < (GDESC_SIZE - 1) )
         space_set_gdesc(space_east, "         ", i);
-      if( strlen(space_get_gdesc(space_west, i)) < 9 )
+      if( space_west && strlen(space_get_gdesc(space_west, i)) < (GDESC_SIZE - 1) )
         space_set_gdesc(space_west, "         ", i);
     }
 

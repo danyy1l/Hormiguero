@@ -7,8 +7,6 @@
  * @copyright GNU Public License
 */
 
-/*Cambiar el "value" por el objecto ya que se usara el Set para los objetos de space.c*/
-
 #ifndef SET_H
 #define SET_H
 #define MAX_IDS 100
@@ -31,7 +29,7 @@ Set *set_create();
  * @brief Destruye un Set
  * @author Anthony Eduardo Alvarado Carbajal
  * @param set un puntero a Set
- * @return OK, si todo va bien, o ERROR si existe algún fallo
+ * @return OK, si todo va bien , o ERROR si existe algún fallo
  */
 Status set_destroy(Set *set);
 
@@ -79,12 +77,12 @@ Status set_del_value(Set *set, Id id);
 Bool set_find_object(Set *set, Id id);
 
 /**
- * @brief Obtiene el id del objeto
+ * @brief establece el id del objeto
  * @author Anthony Eduardo Alvarado Carbajal 
  * @param set Un puntero a Set
  * @return El número id del objeto 
  */
-Id* set_id_object(Set* set); 
+Id* set_id_object(Set* set);
 
 /**
  * @brief Imprime el Set

@@ -14,8 +14,8 @@
 #include "set.h"
 
 struct _Set{
-    Id ids[MAX_IDS];     /*!< Array de ids de los objetos del conjunto */
-    int n_ids;          /*!< El número de objetos del conjunto */
+  Id ids[MAX_IDS];    /*!< Array de ids de los objetos del conjunto */
+  int n_ids;          /*!< El número de objetos del conjunto */
 };
 
 Set *set_create(){
@@ -39,13 +39,10 @@ Set *set_create(){
 }
 
 Status set_destroy(Set* set){
-
-  if (!set){
-    return ERROR;
+  if (set){
+    free(set);
+    set=NULL;
   }
-  free(set);
-
-  set=NULL;
 
   return OK;
 }
@@ -68,8 +65,8 @@ Status set_set_nids(Set* set, int n){
 }
 
 Status set_add_value(Set *set, Id id){
-
   int i;
+
   if (!set||id==NO_ID){
     return ERROR;
   }
@@ -85,7 +82,7 @@ Status set_add_value(Set *set, Id id){
 }
 
 Status set_del_value(Set *set,Id id){
-  int i;
+  int i, j;
 
   if (!set|| id==NO_ID){
     return ERROR;
@@ -94,7 +91,15 @@ Status set_del_value(Set *set,Id id){
   for(i=0;i<MAX_IDS;i++){
     if(set->ids[i]==id){
       set->ids[i]=NO_ID;
+
+      /*Desplaza todos los elementos a la izq, de esta manera, no quedan huecos libres*/
+      for(j=i; j<MAX_IDS-1; j++){
+        set->ids[j] = set->ids[j+1];
+      }
+
+      set->ids[MAX_IDS-1] = NO_ID;
       set->n_ids--;
+
       return OK;
     }
   }
@@ -109,7 +114,7 @@ Bool set_find_object(Set *set, Id id){
     return FALSE;
   }
 
-  for (i=0;i<MAX_IDS;i++){
+  for (i=0;i<set->n_ids;i++){
     if(set->ids[i]==id){
       return TRUE;
     }
@@ -139,4 +144,3 @@ Status set_print(Set *set){
   }
   return OK;
 }
-
