@@ -10,6 +10,9 @@ Ejecuta el juego una vez compilados los archivos
 ```bash
 ./anthill anthill.dat
 ```
+```bash
+./castle castle.dat
+```
 Eliminar los archivos compilados y el ejecutable
 ```bash
 make clean
