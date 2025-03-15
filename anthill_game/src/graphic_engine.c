@@ -30,6 +30,8 @@
 #define HEIGHT_HLP 3
 #define HEIGHT_FDB 3
 
+#define LINE_SPACE 13
+
 struct _Graphic_engine {
   Area *map, *descript, *banner, *help, *feedback;
 };
@@ -47,9 +49,10 @@ void print_objects(Game* game, Id id, char* str){
 
   for(i=0; i<id_count; i++){
     object = game_get_object(game, ids[i]);
+    printf("%ld ", object_get_id(object));
     if( player_get_object(game_get_player(game)) == object )
       continue;
-    if( strlen(foo) + strlen(object_get_name(object)) > 12 ){
+    if( strlen(foo) + strlen(object_get_name(object)) > LINE_SPACE ){
       foo[strlen(foo)-2] = '\0';
       break;
     }
@@ -59,8 +62,8 @@ void print_objects(Game* game, Id id, char* str){
     }
   }
 
-  /*14 es el numero de espacios que tiene de ancho las casillas, menos 2 que ya los imprime otra funcion*/
-  while(strlen(foo) < 13){
+  /*LINE_SPACE es el numero de espacios que tiene de ancho las casillas, que son 15 menos 2 de los laterales que ya los imprime otra funcion*/
+  while(strlen(foo) < LINE_SPACE){
     strcat(foo, " ");
   }
 
@@ -105,7 +108,6 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, player_location = NO_ID;
   Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL;
-  /*char **space_act_objects = NULL, **space_north_objects = NULL, **space_south_objects = NULL, **space_east_objects = NULL, **space_west_objects = NULL;*/
   Object* object;
   Character* character;
   CommandCode last_cmd = UNKNOWN;

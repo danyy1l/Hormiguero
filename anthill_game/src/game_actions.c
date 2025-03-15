@@ -188,22 +188,27 @@ Status game_actions_west(Game *game) {
 
 Status game_actions_take(Game *game, Command *command){
   Object* object = game_get_object_by_name(game, command_get_arguments(command));
+  Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
 
   if( !command )
     return ERROR;
 
   if( player_get_object(game_get_player(game)) == NULL && object_get_location(object) == player_get_location(game_get_player(game)) ){
     player_set_object(game_get_player(game), object);
+    /*TODO: esto cause core dump*/
+    space_del_object(current_space, object_get_id(object));
     return OK;
   }
   
   return ERROR;
 }
 
-
 Status game_actions_drop(Game *game){
-  if( player_get_object(game_get_player(game) )){
-    object_set_location(game_get_object(game, object_get_id( player_get_object(game_get_player(game)))), player_get_location(game_get_player(game)));
+  Object* object = player_get_object(game_get_player(game));
+  Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
+
+  if( object ){
+    space_add_object(current_space, object_get_id(object));
     player_set_object(game_get_player(game), NULL);
     return OK;
   }else
