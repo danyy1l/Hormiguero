@@ -49,7 +49,6 @@ void print_objects(Game* game, Id id, char* str){
 
   for(i=0; i<id_count; i++){
     object = game_get_object(game, ids[i]);
-    printf("%ld ", object_get_id(object));
     if( player_get_object(game_get_player(game)) == object )
       continue;
     if( strlen(foo) + strlen(object_get_name(object)) > LINE_SPACE ){
