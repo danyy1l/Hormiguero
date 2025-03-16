@@ -88,7 +88,7 @@ Status set_del_value(Set *set,Id id){
     return ERROR;
   }
 
-  for(i=0;i<MAX_IDS;i++){
+  for(i=0;i<set->n_ids;i++){
     if(set->ids[i]==id){
       set->ids[i]=NO_ID;
 
