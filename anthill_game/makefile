@@ -20,12 +20,15 @@ objects = $(addprefix $(OBJDIR)/, player.o object.o space.o command.o character.
 $(EXE): $(objects)
 	$(CC) -o $@ $^ $(CLIB)
 
-$(OBJDIR)/%.o: %.c
+$(OBJDIR)/%.o: %.c | $(OBJDIR)
 	$(CC) $(CFLAGS) $< -o $@
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
 #CLEAN .o AND EXE
 clean: 
-	rm -f $(OBJDIR)/*.o $(EXE)
+	rm -rf $(OBJDIR) $(EXE)
 
 #COMPILE AND RUN PROGRAM
 run: 
