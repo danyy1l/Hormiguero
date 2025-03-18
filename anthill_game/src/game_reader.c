@@ -165,13 +165,13 @@ Status game_load_characters(Game *game, char *filename){
       toks = strtok(NULL, "|");
       strcpy(gdesc, toks);
       toks = strtok(NULL, "|");
+      toks = strtok(NULL, "|");
+      location = atol(toks);
       health = atoi(toks);
       toks = strtok(NULL, "|");
       friendly = atoi(toks);
       toks = strtok(NULL, "|");
       strcpy(message, toks);
-      toks = strtok(NULL, "|");
-      location = atol(toks);
   #ifdef DEBUG
       printf("Leido: %ld|%s|%s|%d|%d|%s|%ld\n", id, name, gdesc, health, friendly, message, location);
   #endif

@@ -14,6 +14,6 @@
 #o:3|Cookie|12
 #o:4|Seed|16
 
-#c:100|Antlion| ^0m  |5|1|Hello!|53
-#c:200|Worm|*0o8o |5|1|Welcome!|11
-#c:300|Spider|/\00/\|10|0|!!!!!!|14
+#c:100|Antlion| ^0m  |53|5|1|Hello!|
+#c:200|Worm|*0o8o |11|5|1|Welcome!|
+#c:300|Spider|/\00/\|14|10|0|!!!!!!|
