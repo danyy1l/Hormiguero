@@ -25,7 +25,7 @@ $(OBJDIR)/%.o: %.c
 
 #CLEAN .o AND EXE
 clean: 
-	rm -rf *.o $(EXE) 
+	rm -f $(OBJDIR)/*.o $(EXE)
 
 #COMPILE AND RUN PROGRAM
 run: 
