@@ -32,7 +32,7 @@
  */
  Inventory *inventory_create();
   /**
- * @brief destruye un inventario 
+ * @brief destruye un inventario  
  * @author Álvaro Rodríguez
  * @param Inventory puntero al inventario
  * @return Devuelve OK en caso de exito y ERROR en caso contrario

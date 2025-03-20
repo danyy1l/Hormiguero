@@ -13,6 +13,7 @@
 
 #include "types.h"
 #include "object.h"
+#include "inventory.h"
 
 /**
  * @brief Estructura de datos del jugador, id, nombre, location y objeto portado
@@ -96,24 +97,23 @@ Id player_get_location(Player *player);
 Status player_set_location(Player *player, Id id);
 
 /**
- * @brief Recibe el id del objeto que lleva el jugador (NO_ID en caso de no llevar)
- * @author Danyyil Shykerynets
+ * @brief Devuelve el inventario del jugador (mochila)
+ * @author Hugo Martín
  * 
  * @param player Puntero a la estructura del jugador
- * @return Devuelve el objeto que lleva el jugador
+ * @return Devuelve un puntero de tipo Inventory con la mochila
  */
-Object* player_get_object(Player *player);
+Inventory* player_get_objects(Player *player);
 
 /**
- * @brief Establece un objeto en la estructura jugador
- * Analogamente es "agregar" un objeto con cierto id al inventario del jugador
- * @author Danyyil Shykerynets
+ * @brief Añade un objeto a la mochila del jugador
+ * @author Hugo Martín
  * 
- * @param player Jugador al que darle el objeto
+ * @param player Jugador al que añadir el objeto
  * @param object Objeto que anadir al inventario
  * @return OK en caso de exito, ERROR en caso contrario
  */
-Status player_set_object(Player *player, Object* object);
+Status player_add_object(Player *player, Object* object);
 
 /**
  * @brief Recibe la vida del jugador
@@ -133,6 +133,16 @@ int player_get_health(Player* player);
  * @return OK en caso de exito, ERROR en caso contrario
  */
 Status player_set_health(Player *player, int health);
+
+/**
+ * @brief Busca si el objeto que recibe se encuentra en el inventario del jugador
+ * @author Hugo Martín
+ * 
+ * @param player Jugador al que apunta player
+ * @param object Objeto que queremos encontrar
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Bool player_find_object(Player *player, Object *object);
 
 /**
  * @brief Imprime los datos del jugador

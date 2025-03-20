@@ -6,7 +6,7 @@
  * @version 7
  * @date 05-02-2025
  * @copyright GNU Public License
- */
+ */ 
 
 #include "../include/player.h"
 #include "../include/object.h"
@@ -19,7 +19,7 @@ struct _Player {
   Id id;                      /*!<-ID del jugador*/
   Id location;                /*!<-ID del espacio en el que se ubica el jugador*/
   char name[WORD_SIZE + 1];   /*!<-Nombre del jugador*/
-  Object* object;                  /*!<-ID del objeto que porta el jugador*/
+  Inventory* backpack;        /*!<-Inventario del jugador*/
   int health;                 /*!<-Vida del jugador*/
 };
 
@@ -32,7 +32,7 @@ Player *player_create(){
   output->id = NO_ID;
   output->location = NO_ID;
   output->name[0] = '\0';
-  output->object = NULL;
+  output->backpack = inventory_create();
   output->health = 1;
 
   return output;
@@ -70,17 +70,26 @@ Status player_set_location(Player *player, Id id) {
   return OK;
 }
 
-Status player_set_object(Player *player, Object* object){
-  if( !player ){ return ERROR; }
+Status player_add_object(Player *player, Object* object){
+  if( !player || !object ){ return ERROR; }
 
-  player->object = object;
+  inventory_add_object(player->backpack, object_get_id(object));
+
   return OK;
 }
 
-Object* player_get_object(Player *player){
+Inventory* player_get_objects(Player *player){
   if( !player ) { return NULL; }
   
-  return player->object;
+  return player->backpack;
+}
+
+Bool player_find_object(Player *player, Object *object) {
+  if (!player || !object) {
+    return FALSE;
+  }
+
+  return inventory_find_object(player->backpack, object_get_id(object));  
 }
 
 Status player_set_health(Player *player, int health){

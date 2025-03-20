@@ -5,7 +5,7 @@
  * @version 0
  * @date 20-03-2025
  * @copyright GNU Public License
- */
+ */ 
 
  #include "../include/inventory.h"
 
@@ -37,7 +37,7 @@ Status inventory_destroy(Inventory * inventory){
     if (inventory)
     {
         set_destroy(inventory->objects);
-        free(inventory);
+        free(inventory); 
         inventory=NULL;
     }
     return OK;
