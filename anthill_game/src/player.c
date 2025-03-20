@@ -73,6 +73,10 @@ Status player_set_location(Player *player, Id id) {
 Status player_add_object(Player *player, Object* object){
   if( !player || !object ){ return ERROR; }
 
+  if (inventory_is_full(player->backpack)==TRUE) {
+    return ERROR;
+  } 
+
   inventory_add_object(player->backpack, object_get_id(object));
 
   return OK;
@@ -108,7 +112,7 @@ int player_get_health(Player* player){
 
 Status player_print(Player *player){
   if( player ){
-    printf("Player ID: %ld\nPlayer location: %ld\nPlayer name: %s\nPlayer object: %ld\nPlayer health: %d", player->id, player->location, player->name, object_get_id(player_get_object(player)), player->health);
+    printf("Player ID: %ld\nPlayer location: %ld\nPlayer name: %s\nPlayer objects: %ld\nPlayer health: %d", player->id, player->location, player->name, player_get_objects(player), player->health);
     return OK;
   }else
     return ERROR;

@@ -189,12 +189,15 @@ Status game_actions_west(Game *game) {
 Status game_actions_take(Game *game, Command *command){
   Object* object = game_get_object_by_name(game, command_get_arguments(command));
   Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
+  Player* player=game_get_player(game);
+  Inventory* backpack=player_get_objects(player);
 
   if( !command )
     return ERROR;
 
-  if( player_get_object(game_get_player(game)) == NULL && object_get_location(object) == player_get_location(game_get_player(game)) ){
-    player_set_object(game_get_player(game), object);
+  if( inventory_is_full(backpack)==FALSE && object_get_location(object) == player_get_location(game_get_player(game)) ){
+    player_add_object(player, object);
+
     /*TODO: esto cause core dump*/
     space_del_object(current_space, object_get_id(object));
     return OK;
