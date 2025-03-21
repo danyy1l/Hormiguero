@@ -51,7 +51,7 @@ Status object_set_id(Object* object, Id id){
 
   object->id=id;
   return OK;
-}
+} 
 
 Id object_get_id(Object* object){
   if (!object)

@@ -17,7 +17,7 @@
 
 /**
  * @brief Actualiza las acciones del juego
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Hugo Martín
  * @param game Un puntero a Game
  * @param cmd Un puntero a Command
  * @return OK, si todo va bien o ERROR si hay algún fallo

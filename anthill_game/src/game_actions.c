@@ -21,6 +21,14 @@
 */
 
 Status game_actions_update(Game *game, Command *command) {
+  int i;
+  Player *player=game_get_player(game);                               /*Jugador del game*/
+  Id player_location=player_get_location(player);                     /*Ubicación del jugador del game*/
+  Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
+  int n_ids=set_get_nids(inventory_get_objects(inventory));           
+  Id *set_ids=set_id_object(inventory_get_objects(inventory));        /*Array de Ids, con los ids de los objetos de la mochila del jugador*/
+  Object *object=NULL;                                                
+
   CommandCode cmd;
 
   game_set_last_command(game, command);
@@ -96,8 +104,12 @@ Status game_actions_update(Game *game, Command *command) {
       break;
   }
 
-  if( player_get_object(game_get_player(game)))
-    object_set_location(game_get_object(game, object_get_id( player_get_object(game_get_player(game)))), player_get_location(game_get_player(game)));
+  if (inventory_is_empty(inventory)!=TRUE) {
+    for (i=0;i<n_ids;i++) {
+      object=game_get_object(game, set_ids[i]);       /*Cada uno de los objetos de la mochila del jugador*/
+      object_set_location(object, player_location);   /*Actualiza la ubicación de cada uno de los objetos*/
+    }
+  }
 
   return OK;
 }

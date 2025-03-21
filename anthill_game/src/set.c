@@ -130,7 +130,7 @@ Id *set_id_object(Set *set){
   return set->ids;
 }
 
-Status set_print(Set *set){
+Status set_print(Set *set){ 
   int i;
   if (!set){
     return ERROR;

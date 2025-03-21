@@ -127,7 +127,7 @@ Object* game_get_object(Game *game, Id id){
 Object* game_get_object_by_name(Game *game, char* name){
   int i;
   if( !game )
-    return NULL;
+    return NULL; 
 
   for(i=0; i<game->n_objects; i++){
     if( !strcasecmp(object_get_name(game->objects[i]), name) )
