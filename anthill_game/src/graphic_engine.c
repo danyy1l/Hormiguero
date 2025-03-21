@@ -58,9 +58,10 @@ void print_objects(Game* game, Id id, char* str){
   for(i=0; i<id_count; i++){
     
     object = game_get_object(game, ids[i]);
+    
     if( player_get_object(game_get_player(game)) == object )
       continue;
-      
+    
     if( strlen(foo) + strlen(object_get_name(object)) > LINE_SPACE ){
       foo[strlen(foo)-2] = '\0';
       break;
@@ -69,8 +70,9 @@ void print_objects(Game* game, Id id, char* str){
     if( i!=id_count-1 ){
       strcat(foo, ", ");
     }
+    
   }
-
+  
   if(i!=id_count && strlen(foo) < LINE_SPACE)
     strcat(foo, ",");
 
@@ -80,6 +82,7 @@ void print_objects(Game* game, Id id, char* str){
   }
 
   strcat(str, foo);
+  
 }
 
 void print_north(Graphic_engine* ge, Game* game, char* str, Id id_north, Space* space_north){
