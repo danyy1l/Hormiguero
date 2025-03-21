@@ -15,7 +15,7 @@ vpath %.h include
 all: $(EXE)
 
 objects = $(addprefix $(OBJDIR)/, player.o object.o space.o command.o character.o set.o \
-	game_actions.o game_reader.o game.o graphic_engine.o game_loop.o inventory.o)
+	game_actions.o game_reader.o game.o graphic_engine.o game_loop.o inventory.o link.o)
 
 $(EXE): $(objects)
 	$(CC) -o $@ $^ $(CLIB)

@@ -10,7 +10,9 @@
 
 #include "types.h"
 
- /**
+#define MAX_CHARACTERS 100
+
+/**
  * @brief Estructura character con campos:
  * ID, name, descripcion grafica, vida, friendly y un mensaje
  * @author Danyyil Shykerynets

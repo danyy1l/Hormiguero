@@ -11,6 +11,8 @@
 
 #include "types.h"
 
+#define MAX_OBJECTS 100
+
 /**
  * @brief Object
  * Esta estructura almacena toda la información del objeto

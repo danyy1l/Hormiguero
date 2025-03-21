@@ -22,6 +22,8 @@
 #include "../include/space.h"
 #include "../include/types.h"
 
+#define STATUS_SIZE 6
+
 #define WIDTH_MAP 57
 #define WIDTH_DES 29
 #define WIDTH_BAN 23
