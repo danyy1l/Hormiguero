@@ -82,6 +82,18 @@ Status player_add_object(Player *player, Object* object){
   return OK;
 }
 
+Status player_del_object(Player *player, Object *object) {
+  if( !player || !object ){ return ERROR; }
+
+  if (inventory_is_empty(player->backpack)==TRUE) {
+    return ERROR;
+  }
+
+  inventory_del_object(player->backpack, object_get_id(object));
+
+  return OK;
+}
+
 Inventory* player_get_objects(Player *player){
   if( !player ) { return NULL; }
   
@@ -111,8 +123,11 @@ int player_get_health(Player* player){
 }
 
 Status player_print(Player *player){
+  Set *set=inventory_get_objects(player->backpack);
   if( player ){
-    printf("Player ID: %ld\nPlayer location: %ld\nPlayer name: %s\nPlayer objects: %ld\nPlayer health: %d", player->id, player->location, player->name, player_get_objects(player), player->health);
+    printf("Player ID: %ld\nPlayer location: %ld\nPlayer name: %s\nPlayer health: %d", player->id, player->location, player->name, player->health);
+    printf("Player objects: \n");
+    set_print(set);
     return OK;
   }else
     return ERROR;

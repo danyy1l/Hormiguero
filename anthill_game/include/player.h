@@ -116,6 +116,16 @@ Inventory* player_get_objects(Player *player);
 Status player_add_object(Player *player, Object* object);
 
 /**
+ * @brief Elimina un objeto a la mochila del jugador
+ * @author Hugo Martín
+ * 
+ * @param player Jugador al que eliminar el objeto
+ * @param object Objeto que eliminar del inventario
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status player_del_object(Player *player, Object *object);
+
+/**
  * @brief Recibe la vida del jugador
  * @author Danyyil Shykerynets
  * 
@@ -146,7 +156,7 @@ Bool player_find_object(Player *player, Object *object);
 
 /**
  * @brief Imprime los datos del jugador
- * @author Danyyil Shykerynets
+ * @author Hugo Martín
  * 
  * @param player
  * Estructura que contiene los datos del jugador a imprimir

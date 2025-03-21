@@ -11,9 +11,9 @@
 
  #include <stdio.h>
  #include <stdlib.h>
- #include <string.h>
+ #include <string.h> 
  struct _Inventory{
-    Set *objects;
+    Set *objects; 
     int max_objects;
  };
 Inventory *inventory_create(){
@@ -105,6 +105,14 @@ Status inventory_add_object(Inventory* inventory, Id id){
         return -1;
     }
     return inventory->max_objects;
+  }
+
+  Set *inventory_get_objects(Inventory *inventory) {
+    if (!inventory) {
+      return NULL;
+    } 
+
+    return inventory->objects;
   }
  
   Status inventory_print(Inventory* inventory){

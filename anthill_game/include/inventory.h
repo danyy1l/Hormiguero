@@ -9,7 +9,7 @@
  */
 
  #ifndef INVENTORY_H
- #define INVENTORY_H
+ #define INVENTORY_H 
  
  #define MAX_INVENTORY_OBJS 5
 
@@ -91,6 +91,16 @@
  * @return Devuelve el maximo de objetos del inventario en caso de exito y -1 en caso contrario
  */
  int inventory_get_max_objects(Inventory *inventory);
+
+    /**
+     * @brief Devuelve los objetos del inventario
+     * @author Hugo Martín
+     * 
+     * @param inventory Inventario del que devolver los objetos
+     * @return Puntero a objetos en caso de exito y NULL en caso contrario
+     */
+    Set *inventory_get_objects(Inventory *inventory);
+
      /**
  * @brief imprime las caracteristicas del inventario
  * @author Álvaro Rodríguez

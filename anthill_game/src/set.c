@@ -60,7 +60,7 @@ Status set_set_nids(Set* set, int n){
     return ERROR;
   }
 
-  set->n_ids=n;
+  set->n_ids=n; 
   return OK;
 }
 

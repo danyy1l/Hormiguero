@@ -8,7 +8,7 @@
  * @copyright GNU Public License
  */
 
-#include "../include/game.h"
+#include "../include/game.h" 
 
 #include <stdio.h>
 #include <stdlib.h>

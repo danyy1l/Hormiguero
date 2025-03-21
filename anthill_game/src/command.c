@@ -46,7 +46,7 @@ struct _Command {
  *  and initializes its members
  */
 Command* command_create() {
-  Command* newCommand = NULL;
+  Command* newCommand = NULL; 
 
   newCommand = (Command*)malloc(sizeof(Command));
   if (newCommand == NULL) {

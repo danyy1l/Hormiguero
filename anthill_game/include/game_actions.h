@@ -81,12 +81,12 @@ Status game_actions_west(Game *game);
 Status game_actions_take(Game *game, Command* command);
 
 /**
- * @brief Realiza la accion al recibir un commando "DROP"
- * @author Danyyil Shykerynets
+ * @brief Realiza la accion al recibir un commando "DROP" y un nombre de un objeto
+ * @author Hugo Martín
  * @param game Estructura de la partida actual
  * Suelta el objeto del inventario del jugador en caso de haberlo
  */
-Status game_actions_drop(Game *game);
+Status game_actions_drop(Game *game, Command *command);
 
 /**
  * @brief Realiza la accion al recibir un commando "ATTACK"

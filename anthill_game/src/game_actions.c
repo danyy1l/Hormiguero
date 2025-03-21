@@ -72,7 +72,7 @@ Status game_actions_update(Game *game, Command *command) {
       break;
 
     case DROP:
-      if( game_actions_drop(game) == ERROR )
+      if( game_actions_drop(game, command) == ERROR )
         command_set_output(command, ERROR);
       else
         command_set_output(command, OK);
@@ -206,16 +206,24 @@ Status game_actions_take(Game *game, Command *command){
   return ERROR;
 }
 
-Status game_actions_drop(Game *game){
-  Object* object = player_get_object(game_get_player(game));
+Status game_actions_drop(Game *game, Command *command){
+  
+  Player *player=game_get_player(game);
+  Object *object=game_get_object_by_name(game, command_get_arguments(command));
   Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
-
-  if( object ){
-    space_add_object(current_space, object_get_id(object));
-    player_set_object(game_get_player(game), NULL);
-    return OK;
-  }else
+  
+  if (!game || !command) {
     return ERROR;
+  }
+
+  if (player_find_object(player, object)==FALSE) {
+    return ERROR;
+  }
+  
+  space_add_object(current_space, object_get_id(object));
+  player_del_object(player, object);
+
+  return OK;
 }
 
 Status game_actions_attack(Game *game){
