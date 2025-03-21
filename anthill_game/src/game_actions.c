@@ -100,7 +100,7 @@ Status game_actions_update(Game *game, Command *command) {
         command_set_output(command, OK);
       break;
 
-    default:
+    default: 
       break;
   } 
 
@@ -204,7 +204,7 @@ Status game_actions_take(Game *game, Command *command){
   Player* player=game_get_player(game);
   Inventory* backpack=player_get_objects(player);
 
-  if( !command )
+  if(!game || !command )
     return ERROR;
 
   if( inventory_is_full(backpack)==FALSE && object_get_location(object) == player_get_location(game_get_player(game)) ){
@@ -220,20 +220,22 @@ Status game_actions_take(Game *game, Command *command){
 
 Status game_actions_drop(Game *game, Command *command){
   
-  Player *player=game_get_player(game);
-  Object *object=game_get_object_by_name(game, command_get_arguments(command));
-  Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
-  
-  if (!game || !command) {
+  if (!game || !command_get_arguments(command) || strlen(command_get_arguments(command)) == 0) {
     return ERROR;
   }
 
-  if (player_find_object(player, object)==FALSE) {
+  Player *player=game_get_player(game);
+  Object *object=game_get_object_by_name(game, command_get_arguments(command));
+  Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
+
+  if (!object || player_find_object(player, object)==FALSE) {
     return ERROR;
   }
   
-  space_add_object(current_space, object_get_id(object));
-  player_del_object(player, object);
+  if (strcmp(command_get_arguments(command), "")!=0) {
+    space_add_object(current_space, object_get_id(object));
+    player_del_object(player, object);  
+  }
 
   return OK;
 }

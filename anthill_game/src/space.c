@@ -91,7 +91,7 @@ Status space_set_name(Space* space, char* name) {
   if (!space || !name) {
     return ERROR;
   }
-
+ 
   if (!strcpy(space->name, name)) {
     return ERROR;
   }

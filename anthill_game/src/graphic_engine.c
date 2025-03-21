@@ -59,7 +59,7 @@ void print_objects(Game* game, Id id, char* str){
     
     object = game_get_object(game, ids[i]);
     
-    if( player_get_object(game_get_player(game)) == object )
+    if( player_find_object(game_get_player(game), object)==TRUE )
       continue;
     
     if( strlen(foo) + strlen(object_get_name(object)) > LINE_SPACE ){

@@ -125,7 +125,7 @@ Bool set_find_object(Set *set, Id id){
 Id *set_id_object(Set *set){
   if (!set){
     return NULL;
-  }
+  } 
 
   return set->ids;
 }

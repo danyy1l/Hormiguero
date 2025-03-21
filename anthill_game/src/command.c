@@ -92,7 +92,7 @@ Status command_get_user_input(Command* command) {
   int i = UNKNOWN - NO_CMD + 1;
   CommandCode cmd;
 
-  if (!command) {
+  if (!command) { 
     return ERROR;
   }
 
@@ -133,7 +133,7 @@ Status command_set_output(Command *command, Status new_output){
     return ERROR;
 
   command->output = new_output;
-
+ 
   return OK;
 }
 

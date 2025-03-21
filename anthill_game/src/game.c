@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <string.h>
 
 /*
   Game data structure
@@ -122,16 +123,18 @@ Object* game_get_object(Game *game, Id id){
   }
 
   return NULL;
-}
+} 
 
 Object* game_get_object_by_name(Game *game, char* name){
   int i;
-  if( !game )
-    return NULL; 
+  if (!game || !name || strlen(name) == 0) {
+    return NULL;
+  }
 
   for(i=0; i<game->n_objects; i++){
-    if( !strcasecmp(object_get_name(game->objects[i]), name) )
+    if( strcasecmp(object_get_name(game->objects[i]), name)==0 ){
       return game->objects[i];
+    }
   }
 
   return NULL;
