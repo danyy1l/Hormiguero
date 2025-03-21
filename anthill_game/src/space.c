@@ -7,7 +7,7 @@
  * @date 24-02-2025
  * @copyright GNU Public License
  */
-
+ 
 #include "../include/space.h"
 
 #include <stdio.h>

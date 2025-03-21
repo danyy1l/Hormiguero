@@ -19,7 +19,7 @@
 /**
    Game actions implementation
 */
-
+ 
 Status game_actions_update(Game *game, Command *command) {
   int i;
   Player *player=game_get_player(game);                               /*Jugador del game*/
@@ -102,7 +102,7 @@ Status game_actions_update(Game *game, Command *command) {
 
     default:
       break;
-  }
+  } 
 
   if (inventory_is_empty(inventory)!=TRUE) {
     for (i=0;i<n_ids;i++) {
