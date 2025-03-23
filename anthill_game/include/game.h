@@ -3,8 +3,9 @@
  *
  * @file game.h
  * @author Danyyil Shykerynets
- * @version 7
- * @date 04-02-2025
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @version 15
+ * @date 19-03-2025
  * @copyright GNU Public License
  */
 
@@ -17,6 +18,7 @@
 #include "space.h"
 #include "types.h"
 #include "command.h"
+#include "link.h"
 
 #define MAX_SPACES 100
 
@@ -193,6 +195,32 @@ Status game_add_space(Game *game, Space *space);
 Space *game_get_space(Game *game, Id id);
 
 /**
+ * @brief El juego obtiene el puntero de un link con un id determinado en la estructura game 
+ * @author Anthony Eduardo Alvarado Carbajal 
+ * @param game Un puntero a game
+ * @param id un numero id
+ * @return Un puntero a link en la partida game
+ */
+Link* game_get_link(Game* game, Id id);
+
+/**
+ * @brief El juego obtiene el numero de links
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a game
+ * @return El numero de links
+ */
+int game_get_n_links(Game* game);
+
+/**
+ * @brief El juego obtiene el numero de links
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a game
+ * @param n_links el numero de links
+ * @return El numero de links
+ */
+Status game_set_n_links(Game *game, int n_links);
+
+/**
  * @brief Obtiene del espacio en cierta posicion del array de espacios de la partida
  * @author Danyyil Shykerynets
  * @param game Estructura de la partida actual
@@ -201,4 +229,23 @@ Space *game_get_space(Game *game, Id id);
  */
 Id game_get_space_id_at(Game *game, int position);
 
+/**
+ * @brief Obtiene una conexion id del destino si existe un elnace valido
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a game
+ * @param id un numero id
+ * @param direction una direccion
+ * @return el id destinatario
+ */
+Id game_get_connection(Game *game,Id id, Direction direction);
+
+/**
+ * @brief Verifica si la conexion está abierta o cerrada
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a juego
+ * @param id un numero id 
+ * @param direction una direccion
+ * @return TRUE, si la conexion esta abierta o FALSE en caso contrario
+ */
+Bool game_connection_is_open(Game *game,Id id, Direction direction);
 #endif
