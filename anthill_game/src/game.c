@@ -3,8 +3,9 @@
  *
  * @file game.c
  * @author Danyyil Shykerynets
- * @version 7
- * @date 03-02-2025
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @version 15
+ * @date 19-03-2025
  * @copyright GNU Public License
  */
 
@@ -28,6 +29,8 @@ struct _Game{
   int n_spaces;                           /*!< Número de espacios*/
   Command *last_cmd;                      /*!< Puntero al comando*/
   Bool finished;                          /*!< Valor de TRUE o FALSE*/
+  Link *links[MAX_LINKS];
+  int n_links;
 };
 
 /**
@@ -237,6 +240,74 @@ Id game_get_space_id_at(Game *game, int position) {
   return space_get_id(game->spaces[position]);
 }
 
+Link* game_get_link(Game* game, Id id){
+  int i;
+  if (!game|| id ==NO_ID){
+    return NULL;
+  }
+  for (i=0;i<game->n_links;i++){
+    if(id==space_get_id(game->links[i])){
+      return game->links[i];
+    }
+  }
+  return NULL;
+}
+
+int game_get_n_links(Game* game){
+  if (!game){
+    return -1;
+  }
+
+   return game->n_links;
+}
+
+Status game_set_n_links(Game* game, int n_links){
+  if (!game){
+    return ERROR;
+  }
+  game->n_links=n_links;
+  return OK;
+}
+Id game_get_connection(Game *game,Id id, Direction direction){
+  int i;
+  Link* link=NULL;
+  if (!game){
+    return NO_ID;
+  }
+  for(i=0;i<game->n_links;i++){
+    link=game->links[i];
+  }
+
+  if(id==link_get_origin(game->links[i])&&link_get_direction(game->links[i])==direction){
+    return link_get_destination(game->links[i]);
+  }
+
+  return NO_ID;
+}
+
+Bool game_connection_is_open(Game *game, Id id, Direction direction){
+  int i;
+  Link *link=NULL;
+  if (!game){
+    return FALSE;
+  }
+
+  for(i=0;i<game->n_links;i++){
+    link=game->links[i];
+
+    if(id==link_get_origin(game->links[i])&&link_get_direction(game->links[i])==direction){
+      if(link_get_open(game->links[i])==TRUE){
+        return TRUE;
+      }
+      else {
+        return FALSE;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
 void game_print(Game *game) {
   int i = 0;
 
@@ -252,3 +323,4 @@ void game_print(Game *game) {
   printf("=> Player location: ");
   player_print(game->player);
 }
+
