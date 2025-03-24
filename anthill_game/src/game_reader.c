@@ -165,8 +165,8 @@ Status game_load_characters(Game *game, char *filename){
       toks = strtok(NULL, "|");
       strcpy(gdesc, toks);
       toks = strtok(NULL, "|");
-      toks = strtok(NULL, "|");
       location = atol(toks);
+      toks = strtok(NULL, "|");
       health = atoi(toks);
       toks = strtok(NULL, "|");
       friendly = atoi(toks);
