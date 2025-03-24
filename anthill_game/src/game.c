@@ -104,16 +104,11 @@ Status game_set_finished(Game *game, Bool finished) {
   return OK;
 }
 
-Player* game_get_player(Game *game, Id id){  
-  if(!game)
+Player* game_get_player(Game *game, int turn){  
+  if(!game || turn > game->n_players || turn < 1)
     return NULL;
 
-  for(int i=0; i<game->n_players; i++){
-    if(player_get_id(game->players[i]) == id )
-      return game->players[i];
-  }
-
-  return NULL;
+  return game->players[ turn - 1];
 } 
 
 int game_get_n_players(Game *game){
@@ -289,7 +284,7 @@ Id game_get_connection(Game *game, Id id, Direction direction){
     return NO_ID;
   }
   for(i=0;i<game->n_links;i++){
-    if(id==link_get_origin(game->links[i]) && link_get_direction(game->links[i])==direction)
+    if(id == link_get_origin(game->links[i]) && link_get_direction(game->links[i]) == direction)
       return link_get_destination(game->links[i]);
   }
 

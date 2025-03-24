@@ -35,7 +35,7 @@ Player *player_create(){
   output->name[0] = '\0';
   output->gdesc[0] = '\0';
   output->backpack = inventory_create();
-  output->health = 1;
+  output->health = 0;
 
   return output;
 }

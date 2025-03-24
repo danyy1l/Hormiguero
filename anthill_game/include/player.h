@@ -154,10 +154,23 @@ Status player_set_health(Player *player, int health);
  */
 Bool player_find_object(Player *player, Object *object);
 
-/*TO DO: Documentar*/
-
+/**
+ * @brief Establece la descripcion grafica de un jugador
+ * @author Danyyil Shykerynets
+ * 
+ * @param player Puntero al jugador a modifcar
+ * @param gdesc Desc Grafica a establecer en player
+ * @return OK o ERROR
+ */
 Status player_set_gdesc(Player* player, const char* gdesc);
 
+/**
+ * @brief Obtiene la descripcion grafica de un jugador
+ * @author Danyyil Shykerynets
+ * 
+ * @param player Puntero al jugador del que obtener la descripcion
+ * @return string con la desc grafica del player
+ */
 char* player_get_gdesc(Player* player);
 
 /**

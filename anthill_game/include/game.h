@@ -80,8 +80,14 @@ Status game_set_finished(Game *game, Bool finished);
  * @param game Un puntero a Game
  * @return Puntero a la estructura player de la partida "game" 
  */
-Player *game_get_player(Game* game, Id id);
+Player *game_get_player(Game* game, int turn);
 
+/**
+ * @brief Obtiene el numero de jugadores de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @return Entero con numero de jugadores
+ */
 int game_get_n_players(Game *game);
 
 /**

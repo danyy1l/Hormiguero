@@ -98,12 +98,4 @@ Status command_set_output(Command *command, Status new_output);
  */
 char* command_get_arguments(Command *command);
 
-/**
- * @brief Obtiene la dirección del argumento en caso de que command sea MOVE
- * @author Danyyil Shykerynets
- * @param command comando recibido
- * @return Una direccion (enumeracion) que representa la dirección a la que moverse
- */
-Direction command_move_get_direction(Command *command);
-
 #endif

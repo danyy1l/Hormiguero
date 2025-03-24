@@ -175,23 +175,23 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   extern char *cmd_to_str[N_CMD][N_CMDT];
   int i, id_count, dir_check = 0;
 
-  Player *player=game_get_player(game, 1);                               /*Jugador del game*/
+  Player *player=game_get_player(game, 1);                            /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
   int n_ids=set_get_nids(inventory_get_objects(inventory)); 
   Id *set_ids=set_id_object(inventory_get_objects(inventory));        /*Array de Ids, con los ids de los objetos de la mochila del jugador*/     
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
-  if ((id_act = player_get_location(player)) != NO_ID) {
+    if( (id_act = player_get_location(player)) != NO_ID) {
     space_act = game_get_space(game, id_act);
+    id_north = game_get_connection(game, id_act, N);
     space_north = game_get_space(game, id_north);
-    id_north = space_get_id(space_north);
+    id_south = game_get_connection(game, id_act, S);
     space_south = game_get_space(game, id_south);
-    id_south = space_get_id(space_south);
+    id_east = game_get_connection(game, id_act, E);
     space_east = game_get_space(game, id_east);
-    id_east = space_get_id(space_east);
+    id_west = game_get_connection(game, id_act, W);
     space_west = game_get_space(game, id_west);
-    id_west = space_get_id(space_west);
 
     /*Each direction sums a binary value so that if theres a space north and west
     it'd be equivalent to 1010 (NESW) = 10 in decimal*/
@@ -660,6 +660,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     default:
       break; 
     }
+  
   }
 
   /* Paint in the description area */

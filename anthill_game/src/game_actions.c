@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 
 /**
    Game actions declaration
@@ -163,17 +164,25 @@ void game_actions_quit(Game *game) {}
 
 Status game_actions_move(Game *game, Command *command) {
   Id space_id = NO_ID;
-  Direction dir;
-  
-  if (NO_ID == space_id) {
-    return ERROR;
-  }
+  char dir[__WORDSIZE];
+  Direction direction = U;
 
   space_id = player_get_location(game_get_player(game, 1));
-  dir = command_move_get_direction(command);
+  strcpy(dir, command_get_arguments(command));
 
-  if (game_connection_is_open(game, space_id, dir)) {
-    player_set_location(game_get_player(game, 1), game_get_space_id_at(game, 1));
+  if( !strcasecmp("North", dir) || !strcasecmp("N", dir) )
+    direction = N;
+  else if( !strcasecmp("East", dir) || !strcasecmp("E", dir) )
+    direction = E;
+  else if( !strcasecmp("South", dir) || !strcasecmp("S", dir) )
+    direction = S;
+  else if( !strcasecmp("West", dir) || !strcasecmp("W", dir) )
+    direction = W;
+  else
+    direction = U;
+
+  if (game_connection_is_open(game, space_id, direction)) {
+    player_set_location(game_get_player(game, 1), game_get_connection(game, space_id, direction));
   }else
     return ERROR;
 

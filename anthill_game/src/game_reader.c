@@ -164,7 +164,7 @@ Status game_load_players(Game *game, char *filename){
   #ifdef DEBUG
       printf("Leido: %ld|%s|%ld\n", id, name, location);
   #endif
-      player = player_create();
+      if( !(player = player_create()) ) return ERROR;
       player_set_id(player, id);
       player_set_name(player, name);
       player_set_gdesc(player, gdesc);
@@ -213,7 +213,7 @@ Status game_load_objects(Game *game, char *filename){
   #ifdef DEBUG
       printf("Leido: %ld|%s|%ld\n", id, name, location);
   #endif
-      object = object_create(id);
+      if( !(object = object_create(id))) return ERROR;
       object_set_name(object, name);
       object_set_location(object, location);
       game_add_object(game, object);
@@ -303,24 +303,19 @@ Game* game_create_from_file(char *filename) {
   }
   printf("Game created\n");
 
-  if (game_load_spaces(game, filename) == ERROR) {
-    return ERROR;
-  }
+  if (game_load_spaces(game, filename) == ERROR) return ERROR;
   printf("Spaces created\n");
   
-  if (game_load_links(game, filename) == ERROR) {
-    return ERROR;
-  }
+  if (game_load_links(game, filename) == ERROR) return ERROR;
   printf("Links created\n");
 
-  if(game_load_objects(game, filename) == ERROR){
-    return ERROR;
-  }
+  if( game_load_players(game, filename) == ERROR) return ERROR;
+  printf("Players loaded\n");
+
+  if(game_load_objects(game, filename) == ERROR) return ERROR;
   printf("Objects loaded\n");
   
-  if(game_load_characters(game, filename) == ERROR){
-    return ERROR;
-  }
+  if(game_load_characters(game, filename) == ERROR) return ERROR;
   printf("Characters loaded\n");
 
   return game;
