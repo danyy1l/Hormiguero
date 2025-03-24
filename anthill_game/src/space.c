@@ -24,10 +24,6 @@
 struct _Space { 
   Id id;                              /*!< Id number of the space, it must be unique */
   char name[WORD_SIZE + 1];           /*!< Name of the space */
-  Id north;                           /*!< Id of the space at the north */
-  Id south;                           /*!< Id of the space at the south */
-  Id east;                            /*!< Id of the space at the east */
-  Id west;                            /*!< Id of the space at the west */
   Id character_id;                    /*!< Id of the character in the space, NO_ID if no characters*/
   Set *objects;                       /*!< Array of objects*/
   char gdesc[GDESC_MAX][GDESC_SIZE];  /*!< 5x9 Array containing space's graphic desc*/
@@ -103,66 +99,6 @@ const char* space_get_name(Space* space) {
     return NULL;
   }
   return space->name;
-}
-
-Status space_set_north(Space* space, Id id) {
-  if (!space || id == NO_ID) {
-    return ERROR;
-  }
-  space->north = id;
-  return OK;
-}
-
-Id space_get_north(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->north;
-}
-
-Status space_set_south(Space* space, Id id) {
-  if (!space || id == NO_ID) {
-    return ERROR;
-  }
-  space->south = id;
-  return OK;
-}
-
-Id space_get_south(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->south;
-}
-
-Status space_set_east(Space* space, Id id) {
-  if (!space || id == NO_ID) {
-    return ERROR;
-  }
-  space->east = id;
-  return OK;
-}
-
-Id space_get_east(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->east;
-}
-
-Status space_set_west(Space* space, Id id) {
-  if (!space || id == NO_ID) {
-    return ERROR;
-  }
-  space->west = id;
-  return OK;
-}
-
-Id space_get_west(Space* space) {
-  if (!space) {
-    return NO_ID;
-  }
-  return space->west;
 }
 
 Status space_add_object(Space* space, Id id){
