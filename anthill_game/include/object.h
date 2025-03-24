@@ -9,6 +9,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <stdio.h>
 #include "types.h"
 
 /**
@@ -91,6 +92,6 @@ Id object_get_location(Object *object);
  * @param object Un puntero a Object
  * @return OK, si todo va bien o ERROR si hay algún fallo
  */
-Status object_print(Object* object);
+Status object_print(FILE*pf, Object* object);
 
 #endif

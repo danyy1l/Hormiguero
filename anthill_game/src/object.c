@@ -93,10 +93,10 @@ const char *object_get_name(Object* object) {
 }
 
 
-Status object_print(Object* object){
+Status object_print(FILE *pf, Object* object){
   if (!object)
     return ERROR;
 
-  fprintf(stdout, "-->object (id: %ld; name: %s; location id: %ld)", object->id, object->name, object->location);
+  fprintf(pf, "-->object (id: %ld; name: %s; location id: %ld)", object->id, object->name, object->location);
   return OK;
 }

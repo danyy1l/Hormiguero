@@ -1,4 +1,4 @@
-EXE=anthill
+EXE=castle
 CFLAGS=-g -c -Wall -pedantic
 CC=gcc
 CLIB=-lscreen -L./lib/

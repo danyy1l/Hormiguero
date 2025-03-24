@@ -23,11 +23,10 @@
 Status game_actions_update(Game *game, Command *command) {
   int i;
   Player *player=game_get_player(game);                               /*Jugador del game*/
-  Id player_location=player_get_location(player);                     /*Ubicación del jugador del game*/
   Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
-  int n_ids=set_get_nids(inventory_get_objects(inventory));           
-  Id *set_ids=set_id_object(inventory_get_objects(inventory));        /*Array de Ids, con los ids de los objetos de la mochila del jugador*/
-  Object *object=NULL;                                                
+  Set* player_bag = inventory_get_objects(player_get_objects(player));/*Set con objetos de la mochila*/
+  int n_ids=set_get_nids(player_bag);                                 /*Numero de objetos que porta el jugador*/
+  Object *object=NULL;
 
   CommandCode cmd;
 
@@ -104,10 +103,11 @@ Status game_actions_update(Game *game, Command *command) {
       break;
   } 
 
-  if (inventory_is_empty(inventory)==FALSE) {
+  /*Update position of objects in player backpack*/
+  if( !inventory_is_empty(inventory)) {
     for (i=0;i<n_ids;i++) {
-      object=game_get_object(game, set_ids[i]);       /*Cada uno de los objetos de la mochila del jugador*/
-      object_set_location(object, player_location);   /*Actualiza la ubicación de cada uno de los objetos*/
+      object=game_get_object(game, set_id_object(player_bag)[i]);       /*Cada uno de los objetos de la mochila del jugador*/
+      object_set_location(object, player_get_location(player));         /*Actualiza la ubicación de cada uno de los objetos*/
     }
   }
 
@@ -207,10 +207,8 @@ Status game_actions_take(Game *game, Command *command){
   if(!game || !command )
     return ERROR;
 
-  if( inventory_is_full(backpack)==FALSE && object_get_location(object) == player_get_location(game_get_player(game)) ){
+  if( inventory_is_full(backpack)==FALSE && (object_get_location(object) == player_get_location(game_get_player(game))) ){
     player_add_object(player, object);
-
-    /*TODO: esto cause core dump*/
     space_del_object(current_space, object_get_id(object));
     return OK;
   }
@@ -219,23 +217,20 @@ Status game_actions_take(Game *game, Command *command){
 }
 
 Status game_actions_drop(Game *game, Command *command){
-  
-  if (!game || !command_get_arguments(command) || strlen(command_get_arguments(command)) == 0) {
-    return ERROR;
-  }
-
   Player *player=game_get_player(game);
   Object *object=game_get_object_by_name(game, command_get_arguments(command));
   Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
 
-  if (!object || player_find_object(player, object)==FALSE) {
+  if (!game || !command_get_arguments(command) ) {
+    return ERROR;
+  }
+
+  if (!object || player_find_object(player, object)==FALSE || inventory_is_empty(player_get_objects(player))) {
     return ERROR;
   }
   
-  if (strcmp(command_get_arguments(command), "")!=0) {
-    space_add_object(current_space, object_get_id(object));
-    player_del_object(player, object);  
-  }
+  space_add_object(current_space, object_get_id(object));
+  player_del_object(player, object);
 
   return OK;
 }

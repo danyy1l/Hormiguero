@@ -113,7 +113,8 @@ Status command_get_user_input(Command* command) {
     
     if( (token = strtok(NULL, " \n")) ){ 
       strcpy(command->arguments, token);
-    }
+    }else
+      strcpy(command->arguments, "\0");
     
     return command_set_code(command, cmd);
   }

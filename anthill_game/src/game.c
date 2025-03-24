@@ -251,7 +251,6 @@ void game_print(Game *game) {
   }
 
   printf("=> Object location: ");
-  object_print(game->objects[0]);
   printf("=> Player location: ");
   player_print(game->player);
 }
