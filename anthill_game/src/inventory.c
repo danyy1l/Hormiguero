@@ -110,6 +110,14 @@ int inventory_get_max_objects(Inventory *inventory){
   return inventory->max_objects;
 }
  
+Set *inventory_get_objects(Inventory *inventory) {
+  if (!inventory) {
+    return NULL;
+  } 
+
+  return inventory->objects;
+}
+
 Status inventory_print(Inventory* inventory){
   if (!inventory){
     return ERROR;
