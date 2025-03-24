@@ -104,7 +104,7 @@ Status game_actions_update(Game *game, Command *command) {
       break;
   } 
 
-  if (inventory_is_empty(inventory)!=TRUE) {
+  if (inventory_is_empty(inventory)==FALSE) {
     for (i=0;i<n_ids;i++) {
       object=game_get_object(game, set_ids[i]);       /*Cada uno de los objetos de la mochila del jugador*/
       object_set_location(object, player_location);   /*Actualiza la ubicación de cada uno de los objetos*/

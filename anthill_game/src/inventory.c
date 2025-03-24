@@ -45,7 +45,7 @@ Status inventory_destroy(Inventory * inventory){
 Bool inventory_is_empty(Inventory * inventory){
     if (!inventory)
     {
-       return TRUE;
+       return FALSE;
     }
     if (set_get_nids(inventory->objects)==0)
     {
