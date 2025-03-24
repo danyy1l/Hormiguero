@@ -101,6 +101,14 @@ Status inventory_set_max_objects(Inventory *inventory,int n);
 int inventory_get_max_objects(Inventory *inventory);
 
 /**
+ * @brief recoje el set de objetos del inventario
+ * @author Álvaro Rodríguez
+ * @param Inventory puntero al inventario
+ * @return Devuelve el conjunto de objetos del inventario en caso de exito y NULL en caso contrario
+*/
+Set *inventory_get_objects(Inventory *inventory);
+
+/**
  * @brief imprime las caracteristicas del inventario
  * @author Álvaro Rodríguez
  * @param Inventory puntero al inventario
