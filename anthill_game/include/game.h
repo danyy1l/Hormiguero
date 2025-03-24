@@ -75,19 +75,23 @@ Bool game_get_finished(Game *game);
 Status game_set_finished(Game *game, Bool finished);
 
 /**
- * @brief Imprime el juego
- * @author Anthony Eduardo Alvarado Carbajal
- * @param game Un puntero a Game 
- */
-void game_print(Game *game);
-
-/**
  * @brief Obtiene el puntero del jugador de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game
  * @return Puntero a la estructura player de la partida "game" 
  */
-Player *game_get_player(Game* game);
+Player *game_get_player(Game* game, Id id);
+
+int game_get_n_players(Game *game);
+
+/**
+ * @brief Establece un nuevo jugador en el array de objetos de la partida
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param player jugador a establecer en la partida
+ * @return OK en caso de exito, ERROR en caso contrario 
+ */
+Status game_add_player(Game *game, Player* player);
 
 /**
  * @brief Establece un nuevo objeto en el array de objetos de la partida
@@ -125,15 +129,6 @@ Object* game_get_object_by_name(Game *game, char* name);
 int game_get_n_objects(Game* game);
 
 /**
- * @brief Establece el numero de objetos de la estructura game
- * @author Danyyil Shykerynets
- * @param game Un puntero a Game
- * @param n_objects Numero de objetos a establecer
- * @return OK en caso de exito, ERROR en caso contrario 
- */
-Status game_set_n_objects(Game* game, int n_objects);
-
-/**
  * @brief Establece un nuevo personaje en el array de personajes de la partida
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game
@@ -158,15 +153,6 @@ Status game_remove_character(Game *game, Id character_id);
  * @return INT con numero de personajes vivos en la partida
  */
 int game_get_n_characters(Game* game);
-
-/**
- * @brief Establece el numero de personajes de la estructura game
- * @author Danyyil Shykerynets
- * @param game Un puntero a Game
- * @param n_objects Numero de personajes a establecer
- * @return OK en caso de exito, ERROR en caso contrario 
- */
-Status game_set_n_characters(Game* game, int n_characters);
 
 /**
  * @brief Obtiene el puntero de un personaje con cierto id de la estructura game
@@ -199,10 +185,20 @@ Space *game_get_space(Game *game, Id id);
  * @brief El juego obtiene el puntero de un link con un id determinado en la estructura game 
  * @author Anthony Eduardo Alvarado Carbajal 
  * @param game Un puntero a game
- * @param id un numero id
+ * @param origin ID del origen
+ * @param destination ID del espacio destino
  * @return Un puntero a link en la partida game
  */
-Link* game_get_link(Game* game, Id id);
+Link* game_get_link(Game* game, Id origin, Id destination);
+
+/**
+ * @brief Adicion de un nuevo enlace a la partida 
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a game
+ * @param link estructura del enlace creado (game_reader)
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status game_add_link(Game* game, Link* link);
 
 /**
  * @brief El juego obtiene el numero de links
@@ -211,15 +207,6 @@ Link* game_get_link(Game* game, Id id);
  * @return El numero de links
  */
 int game_get_n_links(Game* game);
-
-/**
- * @brief El juego obtiene el numero de links
- * @author Anthony Eduardo Alvarado Carbajal
- * @param game Un puntero a game
- * @param n_links el numero de links
- * @return El numero de links
- */
-Status game_set_n_links(Game *game, int n_links);
 
 /**
  * @brief Obtiene del espacio en cierta posicion del array de espacios de la partida
@@ -231,22 +218,30 @@ Status game_set_n_links(Game *game, int n_links);
 Id game_get_space_id_at(Game *game, int position);
 
 /**
- * @brief Obtiene una conexion id del destino si existe un elnace valido
+ * @brief Obtiene una conexion id del destino si existe un enlace valido
  * @author Anthony Eduardo Alvarado Carbajal
  * @param game Un puntero a game
- * @param id un numero id
+ * @param id ID del espacio actual
  * @param direction una direccion
  * @return el id destinatario
  */
-Id game_get_connection(Game *game,Id id, Direction direction);
+Id game_get_connection(Game *game, Id id, Direction direction);
 
 /**
  * @brief Verifica si la conexion está abierta o cerrada
  * @author Anthony Eduardo Alvarado Carbajal
  * @param game Un puntero a juego
- * @param id un numero id 
+ * @param id ID del espacio actual
  * @param direction una direccion
  * @return TRUE, si la conexion esta abierta o FALSE en caso contrario
  */
-Bool game_connection_is_open(Game *game,Id id, Direction direction);
+Bool game_connection_is_open(Game *game, Id id, Direction direction);
+
+/**
+ * @brief Imprime el juego
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Un puntero a Game 
+ */
+void game_print(Game *game);
+
 #endif

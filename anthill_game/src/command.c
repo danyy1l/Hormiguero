@@ -21,10 +21,7 @@ char *cmd_to_str[N_CMD][N_CMDT] = {
   {"", "No command"},
   {"", "Unknown"},
   {"q", "Quit"},
-  {"n", "North"},
-  {"s", "South"},
-  {"e", "East"},
-  {"w", "West"},
+  {"m", "Move"},
   {"t", "Take"},
   {"d", "Drop"},
   {"a", "Attack"},
@@ -143,4 +140,27 @@ char* command_get_arguments(Command *command){
     return NULL;
 
   return command->arguments;
+}
+
+Direction command_move_get_direction(Command *command){
+  char dir[__WORDSIZE];
+  Direction output;
+
+  if(command_get_code(command) != MOVE)
+    return U;
+
+  strcpy(dir, command_get_arguments(command));
+
+  if( strcasecmp("North", dir) || strcasecmp("N", dir) )
+    output = N;
+  else if( strcasecmp("East", dir) || strcasecmp("E", dir) )
+    output = E;
+  else if( strcasecmp("South", dir) || strcasecmp("S", dir) )
+    output = S;
+  else if( strcasecmp("West", dir) || strcasecmp("W", dir) )
+    output = W;
+  else
+    output = U;
+
+  return output;
 }

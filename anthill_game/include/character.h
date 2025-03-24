@@ -10,7 +10,7 @@
 
 #include "types.h"
 
- /**
+/**
  * @brief Estructura character con campos:
  * ID, name, descripcion grafica, vida, friendly y un mensaje
  * @author Danyyil Shykerynets

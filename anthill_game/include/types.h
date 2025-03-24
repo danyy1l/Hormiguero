@@ -17,8 +17,12 @@
 #define STATUS_SIZE 6
 #define NO_ID -1
 
+#define PLY_GDESC 4
+#define CHAR_GDESC 6
+
 #define MAX_OBJECTS 100
 #define MAX_CHARACTERS 100
+#define MAX_PLAYERS 4
 
 typedef long Id;
 
@@ -26,6 +30,6 @@ typedef enum { FALSE, TRUE } Bool;
 
 typedef enum { ERROR, OK } Status;
 
-typedef enum { U, N, S, E, W } Direction;
+typedef enum { U, N, E, S, W } Direction;
 
 #endif

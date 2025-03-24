@@ -59,7 +59,7 @@ void print_objects(Game* game, Id id, char* str){
     
     object = game_get_object(game, ids[i]);
     
-    if( player_find_object(game_get_player(game), object)==TRUE )
+    if( player_find_object(game_get_player(game, 1), object)==TRUE )
       continue;
     
     if( strlen(foo) + strlen(object_get_name(object)) > LINE_SPACE ){
@@ -175,23 +175,23 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   extern char *cmd_to_str[N_CMD][N_CMDT];
   int i, id_count, dir_check = 0;
 
-  Player *player=game_get_player(game);                               /*Jugador del game*/
+  Player *player=game_get_player(game, 1);                               /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
   int n_ids=set_get_nids(inventory_get_objects(inventory)); 
   Id *set_ids=set_id_object(inventory_get_objects(inventory));        /*Array de Ids, con los ids de los objetos de la mochila del jugador*/     
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
-  if ((id_act = player_get_location(game_get_player(game))) != NO_ID) {
+  if ((id_act = player_get_location(player)) != NO_ID) {
     space_act = game_get_space(game, id_act);
-    id_north = space_get_north(space_act);
     space_north = game_get_space(game, id_north);
-    id_south = space_get_south(space_act);
+    id_north = space_get_id(space_north);
     space_south = game_get_space(game, id_south);
-    id_east = space_get_east(space_act);
+    id_south = space_get_id(space_south);
     space_east = game_get_space(game, id_east);
-    id_west = space_get_west(space_act);
+    id_east = space_get_id(space_east);
     space_west = game_get_space(game, id_west);
+    id_west = space_get_id(space_west);
 
     /*Each direction sums a binary value so that if theres a space north and west
     it'd be equivalent to 1010 (NESW) = 10 in decimal*/
@@ -664,12 +664,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  if( (player_location = player_get_location(game_get_player(game))) != NO_ID) {
+  if( (player_location = player_get_location(player)) != NO_ID) {
     sprintf(str, "  Player: ");
     screen_area_puts(ge->descript, str);
     sprintf(str, "   Location: %d", (int)player_location);
     screen_area_puts(ge->descript, str);
-    sprintf(str, "   Health: %d", player_get_health(game_get_player(game)));
+    sprintf(str, "   Health: %d", player_get_health(player));
     screen_area_puts(ge->descript, str);
     screen_area_puts(ge->descript, " ");
   }
@@ -706,11 +706,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   screen_area_puts(ge->descript, " ");
 
-  if(inventory_is_empty(player_get_objects(game_get_player(game)))==TRUE) {
+  if(inventory_is_empty(player_get_objects(player))==TRUE) {
     sprintf(str, "  Player has no object");
     screen_area_puts(ge->descript, str);
   } else {
-    sprintf(str, "  Player has these objects: %d", set_get_nids(inventory_get_objects(player_get_objects(game_get_player(game)))));
+    sprintf(str, "  Player has these objects: %d", set_get_nids(inventory_get_objects(player_get_objects(player))));
     screen_area_puts(ge->descript, str);
     for (i=0;i<n_ids;i++) {
       object=game_get_object(game, set_ids[i]);       /*Cada uno de los objetos de la mochila del jugador*/

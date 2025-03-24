@@ -23,10 +23,62 @@ Status game_load_spaces(Game *game, char *filename) {
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
   char *toks = NULL;
-  Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
+  Id id = NO_ID;
   Space *space = NULL;
   Status status = OK;
   int i;
+  
+  if (!filename) {
+    return ERROR;
+  }
+
+  file = fopen(filename, "r");
+  if (file == NULL) {
+    return ERROR;
+  }
+  
+  while (fgets(line, WORD_SIZE, file)) {
+    if (strncmp("#s:", line, 3) == 0) {
+      toks = strtok(line + 3, "|");
+      id = atol(toks);
+      
+      if( !(space = space_create(id)))
+      return ERROR;
+      
+      toks = strtok(NULL, "|");
+      strcpy(name, toks);
+      for(i=0; i<GDESC_MAX; i++){
+        toks = strtok(NULL, "|");
+        space_set_gdesc(space, toks, i);
+      }
+      #ifdef DEBUG
+      printf("Leido: %ld|%s|\n", id, name);
+      #endif
+      space_set_name(space, name);
+      game_add_space(game, space);
+    }
+  }
+  
+  if (ferror(file)) {
+    status = ERROR;
+  }
+  
+  fclose(file);
+  
+  return status;
+}
+
+Status game_load_links(Game *game, char *filename){
+  FILE *file = NULL;
+  char line[WORD_SIZE] = "";
+  char name[WORD_SIZE] = "";
+  Id id = NO_ID, origin = NO_ID, destination = NO_ID;
+  Direction direction;
+  Bool open;
+  char *toks = NULL;
+
+  Link *link = NULL;
+  Status status = OK;
 
   if (!filename) {
     return ERROR;
@@ -38,39 +90,91 @@ Status game_load_spaces(Game *game, char *filename) {
   }
 
   while (fgets(line, WORD_SIZE, file)) {
-    if (strncmp("#s:", line, 3) == 0) {
+    if (strncmp("#l:", line, 3) == 0) {
       toks = strtok(line + 3, "|");
       id = atol(toks);
-
-      if( !(space = space_create(id)))
-        return ERROR;
-
       toks = strtok(NULL, "|");
       strcpy(name, toks);
       toks = strtok(NULL, "|");
-      north = atol(toks);
+      origin= atol(toks);
       toks = strtok(NULL, "|");
-      east = atol(toks);
+      destination = atol(toks);
       toks = strtok(NULL, "|");
-      south = atol(toks);
+      direction = atoi(toks);
       toks = strtok(NULL, "|");
-      west = atol(toks);
-      for(i=0; i<GDESC_MAX; i++){
-        toks = strtok(NULL, "|");
-        space_set_gdesc(space, toks, i);
-      }
-#ifdef DEBUG
-printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
-#endif
-      space_set_name(space, name);
-      space_set_north(space, north);
-      space_set_east(space, east);
-      space_set_south(space, south);
-      space_set_west(space, west);
-      game_add_space(game, space);
+      open = atoi(toks);
+  #ifdef DEBUG
+      printf("Leido: %ld|%s|%s|%d|%d|%s|%ld\n", id, name, gdesc, health, friendly, message, location);
+  #endif
+      if( !(link = link_create()) ){ return ERROR; }
+      link_set_id(link, id);
+      link_set_name(link, name);
+      link_set_origin(link, origin);
+      link_set_destination(link, destination);
+      link_set_direction(link, direction);
+      link_set_open(link, open);
+
+      game_add_link(game, link);
     }
   }
+
+  if (ferror(file)) {
+    status = ERROR;
+  }
+
+  fclose(file);
   
+  return status;
+}
+
+Status game_load_players(Game *game, char *filename){
+  FILE *file = NULL;
+  char line[WORD_SIZE] = "";
+  char name[WORD_SIZE] = "";
+  char gdesc[PLY_GDESC] = "";
+  int health, bag_max;
+  char *toks = NULL;
+  Id id = NO_ID, location = NO_ID;
+  Player* player = NULL;
+  Status status = OK;
+
+  if (!filename) {
+    return ERROR;
+  }
+
+  file = fopen(filename, "r");
+  if (file == NULL) {
+    return ERROR;
+  }
+
+  while (fgets(line, WORD_SIZE, file)) {
+    if (strncmp("#p:", line, 3) == 0) {
+      toks = strtok(line + 3, "|");
+      id = atol(toks);
+      toks = strtok(NULL, "|");
+      strcpy(name, toks);
+      toks = strtok(NULL, "|");
+      strcpy(gdesc, toks);
+      toks = strtok(NULL, "|");
+      location = atol(toks);
+      toks = strtok(NULL, "|");
+      health = atoi(toks);
+      toks = strtok(NULL, "|");
+      bag_max = atoi(toks);
+  #ifdef DEBUG
+      printf("Leido: %ld|%s|%ld\n", id, name, location);
+  #endif
+      player = player_create();
+      player_set_id(player, id);
+      player_set_name(player, name);
+      player_set_gdesc(player, gdesc);
+      player_set_location(player, location);
+      player_set_health(player, health);
+      inventory_set_max_objects(player_get_objects(player), bag_max);
+      game_add_player(game, player);
+    }
+  }
+
   if (ferror(file)) {
     status = ERROR;
   }
@@ -81,7 +185,6 @@ printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
 }
 
 Status game_load_objects(Game *game, char *filename){
-  int i;
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
@@ -99,7 +202,6 @@ Status game_load_objects(Game *game, char *filename){
     return ERROR;
   }
 
-  i=0;
   while (fgets(line, WORD_SIZE, file)) {
     if (strncmp("#o:", line, 3) == 0) {
       toks = strtok(line + 3, "|");
@@ -116,11 +218,8 @@ Status game_load_objects(Game *game, char *filename){
       object_set_location(object, location);
       game_add_object(game, object);
       space_add_object(game_get_space(game, location), id);
-      i++;
     }
   }
-  
-  game_set_n_objects(game, i);
 
   if (ferror(file)) {
     status = ERROR;
@@ -132,7 +231,6 @@ Status game_load_objects(Game *game, char *filename){
 }
 
 Status game_load_characters(Game *game, char *filename){
-  int i;
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
@@ -155,7 +253,6 @@ Status game_load_characters(Game *game, char *filename){
     return ERROR;
   }
 
-  i=0;
   while (fgets(line, WORD_SIZE, file)) {
     if (strncmp("#c:", line, 3) == 0) {
       toks = strtok(line + 3, "|");
@@ -186,11 +283,8 @@ Status game_load_characters(Game *game, char *filename){
 
       game_add_character(game, character);
       space_set_character(game_get_space(game, location), character_get_id(character));
-      i++;
     }
   }
-  
-  game_set_n_characters(game, i);
 
   if (ferror(file)) {
     status = ERROR;
@@ -214,6 +308,11 @@ Game* game_create_from_file(char *filename) {
   }
   printf("Spaces created\n");
   
+  if (game_load_links(game, filename) == ERROR) {
+    return ERROR;
+  }
+  printf("Links created\n");
+
   if(game_load_objects(game, filename) == ERROR){
     return ERROR;
   }
@@ -222,10 +321,7 @@ Game* game_create_from_file(char *filename) {
   if(game_load_characters(game, filename) == ERROR){
     return ERROR;
   }
-  printf("Characters loaded\n");  
-  /* The player is located in the first space */
-  player_set_location(game_get_player(game), game_get_space_id_at(game, 0));
-  player_set_health(game_get_player(game), 10);
+  printf("Characters loaded\n");
 
   return game;
 }

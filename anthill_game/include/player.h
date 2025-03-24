@@ -74,7 +74,7 @@ const char* player_get_name(Player* player);
  * @param name Una cadena con el nombre del objeto
  * @return OK, si todo va bien o ERROR si hay algún fallo
  */
-Status player_set_name(Player* player, char* name);
+Status player_set_name(Player* player, const char* name);
 
 /**
  * @brief Obtiene la ubicacion del jugador
@@ -153,6 +153,12 @@ Status player_set_health(Player *player, int health);
  * @return OK en caso de exito, ERROR en caso contrario
  */
 Bool player_find_object(Player *player, Object *object);
+
+/*TO DO: Documentar*/
+
+Status player_set_gdesc(Player* player, const char* gdesc);
+
+char* player_get_gdesc(Player* player);
 
 /**
  * @brief Imprime los datos del jugador

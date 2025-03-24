@@ -19,6 +19,7 @@ struct _Player {
   Id id;                      /*!<-ID del jugador*/
   Id location;                /*!<-ID del espacio en el que se ubica el jugador*/
   char name[WORD_SIZE + 1];   /*!<-Nombre del jugador*/
+  char gdesc[PLY_GDESC + 1];  /*!<-Descripcion grafica del jugador*/
   Inventory* backpack;        /*!<-Inventario del jugador*/
   int health;                 /*!<-Vida del jugador*/
 };
@@ -32,6 +33,7 @@ Player *player_create(){
   output->id = NO_ID;
   output->location = NO_ID;
   output->name[0] = '\0';
+  output->gdesc[0] = '\0';
   output->backpack = inventory_create();
   output->health = 1;
 
@@ -47,11 +49,26 @@ Status player_destroy(Player *player){
   return OK;
 }
 
+Id player_get_id(Player* player){
+  return player == NULL ? NO_ID : player->id;
+}
+
 Status player_set_id(Player *player, Id id){
   if( !player || id == NO_ID ) { return ERROR; }
 
   player->id = id;
 
+  return OK;
+}
+
+const char* player_get_name(Player* player){
+  return player == NULL ? NULL : player->name;
+}
+
+Status player_set_name(Player* player, const char* name){
+  if( !player || !name ) return ERROR;
+
+  strcpy(player->name, name);
   return OK;
 }
 
@@ -121,6 +138,18 @@ int player_get_health(Player* player){
   if( !player ) { return -1; }
 
   return player->health;
+}
+
+Status player_set_gdesc(Player* player, const char* gdesc){
+  if( !player || !gdesc ) return ERROR;
+
+  strcpy(player->gdesc, gdesc);
+
+  return OK;
+}
+
+char* player_get_gdesc(Player* player){
+  return player == NULL ? NULL : player->gdesc;
 }
 
 Status player_print(Player *player){

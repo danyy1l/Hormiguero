@@ -18,7 +18,7 @@ struct _Character{
   Id id;                    /*!< ID of the character*/
   Id location;              /*!< ID of the locations of this character*/
   char name[WORD_SIZE];     /*!< String containing name of the character*/
-  char gdesc[GDESC_SIZE];   /*!< String containing gdesc of the character*/
+  char gdesc[CHAR_GDESC];   /*!< String containing gdesc of the character*/
   int health;               /*!< Int containing health of character*/
   Bool friendly;            /*!< Sympathy of the character*/
   char message[WORD_SIZE];  /*!< String containing message of the character*/

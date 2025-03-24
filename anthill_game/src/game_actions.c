@@ -37,36 +37,12 @@ Status game_actions_unknown(Game *game);
 void game_actions_quit(Game *game);
 
 /**
- * @brief Realiza la accion al recibir un commando "NORTH"
+ * @brief Realiza la accion al recibir un commando "MOVE"
  * @author Danyyil Shykerynets
  * @param game Estructura de la partida actual
- * Mueve al jugador al sur en caso de que se puede
+ * Mueve al jugador en la direccion escrita en caso de que se puede
  */
-Status game_actions_north(Game *game);
-
-/**
- * @brief Realiza la accion al recibir un commando "SOUTH"
- * @author Danyyil Shykerynets
- * @param game Estructura de la partida actual
- * Mueve al jugador al sur en caso de que sea posible
- */
-Status game_actions_south(Game *game);
-
-/**
- * @brief Realiza la accion al recibir un commando "EAST"
- * @author Danyyil Shykerynets
- * @param game Estructura de la partida actual
- * Se mueve hacia el este en caso de que sea posible
- */
-Status game_actions_east(Game *game);
-
-/**
- * @brief Realiza la accion al recibir un commando "WEST"
- * @author Danyyil Shykerynets
- * @param game Estructura de la partida actual
- * Se mueve hacia el oeste en caso posible
- */
-Status game_actions_west(Game *game);
+Status game_actions_move(Game *game, Command* command);
 
 /**
  * @brief Realiza la accion al recibir un commando "TAKE"
@@ -106,7 +82,7 @@ Status game_actions_chat(Game *game);
  
 Status game_actions_update(Game *game, Command *command) {
   int i;
-  Player *player=game_get_player(game);                               /*Jugador del game*/
+  Player *player=game_get_player(game, 1);                               /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
   Set* player_bag = inventory_get_objects(player_get_objects(player));/*Set con objetos de la mochila*/
   int n_ids=set_get_nids(player_bag);                                 /*Numero de objetos que porta el jugador*/
@@ -127,29 +103,8 @@ Status game_actions_update(Game *game, Command *command) {
       game_actions_quit(game);
       break;
 
-    case NORTH:
-      if( game_actions_north(game) == ERROR )
-        command_set_output(command, ERROR);
-      else
-        command_set_output(command, OK);
-      break;
-
-    case SOUTH:
-      if( game_actions_south(game) == ERROR )
-        command_set_output(command, ERROR);
-      else
-        command_set_output(command, OK);
-      break;
-
-    case EAST:
-      if( game_actions_east(game) == ERROR )
-        command_set_output(command, ERROR);
-      else
-        command_set_output(command, OK);
-      break;
-
-    case WEST:
-      if( game_actions_west(game) == ERROR )
+    case MOVE:
+      if( game_actions_move(game, command) == ERROR )
         command_set_output(command, ERROR);
       else
         command_set_output(command, OK);
@@ -206,76 +161,19 @@ Status game_actions_unknown(Game *game) { return ERROR; }
 
 void game_actions_quit(Game *game) {}
 
-Status game_actions_north(Game *game) {
-  Id current_id = NO_ID;
+Status game_actions_move(Game *game, Command *command) {
   Id space_id = NO_ID;
-
-  space_id = player_get_location(game_get_player(game));
-
+  Direction dir;
+  
   if (NO_ID == space_id) {
     return ERROR;
   }
 
-  current_id = space_get_north(game_get_space(game, space_id));
-  if (current_id != NO_ID) {
-    player_set_location(game_get_player(game), current_id);
-  }else
-    return ERROR;
+  space_id = player_get_location(game_get_player(game, 1));
+  dir = command_move_get_direction(command);
 
-  return OK;
-}
-
-Status game_actions_south(Game *game) {
-  Id current_id = NO_ID;
-  Id space_id = NO_ID;
-
-  space_id = player_get_location(game_get_player(game));
-
-  if (NO_ID == space_id) {
-    return ERROR;
-  }
-
-  current_id = space_get_south(game_get_space(game, space_id));
-  if (current_id != NO_ID) {
-    player_set_location(game_get_player(game), current_id);
-  }else
-    return ERROR;
-
-  return OK;
-}
-
-Status game_actions_east(Game *game) {
-  Id current_id = NO_ID;
-  Id space_id = NO_ID;
-
-  space_id = player_get_location(game_get_player(game));
-
-  if (NO_ID == space_id) {
-    return ERROR;
-  }
-
-  current_id = space_get_east(game_get_space(game, space_id));
-  if (current_id != NO_ID) {
-    player_set_location(game_get_player(game), current_id);
-  }else
-    return ERROR;
-
-  return OK;
-}
-
-Status game_actions_west(Game *game) {
-  Id current_id = NO_ID;
-  Id space_id = NO_ID;
-
-  space_id = player_get_location(game_get_player(game));
-
-  if (NO_ID == space_id) {
-    return ERROR;
-  }
-
-  current_id = space_get_west(game_get_space(game, space_id));
-  if (current_id != NO_ID) {
-    player_set_location(game_get_player(game), current_id);
+  if (game_connection_is_open(game, space_id, dir)) {
+    player_set_location(game_get_player(game, 1), game_get_space_id_at(game, 1));
   }else
     return ERROR;
 
@@ -284,14 +182,14 @@ Status game_actions_west(Game *game) {
 
 Status game_actions_take(Game *game, Command *command){
   Object* object = game_get_object_by_name(game, command_get_arguments(command));
-  Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
-  Player* player=game_get_player(game);
+  Space* current_space = game_get_space(game, player_get_location(game_get_player(game, 1)));
+  Player* player=game_get_player(game, 1);
   Inventory* backpack=player_get_objects(player);
 
   if(!game || !command )
     return ERROR;
 
-  if( inventory_is_full(backpack)==FALSE && (object_get_location(object) == player_get_location(game_get_player(game))) ){
+  if( inventory_is_full(backpack)==FALSE && (object_get_location(object) == player_get_location(game_get_player(game, 1))) ){
     player_add_object(player, object);
     space_del_object(current_space, object_get_id(object));
     return OK;
@@ -301,9 +199,9 @@ Status game_actions_take(Game *game, Command *command){
 }
 
 Status game_actions_drop(Game *game, Command *command){
-  Player *player=game_get_player(game);
+  Player *player=game_get_player(game, 1);
   Object *object=game_get_object_by_name(game, command_get_arguments(command));
-  Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
+  Space* current_space = game_get_space(game, player_get_location(game_get_player(game, 1)));
 
   if (!game || !command_get_arguments(command) ) {
     return ERROR;
@@ -320,7 +218,7 @@ Status game_actions_drop(Game *game, Command *command){
 }
 
 Status game_actions_attack(Game *game){
-  Player* player = game_get_player(game);
+  Player* player = game_get_player(game, 1);
   Space *current_space = game_get_space(game, player_get_location(player));
   Character* character = game_get_character(game, space_get_character_id(current_space));
   int num;
@@ -349,7 +247,7 @@ Status game_actions_attack(Game *game){
 }
 
 Status game_actions_chat(Game *game){
-  Player* player = game_get_player(game);
+  Player* player = game_get_player(game, 1);
   Space *current_space = game_get_space(game, player_get_location(player));
   Character* character = game_get_character(game, space_get_character_id(current_space));
 
