@@ -92,6 +92,6 @@ Id object_get_location(Object *object);
  * @param object Un puntero a Object
  * @return OK, si todo va bien o ERROR si hay algún fallo
  */
-Status object_print(FILE*pf, Object* object);
+Status object_print(Object* object);
 
 #endif

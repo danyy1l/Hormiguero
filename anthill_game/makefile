@@ -1,4 +1,4 @@
-EXE=castle
+EXE=anthill
 CFLAGS=-g -c -Wall -pedantic
 CC=gcc
 CLIB=-lscreen -L./lib/
@@ -14,8 +14,8 @@ vpath %.h include
 
 all: $(EXE)
 
-objects = $(addprefix $(OBJDIR)/, player.o object.o space.o command.o character.o set.o \
-	game_actions.o game_reader.o game.o graphic_engine.o game_loop.o inventory.o)
+objects = $(addprefix $(OBJDIR)/, player.o object.o space.o command.o character.o set.o link.o inventory.o\
+	game_actions.o game_reader.o game.o graphic_engine.o game_loop.o)
 
 $(EXE): $(objects)
 	$(CC) -o $@ $^ $(CLIB)

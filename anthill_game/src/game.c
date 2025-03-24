@@ -3,17 +3,17 @@
  *
  * @file game.c
  * @author Danyyil Shykerynets
- * @version 7
- * @date 03-02-2025
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @version 15
+ * @date 19-03-2025
  * @copyright GNU Public License
  */
 
-#include "../include/game.h" 
+#include "../include/game.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
-#include <string.h>
 
 /*
   Game data structure
@@ -21,7 +21,7 @@
 
 struct _Game{
   Player *player;                         /*!< Puntero a la estructura del jugador de la partida*/
-  Object *objects[MAX_OBJECTS];            /*!< Puntero a array de objetos de la partida*/
+  Object *objects[MAX_OBJECTS];           /*!< Puntero a array de objetos de la partida*/
   int n_objects;                          /*!< Almacena el numero de objetos en la partida*/
   Character *characters[MAX_CHARACTERS];  /*!< Puntero a array de personajes en la partida*/
   int n_characters;                       /*!< Almacena el numero de personajes*/
@@ -29,6 +29,8 @@ struct _Game{
   int n_spaces;                           /*!< Número de espacios*/
   Command *last_cmd;                      /*!< Puntero al comando*/
   Bool finished;                          /*!< Valor de TRUE o FALSE*/
+  Link *links[MAX_LINKS];                 /*!< Puntero a array de enlaces entre espacios*/
+  int n_links;                            /*!< Almacena el numero de enlaces en la partida*/
 };
 
 /**
@@ -123,18 +125,16 @@ Object* game_get_object(Game *game, Id id){
   }
 
   return NULL;
-} 
+}
 
 Object* game_get_object_by_name(Game *game, char* name){
   int i;
-  if (!game || !name || strlen(name) == 0) {
+  if( !game )
     return NULL;
-  }
 
   for(i=0; i<game->n_objects; i++){
-    if( strcasecmp(object_get_name(game->objects[i]), name)==0 ){
+    if( !strcasecmp(object_get_name(game->objects[i]), name) )
       return game->objects[i];
-    }
   }
 
   return NULL;
@@ -240,6 +240,68 @@ Id game_get_space_id_at(Game *game, int position) {
   return space_get_id(game->spaces[position]);
 }
 
+Link* game_get_link(Game* game, Id id){
+  int i;
+  if (!game|| id ==NO_ID){
+    return NULL;
+  }
+  for (i=0;i<game->n_links;i++){
+    if(id==link_get_id(game->links[i])){
+      return game->links[i];
+    }
+  }
+  return NULL;
+}
+
+int game_get_n_links(Game* game){
+  if (!game){
+    return -1;
+  }
+
+   return game->n_links;
+}
+
+Status game_set_n_links(Game* game, int n_links){
+  if (!game){
+    return ERROR;
+  }
+  game->n_links=n_links;
+  return OK;
+}
+
+Id game_get_connection(Game *game,Id id, Direction direction){
+  int i;
+  if (!game){
+    return NO_ID;
+  }
+  for(i=0;i<game->n_links;i++){
+    if(id==link_get_origin(game->links[i]) && link_get_direction(game->links[i])==direction)
+      return link_get_destination(game->links[i]);
+  }
+
+  return NO_ID;
+}
+
+Bool game_connection_is_open(Game *game, Id id, Direction direction){
+  int i;
+  if (!game){
+    return FALSE;
+  }
+
+  for(i=0;i<game->n_links;i++){
+    if(id == link_get_origin(game->links[i]) && link_get_direction(game->links[i])==direction){
+      if(link_get_open(game->links[i])==TRUE){
+        return TRUE;
+      }
+      else {
+        return FALSE;
+      }
+    }
+  }
+
+  return FALSE;
+}
+
 void game_print(Game *game) {
   int i = 0;
 
@@ -251,6 +313,7 @@ void game_print(Game *game) {
   }
 
   printf("=> Object location: ");
+  object_print(game->objects[0]);
   printf("=> Player location: ");
   player_print(game->player);
 }
