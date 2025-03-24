@@ -21,6 +21,7 @@
 #include "link.h"
 
 #define MAX_SPACES 100
+#define MAX_LINKS 400
 
 typedef struct _Game Game;
 

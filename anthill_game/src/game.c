@@ -21,7 +21,7 @@
 
 struct _Game{
   Player *player;                         /*!< Puntero a la estructura del jugador de la partida*/
-  Object *objects[MAX_OBJECTS];            /*!< Puntero a array de objetos de la partida*/
+  Object *objects[MAX_OBJECTS];           /*!< Puntero a array de objetos de la partida*/
   int n_objects;                          /*!< Almacena el numero de objetos en la partida*/
   Character *characters[MAX_CHARACTERS];  /*!< Puntero a array de personajes en la partida*/
   int n_characters;                       /*!< Almacena el numero de personajes*/
@@ -29,8 +29,8 @@ struct _Game{
   int n_spaces;                           /*!< Número de espacios*/
   Command *last_cmd;                      /*!< Puntero al comando*/
   Bool finished;                          /*!< Valor de TRUE o FALSE*/
-  Link *links[MAX_LINKS];
-  int n_links;
+  Link *links[MAX_LINKS];                 /*!< Puntero a array de enlaces entre espacios*/
+  int n_links;                            /*!< Almacena el numero de enlaces en la partida*/
 };
 
 /**
@@ -268,6 +268,7 @@ Status game_set_n_links(Game* game, int n_links){
   game->n_links=n_links;
   return OK;
 }
+
 Id game_get_connection(Game *game,Id id, Direction direction){
   int i;
   Link* link=NULL;
