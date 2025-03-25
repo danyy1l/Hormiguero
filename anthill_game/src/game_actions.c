@@ -78,15 +78,23 @@ Status game_actions_attack(Game *game);
 Status game_actions_chat(Game *game);
 
 /**
+ * @brief Realiza la accion al recibir un commando "INSPECT"
+ * @author Hugo Martín
+ * @param game Estructura de la partida actual
+ * Imprime la descripción del objeto de la casilla en la que nos encontremos, en caso de que lo haya, o de la mochila
+ */
+Status game_actions_inspect(Game *game, Command *command);
+
+/**
    Game actions implementation
 */
  
 Status game_actions_update(Game *game, Command *command) {
   int i;
   Player *player=game_get_player(game, 1);                               /*Jugador del game*/
-  Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
-  Set* player_bag = inventory_get_objects(player_get_objects(player));/*Set con objetos de la mochila*/
-  int n_ids=set_get_nids(player_bag);                                 /*Numero de objetos que porta el jugador*/
+  Inventory *inventory=player_get_objects(player);                       /*Inventario del jugador del game*/
+  Set* player_bag = inventory_get_objects(player_get_objects(player));   /*Set con objetos de la mochila*/
+  int n_ids=set_get_nids(player_bag);                                    /*Numero de objetos que porta el jugador*/
   Object *object=NULL;
 
   CommandCode cmd;
@@ -138,6 +146,13 @@ Status game_actions_update(Game *game, Command *command) {
       else
         command_set_output(command, OK);
       break;
+    
+    case INSPECT:
+      if( game_actions_inspect(game, command) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
+      break;
 
     default: 
       break;
@@ -177,7 +192,7 @@ Status game_actions_move(Game *game, Command *command) {
   else if( !strcasecmp("South", dir) || !strcasecmp("S", dir) )
     direction = S;
   else if( !strcasecmp("West", dir) || !strcasecmp("W", dir) )
-    direction = W;
+    direction = W; 
   else
     direction = U;
 
@@ -261,6 +276,24 @@ Status game_actions_chat(Game *game){
   Character* character = game_get_character(game, space_get_character_id(current_space));
 
   if( (player_get_location(player) == character_get_location(character)) && (character_get_friendly( character )) ){
+    return OK;
+  }
+
+  return ERROR;
+}
+
+Status game_actions_inspect(Game *game, Command *command) {
+  if (!game || !command) {
+    return ERROR;
+  }
+
+  Player *player=game_get_player(game, 1);
+  Inventory *backpack=player_get_objects(player);
+  Object *object=game_get_object_by_name(game, command_get_arguments(command));
+
+  if (player_get_location(player)!=object_get_location(object) && inventory_find_object(backpack, object_get_id(object))==FALSE) {
+    return ERROR;
+  } else {
     return OK;
   }
 

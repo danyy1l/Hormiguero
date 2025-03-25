@@ -21,7 +21,8 @@
 struct _Object{
   Id id;                            /*!< Número de id del objeto*/
   char name[WORD_SIZE + 1];         /*!< Nombre del objeto*/
-  Id location;                      /*!< Id del espacio donde esta el objeto*/
+  Id location;                      /*!< Id del espacio donde esta el objeto*/ 
+  char description[WORD_SIZE];      /*!< Descripción del objeto*/
 };
 
 Object* object_create(Id id){
@@ -92,6 +93,21 @@ const char *object_get_name(Object* object) {
   return object->name;
 }
 
+Status object_set_description(Object *object, char *description) {
+  if (!object || !description) {
+    return ERROR;
+  }
+  strcpy(object->description, description);
+  return OK;
+}
+
+char *object_get_description(Object *object) {
+  if (!object) {
+    return NULL;
+  }
+
+  return object->description;
+}
 
 Status object_print(Object* object){
   if (!object)

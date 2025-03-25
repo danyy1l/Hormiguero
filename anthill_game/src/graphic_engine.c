@@ -690,7 +690,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       id_count++;
 
   }
-  screen_area_puts(ge->descript, " ");
+  screen_area_puts(ge->descript, " "); 
 
   sprintf(str, "  Characters: ");
   screen_area_puts(ge->descript, str);
@@ -742,6 +742,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   
   if( last_cmd == CHAT && command_get_output(game_get_last_command(game)) ){
     sprintf(str, "  %s: %s",character_get_name(game_get_character(game, space_get_character_id(space_act))), character_get_message( game_get_character(game, space_get_character_id(space_act)) ));
+    screen_area_puts(ge->descript, str);
+  }
+
+  if( last_cmd == INSPECT && command_get_output(game_get_last_command(game)) ){
+    sprintf(str, "  %s: %s", object_get_name(game_get_object_by_name(game, command_get_arguments(game_get_last_command(game)))), object_get_description(game_get_object_by_name(game, command_get_arguments(game_get_last_command(game)))));
     screen_area_puts(ge->descript, str);
   }
 

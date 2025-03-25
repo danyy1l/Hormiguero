@@ -87,6 +87,24 @@ Status object_set_location(Object *object, Id id);
 Id object_get_location(Object *object);
 
 /**
+ * @brief Establece la descripción del objecto
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @param description Un puntero a una cadena con la descripción
+ * @return OK si todo va bien y ERROR si va mal
+ */
+Status object_set_description(Object *object, char *description);
+
+/**
+ * @brief Obtiene la descripción del objecto
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @param description Un puntero a una cadena con la descripción
+ * @return Una cadena que es la descripción del objeto
+ */
+char *object_get_description(Object *object);
+
+/**
  * @brief Imprime el objeto
  * @author Anthony Eduardo Alvarado Carbajal
  * @param object Un puntero a Object

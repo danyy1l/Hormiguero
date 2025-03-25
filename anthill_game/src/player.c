@@ -104,7 +104,7 @@ Status player_del_object(Player *player, Object *object) {
   if( !player || !object ){ return ERROR; }
 
   if (inventory_is_empty(player->backpack)==TRUE) {
-    return ERROR;
+    return ERROR; 
   }
 
   inventory_del_object(player->backpack, object_get_id(object));
