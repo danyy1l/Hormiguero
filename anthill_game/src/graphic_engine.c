@@ -690,7 +690,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
       id_count++;
 
   }
-  screen_area_puts(ge->descript, " ");
+  screen_area_puts(ge->descript, " "); 
 
   sprintf(str, "  Characters: ");
   screen_area_puts(ge->descript, str);

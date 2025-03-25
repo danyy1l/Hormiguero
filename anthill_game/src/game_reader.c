@@ -188,8 +188,9 @@ Status game_load_objects(Game *game, char *filename){
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
+  char description[WORD_SIZE] = "";
   char *toks = NULL;
-  Id id = NO_ID, location = NO_ID;
+  Id id = NO_ID, location = NO_ID; 
   Object *object = NULL;
   Status status = OK;
 
@@ -210,12 +211,15 @@ Status game_load_objects(Game *game, char *filename){
       strcpy(name, toks);
       toks = strtok(NULL, "|");
       location = atol(toks);
+      toks = strtok(NULL, "|");
+      strcpy(description, toks);
   #ifdef DEBUG
-      printf("Leido: %ld|%s|%ld\n", id, name, location);
+      printf("Leido: %ld|%s|%ld|%s\n", id, name, location, description);
   #endif
       if( !(object = object_create(id))) return ERROR;
       object_set_name(object, name);
       object_set_location(object, location);
+      object_set_description(object, description);
       game_add_object(game, object);
       space_add_object(game_get_space(game, location), id);
     }

@@ -25,17 +25,17 @@
 #l:14|P6_P7|33|43|2|1|
 #l:15|P7_P6|43|33|4|1|
 #l:16|P7_D|43|53|2|1|
-#l:17|D_P7|53|43|4|1|
+#l:17|D_P7|53|43|4|1| 
 #l:18|D_A|53|16|3|1|
 #l:19|A_P4|16|15|1|1|
 
 #p:1|Hormiga|m0^ |11|5|3|
 #p:2|Gusano|o0o8|53|8|4|
 
-#o:1|Grain|12|
-#o:2|Crumb|12|
-#o:3|Cookie|12|
-#o:4|Seed|16|
+#o:1|Grain|12|Es un grano de maiz|
+#o:2|Crumb|12|Es una miga de pan|
+#o:3|Cookie|12|Es una galleta de chocolate|
+#o:4|Seed|16|Es una semilla de sésamo|
 
 #c:100|Antlion| ^0m  |53|5|1|Hello!|
 #c:200|Worm|*0o8o |11|5|1|Welcome!|

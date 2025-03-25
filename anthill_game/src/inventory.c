@@ -7,7 +7,7 @@
  * @copyright GNU Public License
 */
 
-#include "../include/inventory.h"
+#include "../include/inventory.h" 
 
 #include <stdio.h>
 #include <stdlib.h>
