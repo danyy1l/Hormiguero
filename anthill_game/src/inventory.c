@@ -116,4 +116,12 @@ Status inventory_add_object(Inventory* inventory, Id id){
     set_print(inventory->objects);
     return OK;
   }
+  Set *inventory_get_objects(Inventory *inventory) {
+    if (!inventory) {
+      return NULL;
+    } 
+
+    return inventory->objects;
+}
+
 

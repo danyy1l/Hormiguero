@@ -99,5 +99,13 @@
  */
  Status inventory_print(Inventory* inventory);
 
+ /**
+ * @brief Devuelve los objetos del inventario
+ * @author Hugo Martín
+ * 
+ * @param inventory Inventario del que devolver los objetos
+ * @return Puntero a objetos en caso de exito y NULL en caso contrario
+ */
+ Set *inventory_get_objects(Inventory *inventory);
 
  #endif
