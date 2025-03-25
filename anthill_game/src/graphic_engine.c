@@ -740,12 +740,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
   screen_area_puts(ge->feedback, str);
   
-  if( last_cmd == CHAT && character_get_friendly(game_get_character(game, space_get_character_id(space_act))) ){
+    if( last_cmd == CHAT && command_get_output(game_get_last_command(game)) ){
     sprintf(str, "  %s: %s",character_get_name(game_get_character(game, space_get_character_id(space_act))), character_get_message( game_get_character(game, space_get_character_id(space_act)) ));
     screen_area_puts(ge->descript, str);
   }
 
-  if( last_cmd == INSPECT ){
+  if( last_cmd == INSPECT && command_get_output(game_get_last_command(game)) ){
     sprintf(str, "  %s: %s", object_get_name(game_get_object_by_name(game, command_get_arguments(game_get_last_command(game)))), object_get_description(game_get_object_by_name(game, command_get_arguments(game_get_last_command(game)))));
     screen_area_puts(ge->descript, str);
   }
