@@ -4,8 +4,6 @@ CC=gcc
 CLIB=-lscreen -L./lib/
 OBJDIR=obj
 DOXDIR=doc
-HTML=html
-LATEX=latex
 vpath %.c src
 vpath %.h include
 
