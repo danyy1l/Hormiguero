@@ -102,7 +102,7 @@ Status object_set_description(Object *object, char *description);
  * @param description Un puntero a una cadena con la descripción
  * @return Una cadena que es la descripción del objeto
  */
-char *object_get_description(Object *object, char *description);
+char *object_get_description(Object *object);
 
 /**
  * @brief Imprime el objeto

@@ -101,8 +101,8 @@ Status object_set_description(Object *object, char *description) {
   return OK;
 }
 
-char *object_get_description(Object *object, char *description) {
-  if (!object || !description) {
+char *object_get_description(Object *object) {
+  if (!object) {
     return NULL;
   }
 

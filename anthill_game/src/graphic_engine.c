@@ -745,6 +745,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     screen_area_puts(ge->descript, str);
   }
 
+  if( last_cmd == INSPECT ){
+    sprintf(str, "  %s: %s", object_get_name(game_get_object_by_name(game, command_get_arguments(game_get_last_command(game)))), object_get_description(game_get_object_by_name(game, command_get_arguments(game_get_last_command(game)))));
+    screen_area_puts(ge->descript, str);
+  }
+
   /* Dump to the terminal */
   screen_paint();
   printf("Prompt => ");
