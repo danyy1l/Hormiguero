@@ -3,6 +3,9 @@ CFLAGS=-g -c -Wall -pedantic
 CC=gcc
 CLIB=-lscreen -L./lib/
 OBJDIR=obj
+DOXDIR=doc
+HTML=html
+LATEX=latex
 vpath %.c src
 vpath %.h include
 
@@ -28,7 +31,7 @@ $(OBJDIR):
 
 #CLEAN .o AND EXE
 clean: 
-	rm -rf $(OBJDIR) $(EXE)
+	rm -rf $(OBJDIR) $(DOXDIR) $(EXE) 
 
 #COMPILE AND RUN PROGRAM
 run: 
@@ -37,3 +40,7 @@ run:
 #RUN WITH VALGRIND TO CHECK MEMLEAKS
 runv:
 	@$(MAKE) && valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(EXE) $(EXE).dat
+
+#DOXYGEN
+doc:
+	doxygen Doxyfile
