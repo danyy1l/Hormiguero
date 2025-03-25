@@ -15,11 +15,11 @@
 #include <string.h>
 
 struct _Link{
-  Id id;
-  char name[WORD_SIZE];
-  Id origin, destination;
-  Direction dir;
-  Bool open;
+  Id id;                  /*!<-ID del enlace*/
+  char name[WORD_SIZE];   /*!<-Nombre del enlace*/
+  Id origin, destination; /*!<-IDs de origen y destino del enlace*/
+  Direction dir;          /*!<-Direccion en la que se orienta el enlace*/
+  Bool open;              /*!<-Booleano que representa la apertura del enlace*/
 };
 
 Link* link_create(){

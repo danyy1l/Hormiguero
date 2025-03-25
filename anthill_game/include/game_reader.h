@@ -13,11 +13,9 @@
 
 #include "game.h"
 
-#define OBJ_NUM 5
-
 /**
  * @brief Crea el array de espacios del mapa, tomando el archivo proporcionado
- * anthill.dat esta como predeterminado
+ * El nombre del archivo se especifica en makefile EXE
  * @author Danyyil Shykerynets
  * @param game Estructura de la partida actual
  * @param filename Nombre del archivo del que extraer el mapa
