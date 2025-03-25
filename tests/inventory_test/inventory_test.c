@@ -13,7 +13,7 @@
  #include "inventory.h"
  #include "inventory_test.h"
  
- #define MAX_TESTS 17
+ #define MAX_TESTS 20
  
   /** 
    * @brief Main function for Inventory unit tests. 
@@ -43,24 +43,24 @@
  
    if (all || test == 1) test1_inventory_create();
    if (all || test == 2) test2_inventory_create();
-   if (all || test == 1) test1_inventory_destroy();
-   if (all || test == 2) test2_inventory_destroy();
-   if (all || test == 1) test1_inventory_is_empty();
-   if (all || test == 2) test2_inventory_is_empty();
-   if (all || test == 1) test1_inventory_is_full();
-   if (all || test == 2) test2_inventory_is_full();
-   if (all || test == 1) test1_inventory_add_object();
-   if (all || test == 2) test2_inventory_add_object();
-   if (all || test == 1) test1_inventory_del_object();
-   if (all || test == 2) test2_inventory_del_object();
-   if (all || test == 1) test1_inventory_find_object();
-   if (all || test == 2) test2_inventory_find_object();
-   if (all || test == 1) test1_inventory_set_max_objects();
-   if (all || test == 2) test2_inventory_set_max_objects();
-   if (all || test == 1) test1_inventory_get_max_objects();
-   if (all || test == 2) test2_inventory_get_max_objects();
-   if (all || test == 1) test1_inventory_get_objects();
-   if (all || test == 2) test2_inventory_get_objects();
+   if (all || test == 3) test1_inventory_destroy();
+   if (all || test == 4) test2_inventory_destroy();
+   if (all || test == 5) test1_inventory_is_empty();
+   if (all || test == 6) test2_inventory_is_empty();
+   if (all || test == 7) test1_inventory_is_full();
+   if (all || test == 8) test2_inventory_is_full();
+   if (all || test == 9) test1_inventory_add_object();
+   if (all || test == 10) test2_inventory_add_object();
+   if (all || test == 11) test1_inventory_del_object();
+   if (all || test == 12) test2_inventory_del_object();
+   if (all || test == 13) test1_inventory_find_object();
+   if (all || test == 14) test2_inventory_find_object();
+   if (all || test == 15) test1_inventory_set_max_objects();
+   if (all || test == 16) test2_inventory_set_max_objects();
+   if (all || test == 17) test1_inventory_get_max_objects();
+   if (all || test == 18) test2_inventory_get_max_objects();
+   if (all || test == 19) test1_inventory_get_objects();
+   if (all || test == 20) test2_inventory_get_objects();
  
    PRINT_PASSED_PERCENTAGE;
  
