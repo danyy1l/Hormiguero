@@ -177,7 +177,7 @@ Status game_actions_move(Game *game, Command *command) {
   else if( !strcasecmp("South", dir) || !strcasecmp("S", dir) )
     direction = S;
   else if( !strcasecmp("West", dir) || !strcasecmp("W", dir) )
-    direction = W;
+    direction = W; 
   else
     direction = U;
 
