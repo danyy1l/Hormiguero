@@ -47,7 +47,7 @@ Status game_actions_move(Game *game, Command* command);
 
 /**
  * @brief Realiza la accion al recibir un commando "TAKE"
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Danyyil Shykerynets
  * @param game Estructura de la partida actual
  * Recibe el objeto de la casilla del jugador y lo lleva consigo hasta recibir un DROP
  */

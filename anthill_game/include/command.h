@@ -20,14 +20,14 @@
 typedef enum { CMDS, CMDL } CommandType;
 
 typedef enum { 
-  NO_CMD = -1,
-  UNKNOWN,
-  QUIT,
-  MOVE,
-  TAKE,
-  DROP,
-  ATTACK,
-  CHAT
+  NO_CMD = -1,  /*!<-Representa ningun comando recibido*/
+  UNKNOWN,      /*!<-Comando desconocido*/
+  QUIT,         /*!<-Este comando termina la partida*/
+  MOVE,         /*!<-Movimiento, hay que añadir la direccion en el argumento*/
+  TAKE,         /*!<-Tomar un objeto, se debe añadir el nombre del objeto*/
+  DROP,         /*!<-Soltar un objeto, se debe añadir el nombre */
+  ATTACK,       /*!<-Ataca a un personaje enemigo*/
+  CHAT          /*!<-Conversa con un personaje amigo*/
 }CommandCode;
 
 typedef struct _Command Command;

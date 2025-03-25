@@ -20,7 +20,7 @@
 /**
  * @brief Estructura Inventory con campos:
  * array de objects, int maximo de objetos 
- * @author Danyyil Shykerynets
+ * @author Álvaro Rodríguez
 */
 typedef struct _Inventory Inventory;
 
