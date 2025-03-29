@@ -22,7 +22,7 @@
 
 #define MAX_OBJECTS 100
 #define MAX_CHARACTERS 100
-#define MAX_PLAYERS 4
+#define MAX_PLAYERS 8
 
 typedef long Id;
 

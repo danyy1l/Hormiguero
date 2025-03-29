@@ -55,7 +55,7 @@ Status game_actions_take(Game *game, Command* command);
 
 /**
  * @brief Realiza la accion al recibir un commando "DROP" y un nombre de un objeto
- * @author Hugo Martín
+ * @author Danyyil Shykerynets
  * @param game Estructura de la partida actual
  * Suelta el objeto del inventario del jugador en caso de haberlo
  */
@@ -91,7 +91,7 @@ Status game_actions_inspect(Game *game, Command *command);
  
 Status game_actions_update(Game *game, Command *command) {
   int i;
-  Player *player=game_get_player(game, 1);                               /*Jugador del game*/
+  Player *player=game_get_player(game);                                  /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                       /*Inventario del jugador del game*/
   Set* player_bag = inventory_get_objects(player_get_objects(player));   /*Set con objetos de la mochila*/
   int n_ids=set_get_nids(player_bag);                                    /*Numero de objetos que porta el jugador*/
@@ -182,7 +182,7 @@ Status game_actions_move(Game *game, Command *command) {
   char dir[__WORDSIZE];
   Direction direction = U;
 
-  space_id = player_get_location(game_get_player(game, 1));
+  space_id = player_get_location(game_get_player(game));
   strcpy(dir, command_get_arguments(command));
 
   if( !strcasecmp("North", dir) || !strcasecmp("N", dir) )
@@ -197,7 +197,7 @@ Status game_actions_move(Game *game, Command *command) {
     direction = U;
 
   if (game_connection_is_open(game, space_id, direction)) {
-    player_set_location(game_get_player(game, 1), game_get_connection(game, space_id, direction));
+    player_set_location(game_get_player(game), game_get_connection(game, space_id, direction));
   }else
     return ERROR;
 
@@ -206,14 +206,14 @@ Status game_actions_move(Game *game, Command *command) {
 
 Status game_actions_take(Game *game, Command *command){
   Object* object = game_get_object_by_name(game, command_get_arguments(command));
-  Space* current_space = game_get_space(game, player_get_location(game_get_player(game, 1)));
-  Player* player=game_get_player(game, 1);
+  Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
+  Player* player=game_get_player(game);
   Inventory* backpack=player_get_objects(player);
 
   if(!game || !command )
     return ERROR;
 
-  if( inventory_is_full(backpack)==FALSE && (object_get_location(object) == player_get_location(game_get_player(game, 1))) ){
+  if( inventory_is_full(backpack)==FALSE && (object_get_location(object) == player_get_location(game_get_player(game))) ){
     player_add_object(player, object);
     space_del_object(current_space, object_get_id(object));
     return OK;
@@ -223,9 +223,9 @@ Status game_actions_take(Game *game, Command *command){
 }
 
 Status game_actions_drop(Game *game, Command *command){
-  Player *player=game_get_player(game, 1);
+  Player *player=game_get_player(game);
   Object *object=game_get_object_by_name(game, command_get_arguments(command));
-  Space* current_space = game_get_space(game, player_get_location(game_get_player(game, 1)));
+  Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
 
   if (!game || !command_get_arguments(command) ) {
     return ERROR;
@@ -242,7 +242,7 @@ Status game_actions_drop(Game *game, Command *command){
 }
 
 Status game_actions_attack(Game *game){
-  Player* player = game_get_player(game, 1);
+  Player* player = game_get_player(game);
   Space *current_space = game_get_space(game, player_get_location(player));
   Character* character = game_get_character(game, space_get_character_id(current_space));
   int num;
@@ -271,7 +271,7 @@ Status game_actions_attack(Game *game){
 }
 
 Status game_actions_chat(Game *game){
-  Player* player = game_get_player(game, 1);
+  Player* player = game_get_player(game);
   Space *current_space = game_get_space(game, player_get_location(player));
   Character* character = game_get_character(game, space_get_character_id(current_space));
 
@@ -287,7 +287,7 @@ Status game_actions_inspect(Game *game, Command *command) {
     return ERROR;
   }
 
-  Player *player=game_get_player(game, 1);
+  Player *player=game_get_player(game);
   Inventory *backpack=player_get_objects(player);
   Object *object=game_get_object_by_name(game, command_get_arguments(command));
 

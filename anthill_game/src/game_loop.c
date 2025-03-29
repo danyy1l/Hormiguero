@@ -61,6 +61,7 @@ int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name) {
 
 void game_loop_run(Game *game, Graphic_engine *gengine) {
   Command *last_cmd;
+  int turn = 0;
 
   if (!gengine) {
     return;
@@ -68,10 +69,13 @@ void game_loop_run(Game *game, Graphic_engine *gengine) {
 
   last_cmd=game_get_last_command(game);
 
-  while ((command_get_code(last_cmd) != QUIT) && (game_get_finished(game) == FALSE)) {
+  while ((command_get_code(last_cmd) != QUIT) && (game_get_n_players(game) > 0)) {
     graphic_engine_paint_game(gengine, game);
     command_get_user_input(last_cmd);
     game_actions_update(game, last_cmd);
+
+    turn = (turn + 1) % game_get_n_players(game);
+    game_next_turn(game, turn);
   }
 
 }

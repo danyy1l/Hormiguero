@@ -42,7 +42,7 @@ Game* game_create();
 Status game_destroy(Game *game);
 
 /**
- * @brief El juego obtiene el último comando utilizado
+ * @brief El juego obtiene el último comando utilizado para cierto jugador
  * @author Anthony Eduardo Alvarado Carbajal
  * @param game Un puntero a Game 
  * @return Un puntero a Command
@@ -50,23 +50,24 @@ Status game_destroy(Game *game);
 Command* game_get_last_command(Game *game);
 
 /**
- * @brief El juego define el último comando utilizado
+ * @brief El juego define el último comando utilizado para cierto jugador
  * @author Anthony Eduardo Alvarado Carbajal
  * @param game Un puntero a Game 
+ * @param command comando a establecer
  * @return OK, si todo va bien o ERROR si hay algún fallo
  */
 Status game_set_last_command(Game *game, Command *command);
 
 /**
- * @brief El juego define el último comando utilizado
+ * @brief El juego define el último comando utilizado para cierto jugador
  * @author Anthony Eduardo Alvarado Carbajal
- * @param game Un puntero a Game 
+ * @param game Un puntero a Game
  * @return OK, si todo va bien o ERROR si hay algún fallo
  */
 Bool game_get_finished(Game *game);
 
 /**
- * @brief Se define el fin del juego
+ * @brief Se define el fin del juego para cierto jugador
  * @author Anthony Eduardo Alvarado Carbajal
  * @param game Un puntero a Game 
  * @param finished EL valor TRUE o FALSE
@@ -77,10 +78,10 @@ Status game_set_finished(Game *game, Bool finished);
 /**
  * @brief Obtiene el puntero del jugador de la estructura game
  * @author Danyyil Shykerynets
- * @param game Un puntero a Game
+ * @param game Un puntero a Game a obtener
  * @return Puntero a la estructura player de la partida "game" 
  */
-Player *game_get_player(Game* game, int turn);
+Player *game_get_player(Game* game);
 
 /**
  * @brief Obtiene el numero de jugadores de la estructura game
@@ -98,6 +99,12 @@ int game_get_n_players(Game *game);
  * @return OK en caso de exito, ERROR en caso contrario 
  */
 Status game_add_player(Game *game, Player* player);
+
+/*TO DO: Documentar*/
+
+int game_get_turn(Game* game);
+
+Status game_next_turn(Game* game, int turn);
 
 /**
  * @brief Establece un nuevo objeto en el array de objetos de la partida

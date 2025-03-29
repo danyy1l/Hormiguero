@@ -4,7 +4,7 @@
  * @file libscreen.h
  * @author Profesores PPROG
  * @version 3.5
- * @date 11-02-2024
+ * @date 26-01-2024
  * @copyright GNU Public License
  */
 
@@ -12,6 +12,9 @@
 #define LIBSCREEN_H
 
 typedef struct _Area Area;
+typedef enum {BLUE, GREEN, BLACK, RED, YELLOW, PURPLE, CYAN, WHITE} Frame_color;
+
+
 
 /**
  * @brief It creates a new screen
@@ -40,7 +43,7 @@ void screen_destroy();
  * This function should be called when some updates
  *  in the screen want to be shown.
  */
-void screen_paint();
+void screen_paint(Frame_color color);
 
 /**
  * @brief It creates a new area inside a screen
