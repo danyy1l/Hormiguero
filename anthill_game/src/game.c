@@ -192,18 +192,14 @@ Status game_remove_player(Game* game, Player* player){
 
   player_destroy(game->players[ game->turn ]);
   game->players[ game->turn ] = NULL;
-  printf("Done\n");
   data_destroy(game->data[ game->turn ]);
   game->data[ game->turn ] = NULL;
-  printf("Done\n");
 
   /*Desplaza todos los elementos a la izq, de esta manera, no quedan huecos libres*/
   for(i=game->turn; i<MAX_PLAYERS-1; i++){
     game->players[i] = game->players[i+1];
     game->data[i] = game->data[i+1];
   }
-
-  printf("Done\n");
 
   game->players[MAX_PLAYERS-1] = NULL;
   game->data[MAX_PLAYERS-1] = NULL;
