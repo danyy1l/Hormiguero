@@ -74,6 +74,10 @@ void game_loop_run(Game *game, Graphic_engine *gengine) {
     command_get_user_input(last_cmd);
     game_actions_update(game, last_cmd);
 
+    if( game_get_finished(game) ){
+      game_remove_player(game, game_get_player(game));
+    }
+
     turn = (turn + 1) % game_get_n_players(game);
     game_next_turn(game, turn);
   }

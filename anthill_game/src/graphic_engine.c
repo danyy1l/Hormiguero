@@ -183,6 +183,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   int i, id_count, dir_check = 0;
 
   Player *player=game_get_player(game);                               /*Jugador del game*/
+  printf("Get player ok\n");
   Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
   int n_ids=set_get_nids(inventory_get_objects(inventory)); 
   Id *set_ids=set_id_object(inventory_get_objects(inventory));        /*Array de Ids, con los ids de los objetos de la mochila del jugador*/     
@@ -753,14 +754,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
 
   /* Paint in the feedback area */
   last_cmd = command_get_code(game_get_last_command(game));
-  last_cmd_status = command_get_output(game_get_last_command(game));
-  if( last_cmd_status )
-    strcpy(action_return,"Ok");
-  else
-    strcpy(action_return,"Error");
-  sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
-  screen_area_puts(ge->feedback, str);
+  if(last_cmd >= NO_CMD && last_cmd <= INSPECT ){
+    last_cmd_status = command_get_output(game_get_last_command(game));
+    if( last_cmd_status )
+      strcpy(action_return,"Ok");
+    else
+      strcpy(action_return,"Error");
+
+    sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
+    screen_area_puts(ge->feedback, str);
+  }
   
+  printf("last cmd status\n");
+
   if( last_cmd == CHAT && last_cmd_status ){
     sprintf(str, "  %s: %s",character_get_name(game_get_character(game, space_get_character_id(space_act))), character_get_message( game_get_character(game, space_get_character_id(space_act)) ));
     screen_area_puts(ge->descript, str);
@@ -770,6 +776,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     sprintf(str, "  %s: %s", object_get_name(game_get_object_by_name(game, command_get_arguments(game_get_last_command(game)))), object_get_description(game_get_object_by_name(game, command_get_arguments(game_get_last_command(game)))));
     screen_area_puts(ge->descript, str);
   }
+
+  printf("Final\n");
 
   /* Dump to the terminal */
   screen_paint(game_get_turn(game));

@@ -137,7 +137,12 @@ Status game_destroy(Game *game) {
   return OK;
 }
 
-Command* game_get_last_command(Game *game) { return game->data[ game->turn ]->last_cmd; }
+Command* game_get_last_command(Game *game) {
+  if(game && game->data[ game->turn ])
+    return game->data[ game->turn ]->last_cmd; 
+
+  return NULL;
+}
 
 Status game_set_last_command(Game *game, Command *command) {
   game->data[ game->turn ]->last_cmd = command;
@@ -174,15 +179,31 @@ Status game_add_player(Game *game, Player* player){
 }
 
 Status game_remove_player(Game* game, Player* player){
-  int i;
+  int i=0;
+  
+  /*Suelta todos los objetos*/
+  while(!inventory_is_empty(player_get_objects(player))){
+    if(player_find_object(player, game_get_object(game, i))){
+      space_add_object(game_get_space(game, player_get_location(player)), object_get_id(game_get_object(game, i)));
+      player_del_object(player, game_get_object(game, i));
+    }
+    i++;
+  }
+
   player_destroy(game->players[ game->turn ]);
+  game->players[ game->turn ] = NULL;
+  printf("Done\n");
   data_destroy(game->data[ game->turn ]);
+  game->data[ game->turn ] = NULL;
+  printf("Done\n");
 
   /*Desplaza todos los elementos a la izq, de esta manera, no quedan huecos libres*/
   for(i=game->turn; i<MAX_PLAYERS-1; i++){
     game->players[i] = game->players[i+1];
     game->data[i] = game->data[i+1];
   }
+
+  printf("Done\n");
 
   game->players[MAX_PLAYERS-1] = NULL;
   game->data[MAX_PLAYERS-1] = NULL;

@@ -102,6 +102,8 @@ Status game_add_player(Game *game, Player* player);
 
 /*TO DO: Documentar*/
 
+Status game_remove_player(Game* game, Player* player);
+
 int game_get_turn(Game* game);
 
 Status game_next_turn(Game* game, int turn);
