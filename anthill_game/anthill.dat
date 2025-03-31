@@ -35,7 +35,7 @@
 #o:1|Grain|12|Es un grano de maiz|
 #o:2|Crumb|12|Es una miga de pan|
 #o:3|Cookie|12|Es una galleta|
-#o:4|Seed|16|Es una semilla de sésamo|
+#o:4|Seed|16|Es una semilla|
 
 #c:100|Antlion| ^0m  |53|5|1|Hello!|
 #c:200|Worm|*0o8o |11|5|1|Welcome!|
