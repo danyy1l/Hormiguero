@@ -144,7 +144,7 @@ Set* space_get_set_objects(Space* space){
 }
  
  Status space_set_character(Space *space, Id character_id){
-   if( !space || character_id=NO_ID){
+   if( !space || character_id==NO_ID){
      return ERROR;
    }
    space->character_id = character_id;
@@ -179,7 +179,7 @@ Status space_set_discovered(Space *space,Bool discovered){
     return FALSE;
   }
 
-  space->discovered==discovered;
+  space->discovered=discovered;
   
   return OK;
  }
@@ -195,10 +195,10 @@ Bool space_get_discovered(Space *space) {
 
 void space_player_arrive(Space* space) {
 
- if (!space_get_discovered(space)) {
-     space_set_discovered(space, TRUE);
- }
-
+  if (!space_get_discovered(space)) {
+    space_set_discovered(space, TRUE);
+  }
+}
  
 Status space_print(Space* space) {
   Id idaux = NO_ID;
@@ -212,17 +212,17 @@ Status space_print(Space* space) {
   fprintf(stdout, "--> Space (Id: %ld; Name: %s)\n", space->id, space->name);
  
   /* 3. Print if there is an object in the space or not */
-   if (space_find_object(space,idaux)) {
-    fprintf(stdout, "---> Object in the space.\n");
-   } else {
-    fprintf(stdout, "---> No object in the space.\n");
-   }
+  if (space_find_object(space,idaux)) {
+   fprintf(stdout, "---> Object in the space.\n");
+  } else {
+   fprintf(stdout, "---> No object in the space.\n");
+  }
  
   /* 4. Print if there is a character in the space or not*/
-   if (space_get_character_id(space) != NO_ID){
-    fprintf(stdout, "---> Character in the space with ID: %ld.\n", space_get_character_id(space));
-   } else {
-    fprintf(stdout, "---> No character in the space.\n");
-   }
+  if (space_get_character_id(space) != NO_ID){
+   fprintf(stdout, "---> Character in the space with ID: %ld.\n", space_get_character_id(space));
+  } else {
+   fprintf(stdout, "---> No character in the space.\n");
+  }
   return OK;
 }
