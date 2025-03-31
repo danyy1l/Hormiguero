@@ -144,7 +144,7 @@
  }
  
  Status space_set_character(Space *space, Id character_id){
-   if( !space || character_id=NO_ID){
+   if( !space || character_id==NO_ID){
      return ERROR;
    }
    space->character_id = character_id;
@@ -179,7 +179,7 @@ Status space_set_discovered(Space *space,Bool discovered){
     return FALSE;
   }
 
-  space->discovered==discovered;
+  space->discovered=discovered;
   
   return OK;
  }

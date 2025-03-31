@@ -6,7 +6,7 @@
  * @author Anthony Eduardo Alvarado Carbajal
  * @version 17
  * @date 26-03-2025
- * @copyright GNU Public License
+ * @copyright GNU Public License 
  */
 
  #ifndef SPACE_H
