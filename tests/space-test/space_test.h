@@ -2,9 +2,9 @@
  * @brief It declares the tests for the space module
  * 
  * @file space_test.h
- * @author Anthony Eduardo Alvarado Carbajal
- * @version 2
- * @date 3-03-2025
+ * @author Álvaro Rodríguez Hernández
+ * @version 3
+ * @date 1-04-2025
  * @copyright GNU Public License
  */
 
@@ -317,5 +317,42 @@
   * @post a negative id 
   */
  void test2_space_get_west();
+
+  /**
+  * @test Test function for space get set objects
+  * @pre pointer to space
+  * @post a set != NULL
+  */
+ void test1_space_get_set_objects();
+  /**
+  * @test Test function for space get set objects
+  * @pre pointer to space=NULL
+  * @post a set == NULL
+  */
+ void test2_space_get_set_objects();
+  /**
+  * @test Test function for space get discovered
+  * @pre pointer to space
+  * @post a bool=TRUE
+  */
+ void test1_space_get_discovered();
+  /**
+  * @test Test function for space get discovered
+  * @pre pointer to space=NULL
+  * @post a bool=FALSE
+  */
+ void test2_space_get_discovered();
+  /**
+  * @test Test function for space set discovered
+  * @pre pointer to space
+  * @post a status=OK
+  */
+ void test1_space_set_discovered();
+  /**
+  * @test Test function for space set discovered
+  * @pre pointer to space=NULL
+  * @post a status=ERROR
+  */
+ void test2_space_set_discovered();
 
  #endif
