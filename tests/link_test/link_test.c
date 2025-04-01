@@ -13,10 +13,10 @@
 #include <string.h> 
  
 #include "test.h"
-include "link.h"
+#include "link.h"
 #include "link_test.h"
  
-#define MAX_TESTS 22
+#define MAX_TESTS 31
  
 /** 
  * @brief Main function for LINK unit tests. 
@@ -65,6 +65,15 @@ int main(int argc, char** argv) {
   if (all || test == 20) test3_link_set_destination();
   if (all || test == 21) test1_link_get_destination();
   if (all || test == 22) test2_link_get_destination();
+  if (all || test == 23) test1_link_set_direction();
+  if (all || test == 24) test2_link_set_direction();
+  if (all || test == 25) test3_link_set_direction();
+  if (all || test == 26) test1_link_get_direction();
+  if (all || test == 27) test2_link_get_direction();
+  if (all || test == 28) test1_link_set_open();
+  if (all || test == 29) test2_link_set_open();
+  if (all || test == 30) test1_link_get_open();
+  if (all || test == 31) test2_link_get_open();
   PRINT_PASSED_PERCENTAGE;
 
   return 1;
@@ -74,7 +83,7 @@ int main(int argc, char** argv) {
 void test1_link_create(){
     Link *s;
     s=link_create();
-    PRINT_TEST_RESULT(link_get_id(s)==10);
+    PRINT_TEST_RESULT(link_get_id(s)==NO_ID);
     link_destroy(s);
 }
 
@@ -89,26 +98,27 @@ void test2_link_create(){
 
 void test1_link_set_id(){
     Link *s;
-    s=link_create(20);
-    PRINT_TEST_RESULT(link_set_id(s,20)==OK);
+    s=link_create();
+    PRINT_TEST_RESULT(link_set_id(s,1)==OK);
     link_destroy(s);
 }
 
 void test2_link_set_id(){
     Link *s=NULL;
-    PRINT_TEST_RESULT(link_set_id(s,20)==ERROR);
+    PRINT_TEST_RESULT(link_set_id(s,1)==ERROR);
 }
 
 void test3_link_set_id(){
     Link *s;
-    s=link_create(20);
+    s=link_create();
     PRINT_TEST_RESULT(link_set_id(s,NO_ID)==ERROR);
     link_destroy(s);
 }
 void test1_link_get_id(){
     Link *s;
-    s=link_create(30);
-    PRINT_TEST_RESULT(link_get_id(s)==30);
+    s=link_create();
+    link_set_id(s, 2);
+    PRINT_TEST_RESULT(link_get_id(s)==2);
     link_destroy(s);
 }
 
@@ -118,26 +128,26 @@ void test2_link_get_id(){
 }
 void test1_link_set_name(){
     Link *s;
-    s=link_create(40);
-    PRINT_TEST_RESULT(link_set_name(s,"objeto")==OK);
+    s=link_create();
+    PRINT_TEST_RESULT(link_set_name(s,"enlace")==OK);
     link_destroy(s);
 }
 
 void test2_link_set_name(){
     Link *s=NULL;
-    PRINT_TEST_RESULT(link_set_name(s,"objeto")==ERROR);
+    PRINT_TEST_RESULT(link_set_name(s,"enlace")==ERROR);
 }
 
 void test3_link_set_name(){
     Link *s;
-    s=link_create(40);
+    s=link_create();
     PRINT_TEST_RESULT(link_set_name(s,NULL)==ERROR);
     link_destroy(s);
 }
 
 void test1_link_get_name(){
     Link *s;
-    s=link_create(50);
+    s=link_create();
     link_set_name(s,"objeto");
     PRINT_TEST_RESULT(strcmp(link_get_name(s),"objeto")==0);
     link_destroy(s);
@@ -150,64 +160,120 @@ void test2_link_get_name(){
 
 void test1_link_set_origin(){
     Link *s;
-    s=link_create(60);
-    PRINT_TEST_RESULT(link_set_origin(s,60)==OK);
+    s=link_create();
+    PRINT_TEST_RESULT(link_set_origin(s,1)==OK);
     link_destroy(s);
 }
 
 void test2_link_set_origin(){
     Link *s=NULL;
-    PRINT_TEST_RESULT(link_set_origin(s,60)==ERROR);
+    PRINT_TEST_RESULT(link_set_origin(s,1)==ERROR);
 }
 
 void test3_link_set_origin(){
     Link *s;
-    s=link_create(60);
+    s=link_create();
     PRINT_TEST_RESULT(link_set_origin(s,NO_ID)==ERROR);
     link_destroy(s);
 }
 
 void test1_link_get_origin(){
     Link *s;
-    s=link_create(70);
-    link_set_origin(s,70);
-    PRINT_TEST_RESULT(link_get_origin(s)==70);
+    s=link_create();
+    link_set_origin(s,1);
+    PRINT_TEST_RESULT(link_get_origin(s)==1);
     link_destroy(s);
 }
 void test2_link_get_origin(){
     Link *s=NULL;
-    PRINT_TEST_RESULT(link_get_origin(s)==-1);
+    PRINT_TEST_RESULT(link_get_origin(s)==NO_ID);
 }
 
 void test1_link_set_destination(){
     Link *s;
-    s=link_create(80);
-    PRINT_TEST_RESULT(link_set_destination(s,"hola")==OK);
+    s=link_create();
+    PRINT_TEST_RESULT(link_set_destination(s,2)==OK);
     link_destroy(s);
 }
 
 void test2_link_set_destination(){
     Link *s=NULL;
-    PRINT_TEST_RESULT(link_set_destination(s,"hola")==ERROR);
+    PRINT_TEST_RESULT(link_set_destination(s,2)==ERROR);
 }
 
 void test3_link_set_destination(){
     Link *s;
-    s=link_create(80);
-    PRINT_TEST_RESULT(link_set_destination(s,NULL)==ERROR);
+    s=link_create();
+    PRINT_TEST_RESULT(link_set_destination(s,NO_ID)==ERROR);
     link_destroy(s);
 }
 
 void test1_link_get_destination(){
     Link *s;
-    s=link_create(90);
-    link_set_destination(s,"objeto");
-    PRINT_TEST_RESULT(strcmp(link_get_destination(s),"objeto")==0);
+    s=link_create();
+    link_set_destination(s,2);
+    PRINT_TEST_RESULT(link_get_destination(s)==2);
     link_destroy(s);
 }
 
 void test2_link_get_destination(){
     Link *s=NULL;
-    PRINT_TEST_RESULT(link_get_destination(s)==NULL);
+    PRINT_TEST_RESULT(link_get_destination(s)==NO_ID);
 }
 
+void test1_link_set_direction(){
+    Link *s;
+    s=link_create();
+    PRINT_TEST_RESULT(link_set_direction(s,N)==OK);
+    link_destroy(s);
+}
+
+void test2_link_set_direction(){
+    Link *s=NULL;
+    PRINT_TEST_RESULT(link_set_direction(s,S)==ERROR);
+}
+
+void test3_link_set_direction(){
+    Link *s;
+    s=link_create();
+    PRINT_TEST_RESULT(link_set_direction(s, -1 )==ERROR);
+    link_destroy(s);
+}
+
+void test1_link_get_direction(){
+    Link *s;
+    s=link_create();
+    link_set_direction(s,N);
+    PRINT_TEST_RESULT(link_get_direction(s)==N);
+    link_destroy(s);
+}
+
+void test2_link_get_direction(){
+    Link *s=NULL;
+    PRINT_TEST_RESULT(link_get_direction(s)==U);
+}
+
+void test1_link_set_open(){
+    Link *s;
+    s=link_create();
+    PRINT_TEST_RESULT(link_set_open(s,TRUE)==OK);
+    link_destroy(s);
+}
+
+void test2_link_set_open(){
+    Link *s=NULL;
+    PRINT_TEST_RESULT(link_set_open(s,TRUE)==ERROR);
+}
+
+void test1_link_get_open(){
+    Link *s;
+    s=link_create();
+    link_set_open(s,TRUE);
+    PRINT_TEST_RESULT(link_get_open(s)==TRUE);
+    link_destroy(s);
+}
+
+void test2_link_get_open(){
+    Link *s=NULL;
+    PRINT_TEST_RESULT(link_get_open(s)==FALSE);
+}

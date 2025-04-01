@@ -10,7 +10,7 @@
 #ifndef link_TEST_H
 #define link_TEST_H
 
-
+/*TO DO: REVISAR DOCUMENTACION*/
 
 /**
  * @test Creates an link
@@ -144,7 +144,7 @@ void test2_link_get_origin();
 /**
  * @test Set a destination for the link
  * @pre a pointer to link
- * @pre a char destination
+ * @pre an ID destination
  * @post Output==OK
  */
 void test1_link_set_destination();
@@ -152,7 +152,7 @@ void test1_link_set_destination();
 /**
  * @test Set a destination for the link
  * @pre a pointer to link=NULL
- * @pre a char destination
+ * @pre an ID destination
  * @post Output==ERROR
  */
 void test2_link_set_destination();
@@ -160,7 +160,7 @@ void test2_link_set_destination();
 /**
  * @test Set a destination for the link
  * @pre a pointer to link
- * @pre a char destination=NULL
+ * @pre a NO_ID destination
  * @post Output==ERROR
  */
 void test3_link_set_destination();
@@ -168,7 +168,6 @@ void test3_link_set_destination();
 /**
  * @test Obtain the destination for the link
  * @pre a pointer to link
- * @pre a char decription
  * @post a non NULL char destination
  */
 void test1_link_get_destination();
@@ -181,6 +180,76 @@ void test1_link_get_destination();
  */
 void test2_link_get_destination();
 
+/**
+ * @test Set a direction for the link
+ * @pre a pointer to link
+ * @pre a char direction
+ * @post Output==OK
+ */
+void test1_link_set_direction();
 
+/**
+ * @test Set a direction for the link
+ * @pre a pointer to link=NULL
+ * @pre a char direction
+ * @post Output==ERROR
+ */
+void test2_link_set_direction();
+
+/**
+ * @test Set a direction for the link
+ * @pre a pointer to link
+ * @pre a char direction=NULL
+ * @post Output==ERROR
+ */
+void test3_link_set_direction();
+
+/**
+ * @test Obtain the direction for the link
+ * @pre a pointer to link
+ * @pre a char direction
+ * @post a non NULL char direction
+ */
+void test1_link_get_direction();
+
+/**
+ * @test Obtain the direction for the link
+ * @pre a pointer to link=NULL
+ * @pre a char direction
+ * @post a NULL char direction
+ */
+void test2_link_get_direction();
+
+/**
+ * @test Set a direction for the link
+ * @pre a pointer to link
+ * @pre a char direction
+ * @post Output==OK
+ */
+void test1_link_set_open();
+
+/**
+ * @test Set a open for the link
+ * @pre a pointer to link=NULL
+ * @pre a char open
+ * @post Output==ERROR
+ */
+void test2_link_set_open();
+
+/**
+ * @test Obtain the open for the link
+ * @pre a pointer to link
+ * @pre a char open
+ * @post a non NULL char open
+ */
+void test1_link_get_open();
+
+/**
+ * @test Obtain the open for the link
+ * @pre a pointer to link=NULL
+ * @pre a char open
+ * @post a NULL char open
+ */
+void test2_link_get_open();
 
 #endif

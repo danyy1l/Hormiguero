@@ -7,8 +7,8 @@
  * @copyright GNU Public License
 */
 
-#include "../include/types.h"
-#include "../include/link.h"
+#include "types.h"
+#include "link.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -112,7 +112,11 @@ Status link_set_direction(Link* link, Direction dir){
   return OK; 
 }
 
-Bool link_get_open(Link* link) { return link->open; }
+Bool link_get_open(Link* link) { 
+  if( !link ) return FALSE;
+  
+  return link->open; 
+}
 
 Status link_set_open(Link* link, Bool open){
   if( !link ) return ERROR;
