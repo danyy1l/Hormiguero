@@ -11,8 +11,7 @@
 
 #ifndef SPACE_H
 #define SPACE_H
- 
-#include "object.h"
+
 #include "types.h"
 #include "set.h"
  
