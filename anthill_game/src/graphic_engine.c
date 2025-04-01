@@ -178,7 +178,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   CommandCode last_cmd = UNKNOWN;
   Status last_cmd_status;
   char action_return[STATUS_SIZE], character_gdesc[GDESC_SIZE];
-  char str[WORD_SIZE], friendly[WORD_SIZE], foo, foo1, open_west, open_east, str1[WORD_SIZE];
+  char str[WORD_SIZE], friendly[WORD_SIZE/2], foo, foo1, open_west, open_east;
   extern char *cmd_to_str[N_CMD][N_CMDT];
   int i, id_count, dir_check = 0;
 
@@ -736,8 +736,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
     screen_area_puts(ge->descript, str);
     for (i=0;i<n_ids;i++) {
       object=game_get_object(game, set_ids[i]);       /*Cada uno de los objetos de la mochila del jugador*/
-      sprintf(str1, "  %s (Id: %ld)", object_get_name(object), object_get_id(object));
-      screen_area_puts(ge->descript, str1);
+      sprintf(str, "  %s (Id: %ld)", object_get_name(object), object_get_id(object));
+      screen_area_puts(ge->descript, str);
     }
   }
   screen_area_puts(ge->descript, " ");
