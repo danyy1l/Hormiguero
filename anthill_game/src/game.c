@@ -43,9 +43,6 @@ Interface_Data* data_create(){
 
 void data_destroy(Interface_Data* data){
   if(data){
-    if( data->last_cmd ){
-      command_destroy(data->last_cmd);
-    }
     free(data);
   }
 }
@@ -123,6 +120,7 @@ Status game_destroy(Game *game) {
   }
 
   for(i=0; i<game->n_players; i++){
+    command_destroy(game->data[i]->last_cmd);
     data_destroy(game->data[i]);
     player_destroy(game->players[i]);
   }
@@ -174,6 +172,7 @@ Status game_add_player(Game *game, Player* player){
 
   game->players[ game->n_players ] = player;
   game->data[ game->n_players ] = data_create();  
+  game->data[ game->n_players ]->last_cmd = command_create();
   game->n_players++;
   return OK;
 }
