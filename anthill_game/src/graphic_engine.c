@@ -46,7 +46,7 @@ void print_blank(char* str, Graphic_engine* ge){
 
 void print_objects(Game* game, Id id, char* str){
   int i, id_count;
-  char foo[__WORDSIZE] = "";
+  char foo[WORD_SIZE] = "";
   Object* object;
   Space* space;
   Id* ids;
@@ -178,7 +178,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   CommandCode last_cmd = UNKNOWN;
   Status last_cmd_status;
   char action_return[STATUS_SIZE], character_gdesc[GDESC_SIZE];
-  char str[WORD_SIZE], friendly[__WORDSIZE], foo, foo1, open_west, open_east, str1[WORD_SIZE];
+  char str[WORD_SIZE], friendly[WORD_SIZE], foo, foo1, open_west, open_east, str1[WORD_SIZE];
   extern char *cmd_to_str[N_CMD][N_CMDT];
   int i, id_count, dir_check = 0;
 

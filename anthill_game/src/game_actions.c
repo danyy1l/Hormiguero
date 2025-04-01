@@ -179,7 +179,7 @@ void game_actions_quit(Game *game) {}
 
 Status game_actions_move(Game *game, Command *command) {
   Id space_id = NO_ID;
-  char dir[__WORDSIZE];
+  char dir[WORD_SIZE];
   Direction direction = U;
 
   space_id = player_get_location(game_get_player(game));
