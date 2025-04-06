@@ -43,4 +43,12 @@ void graphic_engine_destroy(Graphic_engine *ge);
  */
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game);
 
+/**
+ * @brief Dibuja un game over
+ * @author Danyyil Shykerynets
+ * @param ge Un puntero a Graphic_engine 
+ * @param game Un puntero a Game
+ */
+void graphic_engine_paint_game_over(Graphic_engine* ge, Game *game);
+
 #endif

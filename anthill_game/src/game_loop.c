@@ -71,7 +71,7 @@ int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name) {
 
 void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
   Command *last_cmd;
-  int turn = 0;
+  int turn = -1;
   Status cmd_output;
   char*result;
   extern char* cmd_to_str[N_CMD][N_CMDT];
@@ -83,6 +83,9 @@ void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
   last_cmd=game_get_last_command(game);
 
   while ((command_get_code(last_cmd) != QUIT) && (game_get_finished(game) == FALSE)) {
+    turn = (turn + 1) % game_get_n_players(game);
+    game_next_turn(game, turn);
+
     graphic_engine_paint_game(gengine, game);
     command_get_user_input(last_cmd);
     game_actions_update(game, last_cmd);
@@ -95,11 +98,9 @@ void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
       fprintf(log_file, "%s(%s) %s: %s\n", cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDL], cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDS], command_get_arguments(last_cmd), result);
     }
 
-    turn = (turn + 1) % game_get_n_players(game);
-    game_next_turn(game, turn);
   }
 
-  fprintf(stdout, "GAME OVER!\n");
+  graphic_engine_paint_game_over(gengine, game);
 }
 
 void game_loop_cleanup(Game *game, Graphic_engine *gengine, FILE *log_file) {

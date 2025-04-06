@@ -630,7 +630,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   if( (player_location = player_get_location(player)) != NO_ID) {
     sprintf(str, "  Turn: %d", game_get_turn(game) + 1);
     screen_area_puts(ge->descript, str);
-    sprintf(str, "  Player: ");
+    sprintf(str, "  Player %s: ", player_get_name(game_get_player(game)));
     screen_area_puts(ge->descript, str);
     sprintf(str, "   Location: %d", (int)player_location);
     screen_area_puts(ge->descript, str);
@@ -721,4 +721,26 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   /* Dump to the terminal */
   screen_paint(game_get_turn(game));
   printf("Prompt => ");
+}
+
+void graphic_engine_paint_game_over(Graphic_engine* ge, Game *game){
+  int i;
+  char str[WORD_SIZE];
+
+  /* Paint the in the map area */
+  screen_area_clear(ge->map);
+
+  for(i=0; i<HEIGHT_MAP; i++){
+    if( i == HEIGHT_MAP/2 ){
+      sprintf(str, "                     GAME OVER!                ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "            Player \"%s\" has died :(        ", player_get_name(game_get_player(game)));
+      screen_area_puts(ge->map, str);
+    }else{
+      sprintf(str, "                                           ");
+      screen_area_puts(ge->map, str);
+    }
+  }
+  
+  screen_paint(game_get_turn(game));
 }
