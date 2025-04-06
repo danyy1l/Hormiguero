@@ -4,7 +4,7 @@ CC=gcc
 CLIB=-lscreen -L./lib/
 OBJDIR=obj
 DOXDIR=doc
-LOG=logFile.dat
+LOG=logFile
 vpath %.c src
 vpath %.h include
 
@@ -30,7 +30,7 @@ $(OBJDIR):
 
 #CLEAN .o AND EXE
 clean: 
-	rm -rf $(OBJDIR) $(DOXDIR) $(EXE) $(LOG)
+	rm -rf $(OBJDIR) $(DOXDIR) $(EXE) $(LOG).dat
 
 #COMPILE AND RUN PROGRAM
 run: 
@@ -38,11 +38,11 @@ run:
 
 #RUN WITH VALGRIND TO CHECK MEMLEAKS
 runv:
-	@$(MAKE) && valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(EXE) $(EXE).dat
+	@$(MAKE) && valgrind --leak-check=full --show-leak-kinds=all ./$(EXE) $(EXE).dat
 
 #RUN WITH LOG
 runlog:
-	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG)
+	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG).dat
 
 #DOXYGEN
 doc:

@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  if (argc == 4 && strcmp(argv[2], "-l") == 0) {
+  if (argc == 4 && (strcmp(argv[2], "-l") == 0) ) {
     log_file = fopen(argv[3], "w");
     if (log_file == NULL) {
         fprintf(stderr, "Error al abrir el archivo de LOG: %s\n", argv[3]);
@@ -86,17 +86,14 @@ void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
     graphic_engine_paint_game(gengine, game);
     command_get_user_input(last_cmd);
     game_actions_update(game, last_cmd);
+    space_player_arrive(game_get_space(game, player_get_location(game_get_player(game))));
 
-    if (log_file) {
+    if(log_file){
       cmd_output = command_get_output(last_cmd);
-      if (cmd_output == OK) {
-          result = "OK";
-      } else {
-          result = "ERROR";
-      }
+      if (cmd_output == OK) result = "OK";
+      else result = "ERROR";
       fprintf(log_file, "%s(%s) %s: %s\n", cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDL], cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDS], command_get_arguments(last_cmd), result);
     }
-
 
     if( game_get_finished(game) ){
       game_remove_player(game, game_get_player(game));
@@ -105,8 +102,6 @@ void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
     turn = (turn + 1) % game_get_n_players(game);
     game_next_turn(game, turn);
   }
-
-  fclose(log_file);
 
 }
 
