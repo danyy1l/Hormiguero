@@ -28,10 +28,7 @@ Status game_actions_update(Game *game, Command *command) {
   Set* player_bag = inventory_get_objects(player_get_objects(player));   /*Set con objetos de la mochila*/
   int n_ids=set_get_nids(player_bag);                                    /*Numero de objetos que porta el jugador*/
   Object *object=NULL;
-
   CommandCode cmd;
-
-  game_set_last_command(game, command);
 
   cmd = command_get_code(command);
 

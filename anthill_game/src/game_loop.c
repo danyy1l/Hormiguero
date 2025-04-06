@@ -100,7 +100,8 @@ void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
 
   }
 
-  graphic_engine_paint_game_over(gengine, game);
+  if( game_get_finished(game) == TRUE )
+    graphic_engine_paint_game_over(gengine, game);
 }
 
 void game_loop_cleanup(Game *game, Graphic_engine *gengine, FILE *log_file) {

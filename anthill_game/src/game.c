@@ -20,7 +20,7 @@
 
 struct _Game{
   Player *players[MAX_PLAYERS];           /*!< Puntero a la estructura del jugador de la partida*/
-  Command* last_cmd[MAX_PLAYERS];         /*!< Almacena comandos correspondientes a los jugadores*/
+  Command *last_cmd[MAX_PLAYERS];         /*!< Almacena ultimo comando propio al jugador*/
   int n_players;                          /*!< Almacena el numero de jugadores en la partida*/
   int turn;                               /*!< Almacena el turno del jugador*/
   Object *objects[MAX_OBJECTS];           /*!< Puntero a array de objetos de la partida*/
@@ -31,7 +31,7 @@ struct _Game{
   int n_spaces;                           /*!< Número de espacios*/
   Link *links[MAX_LINKS];                 /*!< Puntero a array de enlaces entre espacios*/
   int n_links;                            /*!< Almacena el numero de enlaces en la partida*/
-  Bool finished;                          /*!< Define el final de la partida*/
+  Bool finished;
 };
 
 /**
@@ -92,6 +92,7 @@ Status game_destroy(Game *game) {
     player_destroy(game->players[i]);
   }
 
+
   for(i=0; i<game->n_links; i++)
     link_destroy(game->links[i]);
 
@@ -102,7 +103,7 @@ Status game_destroy(Game *game) {
 }
 
 Command* game_get_last_command(Game *game) {
-  if(game && game->last_cmd[game->turn])
+  if(game && game->last_cmd[ game->turn ])
     return game->last_cmd[game->turn]; 
 
   return NULL;

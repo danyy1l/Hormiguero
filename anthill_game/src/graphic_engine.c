@@ -732,7 +732,7 @@ void graphic_engine_paint_game_over(Graphic_engine* ge, Game *game){
 
   for(i=0; i<HEIGHT_MAP; i++){
     if( i == HEIGHT_MAP/2 ){
-      sprintf(str, "                     GAME OVER!                ");
+      sprintf(str, "                 GAME OVER!                ");
       screen_area_puts(ge->map, str);
       sprintf(str, "            Player \"%s\" has died :(        ", player_get_name(game_get_player(game)));
       screen_area_puts(ge->map, str);
