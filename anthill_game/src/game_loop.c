@@ -20,23 +20,11 @@
 #include "../include/game.h"
 #include "../include/graphic_engine.h"
 
-char *cmd_to_str[N_CMD][N_CMDT] = {
-  {"", "No command"},
-  {"", "Unknown"},
-  {"q", "Quit"},
-  {"m", "Move"},
-  {"t", "Take"},
-  {"d", "Drop"},
-  {"a", "Attack"},
-  {"c", "Chat"},
-  {"i", "Inspect"}
-};
-
 int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name);
 
-void game_loop_run(Game *game, Graphic_engine *gengine,FILE *log_file);
+void game_loop_run(Game *game, Graphic_engine *gengine, FILE *log_file);
 
-void game_loop_cleanup(Game *game, Graphic_engine *gengine,FILE* file_name);
+void game_loop_cleanup(Game *game, Graphic_engine *gengine, FILE* file_name);
 
 int main(int argc, char *argv[]) {
   FILE*log_file=NULL;
@@ -47,14 +35,14 @@ int main(int argc, char *argv[]) {
 
   if (argc < 2) {
     fprintf(stderr, "Use: %s <game_data_file>\n", argv[0]);
-    return 1;
+    return EXIT_FAILURE;
   }
 
   if (argc == 4 && strcmp(argv[2], "-l") == 0) {
     log_file = fopen(argv[3], "w");
     if (log_file == NULL) {
         fprintf(stderr, "Error al abrir el archivo de LOG: %s\n", argv[3]);
-        return 1;
+        return EXIT_FAILURE;
     }
   }
 
@@ -69,13 +57,13 @@ int main(int argc, char *argv[]) {
 int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name) {
   if (!(*game = game_create_from_file(file_name))) {
     fprintf(stderr, "Error while initializing game.\n");
-    return 1;
+    return EXIT_FAILURE;
   }
 
   if ((*gengine = graphic_engine_create()) == NULL) {
     fprintf(stderr, "Error while initializing graphic engine.\n");
     game_destroy(*game);
-    return 1;
+    return EXIT_FAILURE;
   }
 
   return 0;
@@ -86,7 +74,9 @@ void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
   int turn = 0;
   Status cmd_output;
   char*result;
-  if (!gengine) {
+  extern char* cmd_to_str[N_CMD][N_CMDT];
+  
+  if (!gengine || !game) {
     return;
   }
 
@@ -116,16 +106,14 @@ void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
     game_next_turn(game, turn);
   }
 
+  fclose(log_file);
+
 }
 
-void game_loop_cleanup(Game *game, Graphic_engine *gengine,FILE *log_file) {
+void game_loop_cleanup(Game *game, Graphic_engine *gengine, FILE *log_file) {
   game_destroy(game);
   graphic_engine_destroy(gengine);
   if (log_file) {
     fclose(log_file);
   }
-}
-void game_loop_cleanup(Game *game, Graphic_engine *gengine) {
-  game_destroy(game);
-  graphic_engine_destroy(gengine);
 }

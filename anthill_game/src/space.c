@@ -1,7 +1,6 @@
 /**
  * @brief It implements the space module
  * @file space.c
- * @author Danyyil Shykerynets 
  * @author Anthony Eduardo Alvarado
  * @version 17
  * @date 26-03-2025
