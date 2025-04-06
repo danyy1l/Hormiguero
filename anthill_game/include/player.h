@@ -2,7 +2,7 @@
  * @brief Funcionalidad relacionada al jugador
  *
  * @file player.h
- * @author Danyyil Shykerynets
+ * @author Hugo Martín
  * @version 7
  * @date 05-02-2025
  * @copyright GNU Public License
@@ -89,8 +89,7 @@ Id player_get_location(Player *player);
  * @brief Establece la ubicacion del jugador
  * @author Danyyil Shykerynets
  * 
- * @param id
- * Id del espacio inicial del jugador
+ * @param id Id del espacio inicial del jugador
  * @param player puntero a la estructura player
  * @return OK en caso de que no haya errores, ERROR en caso contrario
  */

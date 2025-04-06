@@ -2,8 +2,8 @@
  * @brief It defines the game update interface
  *
  * @file game_actions.h
- * @author Anthony Eduardo Alvarado Carbajal
- * @version 7
+ * @author Danyyil Shykerynets
+ * @version 18
  * @date 04-02-2025
  * @copyright GNU Public License
  */

@@ -3,7 +3,6 @@
  *
  * @file game.c
  * @author Danyyil Shykerynets
- * @author Anthony Eduardo Alvarado Carbajal
  * @version 15
  * @date 19-03-2025
  * @copyright GNU Public License

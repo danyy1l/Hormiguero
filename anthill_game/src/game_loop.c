@@ -94,7 +94,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
       } else {
           result = "ERROR";
       }
-      fprintf(log_file, "%s %s: %s\n", command_get_arguments(last_cmd), cmd_to_str[command_get_code(last_cmd)][CMDL], result);
+      fprintf(log_file, "%s(%s) %s: %s\n", cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDL], cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDS], command_get_arguments(last_cmd), result);
     }
 
 
