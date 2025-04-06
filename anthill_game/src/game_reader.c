@@ -172,7 +172,7 @@ Status game_load_players(Game *game, char *filename){
       player_set_health(player, health);
       inventory_set_max_objects(player_get_objects(player), bag_max);
       game_add_player(game, player);
-      space_set_discovered(game_get_space(game, location), TRUE);
+      space_player_arrive(game_get_space(game, location));
     }
   }
 

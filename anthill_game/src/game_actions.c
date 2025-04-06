@@ -192,7 +192,6 @@ Status game_actions_attack(Game *game){
     return ERROR;
 
   if( player_get_health(player) == 0 ){
-    printf("You died!\n");
     game_set_finished(game, TRUE);
   }
   
