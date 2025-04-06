@@ -44,6 +44,14 @@ runv:
 runlog:
 	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG).dat
 
+#RUN WITH CMD1
+runcmd1:
+	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG).dat < game1.cmd
+
+#RUN WITH CMD2
+runcmd2:
+	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG).dat < game2.cmd
+
 #DOXYGEN
 doc:
 	doxygen Doxyfile
