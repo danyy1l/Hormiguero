@@ -23,6 +23,7 @@ struct _Object{
   char name[WORD_SIZE + 1];         /*!< Nombre del objeto*/
   Id location;                      /*!< Id del espacio donde esta el objeto*/ 
   char description[WORD_SIZE];      /*!< Descripción del objeto*/
+  Bool taken;                       /*!< Determina si el objeto ha sido tomado por alguien*/
 };
 
 Object* object_create(Id id){
@@ -107,6 +108,18 @@ char *object_get_description(Object *object) {
   }
 
   return object->description;
+}
+
+Bool object_get_taken(Object* object){
+  return object == NULL ? FALSE : object->taken;
+}
+
+Status object_set_taken(Object* object, Bool taken){
+  if(!object) return ERROR;
+
+  object->taken = taken;
+
+  return OK;
 }
 
 Status object_print(Object* object){

@@ -196,6 +196,33 @@ void test1_object_get_description();
  */
 void test2_object_get_description();
 
+/**
+ * @test Set a description for the object
+ * @pre a pointer to object
+ * @post Output==OK
+ */
+void test1_object_set_taken();
 
+/**
+ * @test Set a description for the object
+ * @pre a pointer to object = NULL
+ * @post Output==ERROR
+ */
+void test2_object_set_taken();
+
+/**
+ * @test Obtain whether is taken the object
+ * @pre a pointer to non NULL object
+ * @pre Sets true to object->taken
+ * @post a TRUE Bool
+ */
+void test1_object_get_taken();
+
+/**
+ * @test Obtain whether is taken the object
+ * @pre a pointer to object=NULL
+ * @post a FALSE booleean
+ */
+void test2_object_get_taken();
 
 #endif

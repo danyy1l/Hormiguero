@@ -213,3 +213,27 @@ void test2_object_get_description(){
     PRINT_TEST_RESULT(object_get_description(s)==NULL);
 }
 
+void test1_object_set_taken(){
+    Object *s;
+    s=object_create(80);
+    PRINT_TEST_RESULT(object_set_taken(s,TRUE)==OK);
+    object_destroy(s);
+}
+
+void test2_object_set_taken(){
+    Object *s=NULL;
+    PRINT_TEST_RESULT(object_set_taken(s,TRUE)==ERROR);
+}
+
+void test1_object_get_taken(){
+    Object *s;
+    s=object_create(100);
+    object_set_taken(s, TRUE);
+    PRINT_TEST_RESULT(object_get_taken(s) == TRUE);
+    object_destroy(s);
+}
+
+void test2_object_get_taken(){
+    Object *s = NULL;
+    PRINT_TEST_RESULT(object_get_taken(s) == FALSE);
+}

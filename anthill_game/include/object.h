@@ -105,6 +105,23 @@ Status object_set_description(Object *object, char *description);
 char *object_get_description(Object *object);
 
 /**
+ * @brief Obtiene la informacion sobre si el objeto ha sido tomado por algun jugador
+ * @author Danyyil Shykerynets
+ * @param object puntero al objeto
+ * @return Booleano TRUE si esta tomado, FALSE en caso contrario
+ */
+Bool object_get_taken(Object* object);
+
+/**
+ * @brief Establece la informacion sobre si el objeto ha sido tomado por algun jugador
+ * @author Danyyil Shykerynets
+ * @param object puntero al objeto
+ * @param taken Booleano a establecer
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status object_set_taken(Object* object, Bool taken);
+
+/**
  * @brief Imprime el objeto
  * @author Anthony Eduardo Alvarado Carbajal
  * @param object Un puntero a Object
