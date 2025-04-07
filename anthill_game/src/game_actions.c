@@ -142,9 +142,10 @@ Status game_actions_take(Game *game, Command *command){
   if(!game || !command )
     return ERROR;
 
-  if( inventory_is_full(backpack)==FALSE && (object_get_location(object) == player_get_location(game_get_player(game))) ){
+  if( inventory_is_full(backpack)==FALSE && (object_get_location(object) == player_get_location(game_get_player(game))) && object_get_taken(object) == FALSE ){
     player_add_object(player, object);
     space_del_object(current_space, object_get_id(object));
+    object_set_taken(object, TRUE);
     return OK;
   }
   
@@ -166,6 +167,7 @@ Status game_actions_drop(Game *game, Command *command){
   
   space_add_object(current_space, object_get_id(object));
   player_del_object(player, object);
+  object_set_taken(object, FALSE);
 
   return OK;
 }
