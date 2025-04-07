@@ -1,0 +1,30 @@
+Este fichero guarda los outputs que se esperan al ejecutar: make runcmd1
+El fichero logFile.dat almacena los outputs reales generados por el juego.
+
+chat          Expected output: OK
+move east     Expected output: OK
+move south    OK
+move north    ERROR
+move south    OK
+move south    ERROR
+move south    OK
+move west     OK
+move south    ERROR
+move east     OK
+attack        OK
+move east     OK
+move south    ERROR
+chat          OK
+move north    OK
+move south    OK
+inspect seed  ERROR
+inspect seed  OK
+move north    OK
+take seed     OK
+take seed     ERROR
+chat          ERROR
+take grain    OK
+move north    OK
+drop grain    OK
+drop seed     OK
+quit          OK
