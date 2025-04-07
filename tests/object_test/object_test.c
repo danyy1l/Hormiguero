@@ -16,7 +16,7 @@
  #include "object.h"
  #include "object_test.h"
  
- #define MAX_TESTS 22
+ #define MAX_TESTS 26
  
  /** 
   * @brief Main function for CHARACTER unit tests. 
@@ -66,6 +66,10 @@
    if (all || test == 20) test3_object_set_description();
    if (all || test == 21) test1_object_get_description();
    if (all || test == 22) test2_object_get_description();
+   if (all || test == 23) test1_object_set_taken();
+   if (all || test == 24) test2_object_set_taken();
+   if (all || test == 25) test1_object_get_taken();
+   if (all || test == 26) test2_object_get_taken();
 
    PRINT_PASSED_PERCENTAGE;
  

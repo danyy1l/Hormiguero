@@ -42,7 +42,7 @@ Player *player_create(){
 
 Status player_destroy(Player *player){
   if( player ){
-    inventory_destroy(player->backpack);
+    if(player->backpack) inventory_destroy(player->backpack);
     free(player);
     player = NULL;
   }

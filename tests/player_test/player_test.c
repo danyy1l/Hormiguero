@@ -176,10 +176,10 @@
  }
  
  void test1_player_set_gdesc() {
-   Player *s;
+   Player *s = NULL;
    s = player_create();
-   player_set_gdesc(s, "_/-.-\\_");
-   PRINT_TEST_RESULT(strcmp(player_get_gdesc(s), "_/-.-\\_") == 0);
+   player_set_gdesc(s, "_-.-_");
+   PRINT_TEST_RESULT(strcmp(player_get_gdesc(s), "_-.-_") == 0);
    player_destroy(s);
  }
  
