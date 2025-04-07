@@ -487,7 +487,7 @@ void graphic_engine_destroy(Graphic_engine *ge) {
   free(ge);
 }
 
-void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
+void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command) {
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, player_location = NO_ID;
   Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL;
   Object* object=NULL;
@@ -696,9 +696,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
-  last_cmd = command_get_code(game_get_last_command(game));
+  last_cmd = command_get_code(command);
   if(last_cmd >= NO_CMD && last_cmd <= INSPECT ){
-    last_cmd_status = command_get_output(game_get_last_command(game));
+    last_cmd_status = command_get_output(command);
     if( last_cmd_status )
       strcpy(action_return,"Ok");
     else
@@ -714,7 +714,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game) {
   }
 
   if( last_cmd == INSPECT && last_cmd_status ){
-    sprintf(str, "  %s: %s", object_get_name(game_get_object_by_name(game, command_get_arguments(game_get_last_command(game)))), object_get_description(game_get_object_by_name(game, command_get_arguments(game_get_last_command(game)))));
+    sprintf(str, "  %s: %s", object_get_name(game_get_object_by_name(game, command_get_arguments(command))), object_get_description(game_get_object_by_name(game, command_get_arguments(command))));
     screen_area_puts(ge->descript, str);
   }
 

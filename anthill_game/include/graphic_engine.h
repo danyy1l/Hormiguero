@@ -40,8 +40,9 @@ void graphic_engine_destroy(Graphic_engine *ge);
  * @author Anthony Eduardo Alvarado Carbajal
  * @param ge Un puntero a Graphic_engine 
  * @param game Un puntero a Game
+ * @param command Puntero al ultimo comando
  */
-void graphic_engine_paint_game(Graphic_engine *ge, Game *game);
+void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command* command);
 
 /**
  * @brief Dibuja un game over

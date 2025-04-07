@@ -86,7 +86,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
     turn = (turn + 1) % game_get_n_players(game);
     game_next_turn(game, turn);
 
-    graphic_engine_paint_game(gengine, game);
+    graphic_engine_paint_game(gengine, game, last_cmd);
     command_get_user_input(last_cmd);
     game_actions_update(game, last_cmd);
     space_player_arrive(game_get_space(game, player_get_location(game_get_player(game))));
