@@ -23,6 +23,9 @@
 #define MAX_SPACES 100
 #define MAX_LINKS 400
 
+/**
+ * @brief Declaracion de la estructura que contiene todos los datos de la partida
+ */
 typedef struct _Game Game;
 
 /**

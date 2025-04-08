@@ -15,9 +15,10 @@
 #include <strings.h>
 
 /**
- * Game implementation
+ * @brief Game
+ *
+ * This struct stores all the information related to the game.
  */
-
 struct _Game{
   Player *players[MAX_PLAYERS];           /*!< Puntero a la estructura del jugador de la partida*/
   Command *last_cmd[MAX_PLAYERS];         /*!< Almacena ultimo comando propio al jugador*/
