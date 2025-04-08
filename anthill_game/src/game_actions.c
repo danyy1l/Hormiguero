@@ -204,8 +204,11 @@ Status game_actions_chat(Game *game){
   Player* player = game_get_player(game);
   Space *current_space = game_get_space(game, player_get_location(player));
   Character* character = game_get_character(game, space_get_character_id(current_space));
+  char str[WORD_SIZE];
 
   if( (player_get_location(player) == character_get_location(character)) && (character_get_friendly( character )) ){
+    sprintf(str, "%s: %s", character_get_name(character), character_get_message(character));
+    game_set_message(game, str);
     return OK;
   }
 

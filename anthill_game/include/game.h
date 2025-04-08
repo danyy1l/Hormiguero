@@ -255,6 +255,11 @@ Id game_get_connection(Game *game, Id id, Direction direction);
  */
 Bool game_connection_is_open(Game *game, Id id, Direction direction);
 
+/*TO DO Documentar*/
+Status game_set_message(Game* game, char* str);
+
+char* game_get_message(Game* game);
+
 /**
  * @brief Imprime el juego
  * @author Anthony Eduardo Alvarado Carbajal

@@ -287,7 +287,7 @@ Status game_load_characters(Game *game, char *filename){
       character_set_message(character, message);
 
       game_add_character(game, character);
-      space_set_character(game_get_space(game, location), character_get_id(character));
+      space_set_character(game_get_space(game, location), id);
     }
   }
 

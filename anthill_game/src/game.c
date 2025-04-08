@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <strings.h>
 
 /**
@@ -32,7 +33,8 @@ struct _Game{
   int n_spaces;                           /*!< Número de espacios*/
   Link *links[MAX_LINKS];                 /*!< Puntero a array de enlaces entre espacios*/
   int n_links;                            /*!< Almacena el numero de enlaces en la partida*/
-  Bool finished;
+  Bool finished;                          /*!< Determina si la partida esta terminada*/
+  char message[WORD_SIZE];                /*!< Almacena el ultimo mensaje de personaje*/
 };
 
 /**
@@ -341,6 +343,18 @@ Bool game_connection_is_open(Game *game, Id id, Direction direction){
   }
 
   return FALSE;
+}
+
+Status game_set_message(Game* game, char* str){
+  if( !game || !str ) return ERROR;
+
+  strcpy(game->message, str);
+
+  return OK;
+}
+
+char* game_get_message(Game* game){
+  return game == NULL ? NULL : game->message;
 }
 
 void game_print(Game *game) {

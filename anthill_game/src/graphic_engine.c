@@ -709,7 +709,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   }
 
   if( last_cmd == CHAT && last_cmd_status ){
-    sprintf(str, "  %s: %s",character_get_name(game_get_character(game, space_get_character_id(space_act))), character_get_message( game_get_character(game, space_get_character_id(space_act)) ));
+    sprintf(str, "  %s",game_get_message(game));
     screen_area_puts(ge->descript, str);
   }
 
