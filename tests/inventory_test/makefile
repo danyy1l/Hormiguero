@@ -1,5 +1,5 @@
 CC=gcc
-EXE=inventory-test
+EXE=inventory_test
 CFLAGS=-g -c -Wall -ansi -pedantic
 
 ###########################################################################

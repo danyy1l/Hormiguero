@@ -1,5 +1,5 @@
 CC=gcc
-EXE=link-test
+EXE=link_test
 CFLAGS=-g -c -Wall -ansi -pedantic
 
 ###########################################################################

@@ -1,5 +1,5 @@
 CC=gcc
-EXE=set-test
+EXE=set_test
 CFLAGS=-g -c -Wall -ansi -pedantic
 
 ###########################################################################

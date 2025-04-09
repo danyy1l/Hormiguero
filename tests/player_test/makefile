@@ -1,5 +1,5 @@
 CC=gcc
-EXE=player-test
+EXE=player_test
 CFLAGS=-g -c -Wall -ansi -pedantic
 
 ###########################################################################

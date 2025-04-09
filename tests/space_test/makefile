@@ -1,5 +1,5 @@
 CC=gcc
-EXE=space-test
+EXE=space_test
 CFLAGS=-g -c -Wall -ansi -pedantic
 
 ###########################################################################

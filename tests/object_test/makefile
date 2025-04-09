@@ -1,5 +1,5 @@
 CC=gcc
-EXE=object-test
+EXE=object_test
 CFLAGS=-g -c -Wall -ansi -pedantic
 
 ###########################################################################

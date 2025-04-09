@@ -1,5 +1,5 @@
 CC=gcc
-EXE=character-test
+EXE=character_test
 CFLAGS=-g -c -Wall -ansi -pedantic
 
 ###########################################################################
