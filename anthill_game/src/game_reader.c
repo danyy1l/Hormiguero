@@ -200,7 +200,7 @@ Status game_load_objects(Game *game, char *filename){
   }
 
   file = fopen(filename, "r");
-  if (file == NULL) {
+  if (file == NULL) { 
     return ERROR;
   }
 

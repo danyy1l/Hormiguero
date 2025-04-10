@@ -15,7 +15,7 @@
 #include <string.h>
 
 /**
- * @brief Object
+ * @brief Object 
  * Esta estructura define los elementos del objeto 
  */
 struct _Object{

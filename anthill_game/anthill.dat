@@ -36,6 +36,22 @@
 #o:2|Crumb|12|Es una miga de pan|
 #o:3|Cookie|12|Es una galleta|
 #o:4|Seed|16|Es una semilla|
+#o:5|Kit|43|+5 de vida|
+#o:6|Poison|15|-5 de vida|
+#o:7|Torch|53|Antorcha|
+#o:8|Fire|12|Fuego para la antorcha|
+#o:9|Nuke|33|Termina la partida|
+#o:10|Serrano|11|+3 de vida|
+#o:11|Pidgeon|23|-3 de vida|
+#o:12|Mine|16|Muerte segura|
+#o:13|Key|14|Abre alguna puerta|
+#o:14|Beer|43|Cura toda la vida|
+#o:15|Bazooka|15|Necesita misil|
+#o:16|Misil|53|Mata de un bombazo|
+#o:17|Campfire|33|Cura toda la vida|
+#o:18|TNT|13|Abre una pared|
+#o:19|Omelette|23|Necesita patata|
+#o:20|Potato|11|Cura toda la vida|
 
 #c:100|Antlion| ^0m  |53|5|1|Hello!|
 #c:200|Worm|*0o8o |11|5|1|Welcome!|
