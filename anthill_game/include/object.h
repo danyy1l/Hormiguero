@@ -1,7 +1,7 @@
 /**
  * @brief Define los interfaces del objeto
  * @file object.h
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Hugo Martín
  * @version 7
  * @date 05-02-2024
  * @copyright GNU Public License
@@ -9,7 +9,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <stdio.h>
+#include <stdio.h> 
 #include "types.h"
 
 /**
@@ -20,7 +20,7 @@ typedef struct _Object Object;
 
 /**
  * @brief Crea un objeto
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Hugo Martín
  * @param id el número id para el nuevo objeto
  * @return un nuevo objeto,inicializado
  */
@@ -120,6 +120,74 @@ Bool object_get_taken(Object* object);
  * @return OK en caso de exito, ERROR en caso contrario
  */
 Status object_set_taken(Object* object, Bool taken);
+
+/**
+ * @brief Obtiene la vida del objeto
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @return Una entero con la vida del objeto
+ */
+int object_get_health(Object *object);
+
+/**
+ * @brief Establece la vida del objeto
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @param health La vida del objeto
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status object_set_health(Object *object, int health);
+
+/**
+ * @brief Devuelve si el objeto se puede coger o no
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @return TRUE en caso de que se pueda, FALSE en caso contrario
+ */
+Bool object_get_movable(Object *object);
+
+/**
+ * @brief Establece la movilidad del objeto
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @param movable Si se puede mover o no
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status object_set_movable(Object *object, Bool movable);
+
+/**
+ * @brief Devuelve si el objeto depende de otro o no
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @return Id del objeto si tiene dependencias o NO_ID en caso contrario
+ */
+Id object_get_dependency(Object *object);
+
+/**
+ * @brief Establece la dependencia del objeto
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @param dependency Si depende o no
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status object_set_dependency(Object *object, Id dependency);
+
+/**
+ * @brief Devuelve si el objeto puede abrir enlaces o no
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @return Id del enlace si puede abrir alguno o NO_ID en caso contrario
+ */
+Id object_get_open(Object *object);
+
+/**
+ * @brief Establece en enlace que puede abrir
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @param open Id del enlace
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status object_set_open(Object *object, Id open);
 
 /**
  * @brief Imprime el objeto
