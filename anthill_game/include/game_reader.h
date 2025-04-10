@@ -26,7 +26,7 @@ Status game_load_spaces(Game *game, char *filename);
 /**
  * @brief Crea el array de objetos del mapa, tomando el archivo proporcionado
  * anthill.dat esta como predeterminado
- * @author Danyyil Shykerynets
+ * @author Hugo Martín
  * @param game Estructura de la partida actual
  * @param filename Nombre del archivo del que extraer el mapa
  * @return OK en caso de exito, ERROR en caso contrario

@@ -4,7 +4,7 @@
  * @author Danyyil Shykerynets
  * @version 0
  * @date 21-03-2025
- * @copyright GNU Public License
+ * @copyright GNU Public License 
 */
 
 #include "../include/types.h"
