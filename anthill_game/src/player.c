@@ -6,14 +6,14 @@
  * @version 7
  * @date 05-02-2025
  * @copyright GNU Public License
- */ 
+ */  
 
 #include "../include/player.h"
 #include "../include/object.h"
 
 #include <stdio.h> 
 #include <stdlib.h>
-#include <string.h> 
+#include <string.h>  
 
 struct _Player {
   Id id;                      /*!<-ID del jugador*/

@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-
+ 
 /**
    Game actions implementation
 */
@@ -138,17 +138,19 @@ Status game_actions_take(Game *game, Command *command){
   Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
   Player* player=game_get_player(game);
   Inventory* backpack=player_get_objects(player);
+  Id dependency=object_get_dependency(object);
+  Object *object2=game_get_object(game, dependency);
 
   if(!game || !command )
     return ERROR;
 
-  if( inventory_is_full(backpack)==FALSE && (object_get_location(object) == player_get_location(game_get_player(game))) && object_get_taken(object) == FALSE ){
+  if( inventory_is_full(backpack)==FALSE && (object_get_location(object) == player_get_location(game_get_player(game))) && object_get_taken(object) == FALSE && object_get_movable(object)==TRUE && (dependency==NO_ID || player_find_object(player, object2)==TRUE)){
     player_add_object(player, object);
     space_del_object(current_space, object_get_id(object));
     object_set_taken(object, TRUE);
     return OK;
   }
-  
+
   return ERROR;
 }
 
@@ -156,6 +158,7 @@ Status game_actions_drop(Game *game, Command *command){
   Player *player=game_get_player(game);
   Object *object=game_get_object_by_name(game, command_get_arguments(command));
   Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
+  int i;
 
   if (!game || !command_get_arguments(command) ) {
     return ERROR;
@@ -165,6 +168,10 @@ Status game_actions_drop(Game *game, Command *command){
     return ERROR;
   }
   
+  for (i=0;i<) {
+
+  }
+
   space_add_object(current_space, object_get_id(object));
   player_del_object(player, object);
   object_set_taken(object, FALSE);

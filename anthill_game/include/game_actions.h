@@ -52,10 +52,10 @@ void game_actions_quit(Game *game);
  * Mueve al jugador en la direccion escrita en caso de que se puede
  */
 Status game_actions_move(Game *game, Command* command);
-
+ 
 /**
  * @brief Realiza la accion al recibir un commando "TAKE"
- * @author Danyyil Shykerynets
+ * @author Hugo Martín
  * @param game Estructura de la partida actual
  * Recibe el objeto de la casilla del jugador y lo lleva consigo hasta recibir un DROP
  */
@@ -63,7 +63,7 @@ Status game_actions_take(Game *game, Command* command);
 
 /**
  * @brief Realiza la accion al recibir un commando "DROP" y un nombre de un objeto
- * @author Danyyil Shykerynets
+ * @author Hugo Martín
  * @param game Estructura de la partida actual
  * Suelta el objeto del inventario del jugador en caso de haberlo
  */
