@@ -11,11 +11,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string.h> 
 
 struct _Inventory{
   Set *objects;
-  int max_objects;
+  int max_objects; 
 };
 
 Inventory *inventory_create(){

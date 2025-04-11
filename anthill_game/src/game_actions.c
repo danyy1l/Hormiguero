@@ -156,9 +156,10 @@ Status game_actions_take(Game *game, Command *command){
 
 Status game_actions_drop(Game *game, Command *command){
   Player *player=game_get_player(game);
-  Object *object=game_get_object_by_name(game, command_get_arguments(command));
+  Object *object=game_get_object_by_name(game, command_get_arguments(command)), *object2=NULL;
   Space* current_space = game_get_space(game, player_get_location(game_get_player(game)));
-  int i;
+  int i, n_ids=set_get_nids(inventory_get_objects(player_get_objects(player)));
+  Id *ids=set_id_object(inventory_get_objects(player_get_objects(player)));
 
   if (!game || !command_get_arguments(command) ) {
     return ERROR;
@@ -168,10 +169,15 @@ Status game_actions_drop(Game *game, Command *command){
     return ERROR;
   }
   
-  for (i=0;i<) {
-
+  for (i=0;i<n_ids;i++) {
+    object2=game_get_object(game, ids[i]);
+    if (object_get_id(object)==object_get_dependency(object2)) {
+      space_add_object(current_space, object_get_id(object2));
+      player_del_object(player, object2);
+      object_set_taken(object2, FALSE);
+    }
   }
-
+  
   space_add_object(current_space, object_get_id(object));
   player_del_object(player, object);
   object_set_taken(object, FALSE);

@@ -12,7 +12,7 @@
 #include <stdlib.h> 
 #include <string.h>
 #include "../include/set.h"
-
+ 
 struct _Set{
   Id ids[MAX_IDS];    /*!< Array de ids de los objetos del conjunto */
   int n_ids;          /*!< El número de objetos del conjunto */
@@ -50,7 +50,7 @@ Status set_destroy(Set* set){
 int set_get_nids(Set* set){
   if (!set){
     return -1;
-  }
+  } 
 
   return set->n_ids;
 }
