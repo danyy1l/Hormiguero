@@ -83,6 +83,20 @@ Status game_actions_update(Game *game, Command *command) {
         command_set_output(command, OK);
       break;
 
+    case USE:
+      if( game_actions_use(game, command) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
+      break;
+
+    case OPEN:
+      if( game_actions_open(game, command) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
+      break;
+
     default: 
       break;
   } 
@@ -244,4 +258,20 @@ Status game_actions_inspect(Game *game, Command *command) {
   }
 
   return ERROR;
+}
+
+Status game_actions_use(Game *game, Command *command) {
+  Player *player=game_get_player(game);
+  Object *object=game_get_object_by_name(game, command_get_arguments(command));
+
+  if (!game || !command) {
+    return ERROR;
+  }
+
+  
+
+
+
+
+
 }

@@ -93,4 +93,20 @@ Status game_actions_chat(Game *game);
  */
 Status game_actions_inspect(Game *game, Command *command);
 
+/**
+ * @brief Realiza la accion al recibir un commando "USE"
+ * @author Hugo Martín
+ * @param game Estructura de la partida actual
+ * Usa el objeto al que se esté refiriendo, y luego el objeto desaparece
+ */
+Status game_actions_use(Game *game, Command* command);
+
+/**
+ * @brief Realiza la accion al recibir un commando "OPEN"
+ * @author Hugo Martín
+ * @param game Estructura de la partida actual
+ * Abre un enlace con un obeto y luego este desaparece
+ */
+Status game_actions_open(Game *game, Command* command);
+
 #endif
