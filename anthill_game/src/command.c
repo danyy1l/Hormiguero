@@ -15,7 +15,7 @@
 #include <string.h>
 #include <strings.h>
 
-#define CMD_LENGHT 30
+#define CMD_LENGHT 100
 
 char *cmd_to_str[N_CMD][N_CMDT] = {
   {"", "No command"},
@@ -40,6 +40,8 @@ struct _Command {
   CommandCode code;               /*!< Name of the command */
   Status output;                  /*!< Return of executed command, either OK or ERROR*/
   char arguments[WORD_SIZE];      /*!< Name of the object desired to take*/
+  char arguments1[WORD_SIZE];     /*!< "over" for USE and "with" for OPEN*/
+  char arguments2[WORD_SIZE];     /*!< Name of the character or the object*/
 };
 
 /** space_create allocates memory for a new space
@@ -56,6 +58,8 @@ Command* command_create() {
   /* Initialization of an empty command*/
   newCommand->code = NO_CMD;
   newCommand->arguments[0] = '\0';
+  newCommand->arguments1[0] = '\0';
+  newCommand->arguments2[0] = '\0';
   newCommand->output = ERROR;
 
   return newCommand;
@@ -143,4 +147,18 @@ char* command_get_arguments(Command *command){
     return NULL;
 
   return command->arguments;
+}
+
+char* command_get_arguments1(Command *command){
+  if( !command )
+    return NULL;
+
+  return command->arguments1;
+}
+
+char* command_get_arguments2(Command *command){
+  if( !command )
+    return NULL;
+
+  return command->arguments2;
 }

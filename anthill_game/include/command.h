@@ -37,7 +37,7 @@ typedef struct _Command Command;
 
 /**
  * @brief Crea un nuevo comando reservando su espacio
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Hugo Martín
  * @return Un nuevo comando inicializado
  */
 Command* command_create();
@@ -99,5 +99,23 @@ Status command_set_output(Command *command, Status new_output);
  * Ejemplo: si el comando es take grain, devuelve grain
  */
 char* command_get_arguments(Command *command);
+
+/**
+ * @brief Obtiene el el argumento adicional del tercer comando
+ * @author Hugo Martín
+ * @param command un puntero a Command
+ * @return un string con los argumentos que se hayan añadido al comando
+ * Ejemplo: si el comando es take grain, devuelve grain
+ */
+char* command_get_arguments1(Command *command);
+
+/**
+ * @brief Obtiene el el argumento adicional del ultimo comando
+ * @author Hugo Martín
+ * @param command un puntero a Command
+ * @return un string con los argumentos que se hayan añadido al comando
+ * Ejemplo: si el comando es take grain, devuelve grain
+ */
+char* command_get_arguments2(Command *command);
 
 #endif
