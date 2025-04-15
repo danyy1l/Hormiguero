@@ -2,9 +2,9 @@
  * @brief It implements the game update through user actions
  *
  * @file game_actions.c
- * @author Hugo Martín
- * @version 7
- * @date 11-02-2025
+ * @author Danyyil Shykerynets
+ * @version 8
+ * @date 11-04-2025
  * @copyright GNU Public License
  */
 
@@ -122,8 +122,12 @@ Status game_actions_move(Game *game, Command *command) {
     direction = S;
   else if( !strcasecmp("West", dir) || !strcasecmp("W", dir) )
     direction = W; 
-  else
+  else if( !strcasecmp("Up", dir) || !strcasecmp("U", dir) )
     direction = U;
+    else if( !strcasecmp("Down", dir) || !strcasecmp("D", dir) )
+    direction = W;  
+  else
+    direction = UNKNOWN;
 
   if (game_connection_is_open(game, space_id, direction)) {
     player_set_location(game_get_player(game), game_get_connection(game, space_id, direction));
