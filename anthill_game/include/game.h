@@ -139,6 +139,15 @@ Object* game_get_object(Game *game, Id id);
 Object* game_get_object_by_name(Game *game, char* name);
 
 /**
+ * @brief Obtiene el puntero de un link con cierto nombre de la estructura game
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @param name Nombre del link que se quiere obtener
+ * @return Puntero a la estructura objeto de la partida "game" 
+ */
+Link* game_get_link_by_name(Game *game, char* name);
+
+/**
  * @brief Obtiene el numero de objetos de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game

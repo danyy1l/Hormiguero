@@ -357,6 +357,19 @@ char* game_get_message(Game* game){
   return game == NULL ? NULL : game->message;
 }
 
+Link* game_get_link_by_name(Game *game, char* name) {
+  int i;
+  if( !game )
+    return NULL;
+
+  for(i=0; i<game->n_links; i++){
+    if( !strcasecmp(link_get_name(game->links[i]), name) )
+    return game->links[i];
+  }
+
+  return NULL;
+}
+
 void game_print(Game *game) {
   int i = 0;
 

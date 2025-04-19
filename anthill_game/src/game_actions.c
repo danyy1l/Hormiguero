@@ -286,16 +286,16 @@ Status game_actions_use(Game *game, Command *command) {
 
 Status game_actions_open(Game *game, Command* command) {
   Player *player=game_get_player(game);
-  Object *object=game_get_object_by_name(game, command_get_arguments(command));
+  Object *object=game_get_object_by_name(game, command_get_arguments2(command));
   Space *current_space = game_get_space(game, player_get_location(player));
+  Id s_id=space_get_id(current_space);
+  Link *link=game_get_link_by_name(game, command_get_arguments(command));
 
-   if (!game || !command || space_get_id(current_space)!=object_get_location(object)) {
+  if (!game || !command || object_get_open(object)!=link_get_id(link) || s_id!=object_get_location(object) || s_id!=link_get_origin(link) || strcasecmp(command_get_arguments1(command), "with")!=0) {
     return ERROR;
   }
 
+  link_set_open(link, TRUE);
 
-
-
-
-
+  return OK;
 }
