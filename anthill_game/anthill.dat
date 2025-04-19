@@ -17,7 +17,7 @@
 #l:6|P2_P5|13|23|2|1|
 #l:7|P3_P2|14|13|1|1| 
 #l:8|P3_P4|14|15|3|0|
-#l:9|P4_P3|15|14|1|1|
+#l:9|P4_P3|15|14|1|1| 
 #l:10|P4_A|15|16|3|1|
 #l:11|P5_P2|23|13|4|1|
 #l:12|P5_P6|23|33|2|1|
@@ -30,7 +30,7 @@
 #l:19|A_P4|16|15|1|1|
 
 #p:1|Hormiga|m0^ |11|10|3|
-#p:2|Gusano|o0o8|33|8|4|
+#p:2|Gusano|o0o8|33|10|4|
 
 #o:1|Grain|12|Es un grano de maiz|0|1|-1|-1|
 #o:2|Crumb|12|Es una miga de pan|0|1|-1|-1|
@@ -40,19 +40,19 @@
 #o:6|Poison|15|-5 de vida|-5|1|-1|-1|
 #o:7|Torch|53|Antorcha|0|1|-1|-1|
 #o:8|Fire|12|Fuego para la antorcha|0|1|7|-1|
-#o:9|Nuke|33|Termina la partida|0|1|-1|-1|
+#o:9|Nuke|33|Termina la partida|-10|1|-1|-1|
 #o:10|Serrano|11|+3 de vida|3|1|-1|-1|
 #o:11|Pidgeon|23|-3 de vida|-3|1|-1|-1|
 #o:12|Mine|16|Muerte segura|-10|0|-1|-1|
 #o:13|Key|14|Abre alguna puerta|0|1|-1|8|
 #o:14|Beer|43|Cura toda la vida|10|1|-1|-1|
-#o:15|Bazooka|15|Mata de un bombazo|0|1|-1|-1|
-#o:16|Misil|53|Necesita Bazooka|-10|1|15|-1|
+#o:15|Grenade|15|Mata de un bombazo|-10|1|-1|-1|
+#o:16|Bomb|53|Game over|-10|1|-1|-1|
 #o:17|Campfire|33|Cura toda la vida|10|0|-1|-1|
 #o:18|TNT|13|Abre una pared|0|1|-1|8|
-#o:19|Omelette|23|Necesita patata|0|1|-1|-1|
-#o:20|Potato|11|Cura toda la vida|0|1|-1|-1|
+#o:19|Omelette|23|+7 de vida|7|1|-1|-1|
+#o:20|Potato|11|Cura toda la vida|10|1|-1|-1|
 
-#c:100|Antlion| ^0m  |53|5|1|Hello!|
-#c:200|Worm|*0o8o |11|5|1|Welcome!|
+#c:100|Antlion| ^0m  |53|10|1|Hello!|
+#c:200|Worm|*0o8o |11|10|1|Welcome!|
 #c:300|Spider|/\00/\|14|10|0|!!!!!!|

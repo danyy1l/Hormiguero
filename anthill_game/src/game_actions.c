@@ -263,12 +263,36 @@ Status game_actions_inspect(Game *game, Command *command) {
 Status game_actions_use(Game *game, Command *command) {
   Player *player=game_get_player(game);
   Object *object=game_get_object_by_name(game, command_get_arguments(command));
+  Space *current_space = game_get_space(game, player_get_location(player));
+  int p_health=player_get_health(player), health=object_get_health(object), t_health;
 
-  if (!game || !command) {
+  if (!game || !command || health==0 || space_get_id(current_space)!=object_get_location(object)) {
     return ERROR;
   }
 
-  
+  t_health=p_health+health;
+  player_set_health(player, t_health);
+  if (player_get_health(player)>10) {
+    player_set_health(player, 10);
+  }
+  if (player_get_health(player)<0) {
+    player_set_health(player, 0);
+  }
+
+  object_set_location(object, 99);
+
+  return OK;
+}
+
+Status game_actions_open(Game *game, Command* command) {
+  Player *player=game_get_player(game);
+  Object *object=game_get_object_by_name(game, command_get_arguments(command));
+  Space *current_space = game_get_space(game, player_get_location(player));
+
+   if (!game || !command || space_get_id(current_space)!=object_get_location(object)) {
+    return ERROR;
+  }
+
 
 
 
