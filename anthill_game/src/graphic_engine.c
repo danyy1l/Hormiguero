@@ -692,12 +692,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   screen_area_clear(ge->help);
   sprintf(str, " The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, " Move(m), Take(t), Drop(d), Attack(a), Chat(c), Inspect(i), Use(u), Open(o), Quit(q)");
+  sprintf(str, " Move(m), Take(t), Drop(d), Attack(a), Chat(c), Inspect(i), Use(u), Open(o), Recruit(r), Abandon(ab), Quit(q)");
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
   last_cmd = command_get_code(command);
-  if(last_cmd >= NO_CMD && last_cmd <= OPEN ){
+  if(last_cmd >= NO_CMD && last_cmd <= ABANDON ){
     last_cmd_status = command_get_output(command);
     if( last_cmd_status )
       strcpy(action_return,"Ok");
