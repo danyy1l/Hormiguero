@@ -191,6 +191,14 @@ int game_get_n_characters(Game* game);
 Character* game_get_character(Game* game, Id id);
 
 /**
+ * @brief Devuelve el personaje en la posición i del array de personajes del juego
+ * @param game puntero a la estructura Game
+ * @param i índice del personaje (0 <= i < n_characters)
+ * @return puntero al personaje o NULL si hay error
+ */
+Character* game_get_character_at(Game* game, int i);
+
+/**
  * @brief Crea un espacio nuevo en el array de espacios
  * @author Danyyil Shykerynets
  * @param game Estructura de la partida actual
