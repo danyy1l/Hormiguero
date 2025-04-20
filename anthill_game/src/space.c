@@ -62,7 +62,7 @@ Space* space_create(Id id) {
  
     /*Si en el .dat el espacio no tiene gdesc definido, al pintar la partida, aparecerán estos espacios*/
     for(i=0;i<GDESC_MAX;i++){
-    strcpy(newSpace->gdesc[i],"");
+    strcpy(newspace->gdesc[i],"");
   }
 
   newSpace->discovered=FALSE;
