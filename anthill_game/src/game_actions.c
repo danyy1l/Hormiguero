@@ -97,6 +97,20 @@ Status game_actions_update(Game *game, Command *command) {
         command_set_output(command, OK);
       break;
 
+     case RECRUIT:
+      if( game_actions_recruit(game, command) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
+      break;
+    
+    case ABANDON:
+      if( game_actions_abandon(game, command) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
+      break;
+
     default: 
       break;
   } 
