@@ -109,4 +109,22 @@ Status game_actions_use(Game *game, Command* command);
  */
 Status game_actions_open(Game *game, Command* command);
 
+/**
+ * @brief Realiza la accion al recibir un commando "RECRUIT"
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Estructura de la partida actual
+ * @param command puntero a command
+ * Recluta a un amigo que se encuentre en la misma casilla
+ */
+Status game_actions_recruit(Game* game, Command *command);
+
+/**
+ * @brief Realiza la accion al recibir un commando "ABANDON"
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Estructura de la partida actual
+ * @param command puntero a command
+ * Abandona a un amigo que se encuentre en la misma casilla
+ */
+Status game_actions_abandon(Game* game, Command* command);
+
 #endif
