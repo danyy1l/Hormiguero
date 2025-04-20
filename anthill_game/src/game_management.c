@@ -1,14 +1,14 @@
 /**
  * @brief It implements the game reading functionality
  *
- * @file game_reader.c
- * @author Danyyil Shykerynets
+ * @file game_management.c
+ * @author Hugo Martín
  * @version 7
  * @date 03-02-2025
  * @copyright GNU Public License
  */
 
-#include "../include/game_reader.h"
+#include "../include/game_management.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -339,3 +339,22 @@ Game* game_create_from_file(char *filename) {
 
   return game;
 }
+
+Status game_management_save(Game *game, char *filename) {
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Status game_management_load(Game *game, char *filename);
