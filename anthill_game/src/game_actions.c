@@ -299,3 +299,78 @@ Status game_actions_open(Game *game, Command* command) {
 
   return OK;
 }
+
+Status game_actions_recruit(Game* game, Command *command){
+  if (!game || !command) {
+    return ERROR;
+  }
+
+  const char *char_name = command_get_arguments(command);
+  if (!char_name) {
+    return ERROR;
+  }
+
+  Player *player = game_get_player(game);
+  Id player_loc = player_get_location(player);
+  int num_chars = game_get_n_characters(game);
+  Character *character = NULL;
+
+  for (int i = 0; i < num_chars; i++) {
+    character = game_get_character_at(game, i);
+
+    if (!character) 
+      continue;
+
+    if (strcasecmp(character_get_name(character), char_name) != 0) {
+      continue;
+    }
+
+
+    if (character_get_location(character) != player_loc || !character_get_friendly(character) || character_get_following(character) != NO_ID) {
+      return ERROR;
+    }
+
+    character_set_following(character, player_get_id(player));
+    return OK;
+  }
+
+  return ERROR; 
+}
+
+Status game_actions_abandon(Game* game, Command *command){
+  if (!game || !command) {
+    return ERROR;
+  }
+
+  Player *player = game_get_player(game);
+  Id player_id = player_get_id(player);
+  Id player_loc = player_get_location(player);
+
+  int num_chars = game_get_n_characters(game);
+  Character *character = NULL;
+
+  const char *char_name = command_get_arguments(command);
+  if (!char_name) {
+    return ERROR;
+  }
+
+  for (int i = 0; i < num_chars; i++) {
+    character = game_get_character_at(game, i);
+
+    if (!character) 
+      continue;
+
+    if (strcasecmp(character_get_name(character), char_name) != 0) {
+      continue;
+    }
+
+    if (character_get_location(character) != player_loc || !character_get_friendly(character) || character_get_following(character) != player_id) {
+      return ERROR;
+    }
+
+    character_set_following(character, NO_ID);
+    return OK;
+  }
+
+  return ERROR;
+}
