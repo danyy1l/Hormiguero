@@ -75,7 +75,7 @@ Status game_actions_drop(Game *game, Command *command);
  * @param game Estructura de la partida actual
  * Ataca al personaje que haya en la misma casilla
  */
-Status game_actions_attack(Game *game);
+Status game_actions_attack(Game *game, Command *command);
 
 /**
  * @brief Realiza la accion al recibir un commando "CHAT"
