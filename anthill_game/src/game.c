@@ -240,6 +240,14 @@ Character* game_get_character(Game *game, Id id){
   return NULL;
 }
 
+Character* game_get_character_at(Game* game, int i) {
+  if (!game || i < 0 || i >= game->n_characters) {
+      return NULL;
+  }
+
+  return game->characters[i];
+}
+
 int game_get_n_characters(Game* game){
   if( !game )
     return -1;
