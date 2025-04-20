@@ -62,6 +62,49 @@ Status space_set_name(Space* space, char* name);
  * @return  a string with the name of the space
  */
 const char* space_get_name(Space* space);
+
+/**
+ * @brief Adds a character to the space
+ * @author Anthony Eduardo Alvarado Carbajal 
+ * @param space A pointer to the space 
+ * @param id a number id 
+ * @return OK, if everything goes well, or ERROR if there is a mistake
+ */
+Status space_add_character(Space* space, Id id);
+
+/**
+ * @brief Deletes a character in the space
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param space A pointer to the space 
+ * @param id a number id 
+ * @return OK, if everything goes well, or ERROR if there is a mistake
+ */
+Status space_del_character(Space* space, Id id);
+  
+/**
+ * @brief Gets the characters in the space
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param space A pointer to the space 
+ * @return Array of object ids in the space
+ */
+Id* space_id_character(Space* space);
+
+/**
+ * @brief Get the set of characters of the space
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param space A pointer to the space
+ * @return Object set in space struct
+ */
+Set* space_get_set_characters(Space* space);
+
+/**
+ * @brief verifies if an character exists 
+ * @author Anthony Eduardo Alvarado Carbajal 
+ * @param space A pointer to the space 
+ * @param id a number id of space
+ * @return TRUE, if everything goes well, or FALSE if there is a mistake 
+ */
+Bool space_find_character(Space* space, Id id);
   
 /**
  * @brief Adds an object to the space
