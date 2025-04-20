@@ -97,6 +97,20 @@ Status game_actions_update(Game *game, Command *command) {
         command_set_output(command, OK);
       break;
 
+    case SAVE:
+      if( game_actions_save(game, command) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
+      break;
+
+    case LOAD:
+      if( game_actions_load(game, command) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
+      break;
+
     default: 
       break;
   } 
@@ -298,4 +312,20 @@ Status game_actions_open(Game *game, Command* command) {
   link_set_open(link, TRUE);
 
   return OK;
+}
+
+Status game_actions_save(Game *game, Command* command) {
+  char *filename=command_get_arguments(command);
+  
+  if (!game || !command || filename == NULL || strlen(filename) == 0) {
+    return ERROR;
+  }
+
+  game_management_save(game, filename);
+
+  return OK;
+}
+
+Status game_actions_load(Game *game, Command* command) {
+
 }

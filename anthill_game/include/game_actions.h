@@ -109,4 +109,20 @@ Status game_actions_use(Game *game, Command* command);
  */
 Status game_actions_open(Game *game, Command* command);
 
+/**
+ * @brief Realiza la accion al recibir un commando "SAVE"
+ * @author Hugo Martín
+ * @param game Estructura de la partida actual
+ * Guarda la partida
+ */
+Status game_actions_save(Game *game, Command* command);
+
+/**
+ * @brief Realiza la accion al recibir un commando "LOAD"
+ * @author Hugo Martín
+ * @param game Estructura de la partida actual
+ * Carga una partida guardada
+ */
+Status game_actions_load(Game *game, Command* command);
+
 #endif

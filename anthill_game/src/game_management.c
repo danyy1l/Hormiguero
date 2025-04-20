@@ -341,7 +341,31 @@ Game* game_create_from_file(char *filename) {
 }
 
 Status game_management_save(Game *game, char *filename) {
-  
+  FILE *f=NULL;
+  int i, j;
+
+  if (!game || !filename || !(f=fopen(filename, "w"))) {
+    return ERROR;
+  }
+
+  fprintf(f, "GAME_START\n");
+  fprintf(f, "PLAYERS_START\n");
+  fprintf(f, "NUM_PLAYERS=%d\n", game_get_n_players(game));
+
+  for (i=0;i<game_get_n_players(game);i++) {
+    fprintf(f, "\nplayer_id=%ld;name=%s;location=%d;gdesc=%s;health=%d;num_objects=%d\n", player_get_id(game_get_player(game)), player_get_name(game_get_player(game)), player_get_location(game_get_player(game)), player_get_gdesc(game_get_player(game)), player_get_health(game_get_player(game)), set_get_nids(inventory_get_objects(player_get_objects(game_get_player(game)))));
+    fprintf(f, "Objects: ");
+    for (j=0;j<set_get_nids(inventory_get_objects(player_get_objects(game_get_player(game))));j++) {
+      fprintf(f, "id=%ld;", (set_id_object(inventory_get_objects(player_get_objects(game_get_player(game)))))[j]);
+    }
+  }
+
+  fprintf(f, "PLAYERS_END\n");
+
+
+  fclose(f);
+
+  return OK;
 }
 
 
@@ -357,4 +381,6 @@ Status game_management_save(Game *game, char *filename) {
 
 
 
-Status game_management_load(Game *game, char *filename);
+Status game_management_load(Game *game, char *filename) {
+
+}

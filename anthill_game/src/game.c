@@ -41,7 +41,7 @@ struct _Game{
    Game interface implementation
 */
 
-Game* game_create() {
+Game* game_create() { 
   int i;
   Game* game = NULL;
 
