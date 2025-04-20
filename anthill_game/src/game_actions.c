@@ -63,7 +63,7 @@ Status game_actions_update(Game *game, Command *command) {
       break;
 
     case ATTACK:
-      if( game_actions_attack(game) == ERROR )
+      if( game_actions_attack(game,command) == ERROR )
         command_set_output(command, ERROR);
       else
         command_set_output(command, OK);
@@ -213,33 +213,75 @@ Status game_actions_drop(Game *game, Command *command){
   return OK;
 }
 
-Status game_actions_attack(Game *game){
-  Player* player = game_get_player(game);
-  Space *current_space = game_get_space(game, player_get_location(player));
-  Character* character = game_get_character(game, space_get_character_id(current_space));
-  int num;
-
-  if( !character )
+Status game_actions_attack(Game *game, Command *command) {
+  if (!game || !command) {
     return ERROR;
+  }
 
-  if( (player_get_location(player) == character_get_location(character)) && !(character_get_friendly( character )) ){
-    num = rand() % 10;
-    if( num < 5 )
+  const char *target_name = command_get_arguments(command);
+  if (!target_name) {
+    return ERROR;
+  }
+
+  Player *player = game_get_player(game);
+  Id player_loc = player_get_location(player);
+  Id player_id = player_get_id(player);
+  Character *target = NULL;
+  int num_chars = game_get_n_characters(game);
+  int n_followers = 0, num, damage, n_attackers, attacker;
+  Character *followers[num_chars]; 
+
+  for (int i = 0; i < num_chars; i++) {
+    Character *character = game_get_character_at(game, i);
+    if (!character) continue;
+
+    if (strcasecmp(character_get_name(character), target_name) == 0) {
+      target = character;
+    }
+
+    if (character_get_following(character) == player_id && character_get_location(character) == player_loc) {
+      followers[n_followers++] = character;
+    }
+  }
+
+  if (!target || character_get_location(target) != player_loc || character_get_friendly(target)) {
+    return ERROR;
+  }
+
+  num = rand() % 10;
+
+  if (num > 5) {
+    damage = 1 + n_followers;  
+    character_set_health(target, character_get_health(target) - damage);
+  } else {
+    n_attackers = 1 + n_followers;  
+    attacker = rand() % n_attackers;
+
+    if (attacker == 0) {
       player_set_health(player, player_get_health(player) - 1);
-    else
-      character_set_health(character, character_get_health(character) - 1);
-  }else
-    return ERROR;
+    } else {
+      Character *hit_follower = followers[attacker - 1];
+      character_set_health(hit_follower, character_get_health(hit_follower) - 1);
+    }
+  }
 
-  if( player_get_health(player) == 0 ){
+  if (player_get_health(player) <= 0) {
     game_set_finished(game, TRUE);
   }
-  
-  if( character_get_health(character) == 0 ){
-    game_remove_character(game, character_get_id(character));
+
+  if (character_get_health(target) <= 0) {
+    game_remove_character(game, character_get_id(target));
+  }
+
+  for (int i = 0; i < n_followers; i++) {
+    Character *follower = followers[i];
+    if (character_get_health(follower) <= 0) {
+      game_remove_character(game, character_get_id(follower));
+    }
   }
   return OK;
 }
+
 
 Status game_actions_chat(Game *game){
   Player* player = game_get_player(game);
