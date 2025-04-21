@@ -77,10 +77,10 @@ Status set_del_value(Set *set, Id id);
 Bool set_find_object(Set *set, Id id);
 
 /**
- * @brief establece el id del objeto
+ * @brief Devuelve el array de ids
  * @author Anthony Eduardo Alvarado Carbajal 
  * @param set Un puntero a Set
- * @return El número id del objeto 
+ * @return Array de IDS
  */
 Id* set_id_object(Set* set);
 

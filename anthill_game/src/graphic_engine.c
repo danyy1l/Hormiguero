@@ -489,7 +489,7 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command) {
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, player_location = NO_ID;
-  Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL;
+  Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL, *prev_space = NULL;
   Object* object=NULL;
   Character* character;
   CommandCode last_cmd = UNKNOWN;
@@ -497,7 +497,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   char action_return[STATUS_SIZE];
   char str[WORD_SIZE], friendly[WORD_SIZE/2];
   extern char *cmd_to_str[N_CMD][N_CMDT];
-  int i, id_count, dir_check = 0;
+  int i, id_count, dir_check = 0, n_objs;
 
   Player *player=game_get_player(game);                               /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
@@ -506,7 +506,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
-    if( (id_act = player_get_location(player)) != NO_ID) {
+  if( (id_act = player_get_location(player)) != NO_ID) {
     space_act = game_get_space(game, id_act);
     id_north = game_get_connection(game, id_act, N);
     space_north = game_get_space(game, id_north);
@@ -639,6 +639,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     screen_area_puts(ge->descript, " ");
   }
 
+  /*TO DO: Object print*/
+  /*
   sprintf(str, "  Objects: ");
   screen_area_puts(ge->descript, str);
   i=0;
@@ -655,6 +657,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
 
   }
   screen_area_puts(ge->descript, " "); 
+  */
 
   sprintf(str, "  Characters: ");
   screen_area_puts(ge->descript, str);
@@ -706,6 +709,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
 
     sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
     screen_area_puts(ge->feedback, str);
+  }
+
+  if( last_cmd == LOOK && last_cmd_status ){
+    prev_space = game_get_space(game, game_get_prev_player_location(game));
+    n_objs = set_get_nids(space_get_set_objects(prev_space));
+    for(i=0; i<n_objs; i++){
+      if( !(object = game_get_object(game, set_id_object(space_get_set_objects(prev_space))[i])) ) break;
+      sprintf(str, "  ");
+      strcat(str, object_get_name(object));
+      strcat(str, ": ");
+      strcat(str, object_get_description(object));
+      screen_area_puts(ge->descript, str);
+    }
   }
 
   if( last_cmd == CHAT && last_cmd_status ){

@@ -14,7 +14,7 @@
 #include "types.h"
 
 #define N_CMDT 2
-#define N_CMD 11
+#define N_CMD 12
 
 
 typedef enum { CMDS, CMDL } CommandType;
@@ -28,6 +28,7 @@ typedef enum {
   DROP,         /*!<-Soltar un objeto, se debe añadir el nombre */
   ATTACK,       /*!<-Ataca a un personaje enemigo*/
   CHAT,         /*!<-Conversa con un personaje amigo*/
+  LOOK,         /*!<-Mira la informacion sobre un espacio*/
   INSPECT,      /*!<Inspecciona un objeto*/
   USE,          /*!<-Usa un objeto*/
   OPEN          /*!<-Abre un enlace con un objeto*/

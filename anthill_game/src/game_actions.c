@@ -16,7 +16,99 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+
+/**
+   Game actions declaration
+*/
+
+/**
+ * @brief Realiza la accion al recibir un commando "UNKNOWN"
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Estructura de la partida actual
+ * No hace nada
+ */
+Status game_actions_unknown(Game *game);
+
+/**
+ * @brief Realiza la accion al recibir un commando "QUIT"
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Estructura de la partida actual
+ * Detiene el bucle de actualizacion del juego, terminando la partida
+ */
+void game_actions_quit(Game *game);
+
+/**
+ * @brief Realiza la accion al recibir un commando "MOVE"
+ * @author Danyyil Shykerynets
+ * @param game Estructura de la partida actual
+ * Mueve al jugador en la direccion escrita en caso de que se puede
+ */
+Status game_actions_move(Game *game, Command* command);
  
+/**
+ * @brief Realiza la accion al recibir un commando "TAKE"
+ * @author Hugo Martín
+ * @param game Estructura de la partida actual
+ * Recibe el objeto de la casilla del jugador y lo lleva consigo hasta recibir un DROP
+ */
+Status game_actions_take(Game *game, Command* command);
+
+/**
+ * @brief Realiza la accion al recibir un commando "DROP" y un nombre de un objeto
+ * @author Hugo Martín
+ * @param game Estructura de la partida actual
+ * Suelta el objeto del inventario del jugador en caso de haberlo
+ */
+Status game_actions_drop(Game *game, Command *command);
+
+/**
+ * @brief Realiza la accion al recibir un commando "ATTACK"
+ * @author Danyyil Shykerynets
+ * @param game Estructura de la partida actual
+ * Ataca al personaje que haya en la misma casilla
+ */
+Status game_actions_attack(Game *game);
+
+/**
+ * @brief Realiza la accion al recibir un commando "CHAT"
+ * @author Danyyil Shykerynets
+ * @param game Estructura de la partida actual
+ * Imprime el mensaje del personaje de la casilla en la que nos encontremos, en caso de que lo haya
+ */
+Status game_actions_chat(Game *game);
+
+/**
+ * @brief Realiza la accion al recibir un commando "LOOK"
+ * @author Danyyil Shykerynets
+ * @param game Estructura de la partida actual
+ * Imprime la informacion del espacio en el que nos encontremos
+ */
+Status game_actions_look(Game *game);
+
+/**
+ * @brief Realiza la accion al recibir un commando "INSPECT"
+ * @author Hugo Martín
+ * @param game Estructura de la partida actual
+ * Imprime la descripción del objeto de la casilla en la que nos encontremos, en caso de que lo haya, o de la mochila
+ */
+Status game_actions_inspect(Game *game, Command *command);
+
+/**
+ * @brief Realiza la accion al recibir un commando "USE"
+ * @author Hugo Martín
+ * @param game Estructura de la partida actual
+ * Usa el objeto al que se esté refiriendo, y luego el objeto desaparece
+ */
+Status game_actions_use(Game *game, Command* command);
+
+/**
+ * @brief Realiza la accion al recibir un commando "OPEN"
+ * @author Hugo Martín
+ * @param game Estructura de la partida actual
+ * Abre un enlace con un obeto y luego este desaparece
+ */
+Status game_actions_open(Game *game, Command* command);
+
 /**
    Game actions implementation
 */
@@ -31,6 +123,7 @@ Status game_actions_update(Game *game, Command *command) {
   CommandCode cmd;
 
   cmd = command_get_code(command);
+  game_set_prev_player_location(game, player_get_location(game_get_player(game)));
 
   switch (cmd) {
     case UNKNOWN:
@@ -76,6 +169,13 @@ Status game_actions_update(Game *game, Command *command) {
         command_set_output(command, OK);
       break;
     
+    case LOOK:
+      if( game_actions_look(game) == ERROR )
+        command_set_output(command, ERROR);
+      else
+        command_set_output(command, OK);
+      break;
+
     case INSPECT:
       if( game_actions_inspect(game, command) == ERROR )
         command_set_output(command, ERROR);
@@ -240,6 +340,11 @@ Status game_actions_chat(Game *game){
   }
 
   return ERROR;
+}
+
+Status game_actions_look(Game *game){
+  if( !game || !game_get_space(game, player_get_location(game_get_player(game))) ) return ERROR;
+  return OK;
 }
 
 Status game_actions_inspect(Game *game, Command *command) {

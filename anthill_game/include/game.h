@@ -264,10 +264,39 @@ Id game_get_connection(Game *game, Id id, Direction direction);
  */
 Bool game_connection_is_open(Game *game, Id id, Direction direction);
 
-/*TO DO Documentar*/
+/**
+ * @brief Establece el ultimo mensaje de la partida
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @param str Mensaje a establecer
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
 Status game_set_message(Game* game, char* str);
 
+/**
+ * @brief Obtiene el ultimo mensaje guardado en la partida
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @return String con el mensaje
+ */
 char* game_get_message(Game* game);
+
+/**
+ * @brief Establece la ubicacion del anterior jugadro de la partida
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @param Id ubicacion a establecer
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status game_set_prev_player_location(Game* game, Id location);
+
+/**
+ * @brief Obtiene la ubicacion del anterior jugador
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @return Id con la ubicacion del anterior jugador
+ */
+Id game_get_prev_player_location(Game* game);
 
 /**
  * @brief Imprime el juego

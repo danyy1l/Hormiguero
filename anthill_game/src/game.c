@@ -35,6 +35,7 @@ struct _Game{
   int n_links;                            /*!< Almacena el numero de enlaces en la partida*/
   Bool finished;                          /*!< Determina si la partida esta terminada*/
   char message[WORD_SIZE];                /*!< Almacena el ultimo mensaje de personaje*/
+  Id prev_player_location;                /*!< La ubicacion del anterior jugador en el array*/
 };
 
 /**
@@ -368,6 +369,17 @@ Link* game_get_link_by_name(Game *game, char* name) {
   }
 
   return NULL;
+}
+
+Id game_get_prev_player_location(Game* game){
+  return game == NULL ? NO_ID : game->prev_player_location;
+}
+
+Status game_set_prev_player_location(Game* game, Id location){
+  if( !game || location == NO_ID) return ERROR;
+
+  game->prev_player_location = location;
+  return OK;
 }
 
 void game_print(Game *game) {
