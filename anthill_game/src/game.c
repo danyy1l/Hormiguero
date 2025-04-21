@@ -127,6 +127,10 @@ Status game_set_finished(Game *game, Bool finished) {
   return OK;
 }
 
+Player** game_players(Game *game){
+  return game == NULL ? NULL : game->players;
+}
+
 Player* game_get_player(Game *game){  
   if(!game )
     return NULL;

@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <string.h>
  
+/*TO DO: Print*/
+
 /**
  * @brief Space
  *
@@ -25,7 +27,7 @@ struct _Space {
   Id character_id;                    /*!< Id of the character in the space, NO_ID if no characters*/
   Set *objects;                       /*!< Array of objects*/
   char gdesc[GDESC_MAX][GDESC_SIZE];  /*!< 5x9 Array containing space's graphic desc*/
-  Bool discovered;
+  Bool discovered;                    /*!< Si el espacio ha sido descubierto o no*/
 };
  
 /** space_create allocates memory for a new space

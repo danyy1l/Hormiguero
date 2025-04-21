@@ -79,6 +79,14 @@ Bool game_get_finished(Game *game);
 Status game_set_finished(Game *game, Bool finished);
 
 /**
+ * @brief Devuelve el array de jugadores de la partida
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @return Puntero a los jugadores
+ */
+Player** game_players(Game *game);
+
+/**
  * @brief Obtiene el puntero del jugador de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game a obtener
@@ -103,12 +111,21 @@ int game_get_n_players(Game *game);
  */
 Status game_add_player(Game *game, Player* player);
 
-/*TO DO: Documentar*/
-
-Status game_remove_player(Game* game, Player* player);
-
+/**
+ * @brief Obtiene turno de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @return Entero con el turno
+ */
 int game_get_turn(Game* game);
 
+/**
+ * @brief Establece el turno de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param turn Nuevo turno a establecer
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
 Status game_next_turn(Game* game, int turn);
 
 /**

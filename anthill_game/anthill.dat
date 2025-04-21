@@ -1,58 +1,59 @@
-#s:11|Entrada|\       /| \     / |  \   /  |  !   !  |  !   !  |
-#s:12|Pasillo1|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |
-#s:13|Pasillo2|   /     |   \___  |    mo'\_|\ @  _   | \  / \__|
-#s:14|Pasillo3| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |
-#s:15|Pasillo4|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |
-#s:16|Agujero|  !   !  | /     \ | \ c>  / |  \___/  |         |
-#s:23|Pasillo5|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|
-#s:33|Pasillo6|         |\/   \__ |    o o \|mo^_  0o |__/ \___/|
-#s:43|Pasillo7|  _______| /       |/  o8o0* |____     |    \____|
-#s:53|Despensa|    V    |  \(")/  |  -(_)-  |o/(_-_)\o|o o\_/o o|
+#s:111|Entrada|\       /| \     / |  \   /  |  !   !  |  !   !  |
+#s:112|Pasillo1|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |
+#s:113|Pasillo2|   /     |   \___  |    mo'\_|\ @  _   | \  / \__|
+#s:114|Pasillo3| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |
+#s:115|Pasillo4|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |
+#s:116|Agujero|  !   !  | /     \ | \ c>  / |  \___/  |         |
+#s:123|Pasillo5|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|
+#s:133|Pasillo6|         |\/   \__ |    o o \|mo^_  0o |__/ \___/|
+#s:143|Pasillo7|  _______| /       |/  o8o0* |____     |    \____|
+#s:153|Despensa|    V    |  \(")/  |  -(_)-  |o/(_-_)\o|o o\_/o o|
 
-#l:1|Entry_P1|11|12|3|1|
-#l:2|P1_Entry|12|11|1|1|
-#l:3|P1_P2|12|13|3|1|
-#l:4|P2_P1|13|12|1|1|
-#l:5|P2_P3|13|14|3|1|
-#l:6|P2_P5|13|23|2|1|
-#l:7|P3_P2|14|13|1|1| 
-#l:8|Door|14|15|3|0|
-#l:9|P4_P3|15|14|1|1| 
-#l:10|P4_A|15|16|3|1|
-#l:11|P5_P2|23|13|4|1|
-#l:12|P5_P6|23|33|2|1|
-#l:13|P6_P5|33|23|4|1|
-#l:14|P6_P7|33|43|2|1|
-#l:15|P7_P6|43|33|4|1|
-#l:16|P7_D|43|53|2|1|
-#l:17|D_P7|53|43|4|1| 
-#l:18|D_A|53|16|3|1|
-#l:19|A_P4|16|15|1|1|
+#l:1|Entry_P1|111|112|3|1|
+#l:2|P1_Entry|112|111|1|1|
+#l:3|P1_P2|112|113|3|1|
+#l:4|P2_P1|113|112|1|1|
+#l:5|P2_P3|113|114|3|1|
+#l:6|P2_P5|113|123|2|1|
+#l:7|P3_P2|114|113|1|1| 
+#l:8|Door|114|115|3|0|
+#l:9|P4_P3|115|114|1|1| 
+#l:10|P4_A|115|116|3|1|
+#l:11|P5_P2|123|113|4|1|
+#l:12|P5_P6|123|133|2|1|
+#l:13|P6_P5|133|123|4|1|
+#l:14|P6_P7|133|143|2|1|
+#l:15|P7_P6|143|133|4|1|
+#l:16|P7_D|143|153|2|1|
+#l:17|D_P7|153|143|4|1| 
+#l:18|D_A|153|116|3|1|
+#l:19|A_P4|116|115|1|1|
 
-#p:1|Hormiga|m0^ |11|10|3|
-#p:2|Gusano|o0o8|33|10|4|
+#p:1|Hormiga|m0^ |111|10|3|
+#p:2|Gusano|o0o8|133|10|4|
 
-#o:1|Grain|12|Es un grano de maiz|0|1|-1|-1|
-#o:2|Crumb|12|Es una miga de pan|0|1|-1|-1|
-#o:3|Cookie|12|Es una galleta|0|1|-1|-1|
-#o:4|Seed|16|Es una semilla|0|1|-1|-1|
-#o:5|Kit|43|+5 de vida|5|1|-1|-1|
-#o:6|Poison|15|-5 de vida|-5|1|-1|-1|
-#o:7|Torch|53|Antorcha|0|1|-1|-1|
-#o:8|Fire|12|Fuego para la antorcha|0|1|7|-1|
-#o:9|Nuke|33|Termina la partida|-10|1|-1|-1|
-#o:10|Serrano|11|+3 de vida|3|1|-1|-1|
-#o:11|Pidgeon|23|-3 de vida|-3|1|-1|-1|
-#o:12|Mine|16|Muerte segura|-10|0|-1|-1|
-#o:13|Key|14|Abre alguna puerta|0|1|-1|8|
-#o:14|Beer|43|Cura toda la vida|10|1|-1|-1|
-#o:15|Grenade|15|Mata de un bombazo|-10|1|-1|-1|
-#o:16|Bomb|53|Game over|-10|1|-1|-1|
-#o:17|Campfire|33|Cura toda la vida|10|0|-1|-1|
-#o:18|TNT|13|Abre una pared|0|1|-1|8|
-#o:19|Omelette|23|+7 de vida|7|1|-1|-1|
-#o:20|Potato|11|Cura toda la vida|10|1|-1|-1|
+#o:1|Grain|112|Es un grano de maiz|0|1|-1|-1|
+#o:2|Crumb|112|Es una miga de pan|0|1|-1|-1|
+#o:3|Cookie|112|Es una galleta|0|1|-1|-1|
+#o:4|Seed|116|Es una semilla|0|1|-1|-1|
+#o:5|Kit|143|+5 de vida|5|1|-1|-1|
+#o:6|Poison|115|-5 de vida|-5|1|-1|-1|
+#o:7|Torch|153|Antorcha|0|1|-1|-1|
+#o:8|Fire|112|Fuego para la antorcha|0|1|7|-1|
+#o:9|Nuke|133|Termina la partida|-10|1|-1|-1|
+#o:10|Serrano|111|+3 de vida|3|1|-1|-1|
+#o:11|Pidgeon|123|-3 de vida|-3|1|-1|-1|
+#o:12|Mine|116|Muerte segura|-10|0|-1|-1|
+#o:13|Key|114|Abre alguna puerta|0|1|-1|8|
+#o:14|Beer|143|Cura toda la vida|10|1|-1|-1|
+#o:15|Grenade|115|Mata de un bombazo|-10|1|-1|-1|
+#o:16|Bomb|113|Game over|-10|1|-1|-1|
+#o:17|Campfire|133|Cura toda la vida|10|0|-1|-1|
+#o:18|TNT|143|Abre una pared|0|1|-1|8|
+#o:19|Omelette|123|+7 de vida|7|1|-1|-1|
+#o:20|Potato|111|Cura toda la vida|10|1|-1|-1|
 
-#c:100|Antlion| ^0m  |53|10|1|Hello!|-1|
-#c:200|Worm|*0o8o |11|10|1|Welcome!|-1|
-#c:300|Spider|/\00/\|14|10|0|!!!!!!|-1|
+#c:100|Antlion| ^0m  |153|10|1|Hello!|-1|
+#c:200|Worm|*0o8o |111|10|1|Welcome!|-1|
+#c:300|Spider|/\00/\|114|10|0|!!!!!!|-1|
+#c:400|Hugo|_/-.-\|123|10|0|Moriras.|-1|
