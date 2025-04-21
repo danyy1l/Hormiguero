@@ -23,6 +23,7 @@
 struct _Space { 
   Id id;                              /*!< Id number of the space, it must be unique */
   char name[WORD_SIZE + 1];           /*!< Name of the space */
+  Set* characters;                    /*!< Array of characters*/
   Id character_id;                    /*!< Id of the character in the space, NO_ID if no characters*/
   Set *objects;                       /*!< Array of objects*/
   char gdesc[GDESC_MAX][GDESC_SIZE];  /*!< 5x9 Array containing space's graphic desc*/
@@ -51,12 +52,17 @@ Space* space_create(Id id) {
   newSpace->objects = set_create();
   if(newSpace->objects==NULL){
     free(newSpace);
+  newSpace->characters=set_create();
+  if(newSpace->characters==NULL){
+    set_destroy(newspace->objects);
+    free(newSpace);
+  }
     return NULL;
   }
  
     /*Si en el .dat el espacio no tiene gdesc definido, al pintar la partida, aparecerán estos espacios*/
     for(i=0;i<GDESC_MAX;i++){
-    strcpy(newSpace->gdesc[i],"");
+    strcpy(newspace->gdesc[i],"");
   }
 
   newSpace->discovered=FALSE;
@@ -67,6 +73,7 @@ Space* space_create(Id id) {
 Status space_destroy(Space* space) {
   if(space){
     set_destroy(space->objects);
+    set_Destroy(space->characters);
     free(space);
     space = NULL;
   }
@@ -98,6 +105,48 @@ const char* space_get_name(Space* space) {
   }
   return space->name;
 }
+
+Status space_add_character(Space* space, Id id){
+  if(!space||id==NO_ID){
+    return ERROR;
+  }
+  set_add_value(space->characters,id);
+  return OK;
+}
+
+Status space_del_character(Space* space, Id id){
+  if(!space||id==NO_ID){
+    return ERROR;
+  }
+
+  set_del_value(space->characters,id);
+  return OK;
+}
+ 
+Bool space_find_character(Space* space, Id id){
+  if(!space||id==NO_ID){
+    return FALSE;
+  }
+  if(set_find_object(space->characters,id)==TRUE){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+Id* space_id_character(Space* space){
+  if(!space){
+    return NULL;
+  }
+  return set_id_object(space->characters);
+}
+
+Set* space_get_set_characters(Space* space){
+  if(!space){
+    return NULL;
+  }
+  return space->characters;
+}
+
  
 Status space_add_object(Space* space, Id id){
   if (!space|| id==NO_ID){

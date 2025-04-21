@@ -152,6 +152,23 @@ char* character_get_message(Character* character);
 Status character_set_message(Character* character, char* message);
 
 /**
+ * @brief Obtiene el following de un personaje
+ * @author Álvaro Rodríguez
+ * @param character Puntero al personaje objetivo
+ * @return Devuelve el following del personaje objetivo
+ */
+Id character_get_following(Character *character);
+
+/**
+ * @brief Establece el mensaje de un personaje
+ * @author Álvaro Rodríguez
+ * @param character Puntero al personaje objetivo
+ * @param id id following a establecer en el personaje
+ * @return Devuelve OK en caso de exito y ERROR en caso contrario
+ */
+Status character_set_following(Character *character, Id id);
+
+/**
  * @brief Imprime los atributos de un personaje
  * @author Danyyil Shykerynets
  * @param c Puntero al personaje objetivo

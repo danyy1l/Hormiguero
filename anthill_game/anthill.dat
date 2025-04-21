@@ -53,6 +53,6 @@
 #o:19|Omelette|23|+7 de vida|7|1|-1|-1|
 #o:20|Potato|11|Cura toda la vida|10|1|-1|-1|
 
-#c:100|Antlion| ^0m  |53|10|1|Hello!|
-#c:200|Worm|*0o8o |11|10|1|Welcome!|
-#c:300|Spider|/\00/\|14|10|0|!!!!!!|
+#c:100|Antlion| ^0m  |53|10|1|Hello!|-1|
+#c:200|Worm|*0o8o |11|10|1|Welcome!|-1|
+#c:300|Spider|/\00/\|14|10|0|!!!!!!|-1|
