@@ -39,6 +39,7 @@ Character* character_create(){
   character->id = NO_ID;
   character->health = 1;
   character->friendly = TRUE;
+  character->following = NO_ID;
   /* Calloc inicializa gdesc a \0 */
   return character;
 }

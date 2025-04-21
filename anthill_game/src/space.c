@@ -13,8 +13,6 @@
 #include <stdlib.h>
 #include <string.h>
  
-/*Eliminar funciones object y susituir por otras funciones set ya que el campo tipo object ya no existe  */
- 
 /**
  * @brief Space
  *
@@ -52,17 +50,18 @@ Space* space_create(Id id) {
   newSpace->objects = set_create();
   if(newSpace->objects==NULL){
     free(newSpace);
+    return NULL;
+  }
   newSpace->characters=set_create();
   if(newSpace->characters==NULL){
-    set_destroy(newspace->objects);
+    set_destroy(newSpace->objects);
     free(newSpace);
-  }
     return NULL;
   }
  
     /*Si en el .dat el espacio no tiene gdesc definido, al pintar la partida, aparecerán estos espacios*/
     for(i=0;i<GDESC_MAX;i++){
-    strcpy(newspace->gdesc[i],"");
+    strcpy(newSpace->gdesc[i],"");
   }
 
   newSpace->discovered=FALSE;
@@ -73,7 +72,7 @@ Space* space_create(Id id) {
 Status space_destroy(Space* space) {
   if(space){
     set_destroy(space->objects);
-    set_Destroy(space->characters);
+    set_destroy(space->characters);
     free(space);
     space = NULL;
   }
@@ -191,36 +190,21 @@ Set* space_get_set_objects(Space* space){
   return space->objects;
 }
  
- Status space_set_character(Space *space, Id character_id){
-   if( !space || character_id==NO_ID){
-     return ERROR;
-   }
-   space->character_id = character_id;
-   return OK;
- }
- 
-Id space_get_character_id(Space *space){
-  if( !space ){
-    return NO_ID;
+char* space_get_gdesc(Space *space, int pos){
+  if (!space){
+    return NULL;
   }
-  return space->character_id;
+  return space->gdesc[pos];
 }
- 
- char* space_get_gdesc(Space *space, int pos){
-   if (!space){
-     return NULL;
-   }
-   return space->gdesc[pos];
- }
- 
- Status space_set_gdesc(Space *space, char* name, int pos){
-   if (!space||!name){
-     return ERROR;
-   }
- 
-   strcpy(space->gdesc[pos], name);
-   return OK;
- }
+
+Status space_set_gdesc(Space *space, char* name, int pos){
+  if (!space||!name){
+    return ERROR;
+  }
+
+  strcpy(space->gdesc[pos], name);
+  return OK;
+}
 
 Status space_set_discovered(Space *space,Bool discovered){
   if(!space){
@@ -267,10 +251,7 @@ Status space_print(Space* space) {
   }
  
   /* 4. Print if there is a character in the space or not*/
-  if (space_get_character_id(space) != NO_ID){
-   fprintf(stdout, "---> Character in the space with ID: %ld.\n", space_get_character_id(space));
-  } else {
-   fprintf(stdout, "---> No character in the space.\n");
-  }
+  
+  
   return OK;
 }

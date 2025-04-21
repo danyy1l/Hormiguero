@@ -173,6 +173,15 @@ Status player_set_gdesc(Player* player, const char* gdesc);
 char* player_get_gdesc(Player* player);
 
 /**
+ * @brief Obtiene los seguidores de un jugador
+ * @author Danyyil Shykerynets
+ * 
+ * @param player
+ * @return Set de seguidores del player
+ */
+Set* player_get_followers(Player* player);
+
+/**
  * @brief Imprime los datos del jugador
  * @author Hugo Martín
  * 

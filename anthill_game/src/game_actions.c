@@ -65,17 +65,19 @@ Status game_actions_drop(Game *game, Command *command);
  * @brief Realiza la accion al recibir un commando "ATTACK"
  * @author Danyyil Shykerynets
  * @param game Estructura de la partida actual
+ * @param command Ultimo comando
  * Ataca al personaje que haya en la misma casilla
  */
-Status game_actions_attack(Game *game);
+Status game_actions_attack(Game *game, Command* command);
 
 /**
  * @brief Realiza la accion al recibir un commando "CHAT"
  * @author Danyyil Shykerynets
  * @param game Estructura de la partida actual
- * Imprime el mensaje del personaje de la casilla en la que nos encontremos, en caso de que lo haya
+ * @param command Ultimo comando de la partida
+ * Imprime el mensaje del personaje al que nos dirijamos si estamos en el mismo espacio
  */
-Status game_actions_chat(Game *game);
+Status game_actions_chat(Game *game, Command* command);
 
 /**
  * @brief Realiza la accion al recibir un commando "LOOK"
@@ -110,6 +112,24 @@ Status game_actions_use(Game *game, Command* command);
 Status game_actions_open(Game *game, Command* command);
 
 /**
+ * @brief Realiza la accion al recibir un commando "RECRUIT"
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Estructura de la partida actual
+ * @param command puntero a command
+ * Recluta a un amigo que se encuentre en la misma casilla
+ */
+Status game_actions_recruit(Game* game, Command *command);
+
+/**
+ * @brief Realiza la accion al recibir un commando "ABANDON"
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Estructura de la partida actual
+ * @param command puntero a command
+ * Abandona a un amigo que se encuentre en la misma casilla
+ */
+Status game_actions_abandon(Game* game, Command* command);
+
+/**
    Game actions implementation
 */
  
@@ -119,7 +139,9 @@ Status game_actions_update(Game *game, Command *command) {
   Inventory *inventory=player_get_objects(player);                       /*Inventario del jugador del game*/
   Set* player_bag = inventory_get_objects(player_get_objects(player));   /*Set con objetos de la mochila*/
   int n_ids=set_get_nids(player_bag);                                    /*Numero de objetos que porta el jugador*/
+  int n_followers = set_get_nids(player_get_followers(player));
   Object *object=NULL;
+  Character* character = NULL;
   CommandCode cmd;
 
   cmd = command_get_code(command);
@@ -156,14 +178,14 @@ Status game_actions_update(Game *game, Command *command) {
       break;
 
     case ATTACK:
-      if( game_actions_attack(game,command) == ERROR )
+      if( game_actions_attack(game, command) == ERROR )
         command_set_output(command, ERROR);
       else
         command_set_output(command, OK);
       break;
 
     case CHAT:
-      if( game_actions_chat(game) == ERROR )
+      if( game_actions_chat(game, command) == ERROR )
         command_set_output(command, ERROR);
       else
         command_set_output(command, OK);
@@ -222,7 +244,12 @@ Status game_actions_update(Game *game, Command *command) {
       object_set_location(object, player_get_location(player));         /*Actualiza la ubicación de cada uno de los objetos*/
     }
   }
-
+  
+  for(i=0; i<n_followers; i++){
+    character=game_get_character(game, set_id_object(player_get_followers(player))[i]);
+    character_set_location(character, player_get_location(player));
+  }
+  
   return OK;
 }
 
@@ -326,13 +353,12 @@ Status game_actions_attack(Game *game, Command *command) {
   Player *player = game_get_player(game);
   Id player_loc = player_get_location(player);
   Id player_id = player_get_id(player);
-  Character *target = NULL;
   int num_chars = game_get_n_characters(game);
   int n_followers = 0, num, damage, n_attackers, attacker;
-  Character *followers[num_chars]; 
+  Character *followers[num_chars], *hit_follower = NULL, *target = NULL, *character = NULL, *follower = NULL; 
 
   for (int i = 0; i < num_chars; i++) {
-    Character *character = game_get_character_at(game, i);
+    character = game_get_character_at(game, i);
     if (!character) continue;
 
     if (strcasecmp(character_get_name(character), target_name) == 0) {
@@ -360,7 +386,7 @@ Status game_actions_attack(Game *game, Command *command) {
     if (attacker == 0) {
       player_set_health(player, player_get_health(player) - 1);
     } else {
-      Character *hit_follower = followers[attacker - 1];
+      hit_follower = followers[attacker - 1];
       character_set_health(hit_follower, character_get_health(hit_follower) - 1);
     }
   }
@@ -374,7 +400,7 @@ Status game_actions_attack(Game *game, Command *command) {
   }
 
   for (int i = 0; i < n_followers; i++) {
-    Character *follower = followers[i];
+    follower = followers[i];
     if (character_get_health(follower) <= 0) {
       game_remove_character(game, character_get_id(follower));
     }
@@ -383,13 +409,28 @@ Status game_actions_attack(Game *game, Command *command) {
 }
 
 
-Status game_actions_chat(Game *game){
+Status game_actions_chat(Game *game, Command* command){
+  if( !command || !game ) return ERROR;
+  
   Player* player = game_get_player(game);
-  Space *current_space = game_get_space(game, player_get_location(player));
-  Character* character = game_get_character(game, space_get_character_id(current_space));
-  char str[WORD_SIZE];
+  Character* character;
+  char str[WORD_SIZE], *char_name;
+  int n_chars = game_get_n_characters(game);
 
-  if( (player_get_location(player) == character_get_location(character)) && (character_get_friendly( character )) ){
+  char_name = command_get_arguments(command);
+
+  for(int i=0; i<n_chars; i++){
+    character = game_get_character_at(game, i);
+
+    if (!character) 
+      continue;
+
+    if (strcasecmp(character_get_name(character), char_name) != 0) {
+      continue;
+    }
+
+    if (character_get_location(character) != player_get_location(player) || !character_get_friendly(character)) return ERROR;
+    
     sprintf(str, "%s: %s", character_get_name(character), character_get_message(character));
     game_set_message(game, str);
     return OK;
@@ -492,6 +533,8 @@ Status game_actions_recruit(Game* game, Command *command){
     }
 
     character_set_following(character, player_get_id(player));
+    set_add_value(player_get_followers(player), character_get_id(character));
+    space_del_character(game_get_space(game, player_loc), character_get_id(character));
     return OK;
   }
 
@@ -507,7 +550,7 @@ Status game_actions_abandon(Game* game, Command *command){
   Id player_id = player_get_id(player);
   Id player_loc = player_get_location(player);
 
-  int num_chars = game_get_n_characters(game);
+  int num_chars = set_get_nids(player_get_followers(player));
   Character *character = NULL;
 
   const char *char_name = command_get_arguments(command);
@@ -516,7 +559,7 @@ Status game_actions_abandon(Game* game, Command *command){
   }
 
   for (int i = 0; i < num_chars; i++) {
-    character = game_get_character_at(game, i);
+    character = game_get_character(game, set_id_object(player_get_followers(player))[i]);
 
     if (!character) 
       continue;
@@ -530,6 +573,9 @@ Status game_actions_abandon(Game* game, Command *command){
     }
 
     character_set_following(character, NO_ID);
+    set_del_value(player_get_followers(player), character_get_id(character));
+    space_add_character(game_get_space(game, player_loc), character_get_id(character));
+
     return OK;
   }
 

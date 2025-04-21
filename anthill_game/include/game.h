@@ -192,6 +192,7 @@ Character* game_get_character(Game* game, Id id);
 
 /**
  * @brief Devuelve el personaje en la posición i del array de personajes del juego
+ * @author Anthony Eduardo Alvarado Carbajal
  * @param game puntero a la estructura Game
  * @param i índice del personaje (0 <= i < n_characters)
  * @return puntero al personaje o NULL si hay error

@@ -14,8 +14,7 @@
 #include "types.h"
 
 #define N_CMDT 2
-#define N_CMD 15
-
+#define N_CMD 14
 
 typedef enum { CMDS, CMDL } CommandType;
 
@@ -33,7 +32,7 @@ typedef enum {
   USE,          /*!<-Usa un objeto*/
   OPEN,         /*!<-Abre un enlace con un objeto*/
   RECRUIT,      /*!<Recruits a friendly character>*/
-  ABANDON       /*!<Abadons a friendly character>*/
+  ABANDON       /*!<Abandons a friendly character>*/
 }CommandCode;
 
 typedef struct _Command Command;

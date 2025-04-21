@@ -221,8 +221,8 @@ Status game_remove_character(Game *game, Id character_id){
   if( !game )
     return ERROR;
 
+  space_del_character( game_get_space(game, player_get_location(game_get_player(game))), character_id );
   character_set_id( game_get_character(game, character_id), NO_ID );
-  space_set_character( game_get_space(game, player_get_location(game_get_player(game))), NO_ID );
   game->n_characters--;
   
   return OK;
@@ -243,7 +243,7 @@ Character* game_get_character(Game *game, Id id){
 
 Character* game_get_character_at(Game* game, int i) {
   if (!game || i < 0 || i >= game->n_characters) {
-      return NULL;
+    return NULL;
   }
 
   return game->characters[i];

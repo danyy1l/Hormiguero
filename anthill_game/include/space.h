@@ -148,25 +148,6 @@ Set* space_get_set_objects(Space* space);
  * @return TRUE, if everything goes well, or FALSE if there is a mistake 
  */
 Bool space_find_object(Space* space,Id id);
-  
-/**
- * @brief It sets a character in a space
- * @author Danyyil Shykerynets
- *
- * @param space a pointer to the space
- * @param character_id The ID of the character to set in the space
- * @return OK, if everything goes well or ERROR if there was some mistake
- */
-Status space_set_character(Space *space, Id character_id);
-  
-/**
- * @brief It gets whether the space has a character or not
- * @author Danyyil Shykerynets
- *
- * @param space a pointer to the space
- * @return The ID of the character in the space, if none, returns NO_ID
- */
-Id space_get_character_id(Space *space);
 
 /**
  * @brief It gets the gdesc string
