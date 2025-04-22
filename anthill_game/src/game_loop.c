@@ -95,7 +95,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine,FILE*log_file) {
       cmd_output = command_get_output(last_cmd);
       if (cmd_output == OK) result = "OK";
       else result = "ERROR";
-      fprintf(log_file, "%s(%s) %s: %s\n", cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDL], cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDS], command_get_arguments(last_cmd), result);
+      fprintf(log_file, "%s(%s) %s: %s (P%ld)\n", cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDL], cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDS], command_get_arguments(last_cmd), result,player_get_id(game_get_player(game)));
     }
   }
   
