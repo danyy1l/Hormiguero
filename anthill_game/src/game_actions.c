@@ -486,7 +486,8 @@ Status game_actions_use(Game *game, Command *command) {
     player_set_health(player, 0);
   }
 
-  object_set_location(object, 99);
+  inventory_del_object(player_get_objects(player), object_get_id(object));
+  game_remove_object(game, object_get_id(object));
 
   return OK;
 }

@@ -176,6 +176,7 @@ Status game_remove_object(Game *game, Id object_id){
   if( !game )
     return ERROR;
 
+  /*TO DO esta linea sobra?*/
   space_del_object( game_get_space(game, player_get_location(game_get_player(game))), object_id );
   object_set_id( game_get_object(game, object_id), NO_ID );
   object_destroy(game->objects[ j ]);
