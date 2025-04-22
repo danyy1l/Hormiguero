@@ -105,7 +105,7 @@ Direction link_get_direction(Link* link){
 }
 
 Status link_set_direction(Link* link, Direction dir){
-  if( !link || dir < NONE || dir > W) return ERROR;
+  if( !link || dir < NONE || dir > DOWN) return ERROR;
 
   link->dir = dir;
 

@@ -661,6 +661,10 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
 
     /*IMPRESIÓN DE CASILLAS, Para mejor view, cerrar*/
     switch(dir_check){
+    case 0:
+      print_blank(str, ge);
+      print_act(ge, game, str, id_act, space_act);
+      break;
     case 1:
       print_blank(str, ge);
       print_west(ge, game, str, id_west, id_act, space_west, space_act);

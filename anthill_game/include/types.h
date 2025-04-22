@@ -11,6 +11,9 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#define MAX_SPACES 100
+#define MAX_LINKS 400
+
 #define WORD_SIZE 1000
 #define GDESC_SIZE 10
 #define GDESC_MAX 5
