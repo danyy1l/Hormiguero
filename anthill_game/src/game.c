@@ -170,6 +170,29 @@ Status game_add_object(Game *game, Object* object){
   return OK;
 }
 
+Status game_remove_object(Game *game, Id object_id){  
+  int j = object_id - 1;
+  
+  if( !game )
+    return ERROR;
+
+  /*TO DO esta linea sobra?*/
+  space_del_object( game_get_space(game, player_get_location(game_get_player(game))), object_id );
+  object_set_id( game_get_object(game, object_id), NO_ID );
+  object_destroy(game->objects[ j ]);
+
+  /*Desplaza todos los elementos a la izq, de esta manera, no quedan huecos libres*/
+  for(; j<game->n_objects; j++){
+    game->objects[j] = game->objects[j+1];
+  }
+
+  game->objects[ game->n_objects ] = NULL;
+
+  game->n_objects--;
+  
+  return OK;
+}
+
 Object* game_get_object(Game *game, Id id){
   int i;
   if(!game)

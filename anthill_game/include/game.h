@@ -135,6 +135,15 @@ Status game_next_turn(Game* game, int turn);
 Status game_add_object(Game* game, Object* object);
 
 /**
+ * @brief Reduce el numero de objetos en 1 de la partida
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param object_id ID del objeto a destruir
+ * @return OK en caso de exito, ERROR en caso contrario 
+ */
+Status game_remove_object(Game *game, Id object_id);
+
+/**
  * @brief Obtiene el puntero de un objeto con cierto id de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game
