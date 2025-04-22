@@ -27,6 +27,9 @@
 #define MAX_CHARACTERS 100
 #define MAX_PLAYERS 8
 
+#define NUM_SEED 1
+#define INIT -1
+
 typedef long Id;
 
 typedef enum { FALSE, TRUE } Bool;
