@@ -483,8 +483,8 @@ Status game_actions_use(Game *game, Command *command) {
   if (strlen(command_get_arguments1(command))==0 && strlen(command_get_arguments2(command))==0) {
     t_health=p_health+health;
     player_set_health(player, t_health);
-    if (player_get_health(player)>10) {
-      player_set_health(player, 10);
+    if (player_get_health(player)>MAX_PLAYER_HEALTH) {
+      player_set_health(player, MAX_PLAYER_HEALTH);
     }
     if (player_get_health(player)<=0) {
       player_set_health(player, 0);
@@ -502,8 +502,8 @@ Status game_actions_use(Game *game, Command *command) {
         c_health=character_get_health(character);
         t_health=c_health+health;
         character_set_health(character, t_health);
-        if (character_get_health(character)>10) {
-          character_set_health(character, 10);
+        if (character_get_health(character)>MAX_CHARACTER_HEALTH) {
+          character_set_health(character, MAX_CHARACTER_HEALTH);
         }
         if (character_get_health(character)<=0) {
           character_set_health(character, 0);

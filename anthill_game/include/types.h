@@ -26,6 +26,8 @@
 #define MAX_OBJECTS 50
 #define MAX_CHARACTERS 30
 #define MAX_PLAYERS 8
+#define MAX_PLAYER_HEALTH 20
+#define MAX_CHARACTER_HEALTH 10
 
 #define NUM_SEED 1
 #define INIT -1
