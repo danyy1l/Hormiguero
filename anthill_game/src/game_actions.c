@@ -520,6 +520,7 @@ Status game_actions_use(Game *game, Command *command) {
       player_set_health(player, 0);
       game_set_finished(game, TRUE);
     }
+    inventory_del_object(player_get_objects(player), object_get_id(object));
     game_remove_object(game, object_get_id(object));
     return OK;
   }
@@ -538,6 +539,7 @@ Status game_actions_use(Game *game, Command *command) {
           character_set_health(character, 0);
           game_remove_character(game, character_get_id(character));
         }
+        inventory_del_object(player_get_objects(player), object_get_id(object));
         game_remove_object(game, object_get_id(object));
         return OK;
       }
