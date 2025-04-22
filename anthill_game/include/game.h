@@ -188,6 +188,15 @@ Status game_add_character(Game* game, Character* character);
 Status game_remove_character(Game *game, Id character_id);
 
 /**
+ * @brief Reduce el numero de objetos en 1 de la partida
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param object_id ID del objeto a destruir
+ * @return OK en caso de exito, ERROR en caso contrario 
+ */
+Status game_remove_object(Game *game, Id object_id);
+
+/**
  * @brief Devuelve el numero de personajes en la partida
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game

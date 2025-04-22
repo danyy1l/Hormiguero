@@ -48,7 +48,7 @@ Object* object_create(Id id){
 
   return newObject;
 }
-
+ 
 Status object_destroy(Object* object){
   if(object){  
     free(object);

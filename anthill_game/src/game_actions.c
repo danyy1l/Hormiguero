@@ -516,10 +516,12 @@ Status game_actions_use(Game *game, Command *command) {
     if (player_get_health(player)>10) {
       player_set_health(player, 10);
     }
-    if (player_get_health(player)<0) {
+    if (player_get_health(player)<=0) {
       player_set_health(player, 0);
+      game_set_finished(game, TRUE);
     }
-    object_set_location(object, 99);
+    game_remove_object(game, object_get_id(object));
+    return OK;
   }
 
   if (strcasecmp(command_get_arguments1(command), "over")==0) {
@@ -530,17 +532,19 @@ Status game_actions_use(Game *game, Command *command) {
         t_health=c_health+health;
         character_set_health(character, t_health);
         if (character_get_health(character)>10) {
-        character_set_health(character, 10);
+          character_set_health(character, 10);
         }
-        if (character_get_health(character)<0) {
-        character_set_health(character, 0);
+        if (character_get_health(character)<=0) {
+          character_set_health(character, 0);
+          game_remove_character(game, character_get_id(character));
         }
-        object_set_location(object, 99);
+        game_remove_object(game, object_get_id(object));
+        return OK;
       }
     }
   }
 
-  return OK;
+  return ERROR;
 }
 
 Status game_actions_open(Game *game, Command* command) {
@@ -574,6 +578,7 @@ Status game_actions_save(Game *game, Command* command) {
 Status game_actions_load(Game *game, Command* command) {
 
 }
+
 Status game_actions_recruit(Game* game, Command *command){
   if (!game || !command) {
     return ERROR;
