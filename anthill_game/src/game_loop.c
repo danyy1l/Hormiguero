@@ -41,24 +41,22 @@ int main(int argc, char *argv[])
   }
 
   while( i<argc ){
-    if( strcmp(argv[i], "-l") == 0 ){log=i;}
-    if( strcmp(argv[i], "-d") == 0 ) {seed = NUM_SEED;}
+    if( strcmp(argv[i], "-l") == 0 ) log=i;
+    if( strcmp(argv[i], "-d") == 0 ) seed = NUM_SEED;
     i++;
   }
-  if (log !=INIT)
-  {
-    log_file = fopen(argv[log], "w");
-    if (log_file == NULL)
-    {
+
+  if (log !=INIT){
+    log_file = fopen(argv[log+1], "w");
+    if (log_file == NULL){
       fprintf(stderr, "Error al abrir el archivo de LOG: %s\n", argv[3]);
       return EXIT_FAILURE;
     }
   }
-  if (seed!=NUM_SEED){
-    srand(time(NULL));
-  }else{
-    srand(NUM_SEED);
-  }
+
+  if (seed!=NUM_SEED) seed = time(NULL);
+  
+  srand(seed);
   
   if (!game_loop_init(&game, &gengine, argv[1]))
   {
@@ -117,7 +115,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine, FILE *log_file)
       cmd_output = command_get_output(last_cmd);
       if (cmd_output == OK) result = "OK";
       else result = "ERROR";
-      fprintf(log_file, "%s(%s) %s: %s (P%ld)\n", cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDL], cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDS], command_get_arguments(last_cmd), result,player_get_id(game_get_player(game)));
+      fprintf(log_file, "%s(%s) %s %s %s: %s (P%ld)\n", cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDL], cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDS], command_get_arguments(last_cmd), command_get_arguments1(last_cmd), command_get_arguments2(last_cmd), result,player_get_id(game_get_player(game)));
     }
   }
 

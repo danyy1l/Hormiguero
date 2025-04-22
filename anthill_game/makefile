@@ -55,9 +55,11 @@ runcmd2:
 #RUN WITH SEED
 runseed: 
 	@$(MAKE) && ./$(EXE) $(EXE).dat	-d
+
 #RUN WITH SEED AND LOG
 runseedlog: 
 	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG).dat -d
+
 #DOXYGEN
 doc:
 	doxygen Doxyfile

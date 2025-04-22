@@ -154,6 +154,7 @@ Status game_actions_update(Game *game, Command *command) {
 
     case QUIT:
       game_actions_quit(game);
+      command_set_output(command, OK);
       break;
 
     case MOVE:
