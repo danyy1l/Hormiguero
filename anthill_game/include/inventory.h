@@ -8,7 +8,7 @@
  * @copyright GNU Public License
 */
 
-#ifndef INVENTORY_H
+#ifndef INVENTORY_H 
 #define INVENTORY_H
  
 #define MAX_INVENTORY_OBJS 5
