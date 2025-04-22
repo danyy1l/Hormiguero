@@ -1,0 +1,9 @@
+Attack(a) hugo: OK
+Attack(a) : ERROR
+Attack(a) hugo: OK
+Attack(a) : ERROR
+Attack(a) hugo: OK
+Attack(a) : ERROR
+Attack(a) hugo: OK
+Attack(a) : ERROR
+Quit(q) : ERROR
