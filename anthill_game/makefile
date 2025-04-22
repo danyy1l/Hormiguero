@@ -52,6 +52,12 @@ runcmd1:
 runcmd2:
 	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG).dat < game2.cmd
 
+#RUN WITH SEED
+	$(MAKE) && ./$(EXE) $(EXE).dat -d
+
+#RUN WITH SEED AND LOG
+	$(MAKE) && ./$(EXE) $(EXE).dat -d -l $(LOG).dat
+
 #DOXYGEN
 doc:
 	doxygen Doxyfile

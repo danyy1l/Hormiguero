@@ -118,17 +118,17 @@ Status command_get_user_input(Command* command) {
       }
     }
     
-    if( (token = strtok(NULL, " \n")) ){ 
+    if( (token = strtok(NULL, "\n")) ){ 
       strcpy(command->arguments, token);
     }else
       strcpy(command->arguments, "\0");
 
-    if( (token = strtok(NULL, " \n")) ){ 
+    if( (token = strtok(NULL, "\n")) ){ 
       strcpy(command->arguments1, token);
     }else
       strcpy(command->arguments1, "\0");
 
-    if( (token = strtok(NULL, " \n")) ){ 
+    if( (token = strtok(NULL, "\n")) ){ 
       strcpy(command->arguments2, token);
     }else
       strcpy(command->arguments2, "\0");
