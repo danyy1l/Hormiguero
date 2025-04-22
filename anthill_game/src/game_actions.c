@@ -501,22 +501,44 @@ Status game_actions_use(Game *game, Command *command) {
   Player *player=game_get_player(game);
   Object *object=game_get_object_by_name(game, command_get_arguments(command));
   Space *current_space = game_get_space(game, player_get_location(player));
-  int p_health=player_get_health(player), health=object_get_health(object), t_health;
+  int p_health=player_get_health(player), health=object_get_health(object), t_health, i, c_health;
+  Set *followers=player_get_followers(player);
+  Id *ids=set_id_object(followers);
+  Character *character=NULL;
 
   if (!game || !command || health==0 || space_get_id(current_space)!=object_get_location(object)) {
     return ERROR;
   }
 
-  t_health=p_health+health;
-  player_set_health(player, t_health);
-  if (player_get_health(player)>10) {
-    player_set_health(player, 10);
-  }
-  if (player_get_health(player)<0) {
-    player_set_health(player, 0);
+  if (strlen(command_get_arguments1(command))==0 && strlen(command_get_arguments2(command))==0) {
+    t_health=p_health+health;
+    player_set_health(player, t_health);
+    if (player_get_health(player)>10) {
+      player_set_health(player, 10);
+    }
+    if (player_get_health(player)<0) {
+      player_set_health(player, 0);
+    }
+    object_set_location(object, 99);
   }
 
-  object_set_location(object, 99);
+  if (strcasecmp(command_get_arguments1(command), "over")==0) {
+    for (i=0;i<set_get_nids(player_get_followers(player));i++) {
+      if (strcasecmp(command_get_arguments2(command), character_get_name(game_get_character(game, ids[i])))==0) {
+        character=game_get_character(game, ids[i]);
+        c_health=character_get_health(character);
+        t_health=c_health+health;
+        character_set_health(character, t_health);
+        if (character_get_health(character)>10) {
+        character_set_health(character, 10);
+        }
+        if (character_get_health(character)<0) {
+        character_set_health(character, 0);
+        }
+        object_set_location(object, 99);
+      }
+    }
+  }
 
   return OK;
 }
