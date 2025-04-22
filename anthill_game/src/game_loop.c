@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
   FILE *log_file = NULL;
   Game *game = NULL;
   Graphic_engine *gengine;
-  int i=0, seed=INIT, log=INIT;
+  int i, seed=INIT, log=INIT;
 
 
   if (argc < 2)
@@ -40,22 +40,20 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
   }
 
-  while( i<argc ){
+  for( i=0; i<argc; i++ ){
     if( strcmp(argv[i], "-l") == 0 ) log=i;
     if( strcmp(argv[i], "-d") == 0 ) seed = NUM_SEED;
-    i++;
   }
 
-  if (log !=INIT){
+  if (log != INIT){
     log_file = fopen(argv[log+1], "w");
     if (log_file == NULL){
-      fprintf(stderr, "Error al abrir el archivo de LOG: %s\n", argv[3]);
+      fprintf(stderr, "Error al abrir el archivo de LOG: %s\n", argv[log+1]);
       return EXIT_FAILURE;
     }
   }
 
-  if (seed!=NUM_SEED) seed = time(NULL);
-  
+  if (seed == INIT) seed = time(NULL);
   srand(seed);
   
   if (!game_loop_init(&game, &gengine, argv[1]))

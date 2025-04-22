@@ -11,8 +11,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#define MAX_SPACES 100
-#define MAX_LINKS 400
+#define MAX_SPACES 50
+#define MAX_LINKS 250
 
 #define WORD_SIZE 1000
 #define GDESC_SIZE 10
@@ -23,8 +23,8 @@
 #define PLY_GDESC 4
 #define CHAR_GDESC 6
 
-#define MAX_OBJECTS 100
-#define MAX_CHARACTERS 100
+#define MAX_OBJECTS 50
+#define MAX_CHARACTERS 30
 #define MAX_PLAYERS 8
 
 #define NUM_SEED 1

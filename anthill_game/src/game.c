@@ -221,12 +221,23 @@ Status game_add_character(Game *game, Character* character){
   return OK;
 }
 
-Status game_remove_character(Game *game, Id character_id){
+Status game_remove_character(Game *game, Id character_id){  
+  int j = (character_id / 100) - 1;
+  
   if( !game )
     return ERROR;
 
   space_del_character( game_get_space(game, player_get_location(game_get_player(game))), character_id );
   character_set_id( game_get_character(game, character_id), NO_ID );
+  character_destroy(game->characters[ j ]);
+
+  /*Desplaza todos los elementos a la izq, de esta manera, no quedan huecos libres*/
+  for(; j<game->n_characters; j++){
+    game->characters[j] = game->characters[j+1];
+  }
+
+  game->characters[ game->n_characters ] = NULL;
+
   game->n_characters--;
   
   return OK;
