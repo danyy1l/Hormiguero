@@ -22,6 +22,7 @@ struct _Player {
   char gdesc[PLY_GDESC + 1];  /*!<-Descripcion grafica del jugador*/
   Inventory* backpack;        /*!<-Inventario del jugador*/
   int health;                 /*!<-Vida del jugador*/
+  Set* followers;             /*!<-Seguidores del jugador*/
 };
 
 Player *player_create(){
@@ -36,6 +37,7 @@ Player *player_create(){
   output->gdesc[0] = '\0';
   output->backpack = inventory_create();
   output->health = 0;
+  output->followers = set_create();
 
   return output;
 }
@@ -43,6 +45,7 @@ Player *player_create(){
 Status player_destroy(Player *player){
   if( player ){
     inventory_destroy(player->backpack);
+    set_destroy(player->followers);
     free(player);
     player = NULL;
   }
@@ -150,6 +153,10 @@ Status player_set_gdesc(Player* player, const char* gdesc){
 
 char* player_get_gdesc(Player* player){
   return player == NULL ? NULL : player->gdesc;
+}
+
+Set* player_get_followers(Player* player){
+  return player == NULL ? NULL : player->followers;
 }
 
 Status player_print(Player *player){

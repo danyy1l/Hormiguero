@@ -70,7 +70,7 @@ Status link_set_name(Link* link, char* name);
 
 /**
  * @brief Obtiene el origen del enlace
- * 
+ * @author Danyyil Shykerynets
  * @param link Puntero al enlace
  * @return Devuelve el id del espacio del que surge el enlace
  */
@@ -78,7 +78,7 @@ Id link_get_origin(Link *link);
 
 /**
  * @brief Establece el origen del enlace
- * 
+ * @author Danyyil Shykerynets
  * @param origin Id del espacio origen del enlace
  * @param link Puntero al enlace
  * @return OK en caso de que no haya errores, ERROR en caso contrario
@@ -87,7 +87,7 @@ Status link_set_origin(Link *link, Id origin);
 
 /**
  * @brief Obtiene el destino del enlace
- * 
+ * @author Danyyil Shykerynets
  * @param link Puntero al enlace
  * @return Devuelve el id del espacio del que surge el enlace
  */
@@ -95,7 +95,7 @@ Id link_get_destination(Link *link);
 
 /**
  * @brief Establece el destino del enlace
- * 
+ * @author Danyyil Shykerynets
  * @param destination Id del espacio destino del enlace
  * @param link Puntero al enlace
  * @return OK en caso de que no haya errores, ERROR en caso contrario
@@ -104,7 +104,7 @@ Status link_set_destination(Link *link, Id destination);
 
 /**
  * @brief Obtiene la direccion del enlace
- * 
+ * @author Danyyil Shykerynets
  * @param link Puntero al enlace
  * @return Devuelve un entero (Direction) que indica la direccion del enlace
  */
@@ -112,7 +112,7 @@ Direction link_get_direction(Link *link);
 
 /**
  * @brief Establece la direccion del enlace
- * 
+ * @author Danyyil Shykerynets
  * @param dir Entero que indica la direccion (Direction)
  * @param link Puntero al enlace
  * @return OK en caso de que no haya errores, ERROR en caso contrario
@@ -121,7 +121,7 @@ Status link_set_direction(Link *link, Direction dir);
 
 /**
  * @brief Obtiene la apertura del enlace
- * 
+ * @author Danyyil Shykerynets
  * @param link Puntero al enlace
  * @return Booleano que indica si esta abierto el enlace o no
  */
@@ -129,9 +129,9 @@ Bool link_get_open(Link *link);
 
 /**
  * @brief Establece la apertura del enlace
- * 
+ * @author Danyyil Shykerynets
  * @param open Booleano que indica si esta abierto el enlace o no
- * @param link Puntero al enlace
+ * @param in Puntero al enlace
  * @return OK en caso de que no haya errores, ERROR en caso contrario
  */
 Status link_set_open(Link *link, Bool open);

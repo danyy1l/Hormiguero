@@ -20,9 +20,6 @@
 #include "command.h"
 #include "link.h"
 
-#define MAX_SPACES 100
-#define MAX_LINKS 400
-
 /**
  * @brief Declaracion de la estructura que contiene todos los datos de la partida
  */
@@ -79,6 +76,14 @@ Bool game_get_finished(Game *game);
 Status game_set_finished(Game *game, Bool finished);
 
 /**
+ * @brief Devuelve el array de jugadores de la partida
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @return Puntero a los jugadores
+ */
+Player** game_players(Game *game);
+
+/**
  * @brief Obtiene el puntero del jugador de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game a obtener
@@ -103,12 +108,21 @@ int game_get_n_players(Game *game);
  */
 Status game_add_player(Game *game, Player* player);
 
-/*TO DO: Documentar*/
-
-Status game_remove_player(Game* game, Player* player);
-
+/**
+ * @brief Obtiene turno de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @return Entero con el turno
+ */
 int game_get_turn(Game* game);
 
+/**
+ * @brief Establece el turno de la estructura game
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param turn Nuevo turno a establecer
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
 Status game_next_turn(Game* game, int turn);
 
 /**
@@ -191,6 +205,15 @@ int game_get_n_characters(Game* game);
 Character* game_get_character(Game* game, Id id);
 
 /**
+ * @brief Devuelve el personaje en la posición i del array de personajes del juego
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game puntero a la estructura Game
+ * @param i índice del personaje (0 <= i < n_characters)
+ * @return puntero al personaje o NULL si hay error
+ */
+Character* game_get_character_at(Game* game, int i);
+
+/**
  * @brief Crea un espacio nuevo en el array de espacios
  * @author Danyyil Shykerynets
  * @param game Estructura de la partida actual
@@ -264,10 +287,39 @@ Id game_get_connection(Game *game, Id id, Direction direction);
  */
 Bool game_connection_is_open(Game *game, Id id, Direction direction);
 
-/*TO DO Documentar*/
+/**
+ * @brief Establece el ultimo mensaje de la partida
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @param str Mensaje a establecer
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
 Status game_set_message(Game* game, char* str);
 
+/**
+ * @brief Obtiene el ultimo mensaje guardado en la partida
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @return String con el mensaje
+ */
 char* game_get_message(Game* game);
+
+/**
+ * @brief Establece la ubicacion del anterior jugadro de la partida
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @param Id ubicacion a establecer
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status game_set_prev_player_location(Game* game, Id location);
+
+/**
+ * @brief Obtiene la ubicacion del anterior jugador
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @return Id con la ubicacion del anterior jugador
+ */
+Id game_get_prev_player_location(Game* game);
 
 /**
  * @brief Imprime el juego

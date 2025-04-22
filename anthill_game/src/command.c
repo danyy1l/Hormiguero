@@ -26,11 +26,14 @@ char *cmd_to_str[N_CMD][N_CMDT] = {
   {"d", "Drop"},
   {"a", "Attack"},
   {"c", "Chat"},
+  {"l", "Look"},
   {"i", "Inspect"},
   {"u", "Use"},
   {"o", "Open"},
   {"s", "Save"},
-  {"l", "Load"} 
+  {"l", "Load"},
+  {"r", "Recruit"},
+  {"ab", "Abandon"}
 };
 
 /**
@@ -117,17 +120,17 @@ Status command_get_user_input(Command* command) {
       }
     }
     
-    if( (token = strtok(NULL, " \n")) ){ 
+    if( (token = strtok(NULL, "\n")) ){ 
       strcpy(command->arguments, token);
     }else
       strcpy(command->arguments, "\0");
 
-    if( (token = strtok(NULL, " \n")) ){ 
+    if( (token = strtok(NULL, "\n")) ){ 
       strcpy(command->arguments1, token);
     }else
       strcpy(command->arguments1, "\0");
 
-    if( (token = strtok(NULL, " \n")) ){ 
+    if( (token = strtok(NULL, "\n")) ){ 
       strcpy(command->arguments2, token);
     }else
       strcpy(command->arguments2, "\0");

@@ -27,6 +27,7 @@ struct _Character{
   int health;               /*!< Int containing health of character*/
   Bool friendly;            /*!< Sympathy of the character*/
   char message[WORD_SIZE];  /*!< String containing message of the character*/
+  Id following;             /*!< Id of the player he follow or NO_ID if he do not follow anyone*/
 };
 
 Character* character_create(){
@@ -38,6 +39,7 @@ Character* character_create(){
   character->id = NO_ID;
   character->health = 1;
   character->friendly = TRUE;
+  character->following = NO_ID;
   /* Calloc inicializa gdesc a \0 */
   return character;
 }
@@ -146,6 +148,23 @@ Status character_set_message(Character* character, char* message){
   strcpy(character->message, message);
   
   return OK;  
+}
+
+Id character_get_following(Character *character){
+  if (!character)
+  {
+    return NO_ID;
+  }
+  return character->following;
+}
+
+Status character_set_following(Character *character, Id id){
+  if (!character || id == NO_ID)
+  {
+    return ERROR;
+  }
+  character->following = id;
+  return OK;
 }
 
 void character_print(Character* c){

@@ -30,7 +30,7 @@ Link* link_create(){
   output->id = NO_ID;
   output->origin = NO_ID;
   output->destination = NO_ID;
-  output->dir = U;
+  output->dir = NONE;
   output->open = FALSE;
 
   return output;
@@ -99,13 +99,13 @@ Status link_set_destination(Link* link, Id destination){
 }
 
 Direction link_get_direction(Link* link){
-  if( !link ) return U;
+  if( !link ) return NONE;
 
   return link->dir;
 }
 
 Status link_set_direction(Link* link, Direction dir){
-  if( !link || dir < U || dir > W) return ERROR;
+  if( !link || dir < NONE || dir > DOWN) return ERROR;
 
   link->dir = dir;
 

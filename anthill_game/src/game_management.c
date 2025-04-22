@@ -104,7 +104,7 @@ Status game_load_links(Game *game, char *filename){
       toks = strtok(NULL, "|");
       open = atoi(toks);
   #ifdef DEBUG
-      printf("Leido: %ld|%s|%s|%d|%d|%s|%ld\n", id, name, gdesc, health, friendly, message, location);
+      printf("Leido: %ld|%s|%ld|%ld|%d|%d\n", id, name, origin, destination, direction, open);
   #endif
       if( !(link = link_create()) ){ return ERROR; }
       link_set_id(link, id);
@@ -258,7 +258,7 @@ Status game_load_characters(Game *game, char *filename){
   char *toks = NULL;
   int health;
   Bool friendly;
-  Id id = NO_ID, location = NO_ID;
+  Id id = NO_ID, location = NO_ID, following = NO_ID;
 
   Character *character = NULL;
   Status status = OK;
@@ -288,8 +288,10 @@ Status game_load_characters(Game *game, char *filename){
       friendly = atoi(toks);
       toks = strtok(NULL, "|");
       strcpy(message, toks);
+      toks =strtok(NULL,"|");
+      following =atol(toks);
   #ifdef DEBUG
-      printf("Leido: %ld|%s|%s|%d|%d|%s|%ld\n", id, name, gdesc, health, friendly, message, location);
+      printf("Leido: %ld|%s|%s|%d|%d|%s|%ld|%ld\n", id, name, gdesc, health, friendly, message, location,following);
   #endif
       if( !(character = character_create()) ){ return ERROR; }
       character_set_id(character, id);
@@ -299,9 +301,10 @@ Status game_load_characters(Game *game, char *filename){
       character_set_health(character, health);
       character_set_friendly(character, friendly);
       character_set_message(character, message);
+      character_set_following(character,following);
 
       game_add_character(game, character);
-      space_set_character(game_get_space(game, location), id);
+      space_add_character(game_get_space(game, location), id);
     }
   }
 

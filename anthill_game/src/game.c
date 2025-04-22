@@ -35,6 +35,7 @@ struct _Game{
   int n_links;                            /*!< Almacena el numero de enlaces en la partida*/
   Bool finished;                          /*!< Determina si la partida esta terminada*/
   char message[WORD_SIZE];                /*!< Almacena el ultimo mensaje de personaje*/
+  Id prev_player_location;                /*!< La ubicacion del anterior jugador en el array*/
 };
 
 /**
@@ -124,6 +125,10 @@ Status game_set_finished(Game *game, Bool finished) {
   game->finished = finished;
 
   return OK;
+}
+
+Player** game_players(Game *game){
+  return game == NULL ? NULL : game->players;
 }
 
 Player* game_get_player(Game *game){  
@@ -216,12 +221,23 @@ Status game_add_character(Game *game, Character* character){
   return OK;
 }
 
-Status game_remove_character(Game *game, Id character_id){
+Status game_remove_character(Game *game, Id character_id){  
+  int j = (character_id / 100) - 1;
+  
   if( !game )
     return ERROR;
 
+  space_del_character( game_get_space(game, player_get_location(game_get_player(game))), character_id );
   character_set_id( game_get_character(game, character_id), NO_ID );
-  space_set_character( game_get_space(game, player_get_location(game_get_player(game))), NO_ID );
+  character_destroy(game->characters[ j ]);
+
+  /*Desplaza todos los elementos a la izq, de esta manera, no quedan huecos libres*/
+  for(; j<game->n_characters; j++){
+    game->characters[j] = game->characters[j+1];
+  }
+
+  game->characters[ game->n_characters ] = NULL;
+
   game->n_characters--;
   
   return OK;
@@ -238,6 +254,14 @@ Character* game_get_character(Game *game, Id id){
   }
   
   return NULL;
+}
+
+Character* game_get_character_at(Game* game, int i) {
+  if (!game || i < 0 || i >= game->n_characters) {
+    return NULL;
+  }
+
+  return game->characters[i];
 }
 
 int game_get_n_characters(Game* game){
@@ -368,6 +392,17 @@ Link* game_get_link_by_name(Game *game, char* name) {
   }
 
   return NULL;
+}
+
+Id game_get_prev_player_location(Game* game){
+  return game == NULL ? NO_ID : game->prev_player_location;
+}
+
+Status game_set_prev_player_location(Game* game, Id location){
+  if( !game || location == NO_ID) return ERROR;
+
+  game->prev_player_location = location;
+  return OK;
 }
 
 void game_print(Game *game) {
