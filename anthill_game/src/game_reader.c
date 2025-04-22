@@ -104,7 +104,7 @@ Status game_load_links(Game *game, char *filename){
       toks = strtok(NULL, "|");
       open = atoi(toks);
   #ifdef DEBUG
-      printf("Leido: %ld|%s|%s|%d|%d|%s|%ld\n", id, name, gdesc, health, friendly, message, location);
+      printf("Leido: %ld|%s|%ld|%ld|%d|%d\n", id, name, origin, destination, direction, open);
   #endif
       if( !(link = link_create()) ){ return ERROR; }
       link_set_id(link, id);

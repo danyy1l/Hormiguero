@@ -264,7 +264,7 @@ void game_actions_quit(Game *game) {}
 Status game_actions_move(Game *game, Command *command) {
   Id space_id = NO_ID;
   char dir[WORD_SIZE];
-  Direction direction = U;
+  Direction direction = NONE;
 
   space_id = player_get_location(game_get_player(game));
   strcpy(dir, command_get_arguments(command));
@@ -276,9 +276,13 @@ Status game_actions_move(Game *game, Command *command) {
   else if( !strcasecmp("South", dir) || !strcasecmp("S", dir) )
     direction = S;
   else if( !strcasecmp("West", dir) || !strcasecmp("W", dir) )
-    direction = W; 
+    direction = W;
+  else if( !strcasecmp("Up", dir) || !strcasecmp("U", dir) )
+    direction = UP;
+  else if( !strcasecmp("Down", dir) || !strcasecmp("D", dir) )
+    direction = DOWN;
   else
-    direction = U;
+    direction = NONE;
 
   if (game_connection_is_open(game, space_id, direction)) {
     player_set_location(game_get_player(game), game_get_connection(game, space_id, direction));
