@@ -1,87 +1,74 @@
-#s:111|Entrada|\       /| \     / |  \   /  |  !   !  |  !   !  |
-#s:112|Pasillo1|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |
-#s:113|Pasillo2|   /     |   \___  |    mo'\_|\ @  _   | \  / \__|
-#s:114|Pasillo3| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |
-#s:115|Pasillo4|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |
-#s:116|Agujero|  !   !  | /     \ | \ c>  / |  \___/  |         |
-#s:123|Pasillo5|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|
-#s:133|Pasillo6|         |\/   \__ |    o o \|mo^_  0o |__/ \___/|
-#s:143|Pasillo7|  _______| /       |/  o8o0* |____     |    \____|
-#s:153|Despensa|    V    |  \(")/  |  -(_)-  |o/(_-_)\o|o o\_/o o|
-#s:223|Entrada2|    -    |  Nada   |   que   |   ver   |   aqui  |
-#s:213|Entrada3|
-#s:222|Entrada4|
-#s:322|Entrada5|
+#s:211|Entrada|\       /| \     / |  \   /  |  !   !  |  !   !  |
+#s:212|Pasillo1|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |
+#s:213|Pasillo2|   /     |   \___  |    mo'\_|\ @  _   | \  / \__|
+#s:214|Pasillo3| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |
+#s:215|Pasillo4|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |
+#s:216|Agujero|  !   !  | /     \ | \ c>  / |  \___/  |         |
+#s:223|Pasillo5|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|
+#s:233|Pasillo6|         |\/   \__ |    o o \|mo^_  0o |__/ \___/|
+#s:243|Pasillo7|  _______| /       |/  o8o0* |____     |    \____|
+#s:253|Despensa|    V    |  \(")/  |  -(_)-  |o/(_-_)\o|o o\_/o o|
+#s:323|Entrada2|    -    |  Nada   |   que   |   ver   |   aqui  |
+#s:313|Entrada3|
+#s:322|Entrada4|
+#s:422|Entrada5|
 
-#l:1|Entry_P1|111|112|5|1|
-#l:2|P1_Entry|112|111|1|1|
-#l:3|P1_P2|112|113|5|1|
-#l:4|P2_P1|113|112|1|1|
-#l:5|P2_P3|113|114|5|1|
-#l:6|P2_P5|113|123|3|1|
-#l:7|P3_P2|114|113|1|1| 
-#l:8|Door|114|115|5|0|
-#l:9|P4_P3|115|114|1|1| 
-#l:10|P4_A|115|116|5|1|
-#l:11|P5_P2|123|113|7|1|
-#l:12|P5_P6|123|133|3|1|
-#l:13|P6_P5|133|123|7|1|
-#l:14|P6_P7|133|143|3|1|
-#l:15|P7_P6|143|133|7|1|
-#l:16|P7_D|143|153|3|1|
-#l:17|D_P7|153|143|7|1| 
-#l:18|D_A|153|116|5|1|
-#l:19|A_P4|116|115|1|1|
-#l:20|P5_E2|123|223|9|1|
-#l:21|E2_P5|223|123|10|1|
-#l:22|h|223|213|7|1|
-#l:24|i|213|223|3|1|
-#l:25|j|223|222|1|1|
-#l:26|k|222|223|5|1|
-#l:27|l|222|322|9|1|
-#l:28|Ladder|322|222|10|1|
-#l:29|P1_P5|112|123|4|1|
-#l:30|P5_P1|123|112|8|1|
+#l:1|Entry_P1|211|212|5|1|
+#l:2|P1_Entry|212|211|1|1|
+#l:3|P1_P2|212|213|5|1|
+#l:4|P2_P1|213|212|1|1|
+#l:5|P2_P3|213|214|5|1|
+#l:6|P2_P5|213|223|3|1|
+#l:7|Door|214|213|1|0| 
+#l:8|Wall|214|215|5|0|
+#l:9|P4_P3|215|214|1|1| 
+#l:10|P4_A|215|216|5|1|
+#l:11|P5_P2|223|213|7|1|
+#l:12|P5_P6|223|233|3|1|
+#l:13|P6_P5|233|223|7|1|
+#l:14|P6_P7|233|243|3|1|
+#l:15|P7_P6|243|233|7|1|
+#l:16|P7_D|243|253|3|1|
+#l:17|D_P7|253|243|7|1| 
+#l:18|D_A|253|216|5|1|
+#l:19|A_P4|216|215|1|1|
+#l:20|P5_E2|223|323|9|1|
+#l:21|E2_P5|323|223|10|1|
+#l:22|h|323|313|7|1|
+#l:24|i|313|323|3|1|
+#l:25|j|323|322|1|1|
+#l:26|k|322|323|5|1|
+#l:27|l|322|422|9|1|
+#l:28|Ladder|422|322|10|1|
+#l:29|P1_P5|212|223|4|1|
+#l:30|P5_P1|223|212|8|1|
 
-#l:31|Ladder|322|111|8|1|
-#l:35|Ladder|322|115|4|1|
+#p:1|Hormiga|m0^ |422|10|3|
+#p:2|Gusano|o0o8|223|10|4|
 
-#l:31|Ladder|111|322|9|1|
-#l:32|Ladder|112|322|9|1|
-#l:33|Ladder|113|322|9|1|
-#l:34|Ladder|114|322|9|1|
-#l:35|Ladder|115|322|9|1|
-#l:36|Ladder|116|322|9|1|
-#l:35|Ladder|133|322|9|1|
-#l:36|Ladder|123|322|9|1|
+#o:1|Grain|212|Es un grano de maiz|0|1|-1|-1|
+#o:2|Crumb|212|Es una miga de pan|0|1|-1|-1|
+#o:3|Cookie|212|Es una galleta|0|1|-1|-1|
+#o:4|Seed|216|Es una semilla|0|1|-1|-1|
+#o:5|Kit|243|+5 de vida|5|1|7|-1|
+#o:6|Poison|215|-5 de vida|-5|1|-1|-1|
+#o:7|Torch|253|Antorcha|0|1|8|-1|
+#o:8|Fire|323|Fuego para antorcha|0|1|-1|-1|
+#o:9|Nuke|233|Termina la partida|-100|1|-1|-1|
+#o:10|Serrano|211|+3 de vida|3|1|-1|-1|
+#o:11|Pidgeon|223|-3 de vida|-3|1|-1|-1|
+#o:12|Mine|216|Muerte segura|-100|0|-1|-1|
+#o:13|Key|422|Abre alguna puerta|0|1|-1|7|
+#o:14|Beer|243|Cura toda la vida|10|1|-1|-1|
+#o:15|Grenade|215|Mata de un bombazo|-100|1|-1|-1|
+#o:16|Bomb|213|Game over|-100|1|-1|-1|
+#o:17|Campfire|233|Cura toda la vida|10|0|-1|-1|
+#o:18|TNT|243|Abre una pared|0|1|8|8|
+#o:19|Omelette|223|+7 de vida|7|1|-1|-1|
+#o:20|Potato|211|Cura toda la vida|10|1|-1|-1|
 
-
-
-#p:1|Hormiga|m0^ |322|10|3|
-#p:2|Gusano|o0o8|123|10|4|
-
-#o:1|Grain|112|Es un grano de maiz|0|1|-1|-1|
-#o:2|Crumb|112|Es una miga de pan|0|1|-1|-1|
-#o:3|Cookie|112|Es una galleta|0|1|-1|-1|
-#o:4|Seed|116|Es una semilla|0|1|-1|-1|
-#o:5|Kit|143|+5 de vida|5|1|7|-1|
-#o:6|Poison|115|-5 de vida|-5|1|-1|-1|
-#o:7|Torch|153|Antorcha|0|1|8|-1|
-#o:8|Fire|223|Fuego para la antorcha|0|1|-1|-1|
-#o:9|Nuke|133|Termina la partida|-100|1|-1|-1|
-#o:10|Serrano|111|+3 de vida|3|1|-1|-1|
-#o:11|Pidgeon|123|-3 de vida|-3|1|-1|-1|
-#o:12|Mine|116|Muerte segura|-100|0|-1|-1|
-#o:13|Key|322|Abre alguna puerta|0|1|-1|8|
-#o:14|Beer|143|Cura toda la vida|10|1|-1|-1|
-#o:15|Grenade|115|Mata de un bombazo|-100|1|-1|-1|
-#o:16|Bomb|113|Game over|-100|1|-1|-1|
-#o:17|Campfire|133|Cura toda la vida|10|0|-1|-1|
-#o:18|TNT|143|Abre una pared|0|1|8|8|
-#o:19|Omelette|123|+7 de vida|7|1|-1|-1|
-#o:20|Potato|111|Cura toda la vida|10|1|-1|-1|
-
-#c:100|Antlion| ^0m  |153|10|1|Hello!|-1|
-#c:200|Worm|*0o8o |111|10|1|Welcome!|-1|
-#c:300|Spider|/\00/\|114|1|0|!!!!!!|-1|
-#c:400|Hugo|_/-.-\|123|10|0|Moriras.|-1|
+#c:1|Antlion| ^0m  |253|5|1|Hello!|-1|
+#c:2|Worm|*0o8o |211|6|1|Welcome!|-1|
+#c:3|Spider|/\00/\|214|10|0|!!!!!!|-1|
+#c:4|Hugo| /-.-\|223|10|0|Moriras.|-1|
+#c:5|Mage|*_/..\|323|12|1|Hello friend|-1|

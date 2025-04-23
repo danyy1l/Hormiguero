@@ -245,7 +245,7 @@ Status game_add_character(Game *game, Character* character){
 }
 
 Status game_remove_character(Game *game, Id character_id){  
-  int j = (character_id / 100) - 1;
+  int j = character_id - 1;
   
   if( !game )
     return ERROR;

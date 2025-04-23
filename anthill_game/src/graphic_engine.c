@@ -2374,8 +2374,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
 
   sprintf(str, "  Characters: ");
   screen_area_puts(ge->descript, str);
-  id_count = 100;
-  for(i=0; i<game_get_n_characters(game); i++, id_count+=100){
+  id_count = 1;
+  for(i=0; i<game_get_n_characters(game); i++, id_count++){
     if( (character = game_get_character(game, id_count)) ){
       if( character_get_friendly(character) ){ strcpy(friendly, "Friend"); }
       else{ strcpy(friendly, "Foe"); }
