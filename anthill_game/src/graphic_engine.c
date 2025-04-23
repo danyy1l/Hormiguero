@@ -258,6 +258,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
+
   /*Impresion del ultimo comando*/
   screen_area_clear(ge->feedback);
   last_cmd = command_get_code(command);
@@ -268,7 +269,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     else
     strcpy(action_return,"Error");
     
-    sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
+    sprintf(str, " P%d - %s (%s): %s", (game_get_turn(game)+1), cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
     screen_area_puts(ge->feedback, str);
   }
   
