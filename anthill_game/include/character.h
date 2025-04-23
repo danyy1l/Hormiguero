@@ -101,10 +101,10 @@ char* character_get_gdesc(Character* character);
 Status character_set_gdesc(Character* character, char* gdesc);
 
 /**
- * @brief Obtiene la descripcion grafica de un personaje
+ * @brief Obtiene la vida de un personaje
  * @author Danyyil Shykerynets
  * @param character Puntero al personaje objetivo
- * @return Devuelve la descripcion grafica del personaje objetivo
+ * @return Devuelve la vida del personaje objetivo
  */
 int character_get_health(Character* character);
 
@@ -116,6 +116,23 @@ int character_get_health(Character* character);
  * @return Devuelve OK en caso de exito y ERROR en caso contrario
  */
 Status character_set_health(Character* character, int health);
+
+/**
+ * @brief Obtiene la fuerza de un personaje
+ * @author Danyyil Shykerynets
+ * @param character Puntero al personaje objetivo
+ * @return Devuelve la fuerza del personaje objetivo
+ */
+int character_get_strength(Character* character);
+
+/**
+ * @brief Establece la fuerza de un personaje
+ * @author Danyyil Shykerynets
+ * @param character Puntero al personaje objetivo
+ * @param strength Fuerza a establecer en el personaje
+ * @return Devuelve OK en caso de exito y ERROR en caso contrario
+ */
+Status character_set_strength(Character* character, int strength);
 
 /**
  * @brief Obtiene si el personaje es amistoso

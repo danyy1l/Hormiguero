@@ -196,7 +196,7 @@ Status game_load_objects(Game *game, char *filename){
   Id id = NO_ID, location = NO_ID, dependency = NO_ID, open = NO_ID; 
   Object *object = NULL;
   Status status = OK;
-  int health;
+  int health, strength;
   Bool movable;
 
   if (!filename) {
@@ -221,19 +221,22 @@ Status game_load_objects(Game *game, char *filename){
       toks = strtok(NULL, "|");
       health = atoi(toks);
       toks = strtok(NULL, "|");
+      strength = atoi(toks);
+      toks = strtok(NULL, "|");
       movable = atoi(toks);
       toks = strtok(NULL, "|");
       dependency = atol(toks);
       toks = strtok(NULL, "|");
       open = atol(toks);
   #ifdef DEBUG
-      printf("Leido: %ld|%s|%ld|%s|%d|%d|%ld|%ld\n", id, name, location, description, health, movable, dependency, open);
+      printf("Leido: %ld|%s|%ld|%s|%d|%d|%d|%ld|%ld\n", id, name, location, description, health, strength, movable, dependency, open);
   #endif
       if( !(object = object_create(id))) return ERROR;
       object_set_name(object, name);
       object_set_location(object, location);
       object_set_description(object, description);
       object_set_health(object, health);
+      object_set_strength(object, strength);
       object_set_movable(object, movable);
       object_set_dependency(object, dependency);
       object_set_open(object, open);
@@ -258,7 +261,7 @@ Status game_load_characters(Game *game, char *filename){
   char gdesc[GDESC_SIZE] = "";
   char message[WORD_SIZE] = "";
   char *toks = NULL;
-  int health;
+  int health, strength;
   Bool friendly;
   Id id = NO_ID, location = NO_ID, following = NO_ID;
 
@@ -287,13 +290,15 @@ Status game_load_characters(Game *game, char *filename){
       toks = strtok(NULL, "|");
       health = atoi(toks);
       toks = strtok(NULL, "|");
+      strength = atoi(toks);
+      toks = strtok(NULL, "|");
       friendly = atoi(toks);
       toks = strtok(NULL, "|");
       strcpy(message, toks);
       toks =strtok(NULL,"|");
       following =atol(toks);
   #ifdef DEBUG
-      printf("Leido: %ld|%s|%s|%d|%d|%s|%ld|%ld\n", id, name, gdesc, health, friendly, message, location,following);
+      printf("Leido: %ld|%s|%s|%d|%d|%d|%s|%ld|%ld\n", id, name, gdesc, health, strength, friendly, message, location, following);
   #endif
       if( !(character = character_create()) ){ return ERROR; }
       character_set_id(character, id);
@@ -301,6 +306,7 @@ Status game_load_characters(Game *game, char *filename){
       character_set_name(character, name);
       character_set_gdesc(character, gdesc);
       character_set_health(character, health);
+      character_set_strength(character, strength);
       character_set_friendly(character, friendly);
       character_set_message(character, message);
       character_set_following(character,following);

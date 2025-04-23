@@ -370,6 +370,8 @@ Status game_actions_attack(Game *game, Command *command) {
   int n_followers = 0, num, damage, n_attackers, attacker;
   Character *followers[num_chars], *hit_follower = NULL, *target = NULL, *character = NULL, *follower = NULL; 
 
+  damage = player_get_strength(player);
+
   for (int i = 0; i < num_chars; i++) {
     character = game_get_character_at(game, i);
     if (!character) continue;
@@ -380,6 +382,7 @@ Status game_actions_attack(Game *game, Command *command) {
 
     if (character_get_following(character) == player_id && character_get_location(character) == player_loc) {
       followers[n_followers++] = character;
+      damage += character_get_strength(character);
     }
   }
 
@@ -390,17 +393,16 @@ Status game_actions_attack(Game *game, Command *command) {
   num = rand() % 10;
 
   if (num > 5) {
-    damage = 1 + n_followers;  
     character_set_health(target, character_get_health(target) - damage);
   } else {
     n_attackers = 1 + n_followers;  
     attacker = rand() % n_attackers;
 
     if (attacker == 0) {
-      player_set_health(player, player_get_health(player) - 1);
+      player_set_health(player, player_get_health(player) - character_get_strength(target));
     } else {
       hit_follower = followers[attacker - 1];
-      character_set_health(hit_follower, character_get_health(hit_follower) - 1);
+      character_set_health(hit_follower, character_get_health(hit_follower) - character_get_strength(target));
     }
   }
 
@@ -477,6 +479,7 @@ Status game_actions_use(Game *game, Command *command) {
   Object *object=game_get_object_by_name(game, command_get_arguments(command));
   Space *current_space = game_get_space(game, player_get_location(player));
   int p_health=player_get_health(player), health=object_get_health(object), t_health, i, c_health;
+  int p_strength=player_get_strength(player), strength=object_get_strength(object), t_strength, c_strength;
   Set *followers=player_get_followers(player);
   Id *ids=set_id_object(followers);
   Character *character=NULL;
@@ -495,6 +498,11 @@ Status game_actions_use(Game *game, Command *command) {
       player_set_health(player, 0);
       game_set_finished(game, TRUE);
     }
+    t_strength=p_strength+strength;
+    player_set_strength(player, t_strength);
+    if (player_get_strength(player)<=0) {
+      player_set_strength(player, 1);
+    }
     inventory_del_object(player_get_objects(player), object_get_id(object));
     game_remove_object(game, object_get_id(object));
     return OK;
@@ -505,6 +513,7 @@ Status game_actions_use(Game *game, Command *command) {
       if (strcasecmp(command_get_arguments2(command), character_get_name(game_get_character(game, ids[i])))==0) {
         character=game_get_character(game, ids[i]);
         c_health=character_get_health(character);
+        c_strength=character_get_strength(character);
         t_health=c_health+health;
         character_set_health(character, t_health);
         if (character_get_health(character)>MAX_CHARACTER_HEALTH) {
@@ -513,6 +522,11 @@ Status game_actions_use(Game *game, Command *command) {
         if (character_get_health(character)<=0) {
           character_set_health(character, 0);
           game_remove_character(game, character_get_id(character));
+        }
+        t_strength=c_strength+strength;
+        character_set_strength(character, t_strength);
+        if (character_get_strength(character)<=0) {
+          character_set_strength(character, 1);
         }
         inventory_del_object(player_get_objects(player), object_get_id(object));
         game_remove_object(game, object_get_id(object));

@@ -16,7 +16,7 @@
 #include "inventory.h"
 
 /**
- * @brief Estructura de datos del jugador, id, nombre, location y objeto portado
+ * @brief Estructura de datos del jugador, id, nombre, location, inventario, vida, seguidores y fuerza
  * @author Danyyil Shykerynets
  */
 typedef struct _Player Player;
@@ -142,6 +142,25 @@ int player_get_health(Player* player);
  * @return OK en caso de exito, ERROR en caso contrario
  */
 Status player_set_health(Player *player, int health);
+
+/**
+ * @brief Recibe la fuerza del jugador
+ * @author Danyyil Shykerynets
+ * 
+ * @param player Puntero a la estructura del jugador
+ * @return Devuelve un int con la fuerza del jugador, -1 en caso de error
+ */
+int player_get_strength(Player* player);
+
+/**
+ * @brief Establece la fuerza en la estructura jugador
+ * @author Danyyil Shykerynets
+ * 
+ * @param player Jugador al que apunta player
+ * @param strength Nueva fuerza del jugador
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status player_set_strength(Player *player, int strength);
 
 /**
  * @brief Busca si el objeto que recibe se encuentra en el inventario del jugador

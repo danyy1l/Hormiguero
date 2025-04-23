@@ -25,6 +25,7 @@ struct _Character{
   char name[WORD_SIZE];     /*!< String containing name of the character*/
   char gdesc[CHAR_GDESC];   /*!< String containing gdesc of the character*/
   int health;               /*!< Int containing health of character*/
+  int strength;             /*!< Int containing strength of character*/
   Bool friendly;            /*!< Sympathy of the character*/
   char message[WORD_SIZE];  /*!< String containing message of the character*/
   Id following;             /*!< Id of the player he follow or NO_ID if he do not follow anyone*/
@@ -38,6 +39,7 @@ Character* character_create(){
 
   character->id = NO_ID;
   character->health = 1;
+  character->strength = 1;
   character->friendly = TRUE;
   character->following = NO_ID;
   /* Calloc inicializa gdesc a \0 */
@@ -118,6 +120,20 @@ Status character_set_health(Character* character, int health){
     return ERROR;
     
   character->health = health;
+
+  return OK;
+}
+
+int character_get_strength(Character* character){ 
+  if( !character ){ return -1; }
+  return character->strength; 
+}
+
+Status character_set_strength(Character* character, int strength){
+  if(!character)
+    return ERROR;
+    
+  character->strength = strength;
 
   return OK;
 }

@@ -25,6 +25,7 @@ struct _Object{
   char description[WORD_SIZE];      /*!< Descripción del objeto*/
   Bool taken;                       /*!< Determina si el objeto ha sido tomado por alguien*/
   int health;                       /*!< Puntos de vida que añade o quita al jugador*/
+  int strength;                     /*!< Puntos de fuerza que añade o quita al jugador*/
   Bool movable;                     /*!< Indica si el objeto se puede mover o no (Coger o no)*/
   Id dependency;                    /*!< Indica si el objeto depende de otro o no*/
   Id open;                          /*!< Indica si el objeto puede abrir un enlace o no*/
@@ -144,6 +145,21 @@ Status object_set_health(Object *object, int health) {
     return ERROR;
   }
   object->health=health;
+  return OK;
+}
+
+int object_get_strength(Object *object) {
+  if (!object) {
+    return 0;
+  }
+  return object->strength; 
+}
+
+Status object_set_strength(Object *object, int strength) {
+  if (!object) {
+    return ERROR;
+  }
+  object->strength=strength;
   return OK;
 }
 

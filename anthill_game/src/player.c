@@ -22,6 +22,7 @@ struct _Player {
   char gdesc[PLY_GDESC + 1];  /*!<-Descripcion grafica del jugador*/
   Inventory* backpack;        /*!<-Inventario del jugador*/
   int health;                 /*!<-Vida del jugador*/
+  int strength;               /*!<-Fuerza del jugador*/
   Set* followers;             /*!<-Seguidores del jugador*/
 };
 
@@ -37,6 +38,7 @@ Player *player_create(){
   output->gdesc[0] = '\0';
   output->backpack = inventory_create();
   output->health = 0;
+  output->strength = 1;
   output->followers = set_create();
 
   return output;
@@ -151,6 +153,20 @@ Status player_set_gdesc(Player* player, const char* gdesc){
   return OK;
 }
 
+Status player_set_strength(Player *player, int strength){
+  if(!player) { return ERROR; }
+
+  player->strength = strength;
+
+  return OK;
+}
+
+int player_get_strength(Player* player){
+  if( !player ) { return -1; }
+
+  return player->strength;
+}
+
 char* player_get_gdesc(Player* player){
   return player == NULL ? NULL : player->gdesc;
 }
@@ -162,7 +178,7 @@ Set* player_get_followers(Player* player){
 Status player_print(Player *player){
   Set *set=inventory_get_objects(player->backpack);
   if( player ){
-    printf("Player ID: %ld\nPlayer location: %ld\nPlayer name: %s\nPlayer health: %d", player->id, player->location, player->name, player->health);
+    printf("Player ID: %ld\nPlayer location: %ld\nPlayer name: %s\nPlayer health: %dPlayer strength: %d", player->id, player->location, player->name, player->health, player->strength);
     printf("Player objects: \n");
     set_print(set);
     return OK;

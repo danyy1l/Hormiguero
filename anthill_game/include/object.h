@@ -139,6 +139,23 @@ int object_get_health(Object *object);
 Status object_set_health(Object *object, int health);
 
 /**
+ * @brief Obtiene la fuerza del objeto
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @return Una entero con la fuerza del objeto
+ */
+int object_get_strength(Object *object);
+
+/**
+ * @brief Establece la fuerza del objeto
+ * @author Hugo Martín
+ * @param object Un puntero a Object
+ * @param strength La fuerza del objeto
+ * @return OK en caso de exito, ERROR en caso contrario
+ */
+Status object_set_strength(Object *object, int strength);
+
+/**
  * @brief Devuelve si el objeto se puede coger o no
  * @author Hugo Martín
  * @param object Un puntero a Object

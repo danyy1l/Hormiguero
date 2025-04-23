@@ -317,11 +317,18 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
 
   if( last_cmd == INSPECT && last_cmd_status ){
     object = game_get_object_by_name(game, command_get_arguments(command));
-    if( object_get_movable(object) ) sprintf(str1, "  Movable");
-    else sprintf(str1, "  Non movable");
-    sprintf(str, "  %s: %s, %d HP", object_get_name(object), object_get_description(object), object_get_health(object));
+    sprintf(str, "  %s: %s", object_get_name(object), object_get_description(object));
     screen_area_puts(ge->descript, str);
-    screen_area_puts(ge->descript, str1);
+    if( object_get_movable(object) ) sprintf(str, "  Movable");
+    else sprintf(str, "  Non movable");
+    if( object_get_health(object) != 0 ){
+      sprintf(str, "  HP: %d", object_get_health(object));
+      screen_area_puts(ge->descript, str);
+    }
+    if( object_get_strength(object) > 0 ){
+      sprintf(str, "  Strength: %d", object_get_strength(object));
+      screen_area_puts(ge->descript, str);
+    }
     if( object_get_dependency(object) != NO_ID ){
       sprintf(str, "  Needs %s", object_get_name(game_get_object(game, object_get_dependency(object))));
       screen_area_puts(ge->descript, str);
