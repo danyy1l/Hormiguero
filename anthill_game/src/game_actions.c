@@ -85,7 +85,7 @@ Status game_actions_chat(Game *game, Command* command);
  * @param game Estructura de la partida actual
  * Imprime la informacion del espacio en el que nos encontremos
  */
-Status game_actions_look(Game *game);
+void game_actions_look(Game *game);
 
 /**
  * @brief Realiza la accion al recibir un commando "INSPECT"
@@ -134,6 +134,8 @@ Status game_actions_abandon(Game* game, Command* command);
 */
  
 Status game_actions_update(Game *game, Command *command) {
+  if( !game || !command ) return ERROR;
+  
   int i;
   Player *player=game_get_player(game);                                  /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                       /*Inventario del jugador del game*/
@@ -143,7 +145,7 @@ Status game_actions_update(Game *game, Command *command) {
   Object *object=NULL;
   Character* character = NULL;
   CommandCode cmd;
-
+  
   cmd = command_get_code(command);
   game_set_prev_player_location(game, player_get_location(game_get_player(game)));
 
@@ -193,9 +195,7 @@ Status game_actions_update(Game *game, Command *command) {
       break;
     
     case LOOK:
-      if( game_actions_look(game) == ERROR )
-        command_set_output(command, ERROR);
-      else
+        game_actions_look(game);
         command_set_output(command, OK);
       break;
 
@@ -272,12 +272,20 @@ Status game_actions_move(Game *game, Command *command) {
 
   if( !strcasecmp("North", dir) || !strcasecmp("N", dir) )
     direction = N;
+  else if( !strcasecmp("Northeast", dir) || !strcasecmp("NE", dir) )
+    direction = NE;
   else if( !strcasecmp("East", dir) || !strcasecmp("E", dir) )
     direction = E;
+  else if( !strcasecmp("Southeast", dir) || !strcasecmp("SE", dir) )
+    direction = SE;
   else if( !strcasecmp("South", dir) || !strcasecmp("S", dir) )
     direction = S;
+  else if( !strcasecmp("Southwest", dir) || !strcasecmp("SW", dir) )
+    direction = SW;
   else if( !strcasecmp("West", dir) || !strcasecmp("W", dir) )
     direction = W;
+  else if( !strcasecmp("Northwest", dir) || !strcasecmp("NW", dir) )
+    direction = NW;
   else if( !strcasecmp("Up", dir) || !strcasecmp("U", dir) )
     direction = UP;
   else if( !strcasecmp("Down", dir) || !strcasecmp("D", dir) )
@@ -444,10 +452,7 @@ Status game_actions_chat(Game *game, Command* command){
   return ERROR;
 }
 
-Status game_actions_look(Game *game){
-  if( !game || !game_get_space(game, player_get_location(game_get_player(game))) ) return ERROR;
-  return OK;
-}
+void game_actions_look(Game *game) {}
 
 Status game_actions_inspect(Game *game, Command *command) {
   if (!game || !command) {

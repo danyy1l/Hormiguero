@@ -36,6 +36,45 @@ struct _Graphic_engine {
   Area *map, *descript, *banner, *help, *feedback;
 };
 
+/*Conversion de enum a palabra*/
+const char* get_dir_by_enum(int i){
+  switch (i){
+  case 1:
+    return "N ";
+    break;
+  case 2:
+    return "NE ";
+    break;
+  case 3:
+    return "E ";
+    break;
+  case 4:
+    return "SE ";
+    break;
+  case 5:
+    return "S ";
+    break;
+  case 6:
+    return "SW ";
+    break;
+  case 7:
+    return "W ";
+    break;
+  case 8:
+    return "NW ";
+    break;
+  case 9:
+    return "UP ";
+    break;
+  case 10:
+    return "DOWN ";
+    break;
+  default:
+    break;
+  }
+  return NULL;
+}
+
 /*TO DO: Imprimir jugadores de otras casillas*/
 
 void print_blank(char* str, Graphic_engine* ge){
@@ -125,6 +164,860 @@ void print_act(Graphic_engine* ge, Game* game, char* str, Id id_act, Space* spac
   }
 }
 
+/*BOTTOM PRINTING*/
+void print_south(Graphic_engine* ge, Game *game, char* str, Id id_south, Space* space_south){
+  int i;
+  Player* player;
+  char gdesc[PLY_GDESC + 1] = "    ";
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player = game_players(game)[i];
+    if( player_get_location(player) == id_south ){
+      strcpy(gdesc, player_get_gdesc(player));
+      break;
+    }
+  }
+  
+  if(game_connection_is_open(game, game_get_connection(game, id_south, N), S))
+    sprintf(str, "                                 v");
+  else
+    sprintf(str, "                                 X");
+  screen_area_puts(ge->map, str);
+  if(space_get_discovered(space_south)){
+    sprintf(str, "                       +------------------+");
+    screen_area_puts(ge->map, str);
+    sprintf(str, "                       | %s %s   %3d|", gdesc, character_get_gdesc( game_get_character(game, space_id_character(space_south)[0])), (int)id_south);
+    screen_area_puts(ge->map, str);
+    for(i=0; i<GDESC_MAX; i++){
+      strcpy(str, "                       |");
+      strcat(str, space_get_gdesc(space_south, i));
+      strcat(str, "         |");
+      screen_area_puts(ge->map, str);
+    }
+    sprintf(str, "                       | ");
+    print_objects(game, id_south, str);
+    strcat(str, " |");
+    screen_area_puts(ge->map, str);
+    sprintf(str, "                       +------------------+");
+    screen_area_puts(ge->map, str);
+  }else{
+    sprintf(str, "                       +------------------+");
+    screen_area_puts(ge->map, str);
+    sprintf(str, "                       |               %3d|", (int)id_south);
+    screen_area_puts(ge->map, str);
+    for(i=0; i<GDESC_MAX + 1; i++){
+      sprintf(str, "                       |                  |");
+      screen_area_puts(ge->map, str);
+    }
+    sprintf(str, "                       +------------------+");
+    screen_area_puts(ge->map, str);
+  }
+}
+
+void print_sw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_sw, Space* space_sw){
+  char open_asw;
+  int i;
+  Player* player = game_get_player(game);
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_sw ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_act, SW) )
+    open_asw = '/';
+  else
+    open_asw = ' ';
+
+  
+  sprintf(str, "                     %c", open_asw);
+  screen_area_puts(ge->map, str);
+
+  if(space_get_discovered(space_sw)){
+    if (id_act != NO_ID) {
+      sprintf(str, "+------------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "| %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_sw)[0])), (int)id_sw);
+      screen_area_puts(ge->map, str);
+      for(i=0; i<GDESC_MAX; i++){
+        sprintf(str, "|%s         |",space_get_gdesc(space_sw, i));
+        screen_area_puts(ge->map, str);
+      }
+      sprintf(str, "| ");
+      print_objects(game, id_sw, str);
+      strcat(str," |");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "+------------------+");
+      screen_area_puts(ge->map, str);
+    }
+  }else{
+    if (id_act != NO_ID) {
+      sprintf(str, "+------------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "|               %3d|", (int)id_sw);
+      screen_area_puts(ge->map, str);
+      for(i=0; i<GDESC_MAX; i++){
+        sprintf(str, "|                  |");
+        screen_area_puts(ge->map, str);
+      }
+      sprintf(str, "|                  |");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "+------------------+");
+      screen_area_puts(ge->map, str);
+    }
+  }
+}
+
+void print_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_se, Space* space_se){
+  char open_ase;
+  int i;
+  Player* player = game_get_player(game);
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_se ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_act, SE) )
+    open_ase = '\\';
+  else
+    open_ase = ' ';
+
+  sprintf(str, "                                            %c", open_ase);
+  screen_area_puts(ge->map, str);
+    
+  if( space_get_discovered(space_se) ){
+    if (id_act != NO_ID) {
+      sprintf(str, "                                              +------------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                                              | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_se)[0])), (int)id_se);
+      screen_area_puts(ge->map, str);
+      for(i=0; i<GDESC_MAX; i++){
+        sprintf(str, "                                              |%s         |", space_get_gdesc(space_se, i));
+        screen_area_puts(ge->map, str);
+      }
+      sprintf(str, "                                              | ");
+      print_objects(game, id_se, str);
+      strcat(str," |");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                                              +------------------+");
+      screen_area_puts(ge->map, str);
+    }
+  }else{
+    if (id_act != NO_ID) {
+      sprintf(str, "                                              +------------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                                              |               %3d|", (int)id_se);
+      screen_area_puts(ge->map, str);
+      for(i=0; i<GDESC_MAX; i++){
+        sprintf(str, "                                              |                  |");
+        screen_area_puts(ge->map, str);
+      }
+      sprintf(str, "                                              |                  |");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                                              +------------------+");
+      screen_area_puts(ge->map, str);
+    }
+  }  
+}
+
+void print_south_and_sw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south, Id id_sw, Space* space_south, Space* space_sw){
+  char open_sw, open_asw, open_south;
+  int i;
+  Player* player = game_get_player(game);
+  char foo;
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+  Player* player2;
+  char gdesc2[PLY_GDESC + 1] = "    ";
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_south ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player2 = game_players(game)[i];
+    if( player == player2 ) continue;
+    if( player_get_location(player2) == id_sw ){
+      strcpy(gdesc2, player_get_gdesc(player2));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_south, W) )
+    open_sw = '<';
+  else
+    open_sw = 'X';
+  if( game_connection_is_open(game, id_act, SW) )
+    open_asw = '/';
+  else
+    open_asw = ' ';
+  if( game_connection_is_open(game, id_act, S) )
+    open_south = 'v';
+  else
+    open_south = 'X';
+
+  sprintf(str, "                     %c           %c", open_asw, open_south);
+  screen_area_puts(ge->map, str);
+
+  if(space_get_discovered(space_sw)){
+    if(space_get_discovered(space_south)){
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "| %s %s   %3d|   | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_sw)[0])), (int)id_sw, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_south)[0])), (int)id_south);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo = open_sw;
+          else foo = ' ';
+          sprintf(str, "|%s         | %c |%s         |",space_get_gdesc(space_sw, i), foo, space_get_gdesc(space_south, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "| ");
+        print_objects(game, id_sw, str);
+        strcat(str, " |   | ");
+        print_objects(game, id_south, str);
+        strcat(str, " |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "| %s %s   %3d|   |               %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_sw)[0])), (int)id_sw, (int)id_south);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo = open_sw;
+          else foo = ' ';
+          sprintf(str, "|%s         | %c |                  |",space_get_gdesc(space_sw, i), foo);
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "| ");
+        print_objects(game, id_sw, str);
+        strcat(str, " |   |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }else{
+    if(space_get_discovered(space_south)){  
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "|               %3d|   | %s %s   %3d|", (int)id_sw, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_south)[0])), (int)id_south);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo = open_sw;
+          else foo = ' ';
+          sprintf(str, "|                  | %c |%s         |", foo, space_get_gdesc(space_south, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "|                  |   | ");
+        print_objects(game, id_south, str);
+        strcat(str, " |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "|               %3d|   |               %3d|", (int)id_sw, (int)id_south);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          sprintf(str, "|                  |   |                  |");
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "|                  |   |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }
+}
+
+void print_south_and_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south, Id id_se, Space* space_south, Space* space_se){
+  char open_se, open_ase, open_south;
+  int i;
+  Player* player = game_get_player(game);
+  char foo1;
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+  Player* player2;
+  char gdesc2[PLY_GDESC + 1] = "    ";
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_south ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player2 = game_players(game)[i];
+    if( player == player2 ) continue;
+    if( player_get_location(player2) == id_se ){
+      strcpy(gdesc2, player_get_gdesc(player2));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_south, E) )
+    open_se = '>';
+  else
+    open_se = 'X';
+  if( game_connection_is_open(game, id_act, SE) )
+    open_ase = '\\';
+  else
+    open_ase = ' ';
+  if( game_connection_is_open(game, id_act, S) )
+    open_south = 'v';
+  else
+    open_south = 'X';
+
+  sprintf(str, "                                 %c          %c", open_south, open_ase);
+  screen_area_puts(ge->map, str);
+
+  if(space_get_discovered(space_se)){
+    if(space_get_discovered(space_south)){
+      if (id_act != NO_ID) {
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       | %s %s   %3d|   | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_south)[0])), (int)id_south, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_se)[0])), (int)id_se);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo1 = open_se;
+          else foo1= ' ';
+          sprintf(str, "                       |%s         | %c |%s         |", space_get_gdesc(space_south, i), foo1, space_get_gdesc(space_se, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "                       | ");
+        print_objects(game, id_south, str);
+        strcat(str, " |   | ");
+        print_objects(game, id_se, str);
+        strcat(str," |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if (id_act != NO_ID) {
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       |               %3d|   | %s %s   %3d|", (int)id_south, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_se)[0])), (int)id_se);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo1 = open_se;
+          else foo1= ' ';
+          sprintf(str, "                       |                  | %c |%s         |", foo1, space_get_gdesc(space_se, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "                       |                  |   | ");
+        print_objects(game, id_se, str);
+        strcat(str," |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }else{
+    if(space_get_discovered(space_south)){
+      if( id_act != NO_ID ){
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       | %s %s   %3d|   |               %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_south)[0])), (int)id_south, (int)id_se);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo1 = open_se;
+          else foo1= ' ';
+          sprintf(str, "                       |%s         | %c |                  |", space_get_gdesc(space_south, i), foo1);
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "                       | ");
+        print_objects(game, id_south, str);
+        strcat(str, " |   |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if( id_act != NO_ID ){
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       |               %3d|   |               %3d|", (int)id_south, (int)id_se);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo1 = open_se;
+          else foo1= ' ';
+          sprintf(str, "                       |                  |   |                  |");
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "                       |                  |   |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }
+}
+
+void print_sw_and_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_se, Id id_sw, Space* space_se, Space* space_sw){
+  char open_asw, open_ase;
+  int i;
+  Player* player = game_get_player(game);
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+  Player* player2;
+  char gdesc2[PLY_GDESC + 1] = "    ";
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_sw ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player2 = game_players(game)[i];
+    if( player == player2 ) continue;
+    if( player_get_location(player2) == id_se ){
+      strcpy(gdesc2, player_get_gdesc(player2));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_act, SW) )
+    open_asw = '/';
+  else
+    open_asw = ' ';
+  if( game_connection_is_open(game, id_act, SE) )
+    open_ase = '\\';
+  else
+    open_ase = ' ';
+
+  sprintf(str, "                     %c                      %c", open_asw, open_ase);
+  screen_area_puts(ge->map, str);
+
+  if( space_get_discovered(space_se) ){
+    if(space_get_discovered(space_sw)){
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "| %s %s   %3d|                          | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_sw)[0])), (int)id_sw, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_se)[0])), (int)id_se);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          sprintf(str, "|%s         |                          |%s         |",space_get_gdesc(space_sw, i), space_get_gdesc(space_se, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "| ");
+        print_objects(game, id_sw, str);
+        strcat(str, " |                          | ");
+        print_objects(game, id_se, str);
+        strcat(str," |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "|               %3d|                          | %s %s   %3d|", (int)id_sw, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_se)[0])), (int)id_se);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          sprintf(str, "|                  |                          |%s         |", space_get_gdesc(space_se, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "|                  |                          | ");
+        print_objects(game, id_se, str);
+        strcat(str," |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }else{
+    if(space_get_discovered(space_sw)){
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "| %s %s   %3d|                          |               %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_sw)[0])), (int)id_sw, (int)id_se);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          sprintf(str, "|%s         |                          |                  |",space_get_gdesc(space_sw, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "| ");
+        print_objects(game, id_sw, str);
+        strcat(str, " |                          |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "|               %3d|                          |               %3d|", (int)id_sw, (int)id_se);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          sprintf(str, "|                  |                          |                  |");
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "|                  |                          |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }
+}
+
+void print_bot(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south, Id id_se, Id id_sw, Space* space_south, Space* space_se, Space* space_sw){
+  char open_se, open_nw, open_asw, open_ase, open_south;
+  int i, x=0;
+  Player* player = game_get_player(game);
+  char foo, foo1;
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+  Player* player2;
+  char gdesc2[PLY_GDESC + 1] = "    ";
+  Player* player3;
+  char gdesc3[PLY_GDESC + 1] = "    ";
+
+  if( id_sw != NO_ID ) x += 4;
+  if( id_south != NO_ID) x += 2;
+  if( id_se != NO_ID) x += 1;
+
+  switch (x){
+  case 0:
+    return;
+  case 1:
+    print_se(ge, game, str, id_act, id_se, space_se);
+    return;
+  case 2:
+    print_south(ge, game, str, id_south, space_south);
+    return;
+  case 3:
+    print_south_and_se(ge, game, str, id_act, id_south, id_se, space_south, space_se);
+    return;
+  case 4:
+    print_sw(ge, game, str, id_act, id_sw, space_sw);
+    return;
+  case 5:
+    print_sw_and_se(ge, game, str, id_act, id_se, id_sw, space_se, space_sw);
+    return;
+  case 6:
+    print_south_and_sw(ge, game, str, id_act, id_south, id_sw, space_south, space_sw);
+    return;
+  default:
+    break;
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_se ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player2 = game_players(game)[i];
+    if( player == player2 ) continue;
+    if( player_get_location(player2) == id_sw ){
+      strcpy(gdesc2, player_get_gdesc(player2));
+      break;
+    }
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player3 = game_players(game)[i];
+    if( player == player3 ) continue;
+    if( player_get_location(player3) == id_south ){
+      strcpy(gdesc3, player_get_gdesc(player3));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_south, W) )
+    open_nw = '<';
+  else
+    open_nw = 'X';
+  if( game_connection_is_open(game, id_south, E) )
+    open_se = '>';
+  else
+    open_se = 'X';
+  if( game_connection_is_open(game, id_act, SW) )
+    open_asw = '/';
+  else
+    open_nw = ' ';
+  if( game_connection_is_open(game, id_act, SE) )
+    open_ase = '\\';
+  else
+    open_ase = ' ';
+  if( game_connection_is_open(game, id_act, S) )
+    open_south = 'v';
+  else
+    open_south = 'X';
+
+  sprintf(str, "                     %c           %c          %c", open_asw, open_south, open_ase);
+  screen_area_puts(ge->map, str);
+
+  if( space_get_discovered(space_se) ){
+    if(space_get_discovered(space_sw)){
+      if(space_get_discovered(space_south)){
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "| %s %s   %3d|   | %s %s   %3d|   | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_sw)[0])), (int)id_sw, gdesc3, character_get_gdesc( game_get_character(game, space_id_character(space_south)[0])), (int)id_south, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_se)[0])), (int)id_se);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_se;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|%s         | %c |%s         | %c |%s         |",space_get_gdesc(space_sw, i), foo, space_get_gdesc(space_south, i), foo1, space_get_gdesc(space_se, i));
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "| ");
+          print_objects(game, id_sw, str);
+          strcat(str, " |   | ");
+          print_objects(game, id_south, str);
+          strcat(str, " |   | ");
+          print_objects(game, id_se, str);
+          strcat(str," |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }else{
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "| %s %s   %3d|   |               %3d|   | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_sw)[0])), (int)id_sw, (int)id_south, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_se)[0])), (int)id_se);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_se;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|%s         | %c |                  | %c |%s         |",space_get_gdesc(space_sw, i), foo, foo1, space_get_gdesc(space_se, i));
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "| ");
+          print_objects(game, id_sw, str);
+          strcat(str, " |   |                  |   | ");
+          print_objects(game, id_se, str);
+          strcat(str," |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }
+    }else{
+      if(space_get_discovered(space_south)){  
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "|               %3d|   | %s %s   %3d|   | %s %s   %3d|", (int)id_sw, gdesc3, character_get_gdesc( game_get_character(game, space_id_character(space_south)[0])), (int)id_south, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_se)[0])), (int)id_se);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_se;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|                  | %c |%s         | %c |%s         |", foo, space_get_gdesc(space_south, i), foo1, space_get_gdesc(space_se, i));
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "|                  |   | ");
+          print_objects(game, id_south, str);
+          strcat(str, " |   | ");
+          print_objects(game, id_se, str);
+          strcat(str," |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }else{
+        if( id_act != NO_ID ){
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "|               %3d|   |               %3d|   | %s %s   %3d|", (int)id_sw, (int)id_south, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_se)[0])), (int)id_se);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_se;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|                  |   |                  | %c |%s         |", foo1, space_get_gdesc(space_se, i));
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "|                  |   |                  |   | ");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }
+    }
+  }else{
+    if(space_get_discovered(space_sw)){
+      if(space_get_discovered(space_south)){
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "| %s %s   %3d|   | %s %s   %3d|   |               %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_sw)[0])), (int)id_sw, gdesc3, character_get_gdesc( game_get_character(game, space_id_character(space_south)[0])), (int)id_south, (int)id_se);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_se;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|%s         | %c |%s         | %c |                  |",space_get_gdesc(space_sw, i), foo, space_get_gdesc(space_south, i), foo1);
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "| ");
+          print_objects(game, id_sw, str);
+          strcat(str, " |   | ");
+          print_objects(game, id_south, str);
+          strcat(str, " |   |                  |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }else{
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "| %s %s   %3d|   |               %3d|   |               %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_sw)[0])), (int)id_sw, (int)id_south, (int)id_se);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_se;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|%s         | %c |                  |   |                  |",space_get_gdesc(space_sw, i), foo);
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "| ");
+          print_objects(game, id_sw, str);
+          strcat(str, " |   |                  |   |                  |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }
+    }else{
+      if(space_get_discovered(space_south)){  
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "|               %3d|   | %s %s   %3d|   |               %3d|", (int)id_sw, gdesc3, character_get_gdesc( game_get_character(game, space_id_character(space_south)[0])), (int)id_south, (int)id_se);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_se;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|                  | %c |%s         | %c |                  |", foo, space_get_gdesc(space_south, i), foo1);
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "|                  |   | ");
+          print_objects(game, id_south, str);
+          strcat(str, " |   |                  |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }else{
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "|               %3d|   |               %3d|   |               %3d|", (int)id_sw, (int)id_south, (int)id_se);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            sprintf(str, "|                  |   |                  |   |                  |");
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "|                  |   |                  |   |                  |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }
+    }
+  }
+}
+
+
+/*TOP PRINTING*/
 void print_north(Graphic_engine* ge, Game* game, char* str, Id id_north, Space* space_north){
   int i;
   Player* player;
@@ -175,55 +1068,809 @@ void print_north(Graphic_engine* ge, Game* game, char* str, Id id_north, Space* 
   screen_area_puts(ge->map, str);
 }
 
-void print_south(Graphic_engine* ge, Game *game, char* str, Id id_south, Space* space_south){
+void print_nw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_nw, Space* space_nw){
+  char open_anw;
   int i;
-  Player* player;
-  char gdesc[PLY_GDESC + 1] = "    ";
+  Player* player = game_get_player(game);
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
 
   for(int i=0; i<game_get_n_players(game); i++){
-    player = game_players(game)[i];
-    if( player_get_location(player) == id_south ){
-      strcpy(gdesc, player_get_gdesc(player));
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_nw ){
+      strcpy(gdesc1, player_get_gdesc(player1));
       break;
     }
   }
-  
-  if(game_connection_is_open(game, game_get_connection(game, id_south, N), S))
-    sprintf(str, "                                 v");
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_act, NW) )
+    open_anw = '\\';
   else
-    sprintf(str, "                                 X");
-  screen_area_puts(ge->map, str);
-  if(space_get_discovered(space_south)){
-    sprintf(str, "                       +------------------+");
-    screen_area_puts(ge->map, str);
-    sprintf(str, "                       | %s %s   %3d|", gdesc, character_get_gdesc( game_get_character(game, space_id_character(space_south)[0])), (int)id_south);
-    screen_area_puts(ge->map, str);
-    for(i=0; i<GDESC_MAX; i++){
-      strcpy(str, "                       |");
-      strcat(str, space_get_gdesc(space_south, i));
-      strcat(str, "         |");
+    open_anw = ' ';
+
+  if(space_get_discovered(space_nw)){
+    if (id_act != NO_ID) {
+      sprintf(str, "+------------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "| %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_nw)[0])), (int)id_nw);
+      screen_area_puts(ge->map, str);
+      for(i=0; i<GDESC_MAX; i++){
+        sprintf(str, "|%s         |",space_get_gdesc(space_nw, i));
+        screen_area_puts(ge->map, str);
+      }
+      sprintf(str, "| ");
+      print_objects(game, id_nw, str);
+      strcat(str," |");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "+------------------+");
       screen_area_puts(ge->map, str);
     }
-    sprintf(str, "                       | ");
-    print_objects(game, id_south, str);
-    strcat(str, " |");
-    screen_area_puts(ge->map, str);
-    sprintf(str, "                       +------------------+");
-    screen_area_puts(ge->map, str);
   }else{
-    sprintf(str, "                       +------------------+");
-    screen_area_puts(ge->map, str);
-    sprintf(str, "                       |               %3d|", (int)id_south);
-    screen_area_puts(ge->map, str);
-    for(i=0; i<GDESC_MAX + 1; i++){
-      sprintf(str, "                       |                  |");
+    if (id_act != NO_ID) {
+      sprintf(str, "+------------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "|               %3d|", (int)id_nw);
+      screen_area_puts(ge->map, str);
+      for(i=0; i<GDESC_MAX; i++){
+        sprintf(str, "|                  |");
+        screen_area_puts(ge->map, str);
+      }
+      sprintf(str, "|                  |");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "+------------------+");
       screen_area_puts(ge->map, str);
     }
-    sprintf(str, "                       +------------------+");
-    screen_area_puts(ge->map, str);
   }
+
+  sprintf(str, "                     %c", open_anw);
+  screen_area_puts(ge->map, str);
 }
 
+void print_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_ne, Space* space_ne){
+  char open_ane;
+  int i;
+  Player* player = game_get_player(game);
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_ne ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_act, NE) )
+    open_ane = '/';
+  else
+    open_ane = ' ';
+
+  if( space_get_discovered(space_ne) ){
+    if (id_act != NO_ID) {
+      sprintf(str, "                                              +------------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                                              | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_ne)[0])), (int)id_ne);
+      screen_area_puts(ge->map, str);
+      for(i=0; i<GDESC_MAX; i++){
+        sprintf(str, "                                              |%s         |", space_get_gdesc(space_ne, i));
+        screen_area_puts(ge->map, str);
+      }
+      sprintf(str, "                                              | ");
+      print_objects(game, id_ne, str);
+      strcat(str," |");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                                              +------------------+");
+      screen_area_puts(ge->map, str);
+    }
+  }else{
+    if (id_act != NO_ID) {
+      sprintf(str, "                                              +------------------+");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                                              |               %3d|", (int)id_ne);
+      screen_area_puts(ge->map, str);
+      for(i=0; i<GDESC_MAX; i++){
+        sprintf(str, "                                              |                  |");
+        screen_area_puts(ge->map, str);
+      }
+      sprintf(str, "                                              |                  |");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                                              +------------------+");
+      screen_area_puts(ge->map, str);
+    }
+  }  
+
+  sprintf(str, "                                            %c", open_ane);
+  screen_area_puts(ge->map, str);
+}
+
+void print_north_and_nw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north, Id id_nw, Space* space_north, Space* space_nw){
+  char open_nw, open_anw, open_north;
+  int i;
+  Player* player = game_get_player(game);
+  char foo;
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+  Player* player2;
+  char gdesc2[PLY_GDESC + 1] = "    ";
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_north ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player2 = game_players(game)[i];
+    if( player == player2 ) continue;
+    if( player_get_location(player2) == id_nw ){
+      strcpy(gdesc2, player_get_gdesc(player2));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_north, W) )
+    open_nw = '<';
+  else
+    open_nw = 'X';
+  if( game_connection_is_open(game, id_act, NW) )
+    open_anw = '\\';
+  else
+    open_anw = ' ';
+  if( game_connection_is_open(game, id_act, N) )
+    open_north = '^';
+  else
+    open_north = 'X';
+
+  if(space_get_discovered(space_nw)){
+    if(space_get_discovered(space_north)){
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "| %s %s   %3d|   | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_nw)[0])), (int)id_nw, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_north)[0])), (int)id_north);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo = open_nw;
+          else foo = ' ';
+          sprintf(str, "|%s         | %c |%s         |",space_get_gdesc(space_nw, i), foo, space_get_gdesc(space_north, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "| ");
+        print_objects(game, id_nw, str);
+        strcat(str, " |   | ");
+        print_objects(game, id_north, str);
+        strcat(str, " |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "| %s %s   %3d|   |               %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_nw)[0])), (int)id_nw, (int)id_north);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo = open_nw;
+          else foo = ' ';
+          sprintf(str, "|%s         | %c |                  |",space_get_gdesc(space_nw, i), foo);
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "| ");
+        print_objects(game, id_nw, str);
+        strcat(str, " |   |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }else{
+    if(space_get_discovered(space_north)){  
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "|               %3d|   | %s %s   %3d|", (int)id_nw, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_north)[0])), (int)id_north);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo = open_nw;
+          else foo = ' ';
+          sprintf(str, "|                  | %c |%s         |", foo, space_get_gdesc(space_north, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "|                  |   | ");
+        print_objects(game, id_north, str);
+        strcat(str, " |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "|               %3d|   |               %3d|", (int)id_nw, (int)id_north);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          sprintf(str, "|                  |   |                  |");
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "|                  |   |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }
+
+  sprintf(str, "                     %c           %c", open_anw, open_north);
+  screen_area_puts(ge->map, str);
+}
+
+void print_north_and_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north, Id id_ne, Space* space_north, Space* space_ne){
+  char open_ne, open_ane, open_north;
+  int i;
+  Player* player = game_get_player(game);
+  char foo1;
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+  Player* player2;
+  char gdesc2[PLY_GDESC + 1] = "    ";
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_north ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player2 = game_players(game)[i];
+    if( player == player2 ) continue;
+    if( player_get_location(player2) == id_ne ){
+      strcpy(gdesc2, player_get_gdesc(player2));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_north, E) )
+    open_ne = '>';
+  else
+    open_ne = 'X';
+  if( game_connection_is_open(game, id_act, NE) )
+    open_ane = '/';
+  else                       
+    open_ane = ' ';
+  if( game_connection_is_open(game, id_act, N) )
+    open_north = '^';
+  else
+    open_north = 'X';
+
+  if(space_get_discovered(space_ne)){
+    if(space_get_discovered(space_north)){
+      if (id_act != NO_ID) {
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       | %s %s   %3d|   | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_north)[0])), (int)id_north, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_ne)[0])), (int)id_ne);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo1 = open_ne;
+          else foo1= ' ';
+          sprintf(str, "                       |%s         | %c |%s         |", space_get_gdesc(space_north, i), foo1, space_get_gdesc(space_ne, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "                       | ");
+        print_objects(game, id_north, str);
+        strcat(str, " |   | ");
+        print_objects(game, id_ne, str);
+        strcat(str," |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if (id_act != NO_ID) {
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       |               %3d|   | %s %s   %3d|", (int)id_north, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_ne)[0])), (int)id_ne);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo1 = open_ne;
+          else foo1= ' ';
+          sprintf(str, "                       |                  | %c |%s         |", foo1, space_get_gdesc(space_ne, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "                       |                  |   | ");
+        print_objects(game, id_ne, str);
+        strcat(str," |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }else{
+    if(space_get_discovered(space_north)){
+      if( id_act != NO_ID ){
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       | %s %s   %3d|   |               %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_north)[0])), (int)id_north, (int)id_ne);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo1 = open_ne;
+          else foo1= ' ';
+          sprintf(str, "                       |%s         | %c |                  |", space_get_gdesc(space_north, i), foo1);
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "                       | ");
+        print_objects(game, id_north, str);
+        strcat(str, " |   |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if( id_act != NO_ID ){
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       |               %3d|   |               %3d|", (int)id_north, (int)id_ne);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          if(i==2) foo1 = open_ne;
+          else foo1= ' ';
+          sprintf(str, "                       |                  |   |                  |");
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "                       |                  |   |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       +------------------+   +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }
+
+  sprintf(str, "                                 %c          %c", open_north, open_ane);
+  screen_area_puts(ge->map, str);
+}
+
+void print_nw_and_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_ne, Id id_nw, Space* space_ne, Space* space_nw){
+  char open_anw, open_ane;
+  int i;
+  Player* player = game_get_player(game);
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+  Player* player2;
+  char gdesc2[PLY_GDESC + 1] = "    ";
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_nw ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player2 = game_players(game)[i];
+    if( player == player2 ) continue;
+    if( player_get_location(player2) == id_ne ){
+      strcpy(gdesc2, player_get_gdesc(player2));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_act, NW) )
+    open_anw = '\\';
+  else
+    open_anw = ' ';
+  if( game_connection_is_open(game, id_act, NE) )
+    open_ane = '/';
+  else
+    open_ane = ' ';
+
+  if( space_get_discovered(space_ne) ){
+    if(space_get_discovered(space_nw)){
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "| %s %s   %3d|                          | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_nw)[0])), (int)id_nw, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_ne)[0])), (int)id_ne);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          sprintf(str, "|%s         |                          |%s         |",space_get_gdesc(space_nw, i), space_get_gdesc(space_ne, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "| ");
+        print_objects(game, id_nw, str);
+        strcat(str, " |                          | ");
+        print_objects(game, id_ne, str);
+        strcat(str," |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "|               %3d|                          | %s %s   %3d|", (int)id_nw, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_ne)[0])), (int)id_ne);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          sprintf(str, "|                  |                          |%s         |", space_get_gdesc(space_ne, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "|                  |                          | ");
+        print_objects(game, id_ne, str);
+        strcat(str," |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }else{
+    if(space_get_discovered(space_nw)){
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "| %s %s   %3d|                          |               %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_nw)[0])), (int)id_nw, (int)id_ne);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          sprintf(str, "|%s         |                          |                  |",space_get_gdesc(space_nw, i));
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "| ");
+        print_objects(game, id_nw, str);
+        strcat(str, " |                          |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }else{
+      if (id_act != NO_ID) {
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "|               %3d|                          |               %3d|", (int)id_nw, (int)id_ne);
+        screen_area_puts(ge->map, str);
+        for(i=0; i<GDESC_MAX; i++){
+          sprintf(str, "|                  |                          |                  |");
+          screen_area_puts(ge->map, str);
+        }
+        sprintf(str, "|                  |                          |                  |");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "+------------------+                          +------------------+");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }
+
+  sprintf(str, "                     %c                      %c", open_anw, open_ane);
+  screen_area_puts(ge->map, str);
+}
+
+void print_top(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north, Id id_ne, Id id_nw, Space* space_north, Space* space_ne, Space* space_nw){
+  char open_ne, open_nw, open_anw, open_ane, open_north;
+  int i, x=0;
+  Player* player = game_get_player(game);
+  char foo, foo1;
+
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+  Player* player2;
+  char gdesc2[PLY_GDESC + 1] = "    ";
+  Player* player3;
+  char gdesc3[PLY_GDESC + 1] = "    ";
+
+  if( id_nw != NO_ID ) x += 4;
+  if( id_north != NO_ID) x += 2;
+  if( id_ne != NO_ID) x += 1;
+
+  switch (x){
+  case 0:
+    print_blank(str, ge);
+    return;
+  case 1:
+    print_ne(ge, game, str, id_act, id_ne, space_ne);
+    return;
+  case 2:
+    print_north(ge, game, str, id_north, space_north);
+    return;
+  case 3:
+    print_north_and_ne(ge, game, str, id_act, id_north, id_ne, space_north, space_ne);
+    return;
+  case 4:
+    print_nw(ge, game, str, id_act, id_nw, space_nw);
+    return;
+  case 5:
+    print_nw_and_ne(ge, game, str, id_act, id_ne, id_nw, space_ne, space_nw);
+    return;
+  case 6:
+    print_north_and_nw(ge, game, str, id_act, id_north, id_nw, space_north, space_nw);
+    return;
+  default:
+    break;
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player1 = game_players(game)[i];
+    if( player == player1 ) continue;
+    if( player_get_location(player1) == id_ne ){
+      strcpy(gdesc1, player_get_gdesc(player1));
+      break;
+    }
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player2 = game_players(game)[i];
+    if( player == player2 ) continue;
+    if( player_get_location(player2) == id_nw ){
+      strcpy(gdesc2, player_get_gdesc(player2));
+      break;
+    }
+  }
+
+  for(int i=0; i<game_get_n_players(game); i++){
+    player3 = game_players(game)[i];
+    if( player == player3 ) continue;
+    if( player_get_location(player3) == id_north ){
+      strcpy(gdesc3, player_get_gdesc(player3));
+      break;
+    }
+  }
+
+  /*Revision de si conexion abierta*/
+  if( game_connection_is_open(game, id_north, W) )
+    open_nw = '<';
+  else
+    open_nw = 'X';
+  if( game_connection_is_open(game, id_north, E) )
+    open_ne = '>';
+  else
+    open_ne = 'X';
+  if( game_connection_is_open(game, id_act, NW) )
+    open_anw = '\\';
+  else
+    open_nw = ' ';
+  if( game_connection_is_open(game, id_act, NE) )
+    open_ane = '/';
+  else
+    open_ane = ' ';
+  if( game_connection_is_open(game, id_act, N) )
+    open_north = '^';
+  else
+    open_north = 'X';
+
+  if( space_get_discovered(space_ne) ){
+    if(space_get_discovered(space_nw)){
+      if(space_get_discovered(space_north)){
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "| %s %s   %3d|   | %s %s   %3d|   | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_nw)[0])), (int)id_nw, gdesc3, character_get_gdesc( game_get_character(game, space_id_character(space_north)[0])), (int)id_north, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_ne)[0])), (int)id_ne);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_ne;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|%s         | %c |%s         | %c |%s         |",space_get_gdesc(space_nw, i), foo, space_get_gdesc(space_north, i), foo1, space_get_gdesc(space_ne, i));
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "| ");
+          print_objects(game, id_nw, str);
+          strcat(str, " |   | ");
+          print_objects(game, id_north, str);
+          strcat(str, " |   | ");
+          print_objects(game, id_ne, str);
+          strcat(str," |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }else{
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "| %s %s   %3d|   |               %3d|   | %s %s   %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_nw)[0])), (int)id_nw, (int)id_north, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_ne)[0])), (int)id_ne);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_ne;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|%s         | %c |                  | %c |%s         |",space_get_gdesc(space_nw, i), foo, foo1, space_get_gdesc(space_ne, i));
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "| ");
+          print_objects(game, id_nw, str);
+          strcat(str, " |   |                  |   | ");
+          print_objects(game, id_ne, str);
+          strcat(str," |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }
+    }else{
+      if(space_get_discovered(space_north)){  
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "|               %3d|   | %s %s   %3d|   | %s %s   %3d|", (int)id_nw, gdesc3, character_get_gdesc( game_get_character(game, space_id_character(space_north)[0])), (int)id_north, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_ne)[0])), (int)id_ne);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_ne;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|                  | %c |%s         | %c |%s         |", foo, space_get_gdesc(space_north, i), foo1, space_get_gdesc(space_ne, i));
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "|                  |   | ");
+          print_objects(game, id_north, str);
+          strcat(str, " |   | ");
+          print_objects(game, id_ne, str);
+          strcat(str," |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }else{
+        if( id_act != NO_ID ){
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "|               %3d|   |               %3d|   | %s %s   %3d|", (int)id_nw, (int)id_north, gdesc2, character_get_gdesc( game_get_character(game, space_id_character(space_ne)[0])), (int)id_ne);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_ne;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|                  |   |                  | %c |%s         |", foo1, space_get_gdesc(space_ne, i));
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "|                  |   |                  |   | ");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }
+    }
+  }else{
+    if(space_get_discovered(space_nw)){
+      if(space_get_discovered(space_north)){
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "| %s %s   %3d|   | %s %s   %3d|   |               %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_nw)[0])), (int)id_nw, gdesc3, character_get_gdesc( game_get_character(game, space_id_character(space_north)[0])), (int)id_north, (int)id_ne);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_ne;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|%s         | %c |%s         | %c |                  |",space_get_gdesc(space_nw, i), foo, space_get_gdesc(space_north, i), foo1);
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "| ");
+          print_objects(game, id_nw, str);
+          strcat(str, " |   | ");
+          print_objects(game, id_north, str);
+          strcat(str, " |   |                  |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }else{
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "| %s %s   %3d|   |               %3d|   |               %3d|", gdesc1, character_get_gdesc( game_get_character(game, space_id_character(space_nw)[0])), (int)id_nw, (int)id_north, (int)id_ne);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_ne;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|%s         | %c |                  |   |                  |",space_get_gdesc(space_nw, i), foo);
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "| ");
+          print_objects(game, id_nw, str);
+          strcat(str, " |   |                  |   |                  |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }
+    }else{
+      if(space_get_discovered(space_north)){  
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "|               %3d|   | %s %s   %3d|   |               %3d|", (int)id_nw, gdesc3, character_get_gdesc( game_get_character(game, space_id_character(space_north)[0])), (int)id_north, (int)id_ne);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            if(i==2){
+              foo = open_nw;
+              foo1 = open_ne;
+            }
+            else{
+              foo = ' ';
+              foo1= ' ';
+            }
+            sprintf(str, "|                  | %c |%s         | %c |                  |", foo, space_get_gdesc(space_north, i), foo1);
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "|                  |   | ");
+          print_objects(game, id_north, str);
+          strcat(str, " |   |                  |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }else{
+        if (id_act != NO_ID) {
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "|               %3d|   |               %3d|   |               %3d|", (int)id_nw, (int)id_north, (int)id_ne);
+          screen_area_puts(ge->map, str);
+          for(i=0; i<GDESC_MAX; i++){
+            sprintf(str, "|                  |   |                  |   |                  |");
+            screen_area_puts(ge->map, str);
+          }
+          sprintf(str, "|                  |   |                  |   |                  |");
+          screen_area_puts(ge->map, str);
+          sprintf(str, "+------------------+   +------------------+   +------------------+");
+          screen_area_puts(ge->map, str);
+        }
+      }
+    }
+  }
+
+  sprintf(str, "                     %c           %c          %c", open_anw, open_north, open_ane);
+  screen_area_puts(ge->map, str);
+}
+
+/*MIDDLE PRINTING*/
 void print_west(Graphic_engine* ge, Game *game, char* str, Id id_west, Id id_act, Space* space_west, Space* space_act){
   int open_west, i;
   Player* player = game_get_player(game);
@@ -392,11 +2039,22 @@ void print_east(Graphic_engine* ge, Game *game, char* str, Id id_east, Id id_act
   }
 }
 
-void print_east_and_west(Graphic_engine* ge, Game *game, char* str, Id id_west, Id id_east, Id id_act, Space* space_west, Space* space_east, Space* space_act){
+void print_mid(Graphic_engine* ge, Game *game, char* str, Id id_west, Id id_east, Id id_act, Space* space_west, Space* space_east, Space* space_act){
   int open_east, open_west, i;
   Player* player = game_get_player(game);
   char character_gdesc[CHAR_GDESC + 1], foo, foo1;
   char updown;
+
+  if( ( id_east == NO_ID ) && ( id_west == NO_ID ) ) {
+    print_act(ge, game, str, id_act, space_act); 
+    return;
+  }else if( id_east == NO_ID ) {
+    print_west(ge, game, str, id_west, id_act, space_west, space_act); 
+    return;
+  }else if( id_west == NO_ID ){
+    print_east(ge, game, str, id_east, id_act, space_east, space_act); 
+    return;
+  }
 
   Player* player1;
   char gdesc1[PLY_GDESC + 1] = "    ";
@@ -561,6 +2219,7 @@ void print_east_and_west(Graphic_engine* ge, Game *game, char* str, Id id_west, 
   }
 }
 
+/*GE*/
 Graphic_engine *graphic_engine_create() {
   static Graphic_engine *ge = NULL;
 
@@ -598,15 +2257,20 @@ void graphic_engine_destroy(Graphic_engine *ge) {
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command) {
   Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, player_location = NO_ID;
+  Id id_ne = NO_ID, id_se = NO_ID, id_sw = NO_ID, id_nw = NO_ID; 
+
   Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL, *prev_space = NULL;
+  Space *space_ne = NULL, *space_se = NULL, *space_sw = NULL, *space_nw = NULL;
+  
   Object* object=NULL;
   Character* character = NULL;
   CommandCode last_cmd = UNKNOWN;
   Status last_cmd_status;
+
   char action_return[STATUS_SIZE];
   char str[WORD_SIZE], friendly[WORD_SIZE/2], str1[WORD_SIZE/2];
   extern char *cmd_to_str[N_CMD][N_CMDT];
-  int i, id_count, dir_check = 0, n_objs, n_chars;
+  int i, id_count, n_objs, n_chars;
 
   Player *player=game_get_player(game);                               /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
@@ -619,31 +2283,20 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     space_act = game_get_space(game, id_act);
     id_north = game_get_connection(game, id_act, N);
     space_north = game_get_space(game, id_north);
-    id_south = game_get_connection(game, id_act, S);
-    space_south = game_get_space(game, id_south);
+    id_ne = game_get_connection(game, id_act, NE);
+    space_ne = game_get_space(game, id_ne);
     id_east = game_get_connection(game, id_act, E);
     space_east = game_get_space(game, id_east);
+    id_se = game_get_connection(game, id_act, SE);
+    space_se = game_get_space(game, id_se);
+    id_south = game_get_connection(game, id_act, S);
+    space_south = game_get_space(game, id_south);
+    id_sw = game_get_connection(game, id_act, SW);
+    space_sw = game_get_space(game, id_sw);
     id_west = game_get_connection(game, id_act, W);
     space_west = game_get_space(game, id_west);
-
-    /*Each direction sums a binary value so that if theres a space north and west
-    it'd be equivalent to 1010 (NESW) = 10 in decimal*/
-    
-    if (id_north != NO_ID) {
-      dir_check += 8;
-    }
-
-    if (id_east != NO_ID) {
-      dir_check += 4;
-    }
-
-    if (id_south != NO_ID) {
-      dir_check += 2;
-    }
-
-    if (id_west != NO_ID) {
-      dir_check += 1;
-    }
+    id_nw = game_get_connection(game, id_act, NW);
+    space_nw = game_get_space(game, id_nw);
 
     /*Caso especial: Si el espacio no tiene gdesc, relleno los 5 campos con 9 espacios*/
     for(i=0; i<GDESC_MAX;i++){
@@ -657,100 +2310,34 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
         space_set_gdesc(space_east, "         ", i);
       if( space_west && strlen(space_get_gdesc(space_west, i)) < (GDESC_SIZE - 1) )
         space_set_gdesc(space_west, "         ", i);
+      if( space_ne && strlen(space_get_gdesc(space_ne, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_ne, "         ", i);
+      if( space_nw && strlen(space_get_gdesc(space_nw, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_nw, "         ", i);
+      if( space_se && strlen(space_get_gdesc(space_se, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_se, "         ", i);
+      if( space_sw && strlen(space_get_gdesc(space_sw, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_sw, "         ", i);
     }
 
-    /*IMPRESIÓN DE CASILLAS, Para mejor view, cerrar*/
-    switch(dir_check){
-    case 0:
-      print_blank(str, ge);
-      print_act(ge, game, str, id_act, space_act);
-      break;
-    case 1:
-      print_blank(str, ge);
-      print_west(ge, game, str, id_west, id_act, space_west, space_act);
-      break;
-    case 2:
-      print_blank(str, ge);
-      print_act(ge, game, str, id_act, space_act);
-      print_south(ge, game, str, id_south, space_south);
-      break;
-    case 3:
-      print_blank(str, ge);
-      print_west(ge, game, str, id_west, id_act, space_west, space_act);
-      print_south(ge, game, str, id_south, space_south);
-      break;
-    case 4:
-      print_blank(str, ge);
-      print_east(ge, game, str, id_east, id_act, space_east, space_act);
-      break;
-    case 5:
-      print_blank(str, ge);
-      print_east_and_west(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
-      break;
-    case 6:
-      print_blank(str, ge);
-      print_east(ge, game, str, id_east, id_act, space_east, space_act);     
-      print_south(ge, game, str, id_south, space_south);
-      break;
-    case 7:
-      print_blank(str, ge);
-      print_east_and_west(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
-      print_south(ge, game, str, id_south, space_south);
-      break;
-    case 8:
-      print_north(ge, game, str, id_north, space_north);
-      print_act(ge, game, str, id_act, space_act);
-      break;
-    case 9:
-      print_north(ge, game, str, id_north, space_north);
-      print_west(ge, game, str, id_west, id_act, space_west, space_act);
-      break;
-    case 10:
-      print_north(ge, game, str, id_north, space_north);
-      print_act(ge, game, str, id_act, space_act);
-      print_south(ge, game, str, id_south, space_south);
-      break;
-    case 11:
-      print_north(ge, game, str, id_north, space_north);
-      print_west(ge, game, str, id_west, id_act, space_west, space_act);
-      print_south(ge, game, str, id_south, space_south);
-      break;
-    case 12:
-      print_north(ge, game, str, id_north, space_north);
-      print_east(ge, game, str, id_east, id_act, space_east, space_act);
-      break;
-    case 13:
-      print_north(ge, game, str, id_north, space_north);
-      print_east_and_west(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
-      break;
-    case 14:
-      print_north(ge, game, str, id_north, space_north);
-      print_east(ge, game, str, id_east, id_act, space_east, space_act);
-      print_south(ge, game, str, id_south, space_south);
-      break;
-    case 15:
-      print_north(ge, game, str, id_north, space_north);
-      print_east_and_west(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
-      print_south(ge, game, str, id_south, space_south);
-      break;
-    default:
-      break; 
-    }
+    print_top(ge, game, str, id_act, id_north, id_ne, id_nw, space_north, space_ne, space_nw);
+    print_mid(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
+    print_bot(ge, game, str, id_act, id_south, id_se, id_sw, space_south, space_se, space_sw);
   }
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
 
   screen_area_puts(ge->descript, " ");
-  sprintf(str, "              N");
+  sprintf(str, "          NW  N  NE");
   screen_area_puts(ge->descript, str);
-  sprintf(str, "              ^");
+  sprintf(str, "            \\ ^ /");
   screen_area_puts(ge->descript, str);
   sprintf(str, "          W < O > E");
   screen_area_puts(ge->descript, str);
-  sprintf(str, "              v");
+  sprintf(str, "            / v \\");
   screen_area_puts(ge->descript, str);
-  sprintf(str, "              S");
+  sprintf(str, "          SW  S  SE");
   screen_area_puts(ge->descript, str);
   screen_area_puts(ge->descript, " ");
 
@@ -784,26 +2371,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     
     screen_area_puts(ge->descript, " ");
   }
-
-  /*TO DO: Object print*/
-  /*
-  sprintf(str, "  Objects: ");
-  screen_area_puts(ge->descript, str);
-  i=0;
-  id_count = 0;
-  while(i < game_get_n_objects(game)){
-    object = game_get_object(game, id_count);
-    if( object ){
-      sprintf(str, "   %s: %d", object_get_name(object), updown, (int)object_get_location(object));
-      screen_area_puts(ge->descript, str);
-      i++;
-      id_count++;
-    }else
-      id_count++;
-
-  }
-  screen_area_puts(ge->descript, " "); 
-  */
 
   sprintf(str, "  Characters: ");
   screen_area_puts(ge->descript, str);
@@ -880,7 +2447,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
       strcat(str, str1);
       screen_area_puts(ge->descript, str);
     }
-    
+    sprintf(str, "  Open links:");
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "  ");
+    for(i=NONE; i<=DOWN; i++){
+      if( game_connection_is_open(game, game_get_prev_player_location(game), i)) strcat(str, get_dir_by_enum(i));
+    }
+    screen_area_puts(ge->descript, str);
+
   }
 
   if( last_cmd == CHAT && last_cmd_status ){
@@ -889,8 +2463,16 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   }
 
   if( last_cmd == INSPECT && last_cmd_status ){
-    sprintf(str, "  %s: %s", object_get_name(game_get_object_by_name(game, command_get_arguments(command))), object_get_description(game_get_object_by_name(game, command_get_arguments(command))));
+    object = game_get_object_by_name(game, command_get_arguments(command));
+    if( object_get_movable(object) ) sprintf(str1, "  Movable");
+    else sprintf(str1, "  Non movable");
+    sprintf(str, "  %s: %s, %d HP", object_get_name(object), object_get_description(object), object_get_health(object));
     screen_area_puts(ge->descript, str);
+    screen_area_puts(ge->descript, str1);
+    if( object_get_dependency(object) != NO_ID ){
+      sprintf(str, "  Needs %s", object_get_name(game_get_object(game, object_get_dependency(object))));
+      screen_area_puts(ge->descript, str);
+    }
   }
 
   /* Dump to the terminal */
@@ -907,9 +2489,9 @@ void graphic_engine_paint_game_over(Graphic_engine* ge, Game *game){
 
   for(i=0; i<HEIGHT_MAP; i++){
     if( i == HEIGHT_MAP/2 ){
-      sprintf(str, "                 GAME OVER!                ");
+      sprintf(str, "                        GAME OVER!                ");
       screen_area_puts(ge->map, str);
-      sprintf(str, "            Player \"%s\" has died :(        ", player_get_name(game_get_player(game)));
+      sprintf(str, "                   Player \"%s\" has died :(        ", player_get_name(game_get_player(game)));
       screen_area_puts(ge->map, str);
     }else{
       sprintf(str, "                                           ");

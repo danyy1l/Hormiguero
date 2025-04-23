@@ -28,11 +28,11 @@ typedef enum {
   ATTACK,       /*!<-Ataca a un personaje enemigo*/
   CHAT,         /*!<-Conversa con un personaje amigo*/
   LOOK,         /*!<-Mira la informacion sobre un espacio*/
-  INSPECT,      /*!<Inspecciona un objeto*/
+  INSPECT,      /*!<-Inspecciona un objeto*/
   USE,          /*!<-Usa un objeto*/
   OPEN,         /*!<-Abre un enlace con un objeto*/
-  RECRUIT,      /*!<Recruits a friendly character>*/
-  ABANDON       /*!<Abandons a friendly character>*/
+  RECRUIT,      /*!<-Recruits a friendly character>*/
+  ABANDON       /*!<-Abandons a friendly character>*/
 }CommandCode;
 
 typedef struct _Command Command;
