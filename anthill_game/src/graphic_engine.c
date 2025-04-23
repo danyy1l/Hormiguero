@@ -258,6 +258,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
+  /*Impresion del ultimo comando*/
   screen_area_clear(ge->feedback);
   last_cmd = command_get_code(command);
   if(last_cmd >= NO_CMD && last_cmd <= ABANDON ){
@@ -274,11 +275,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   /*Esto es un semi arreglo, hacer gamerule mejor*/
   if( (last_cmd == OPEN || last_cmd == USE) && last_cmd_status ) space_set_message1( game_get_space(game, game_get_prev_player_location(game)) , space_get_message2(game_get_space(game, game_get_prev_player_location(game))));
 
+  /*Impresion del mensaje del espacio*/
   if( strlen(space_get_message1(space_act)) > 2 ){
     sprintf(str, " %s", space_get_message1(space_act));
     screen_area_puts(ge->feedback, str);
   }
 
+  /*Caso: Comando LOOK, imprime datos de objetos, personajes y enlaces*/
   if( last_cmd == LOOK && last_cmd_status ){
     prev_space = game_get_space(game, game_get_prev_player_location(game));
     n_objs = set_get_nids(space_get_set_objects(prev_space));
@@ -296,7 +299,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
       sprintf(str, "  ");
       strcat(str, character_get_name(character));
       strcat(str, ": ");
-      sprintf(str1, "%d HP",character_get_health(character));
+      sprintf(str1, "%d HP, Strength: %d ",character_get_health(character), character_get_strength(character));
       strcat(str, str1);
       screen_area_puts(ge->descript, str);
     }
@@ -310,11 +313,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
 
   }
 
+  /*Caso CHAT: Imprime el mensaje del personaje*/
   if( last_cmd == CHAT && last_cmd_status ){
     sprintf(str, "  %s",game_get_message(game));
     screen_area_puts(ge->descript, str);
   }
 
+  /*Caso INSPECT: Imprime toda la informacion de un objeto*/
   if( last_cmd == INSPECT && last_cmd_status ){
     object = game_get_object_by_name(game, command_get_arguments(command));
     sprintf(str, "  %s: %s", object_get_name(object), object_get_description(object));
