@@ -36,6 +36,328 @@ struct _Graphic_engine {
   Area *map, *descript, *banner, *help, *feedback;
 };
 
+/*Declaracion de funciones privadas */
+const char* get_dir_by_enum(int i);
+
+void print_blank(char* str, Graphic_engine* ge);
+void print_objects(Game* game, Id id, char* str);
+void print_act(Graphic_engine* ge, Game* game, char* str, Id id_act, Space* space_act);
+
+void print_south(Graphic_engine* ge, Game *game, char* str, Id id_south, Space* space_south);
+void print_sw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_sw, Space* space_sw);
+void print_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_se, Space* space_se);
+void print_south_and_sw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south, Id id_sw, Space* space_south, Space* space_sw);
+void print_south_and_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south, Id id_se, Space* space_south, Space* space_se);
+void print_sw_and_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_se, Id id_sw, Space* space_se, Space* space_sw);
+void print_bot(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south, Id id_se, Id id_sw, Space* space_south, Space* space_se, Space* space_sw);
+
+void print_north(Graphic_engine* ge, Game* game, char* str, Id id_north, Space* space_north);
+void print_nw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_nw, Space* space_nw);
+void print_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_ne, Space* space_ne);
+void print_north_and_nw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north, Id id_nw, Space* space_north, Space* space_nw);
+void print_north_and_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north, Id id_ne, Space* space_north, Space* space_ne);
+void print_nw_and_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_ne, Id id_nw, Space* space_ne, Space* space_nw);
+void print_top(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north, Id id_ne, Id id_nw, Space* space_north, Space* space_ne, Space* space_nw);
+
+void print_west(Graphic_engine* ge, Game *game, char* str, Id id_west, Id id_act, Space* space_west, Space* space_act);
+void print_east(Graphic_engine* ge, Game *game, char* str, Id id_east, Id id_act, Space* space_east, Space* space_act);
+void print_mid(Graphic_engine* ge, Game *game, char* str, Id id_west, Id id_east, Id id_act, Space* space_west, Space* space_east, Space* space_act);
+
+/*GE*/
+Graphic_engine *graphic_engine_create() {
+  static Graphic_engine *ge = NULL;
+
+  if (ge) {
+    return ge;
+  }
+
+  screen_init(HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + HEIGHT_FDB + 4, WIDTH_MAP + WIDTH_DES + 3);
+  ge = (Graphic_engine *)malloc(sizeof(Graphic_engine));
+  if (ge == NULL) {
+    return NULL;
+  }
+
+  ge->map = screen_area_init(1, 1, WIDTH_MAP, HEIGHT_MAP);
+  ge->descript = screen_area_init(WIDTH_MAP + 2, 1, WIDTH_DES, HEIGHT_MAP);
+  ge->banner = screen_area_init((int)((WIDTH_MAP + WIDTH_DES + 1 - WIDTH_BAN) / 2), HEIGHT_MAP + 2, WIDTH_BAN, HEIGHT_BAN);
+  ge->help = screen_area_init(1, HEIGHT_MAP + HEIGHT_BAN + 2, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_HLP);
+  ge->feedback = screen_area_init(1, HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + 3, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_FDB);
+
+  return ge;
+}
+
+void graphic_engine_destroy(Graphic_engine *ge) {
+  if (!ge) return;
+
+  screen_area_destroy(ge->map);
+  screen_area_destroy(ge->descript);
+  screen_area_destroy(ge->banner);
+  screen_area_destroy(ge->help);
+  screen_area_destroy(ge->feedback);
+
+  screen_destroy();
+  free(ge);
+}
+
+void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command) {
+  Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, player_location = NO_ID;
+  Id id_ne = NO_ID, id_se = NO_ID, id_sw = NO_ID, id_nw = NO_ID; 
+
+  Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL, *prev_space = NULL;
+  Space *space_ne = NULL, *space_se = NULL, *space_sw = NULL, *space_nw = NULL;
+  
+  Object* object=NULL;
+  Character* character = NULL;
+  CommandCode last_cmd = UNKNOWN;
+  Status last_cmd_status;
+
+  char action_return[STATUS_SIZE];
+  char str[WORD_SIZE], friendly[WORD_SIZE/2], str1[WORD_SIZE/2];
+  extern char *cmd_to_str[N_CMD][N_CMDT];
+  int i, id_count, n_objs, n_chars;
+
+  Player *player=game_get_player(game);                               /*Jugador del game*/
+  Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
+  int n_ids=set_get_nids(inventory_get_objects(inventory)); 
+  Id *set_ids=set_id_object(inventory_get_objects(inventory));        /*Array de Ids, con los ids de los objetos de la mochila del jugador*/     
+
+  /* Paint the in the map area */
+  screen_area_clear(ge->map);
+  if( (id_act = player_get_location(player)) != NO_ID) {
+    space_act = game_get_space(game, id_act);
+    id_north = game_get_connection(game, id_act, N);
+    space_north = game_get_space(game, id_north);
+    id_ne = game_get_connection(game, id_act, NE);
+    space_ne = game_get_space(game, id_ne);
+    id_east = game_get_connection(game, id_act, E);
+    space_east = game_get_space(game, id_east);
+    id_se = game_get_connection(game, id_act, SE);
+    space_se = game_get_space(game, id_se);
+    id_south = game_get_connection(game, id_act, S);
+    space_south = game_get_space(game, id_south);
+    id_sw = game_get_connection(game, id_act, SW);
+    space_sw = game_get_space(game, id_sw);
+    id_west = game_get_connection(game, id_act, W);
+    space_west = game_get_space(game, id_west);
+    id_nw = game_get_connection(game, id_act, NW);
+    space_nw = game_get_space(game, id_nw);
+
+    /*Caso especial: Si el espacio no tiene gdesc, relleno los 5 campos con 9 espacios*/
+    for(i=0; i<GDESC_MAX;i++){
+      if( space_act && strlen(space_get_gdesc(space_act, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_act, "         ", i);
+      if( space_north && strlen(space_get_gdesc(space_north, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_north, "         ", i);
+      if( space_south && strlen(space_get_gdesc(space_south, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_south, "         ", i);
+      if( space_east && strlen(space_get_gdesc(space_east, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_east, "         ", i);
+      if( space_west && strlen(space_get_gdesc(space_west, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_west, "         ", i);
+      if( space_ne && strlen(space_get_gdesc(space_ne, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_ne, "         ", i);
+      if( space_nw && strlen(space_get_gdesc(space_nw, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_nw, "         ", i);
+      if( space_se && strlen(space_get_gdesc(space_se, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_se, "         ", i);
+      if( space_sw && strlen(space_get_gdesc(space_sw, i)) < (GDESC_SIZE - 1) )
+        space_set_gdesc(space_sw, "         ", i);
+    }
+
+    print_top(ge, game, str, id_act, id_north, id_ne, id_nw, space_north, space_ne, space_nw);
+    print_mid(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
+    print_bot(ge, game, str, id_act, id_south, id_se, id_sw, space_south, space_se, space_sw);
+  }
+
+  /* Paint in the description area */
+  screen_area_clear(ge->descript);
+
+  screen_area_puts(ge->descript, " ");
+  sprintf(str, "          NW  N  NE");
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "            \\ ^ /");
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "          W < O > E");
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "            / v \\");
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "          SW  S  SE");
+  screen_area_puts(ge->descript, str);
+  screen_area_puts(ge->descript, " ");
+
+  if( (player_location = player_get_location(player)) != NO_ID) {
+    if( game_get_n_players(game) > 1 ){  
+      sprintf(str, "  Turn: %d", game_get_turn(game) + 1);
+      screen_area_puts(ge->descript, str);
+    }
+    sprintf(str, "  Player %s: ", player_get_name(game_get_player(game)));
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "   Location: %d", (int)player_location);
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "   Health: %d", player_get_health(player));
+    screen_area_puts(ge->descript, str);
+    
+    n_chars = set_get_nids(player_get_followers(player));
+    
+    if( n_chars > 0 ){
+      sprintf(str, "   Followers: ");
+      screen_area_puts(ge->descript, str);
+      for(int i=0; i<n_chars; i++){
+        if( !(character = game_get_character(game, set_id_object(player_get_followers(player))[i])) ) break;
+        sprintf(str, "    ");
+        strcat(str, character_get_name(character));
+        strcat(str, ": ");
+        sprintf(str1, "%d HP",character_get_health(character));
+        strcat(str, str1);
+        screen_area_puts(ge->descript, str);
+      }
+    }
+    
+    screen_area_puts(ge->descript, " ");
+  }
+
+  sprintf(str, "  Characters: ");
+  screen_area_puts(ge->descript, str);
+  id_count = 1;
+  for(i=0; i<game_get_n_characters(game); i++, id_count++){
+    if( (character = game_get_character(game, id_count)) ){
+      if( character_get_friendly(character) ){ strcpy(friendly, "Friend"); }
+      else{ strcpy(friendly, "Foe"); }
+      sprintf(str, "   %s: %d(%d HP) %s", character_get_gdesc(character), (int)character_get_location(character), character_get_health(character), friendly);
+      screen_area_puts(ge->descript, str);
+    }else
+      i--;
+  }
+
+  screen_area_puts(ge->descript, " ");
+
+  if(inventory_is_empty(player_get_objects(player))==TRUE) {
+    sprintf(str, "  Player has no object");
+    screen_area_puts(ge->descript, str);
+  } else {
+    sprintf(str, "  Player has these objects: %d", set_get_nids(inventory_get_objects(player_get_objects(player))));
+    screen_area_puts(ge->descript, str);
+    for (i=0;i<n_ids;i++) {
+      object=game_get_object(game, set_ids[i]);       /*Cada uno de los objetos de la mochila del jugador*/
+      sprintf(str, "  %s (Id: %ld)", object_get_name(object), object_get_id(object));
+      screen_area_puts(ge->descript, str);
+    }
+  }
+  screen_area_puts(ge->descript, " ");
+
+  /* Paint in the banner area */
+  screen_area_puts(ge->banner, "    The anthill game ");
+
+  /* Paint in the help area */
+  screen_area_clear(ge->help);
+  sprintf(str, " The commands you can use are:");
+  screen_area_puts(ge->help, str);
+  sprintf(str, " Move(m), Take(t), Drop(d), Attack(a), Chat(c), Look (l), Inspect(i), Use(u), Open(o), ");
+  screen_area_puts(ge->help, str);
+  sprintf(str, " Recruit(r), Abandon(ab), Quit(q)");
+  screen_area_puts(ge->help, str);
+
+  /* Paint in the feedback area */
+  screen_area_clear(ge->feedback);
+  last_cmd = command_get_code(command);
+  if(last_cmd >= NO_CMD && last_cmd <= ABANDON ){
+    last_cmd_status = command_get_output(command);
+    if( last_cmd_status )
+    strcpy(action_return,"Ok");
+    else
+    strcpy(action_return,"Error");
+    
+    sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
+    screen_area_puts(ge->feedback, str);
+  }
+  
+  /*Esto es un semi arreglo, hacer gamerule mejor*/
+  if( (last_cmd == OPEN || last_cmd == USE) && last_cmd_status ) space_set_message1( game_get_space(game, game_get_prev_player_location(game)) , space_get_message2(game_get_space(game, game_get_prev_player_location(game))));
+
+  if( strlen(space_get_message1(space_act)) > 2 ){
+    sprintf(str, " %s", space_get_message1(space_act));
+    screen_area_puts(ge->feedback, str);
+  }
+
+  if( last_cmd == LOOK && last_cmd_status ){
+    prev_space = game_get_space(game, game_get_prev_player_location(game));
+    n_objs = set_get_nids(space_get_set_objects(prev_space));
+    for(i=0; i<n_objs; i++){
+      if( !(object = game_get_object(game, set_id_object(space_get_set_objects(prev_space))[i])) ) break;
+      sprintf(str, "  ");
+      strcat(str, object_get_name(object));
+      strcat(str, ": ");
+      strcat(str, object_get_description(object));
+      screen_area_puts(ge->descript, str);
+    }
+    n_chars = set_get_nids(space_get_set_characters(prev_space));
+    for(i=0; i<n_chars; i++){
+      if( !(character = game_get_character(game, set_id_object(space_get_set_characters(prev_space))[i])) ) break;
+      sprintf(str, "  ");
+      strcat(str, character_get_name(character));
+      strcat(str, ": ");
+      sprintf(str1, "%d HP",character_get_health(character));
+      strcat(str, str1);
+      screen_area_puts(ge->descript, str);
+    }
+    sprintf(str, "  Open links:");
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "  ");
+    for(i=NONE; i<=DOWN; i++){
+      if( game_connection_is_open(game, game_get_prev_player_location(game), i)) strcat(str, get_dir_by_enum(i));
+    }
+    screen_area_puts(ge->descript, str);
+
+  }
+
+  if( last_cmd == CHAT && last_cmd_status ){
+    sprintf(str, "  %s",game_get_message(game));
+    screen_area_puts(ge->descript, str);
+  }
+
+  if( last_cmd == INSPECT && last_cmd_status ){
+    object = game_get_object_by_name(game, command_get_arguments(command));
+    if( object_get_movable(object) ) sprintf(str1, "  Movable");
+    else sprintf(str1, "  Non movable");
+    sprintf(str, "  %s: %s, %d HP", object_get_name(object), object_get_description(object), object_get_health(object));
+    screen_area_puts(ge->descript, str);
+    screen_area_puts(ge->descript, str1);
+    if( object_get_dependency(object) != NO_ID ){
+      sprintf(str, "  Needs %s", object_get_name(game_get_object(game, object_get_dependency(object))));
+      screen_area_puts(ge->descript, str);
+    }
+  }
+
+  /* Dump to the terminal */
+  screen_paint(game_get_turn(game));
+  printf("Prompt => ");
+}
+
+void graphic_engine_paint_game_over(Graphic_engine* ge, Game *game){
+  int i;
+  char str[WORD_SIZE];
+
+  /* Paint the in the map area */
+  screen_area_clear(ge->map);
+
+  for(i=0; i<HEIGHT_MAP; i++){
+    if( i == HEIGHT_MAP/2 ){
+      sprintf(str, "                        GAME OVER!                ");
+      screen_area_puts(ge->map, str);
+      sprintf(str, "                   Player \"%s\" has died :(        ", player_get_name(game_get_player(game)));
+      screen_area_puts(ge->map, str);
+    }else{
+      sprintf(str, "                                           ");
+      screen_area_puts(ge->map, str);
+    }
+  }
+  
+  screen_paint(game_get_turn(game));
+}
+
+
+/* ================================== IMPLEMENTACION DE FUNCIONES DE IMPRESION ============================== */
+
 /*Conversion de enum a palabra*/
 const char* get_dir_by_enum(int i){
   switch (i){
@@ -74,8 +396,6 @@ const char* get_dir_by_enum(int i){
   }
   return NULL;
 }
-
-/*TO DO: Imprimir jugadores de otras casillas*/
 
 void print_blank(char* str, Graphic_engine* ge){
   int i;
@@ -1015,7 +1335,6 @@ void print_bot(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south
     }
   }
 }
-
 
 /*TOP PRINTING*/
 void print_north(Graphic_engine* ge, Game* game, char* str, Id id_north, Space* space_north){
@@ -2217,287 +2536,4 @@ void print_mid(Graphic_engine* ge, Game *game, char* str, Id id_west, Id id_east
       }
     }
   }
-}
-
-/*GE*/
-Graphic_engine *graphic_engine_create() {
-  static Graphic_engine *ge = NULL;
-
-  if (ge) {
-    return ge;
-  }
-
-  screen_init(HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + HEIGHT_FDB + 4, WIDTH_MAP + WIDTH_DES + 3);
-  ge = (Graphic_engine *)malloc(sizeof(Graphic_engine));
-  if (ge == NULL) {
-    return NULL;
-  }
-
-  ge->map = screen_area_init(1, 1, WIDTH_MAP, HEIGHT_MAP);
-  ge->descript = screen_area_init(WIDTH_MAP + 2, 1, WIDTH_DES, HEIGHT_MAP);
-  ge->banner = screen_area_init((int)((WIDTH_MAP + WIDTH_DES + 1 - WIDTH_BAN) / 2), HEIGHT_MAP + 2, WIDTH_BAN, HEIGHT_BAN);
-  ge->help = screen_area_init(1, HEIGHT_MAP + HEIGHT_BAN + 2, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_HLP);
-  ge->feedback = screen_area_init(1, HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + 3, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_FDB);
-
-  return ge;
-}
-
-void graphic_engine_destroy(Graphic_engine *ge) {
-  if (!ge) return;
-
-  screen_area_destroy(ge->map);
-  screen_area_destroy(ge->descript);
-  screen_area_destroy(ge->banner);
-  screen_area_destroy(ge->help);
-  screen_area_destroy(ge->feedback);
-
-  screen_destroy();
-  free(ge);
-}
-
-void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command) {
-  Id id_act = NO_ID, id_north = NO_ID, id_south = NO_ID, id_east = NO_ID, id_west = NO_ID, player_location = NO_ID;
-  Id id_ne = NO_ID, id_se = NO_ID, id_sw = NO_ID, id_nw = NO_ID; 
-
-  Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL, *prev_space = NULL;
-  Space *space_ne = NULL, *space_se = NULL, *space_sw = NULL, *space_nw = NULL;
-  
-  Object* object=NULL;
-  Character* character = NULL;
-  CommandCode last_cmd = UNKNOWN;
-  Status last_cmd_status;
-
-  char action_return[STATUS_SIZE];
-  char str[WORD_SIZE], friendly[WORD_SIZE/2], str1[WORD_SIZE/2];
-  extern char *cmd_to_str[N_CMD][N_CMDT];
-  int i, id_count, n_objs, n_chars;
-
-  Player *player=game_get_player(game);                               /*Jugador del game*/
-  Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
-  int n_ids=set_get_nids(inventory_get_objects(inventory)); 
-  Id *set_ids=set_id_object(inventory_get_objects(inventory));        /*Array de Ids, con los ids de los objetos de la mochila del jugador*/     
-
-  /* Paint the in the map area */
-  screen_area_clear(ge->map);
-  if( (id_act = player_get_location(player)) != NO_ID) {
-    space_act = game_get_space(game, id_act);
-    id_north = game_get_connection(game, id_act, N);
-    space_north = game_get_space(game, id_north);
-    id_ne = game_get_connection(game, id_act, NE);
-    space_ne = game_get_space(game, id_ne);
-    id_east = game_get_connection(game, id_act, E);
-    space_east = game_get_space(game, id_east);
-    id_se = game_get_connection(game, id_act, SE);
-    space_se = game_get_space(game, id_se);
-    id_south = game_get_connection(game, id_act, S);
-    space_south = game_get_space(game, id_south);
-    id_sw = game_get_connection(game, id_act, SW);
-    space_sw = game_get_space(game, id_sw);
-    id_west = game_get_connection(game, id_act, W);
-    space_west = game_get_space(game, id_west);
-    id_nw = game_get_connection(game, id_act, NW);
-    space_nw = game_get_space(game, id_nw);
-
-    /*Caso especial: Si el espacio no tiene gdesc, relleno los 5 campos con 9 espacios*/
-    for(i=0; i<GDESC_MAX;i++){
-      if( space_act && strlen(space_get_gdesc(space_act, i)) < (GDESC_SIZE - 1) )
-        space_set_gdesc(space_act, "         ", i);
-      if( space_north && strlen(space_get_gdesc(space_north, i)) < (GDESC_SIZE - 1) )
-        space_set_gdesc(space_north, "         ", i);
-      if( space_south && strlen(space_get_gdesc(space_south, i)) < (GDESC_SIZE - 1) )
-        space_set_gdesc(space_south, "         ", i);
-      if( space_east && strlen(space_get_gdesc(space_east, i)) < (GDESC_SIZE - 1) )
-        space_set_gdesc(space_east, "         ", i);
-      if( space_west && strlen(space_get_gdesc(space_west, i)) < (GDESC_SIZE - 1) )
-        space_set_gdesc(space_west, "         ", i);
-      if( space_ne && strlen(space_get_gdesc(space_ne, i)) < (GDESC_SIZE - 1) )
-        space_set_gdesc(space_ne, "         ", i);
-      if( space_nw && strlen(space_get_gdesc(space_nw, i)) < (GDESC_SIZE - 1) )
-        space_set_gdesc(space_nw, "         ", i);
-      if( space_se && strlen(space_get_gdesc(space_se, i)) < (GDESC_SIZE - 1) )
-        space_set_gdesc(space_se, "         ", i);
-      if( space_sw && strlen(space_get_gdesc(space_sw, i)) < (GDESC_SIZE - 1) )
-        space_set_gdesc(space_sw, "         ", i);
-    }
-
-    print_top(ge, game, str, id_act, id_north, id_ne, id_nw, space_north, space_ne, space_nw);
-    print_mid(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
-    print_bot(ge, game, str, id_act, id_south, id_se, id_sw, space_south, space_se, space_sw);
-  }
-
-  /* Paint in the description area */
-  screen_area_clear(ge->descript);
-
-  screen_area_puts(ge->descript, " ");
-  sprintf(str, "          NW  N  NE");
-  screen_area_puts(ge->descript, str);
-  sprintf(str, "            \\ ^ /");
-  screen_area_puts(ge->descript, str);
-  sprintf(str, "          W < O > E");
-  screen_area_puts(ge->descript, str);
-  sprintf(str, "            / v \\");
-  screen_area_puts(ge->descript, str);
-  sprintf(str, "          SW  S  SE");
-  screen_area_puts(ge->descript, str);
-  screen_area_puts(ge->descript, " ");
-
-  if( (player_location = player_get_location(player)) != NO_ID) {
-    if( game_get_n_players(game) > 1 ){  
-      sprintf(str, "  Turn: %d", game_get_turn(game) + 1);
-      screen_area_puts(ge->descript, str);
-    }
-    sprintf(str, "  Player %s: ", player_get_name(game_get_player(game)));
-    screen_area_puts(ge->descript, str);
-    sprintf(str, "   Location: %d", (int)player_location);
-    screen_area_puts(ge->descript, str);
-    sprintf(str, "   Health: %d", player_get_health(player));
-    screen_area_puts(ge->descript, str);
-    
-    n_chars = set_get_nids(player_get_followers(player));
-    
-    if( n_chars > 0 ){
-      sprintf(str, "   Followers: ");
-      screen_area_puts(ge->descript, str);
-      for(int i=0; i<n_chars; i++){
-        if( !(character = game_get_character(game, set_id_object(player_get_followers(player))[i])) ) break;
-        sprintf(str, "    ");
-        strcat(str, character_get_name(character));
-        strcat(str, ": ");
-        sprintf(str1, "%d HP",character_get_health(character));
-        strcat(str, str1);
-        screen_area_puts(ge->descript, str);
-      }
-    }
-    
-    screen_area_puts(ge->descript, " ");
-  }
-
-  sprintf(str, "  Characters: ");
-  screen_area_puts(ge->descript, str);
-  id_count = 1;
-  for(i=0; i<game_get_n_characters(game); i++, id_count++){
-    if( (character = game_get_character(game, id_count)) ){
-      if( character_get_friendly(character) ){ strcpy(friendly, "Friend"); }
-      else{ strcpy(friendly, "Foe"); }
-      sprintf(str, "   %s: %d(%d HP) %s", character_get_gdesc(character), (int)character_get_location(character), character_get_health(character), friendly);
-      screen_area_puts(ge->descript, str);
-    }else
-      i--;
-  }
-
-  screen_area_puts(ge->descript, " ");
-
-  if(inventory_is_empty(player_get_objects(player))==TRUE) {
-    sprintf(str, "  Player has no object");
-    screen_area_puts(ge->descript, str);
-  } else {
-    sprintf(str, "  Player has these objects: %d", set_get_nids(inventory_get_objects(player_get_objects(player))));
-    screen_area_puts(ge->descript, str);
-    for (i=0;i<n_ids;i++) {
-      object=game_get_object(game, set_ids[i]);       /*Cada uno de los objetos de la mochila del jugador*/
-      sprintf(str, "  %s (Id: %ld)", object_get_name(object), object_get_id(object));
-      screen_area_puts(ge->descript, str);
-    }
-  }
-  screen_area_puts(ge->descript, " ");
-
-  /* Paint in the banner area */
-  screen_area_puts(ge->banner, "    The anthill game ");
-
-  /* Paint in the help area */
-  screen_area_clear(ge->help);
-  sprintf(str, " The commands you can use are:");
-  screen_area_puts(ge->help, str);
-  sprintf(str, " Move(m), Take(t), Drop(d), Attack(a), Chat(c), Look (l), Inspect(i), Use(u), Open(o), ");
-  screen_area_puts(ge->help, str);
-  sprintf(str, " Recruit(r), Abandon(ab), Quit(q)");
-  screen_area_puts(ge->help, str);
-
-  /* Paint in the feedback area */
-  last_cmd = command_get_code(command);
-  if(last_cmd >= NO_CMD && last_cmd <= ABANDON ){
-    last_cmd_status = command_get_output(command);
-    if( last_cmd_status )
-      strcpy(action_return,"Ok");
-    else
-      strcpy(action_return,"Error");
-
-    sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
-    screen_area_puts(ge->feedback, str);
-  }
-
-  if( last_cmd == LOOK && last_cmd_status ){
-    prev_space = game_get_space(game, game_get_prev_player_location(game));
-    n_objs = set_get_nids(space_get_set_objects(prev_space));
-    for(i=0; i<n_objs; i++){
-      if( !(object = game_get_object(game, set_id_object(space_get_set_objects(prev_space))[i])) ) break;
-      sprintf(str, "  ");
-      strcat(str, object_get_name(object));
-      strcat(str, ": ");
-      strcat(str, object_get_description(object));
-      screen_area_puts(ge->descript, str);
-    }
-    n_chars = set_get_nids(space_get_set_characters(prev_space));
-    for(i=0; i<n_chars; i++){
-      if( !(character = game_get_character(game, set_id_object(space_get_set_characters(prev_space))[i])) ) break;
-      sprintf(str, "  ");
-      strcat(str, character_get_name(character));
-      strcat(str, ": ");
-      sprintf(str1, "%d HP",character_get_health(character));
-      strcat(str, str1);
-      screen_area_puts(ge->descript, str);
-    }
-    sprintf(str, "  Open links:");
-    screen_area_puts(ge->descript, str);
-    sprintf(str, "  ");
-    for(i=NONE; i<=DOWN; i++){
-      if( game_connection_is_open(game, game_get_prev_player_location(game), i)) strcat(str, get_dir_by_enum(i));
-    }
-    screen_area_puts(ge->descript, str);
-
-  }
-
-  if( last_cmd == CHAT && last_cmd_status ){
-    sprintf(str, "  %s",game_get_message(game));
-    screen_area_puts(ge->descript, str);
-  }
-
-  if( last_cmd == INSPECT && last_cmd_status ){
-    object = game_get_object_by_name(game, command_get_arguments(command));
-    if( object_get_movable(object) ) sprintf(str1, "  Movable");
-    else sprintf(str1, "  Non movable");
-    sprintf(str, "  %s: %s, %d HP", object_get_name(object), object_get_description(object), object_get_health(object));
-    screen_area_puts(ge->descript, str);
-    screen_area_puts(ge->descript, str1);
-    if( object_get_dependency(object) != NO_ID ){
-      sprintf(str, "  Needs %s", object_get_name(game_get_object(game, object_get_dependency(object))));
-      screen_area_puts(ge->descript, str);
-    }
-  }
-
-  /* Dump to the terminal */
-  screen_paint(game_get_turn(game));
-  printf("Prompt => ");
-}
-
-void graphic_engine_paint_game_over(Graphic_engine* ge, Game *game){
-  int i;
-  char str[WORD_SIZE];
-
-  /* Paint the in the map area */
-  screen_area_clear(ge->map);
-
-  for(i=0; i<HEIGHT_MAP; i++){
-    if( i == HEIGHT_MAP/2 ){
-      sprintf(str, "                        GAME OVER!                ");
-      screen_area_puts(ge->map, str);
-      sprintf(str, "                   Player \"%s\" has died :(        ", player_get_name(game_get_player(game)));
-      screen_area_puts(ge->map, str);
-    }else{
-      sprintf(str, "                                           ");
-      screen_area_puts(ge->map, str);
-    }
-  }
-  
-  screen_paint(game_get_turn(game));
 }

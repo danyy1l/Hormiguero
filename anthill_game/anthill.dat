@@ -1,17 +1,26 @@
-#s:211|Entrada|\       /| \     / |  \   /  |  !   !  |  !   !  |
-#s:212|Pasillo1|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |
-#s:213|Pasillo2|   /     |   \___  |    mo'\_|\ @  _   | \  / \__|
-#s:214|Pasillo3| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |
-#s:215|Pasillo4|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |
-#s:216|Agujero|  !   !  | /     \ | \ c>  / |  \___/  |         |
-#s:223|Pasillo5|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|
+#s:211|Entrada1| _  _  _ |[ ][_][ ]|!   _  o!|!  ! ! I!|!__!_!__!|Ves un castillo a lo lejos al sur|
+#s:212|Pasillo1|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |Hay algo emocionante en el aire|
+#s:213|Pasillo2|   /     |   \___  |    mo'\_|\ @  _   | \  / \__|El camino se separa, a donde iremos?|
+#s:214|Pasillo3| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |Se cierra la puerta tras de ti!|La puerta se abrio, menos mal|
+#s:215|Pasillo4|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |Poca cosa aqui|
+#s:216|Agujero1|  !   !  | /     \ | \ c>  / |  \___/  |         |Hay un agujero, no se ve el fondo|
+#s:223|Pasillo5|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|El castillo no esta muy lejos|
 #s:233|Pasillo6|         |\/   \__ |    o o \|mo^_  0o |__/ \___/|
 #s:243|Pasillo7|  _______| /       |/  o8o0* |____     |    \____|
 #s:253|Despensa|    V    |  \(")/  |  -(_)-  |o/(_-_)\o|o o\_/o o|
 #s:323|Entrada2|    -    |  Nada   |   que   |   ver   |   aqui  |
-#s:313|Entrada3|
-#s:322|Entrada4|
-#s:422|Entrada5|
+#s:313|Entrada3||||||
+#s:322|Entrada4||||||
+#s:422|Entrada5||||||
+
+#p:1|Hormiga|m0^ |211|10|3|
+#p:2|Gusano|o0o8|422|10|4|
+
+#c:1|Antlion| ^0m  |213|5|1|Hello!|-1|
+#c:2|Worm|*0o8o |211|6|1|Welcome!|-1|
+#c:3|Spider|/\00/\|214|10|0|!!!!!!|-1|
+#c:4|Hugo| /-.-\|253|20|0|No entraras|-1|
+#c:5|Mage|*_/''\|323|12|1|Anda con cuidado|-1|
 
 #l:1|Entry_P1|211|212|5|1|
 #l:2|P1_Entry|212|211|1|1|
@@ -19,7 +28,7 @@
 #l:4|P2_P1|213|212|1|1|
 #l:5|P2_P3|213|214|5|1|
 #l:6|P2_P5|213|223|3|1|
-#l:7|Door|214|213|1|0| 
+#l:7|Door|214|213|1|0|
 #l:8|Wall|214|215|5|0|
 #l:9|P4_P3|215|214|1|1| 
 #l:10|P4_A|215|216|5|1|
@@ -43,15 +52,12 @@
 #l:29|P1_P5|212|223|4|1|
 #l:30|P5_P1|223|212|8|1|
 
-#p:1|Hormiga|m0^ |422|10|3|
-#p:2|Gusano|o0o8|223|10|4|
-
 #o:1|Grain|212|Es un grano de maiz|0|1|-1|-1|
 #o:2|Crumb|212|Es una miga de pan|0|1|-1|-1|
-#o:3|Cookie|212|Es una galleta|0|1|-1|-1|
+#o:3|Potion|212|Es roja y brilla mucho|5|1|-1|-1|
 #o:4|Seed|216|Es una semilla|0|1|-1|-1|
 #o:5|Kit|243|+5 de vida|5|1|7|-1|
-#o:6|Poison|215|-5 de vida|-5|1|-1|-1|
+#o:6|Potion|215|Verde y burbujeante|-5|1|-1|-1|
 #o:7|Torch|253|Antorcha|0|1|8|-1|
 #o:8|Fire|323|Fuego para antorcha|0|1|-1|-1|
 #o:9|Nuke|233|Termina la partida|-100|1|-1|-1|
@@ -66,9 +72,3 @@
 #o:18|TNT|243|Abre una pared|0|1|8|8|
 #o:19|Omelette|223|+7 de vida|7|1|-1|-1|
 #o:20|Potato|211|Cura toda la vida|10|1|-1|-1|
-
-#c:1|Antlion| ^0m  |253|5|1|Hello!|-1|
-#c:2|Worm|*0o8o |211|6|1|Welcome!|-1|
-#c:3|Spider|/\00/\|214|10|0|!!!!!!|-1|
-#c:4|Hugo| /-.-\|223|10|0|Moriras.|-1|
-#c:5|Mage|*_/..\|323|12|1|Hello friend|-1|

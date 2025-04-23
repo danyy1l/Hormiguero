@@ -3,8 +3,8 @@
  *
  * @file space.h
  * @author Anthony Eduardo Alvarado Carbajal
- * @version 17
- * @date 26-03-2025
+ * @version 20
+ * @date 23-04-2025
  * @copyright GNU Public License 
  */
 
@@ -15,6 +15,9 @@
 #include "types.h"
 #include "set.h"
  
+/**
+ * @brief Space struct declaration
+ */
 typedef struct _Space Space;
   
 /**
@@ -191,7 +194,41 @@ Status space_set_discovered(Space *space,Bool discovered);
  * @param space a pointer to space
  */
 void space_player_arrive(Space *space);
-  
+
+/**
+ * @brief It gets the spaces primary message
+ * @author Danyyil Shykerynets
+ * @param space pointer to space
+ * @return string with spaces message
+ */
+char* space_get_message1(Space* space);
+
+/**
+ * @brief It gets the spaces secondary message
+ * @author Danyyil Shykerynets
+ * @param space pointer to space
+ * @return string with spaces message
+ */
+char* space_get_message2(Space* space);
+
+/**
+ * @brief It sets the spaces primary message 
+ * @author Danyyil Shykerynets
+ * @param space a pointer to space
+ * @param message1 the spaces message
+ * @return OK if all right, ERROR otherwise
+ */
+Status space_set_message1(Space* space, char* message1);
+
+/**
+ * @brief It sets the spaces secondary message 
+ * @author Danyyil Shykerynets
+ * @param space a pointer to space
+ * @param message2 the spaces message
+ * @return OK if all right, ERROR otherwise
+ */
+Status space_set_message2(Space* space, char* message2);
+
 /**
  * @brief It prints the space information
  * @author Danyyil Shykerynets

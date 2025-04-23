@@ -21,13 +21,15 @@
  * This struct stores all the information of a space.
 */
 struct _Space { 
-  Id id;                              /*!< Id number of the space, it must be unique */
-  char name[WORD_SIZE + 1];           /*!< Name of the space */
-  Set* characters;                    /*!< Array of characters*/
-  Id character_id;                    /*!< Id of the character in the space, NO_ID if no characters*/
-  Set *objects;                       /*!< Array of objects*/
-  char gdesc[GDESC_MAX][GDESC_SIZE];  /*!< 5x9 Array containing space's graphic desc*/
-  Bool discovered;                    /*!< Si el espacio ha sido descubierto o no*/
+  Id id;                              /*!<-Id number of the space, it must be unique */
+  char name[WORD_SIZE];               /*!<-Name of the space */
+  Set* characters;                    /*!<-Array of characters*/
+  Id character_id;                    /*!<-Id of the character in the space, NO_ID if no characters*/
+  Set *objects;                       /*!<-Array of objects*/
+  char gdesc[GDESC_MAX][GDESC_SIZE];  /*!<-5x9 Array containing space's graphic desc*/
+  Bool discovered;                    /*!<-Si el espacio ha sido descubierto o no*/
+  char message1[WORD_SIZE];           /*!<-Mensaje principal del espacio*/
+  char message2[WORD_SIZE];           /*!<-Mensaje secundario del espacio*/
 };
  
 /** space_create allocates memory for a new space
@@ -48,6 +50,8 @@ Space* space_create(Id id) {
   /* Initialization of an empty space*/
   newSpace->id = id;
   newSpace->name[0] = '\0';
+  newSpace->message1[0] = '\0';
+  newSpace->message2[0] = '\0';
   newSpace->character_id=NO_ID;
   newSpace->objects = set_create();
   if(newSpace->objects==NULL){
@@ -228,12 +232,35 @@ Bool space_get_discovered(Space *space) {
 }
 
 void space_player_arrive(Space* space) {
-
   if (!space_get_discovered(space)) {
     space_set_discovered(space, TRUE);
   }
 }
- 
+
+char* space_get_message1(Space* space){
+  return space == NULL ? NULL : space->message1;
+}
+
+char* space_get_message2(Space* space){
+  return space == NULL ? NULL : space->message2;
+}
+
+Status space_set_message1(Space* space, char* message1){
+  if(!space) return ERROR;
+
+  strcpy(space->message1, message1);
+
+  return OK;
+}
+
+Status space_set_message2(Space* space, char* message2){
+  if(!space) return ERROR;
+
+  strcpy(space->message2, message2);
+
+  return OK;
+}
+
 Status space_print(Space* space) {
   Id idaux = NO_ID;
  

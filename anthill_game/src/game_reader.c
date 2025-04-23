@@ -51,6 +51,8 @@ Status game_load_spaces(Game *game, char *filename) {
         toks = strtok(NULL, "|");
         space_set_gdesc(space, toks, i);
       }
+      if( (toks = strtok(NULL, "|"))) space_set_message1(space, toks);
+      if( (toks = strtok(NULL, "|"))) space_set_message2(space, toks);
       #ifdef DEBUG
       printf("Leido: %ld|%s|\n", id, name);
       #endif
