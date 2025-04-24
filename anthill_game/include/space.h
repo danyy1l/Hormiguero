@@ -2,7 +2,7 @@
  * @brief It defines the space module interface
  *
  * @file space.h
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Anthony Eduardo Alvarado Carbajal 
  * @version 17
  * @date 26-03-2025
  * @copyright GNU Public License 

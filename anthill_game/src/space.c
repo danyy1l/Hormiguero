@@ -1,10 +1,10 @@
 /**
  * @brief It implements the space module
  * @file space.c
- * @author Anthony Eduardo Alvarado
+ * @author Anthony Eduardo Alvarado Carbajal 
  * @version 17
  * @date 26-03-2025
- * @copyright GNU Public License
+ * @copyright GNU Public License 
 */
 
 #include "../include/space.h"

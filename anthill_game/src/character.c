@@ -5,7 +5,7 @@
  * @author Danyyil Shykerynets
  * @version 2
  * @date 27-02-2025
- * @copyright GNU Public License
+ * @copyright GNU Public License 
  */
 
 #include "../include/character.h"

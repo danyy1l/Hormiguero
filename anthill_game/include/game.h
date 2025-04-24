@@ -144,6 +144,46 @@ Status game_add_object(Game* game, Object* object);
 Object* game_get_object(Game *game, Id id);
 
 /**
+ * @brief Obtiene los objetos del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Puntero al array de objetos del juego
+ */
+Object **game_get_objects(Game *game);
+
+/**
+ * @brief Obtiene los characters del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Puntero al array de characters del juego
+ */
+Character **game_get_characters(Game *game);
+
+/**
+ * @brief Obtiene los espacios del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Puntero al array de espacios del juego
+ */
+Space **game_get_spaces(Game *game);
+
+/**
+ * @brief Obtiene los links del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Puntero al array de links del juego
+ */
+Link **game_get_links(Game *game);
+
+/**
+ * @brief Devuelve el numero de espacios del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Numero de espacios del juego
+ */
+int game_get_n_spaces(Game *game);
+
+/**
  * @brief Obtiene el puntero de un objeto con cierto nombre de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game

@@ -1,0 +1,142 @@
+GAME_START
+
+
+PLAYERS_START
+NUM_PLAYERS=2
+
+player_id=1;name=Hormiga;location=114;gdesc=m0^ ;health=10;num_objects=0
+Objects: 
+player_id=2;name=Gusano;location=114;gdesc=o0o8;health=10;num_objects=0
+Objects: 
+
+PLAYERS_END
+
+
+OBJECTS_START
+NUM_OBJECTS=20
+
+object_id=1;name=Grain;location=112;description=Es un grano de maiz;taken=0;health=0;movable=1;dependency=-1;open=-1
+object_id=2;name=Crumb;location=112;description=Es una miga de pan;taken=0;health=0;movable=1;dependency=-1;open=-1
+object_id=3;name=Cookie;location=112;description=Es una galleta;taken=0;health=0;movable=1;dependency=-1;open=-1
+object_id=4;name=Seed;location=116;description=Es una semilla;taken=0;health=0;movable=1;dependency=-1;open=-1
+object_id=5;name=Kit;location=143;description=+5 de vida;taken=0;health=5;movable=1;dependency=-1;open=-1
+object_id=6;name=Poison;location=115;description=-5 de vida;taken=0;health=-5;movable=1;dependency=-1;open=-1
+object_id=7;name=Torch;location=153;description=Antorcha;taken=0;health=0;movable=1;dependency=-1;open=-1
+object_id=8;name=Fire;location=112;description=Fuego para la antorcha;taken=0;health=0;movable=1;dependency=7;open=-1
+object_id=9;name=Nuke;location=133;description=Termina la partida;taken=0;health=-10;movable=1;dependency=-1;open=-1
+object_id=10;name=Serrano;location=111;description=+3 de vida;taken=0;health=3;movable=1;dependency=-1;open=-1
+object_id=11;name=Pidgeon;location=123;description=-3 de vida;taken=0;health=-3;movable=1;dependency=-1;open=-1
+object_id=12;name=Mine;location=116;description=Muerte segura;taken=0;health=-10;movable=0;dependency=-1;open=-1
+object_id=13;name=Key;location=114;description=Abre alguna puerta;taken=0;health=0;movable=1;dependency=-1;open=8
+object_id=14;name=Beer;location=143;description=Cura toda la vida;taken=0;health=10;movable=1;dependency=-1;open=-1
+object_id=15;name=Grenade;location=115;description=Mata de un bombazo;taken=0;health=-10;movable=1;dependency=-1;open=-1
+object_id=16;name=Bomb;location=113;description=Game over;taken=0;health=-10;movable=1;dependency=-1;open=-1
+object_id=17;name=Campfire;location=133;description=Cura toda la vida;taken=0;health=10;movable=0;dependency=-1;open=-1
+object_id=18;name=TNT;location=143;description=Abre una pared;taken=0;health=0;movable=1;dependency=-1;open=8
+object_id=19;name=Omelette;location=123;description=+7 de vida;taken=0;health=7;movable=1;dependency=-1;open=-1
+object_id=20;name=Potato;location=111;description=Cura toda la vida;taken=0;health=10;movable=1;dependency=-1;open=-1
+
+OBJECTS_END
+
+
+CHARACTER_START
+NUM_CHARACTERS=4
+
+character_id=100;name=Antlion;location=153;gdesc= ^0m  ;health=10;friendly=1;message=Hello!;following=-1
+character_id=200;name=Worm;location=111;gdesc=*0o8o ;health=10;friendly=1;message=Welcome!;following=-1
+character_id=300;name=Spider;location=114;gdesc=/\00/\;health=10;friendly=0;message=!!!!!!;following=-1
+character_id=400;name=Hugo;location=123;gdesc=_/-.-\;health=10;friendly=0;message=Moriras.;following=-1
+
+CHARACTERS_END
+
+
+SPACES_START
+NUM_SPACES=14
+
+space_id=111;name=Entrada;discovered=0;num_objects=2;num_characters=1
+Objects: id=10;id=20;
+Characters: id=200;
+space_id=112;name=Pasillo1;discovered=0;num_objects=4;num_characters=0
+Objects: id=1;id=2;id=3;id=8;
+Characters: 
+space_id=113;name=Pasillo2;discovered=0;num_objects=1;num_characters=0
+Objects: id=16;
+Characters: 
+space_id=114;name=Pasillo3;discovered=1;num_objects=1;num_characters=1
+Objects: id=13;
+Characters: id=300;
+space_id=115;name=Pasillo4;discovered=0;num_objects=2;num_characters=0
+Objects: id=6;id=15;
+Characters: 
+space_id=116;name=Agujero;discovered=0;num_objects=2;num_characters=0
+Objects: id=4;id=12;
+Characters: 
+space_id=123;name=Pasillo5;discovered=0;num_objects=2;num_characters=1
+Objects: id=11;id=19;
+Characters: id=400;
+space_id=133;name=Pasillo6;discovered=0;num_objects=2;num_characters=0
+Objects: id=9;id=17;
+Characters: 
+space_id=143;name=Pasillo7;discovered=0;num_objects=3;num_characters=0
+Objects: id=5;id=14;id=18;
+Characters: 
+space_id=153;name=Despensa;discovered=0;num_objects=1;num_characters=1
+Objects: id=7;
+Characters: id=100;
+space_id=223;name=Entrada2;discovered=0;num_objects=0;num_characters=0
+Objects: 
+Characters: 
+space_id=213;name=Entrada3;discovered=0;num_objects=0;num_characters=0
+Objects: 
+Characters: 
+space_id=222;name=Entrada4;discovered=0;num_objects=0;num_characters=0
+Objects: 
+Characters: 
+space_id=322;name=Entrada5;discovered=0;num_objects=0;num_characters=0
+Objects: 
+Characters: 
+
+SPACES_END
+
+
+LINKS_START
+NUM_LINKS=26
+
+link_id=1;name=Entry_P1;origin=111;destination=112;dir=3;open=1
+link_id=2;name=P1_Entry;origin=112;destination=111;dir=1;open=1
+link_id=3;name=P1_P2;origin=112;destination=113;dir=3;open=1
+link_id=4;name=P2_P1;origin=113;destination=112;dir=1;open=1
+link_id=5;name=P2_P3;origin=113;destination=114;dir=3;open=1
+link_id=6;name=P2_P5;origin=113;destination=123;dir=2;open=1
+link_id=7;name=P3_P2;origin=114;destination=113;dir=1;open=1
+link_id=8;name=Door;origin=114;destination=115;dir=3;open=0
+link_id=9;name=P4_P3;origin=115;destination=114;dir=1;open=1
+link_id=10;name=P4_A;origin=115;destination=116;dir=3;open=1
+link_id=11;name=P5_P2;origin=123;destination=113;dir=4;open=1
+link_id=12;name=P5_P6;origin=123;destination=133;dir=2;open=1
+link_id=13;name=P6_P5;origin=133;destination=123;dir=4;open=1
+link_id=14;name=P6_P7;origin=133;destination=143;dir=2;open=1
+link_id=15;name=P7_P6;origin=143;destination=133;dir=4;open=1
+link_id=16;name=P7_D;origin=143;destination=153;dir=2;open=1
+link_id=17;name=D_P7;origin=153;destination=143;dir=4;open=1
+link_id=18;name=D_A;origin=153;destination=116;dir=3;open=1
+link_id=19;name=A_P4;origin=116;destination=115;dir=1;open=1
+link_id=20;name=P5_E2;origin=123;destination=223;dir=5;open=1
+link_id=21;name=E2_P5;origin=223;destination=123;dir=6;open=1
+link_id=22;name=h;origin=223;destination=213;dir=4;open=1
+link_id=24;name=i;origin=213;destination=223;dir=2;open=1
+link_id=25;name=j;origin=223;destination=222;dir=1;open=1
+link_id=26;name=k;origin=222;destination=223;dir=3;open=1
+link_id=27;name=l;origin=222;destination=322;dir=5;open=1
+
+LINKS_END
+
+
+LAST_COMMAND
+code=11;output=0;arguments=prueba.dat;argumments1=;arguments2=
+
+
+TURN=1
+
+
+GAME_END
