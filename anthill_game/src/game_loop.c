@@ -16,7 +16,7 @@
 #include "../include/player.h"
 #include "../include/command.h"
 #include "../include/game_actions.h"
-#include "../include/game_reader.h"
+#include "../include/game_management.h"
 #include "../include/game.h"
 #include "../include/graphic_engine.h"
 

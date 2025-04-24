@@ -10,7 +10,7 @@
 
 #include "../include/game.h"
 #include "../include/game_actions.h"
-#include "../include/game_reader.h"
+#include "../include/game_management.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -339,7 +339,7 @@ Status game_actions_take(Game *game, Command *command){
   Id dependency=object_get_dependency(object);
   Object *object2=game_get_object(game, dependency);
 
-  if(!game || !command )
+  if( !game || !command )
     return ERROR;
 
   if( inventory_is_full(backpack)==FALSE && (object_get_location(object) == player_get_location(game_get_player(game))) && object_get_taken(object) == FALSE && object_get_movable(object)==TRUE && (dependency==NO_ID || player_find_object(player, object2)==TRUE)){

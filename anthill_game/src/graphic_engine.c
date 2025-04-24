@@ -15,7 +15,7 @@
 #include <string.h>
 
 #include "../include/command.h"
-#include "../include/game_reader.h"
+#include "../include/game_management.h"
 #include "../include/libscreen.h"
 #include "../include/object.h"
 #include "../include/player.h"
