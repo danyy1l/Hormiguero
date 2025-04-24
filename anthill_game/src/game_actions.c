@@ -594,6 +594,14 @@ Status game_actions_save(Game *game, Command* command) {
 }
 
 Status game_actions_load(Game *game, Command* command) {
+  char *filename=command_get_arguments(command);
+
+  if (!game || !command || filename == NULL || strlen(filename) == 0) {
+    return ERROR;
+  }
+
+  game_management_load(game, filename);
+
   return OK;
 }
 
