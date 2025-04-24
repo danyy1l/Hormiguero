@@ -15,26 +15,26 @@ PLAYERS_END
 OBJECTS_START
 NUM_OBJECTS=20
 
-object_id=1;name=Grain;location=112;description=Es un grano de maiz;taken=0;health=0;movable=1;dependency=-1;open=-1
-object_id=2;name=Crumb;location=112;description=Es una miga de pan;taken=0;health=0;movable=1;dependency=-1;open=-1
-object_id=3;name=Cookie;location=112;description=Es una galleta;taken=0;health=0;movable=1;dependency=-1;open=-1
-object_id=4;name=Seed;location=116;description=Es una semilla;taken=0;health=0;movable=1;dependency=-1;open=-1
-object_id=5;name=Kit;location=143;description=+5 de vida;taken=0;health=5;movable=1;dependency=-1;open=-1
-object_id=6;name=Poison;location=115;description=-5 de vida;taken=0;health=-5;movable=1;dependency=-1;open=-1
-object_id=7;name=Torch;location=153;description=Antorcha;taken=0;health=0;movable=1;dependency=-1;open=-1
-object_id=8;name=Fire;location=112;description=Fuego para la antorcha;taken=0;health=0;movable=1;dependency=7;open=-1
-object_id=9;name=Nuke;location=133;description=Termina la partida;taken=0;health=-10;movable=1;dependency=-1;open=-1
-object_id=10;name=Serrano;location=111;description=+3 de vida;taken=0;health=3;movable=1;dependency=-1;open=-1
-object_id=11;name=Pidgeon;location=123;description=-3 de vida;taken=0;health=-3;movable=1;dependency=-1;open=-1
-object_id=12;name=Mine;location=116;description=Muerte segura;taken=0;health=-10;movable=0;dependency=-1;open=-1
-object_id=13;name=Key;location=114;description=Abre alguna puerta;taken=0;health=0;movable=1;dependency=-1;open=8
-object_id=14;name=Beer;location=143;description=Cura toda la vida;taken=0;health=10;movable=1;dependency=-1;open=-1
-object_id=15;name=Grenade;location=115;description=Mata de un bombazo;taken=0;health=-10;movable=1;dependency=-1;open=-1
-object_id=16;name=Bomb;location=113;description=Game over;taken=0;health=-10;movable=1;dependency=-1;open=-1
-object_id=17;name=Campfire;location=133;description=Cura toda la vida;taken=0;health=10;movable=0;dependency=-1;open=-1
-object_id=18;name=TNT;location=143;description=Abre una pared;taken=0;health=0;movable=1;dependency=-1;open=8
-object_id=19;name=Omelette;location=123;description=+7 de vida;taken=0;health=7;movable=1;dependency=-1;open=-1
-object_id=20;name=Potato;location=111;description=Cura toda la vida;taken=0;health=10;movable=1;dependency=-1;open=-1
+#o:1|Grain|112|Es un grano de maiz|0|1|-1|-1|0
+#o:2|Crumb|112|Es una miga de pan|0|1|-1|-1|0
+#o:3|Cookie|112|Es una galleta|0|1|-1|-1|0
+#o:4|Seed|116|Es una semilla|0|1|-1|-1|0
+#o:5|Kit|143|+5 de vida|5|1|-1|-1|0
+#o:6|Poison|115|-5 de vida|-5|1|-1|-1|0
+#o:7|Torch|153|Antorcha|0|1|-1|-1|0
+#o:8|Fire|112|Fuego para la antorcha|0|1|7|-1|0
+#o:9|Nuke|133|Termina la partida|-10|1|-1|-1|0
+#o:10|Serrano|111|+3 de vida|3|1|-1|-1|0
+#o:11|Pidgeon|123|-3 de vida|-3|1|-1|-1|0
+#o:12|Mine|116|Muerte segura|-10|0|-1|-1|0
+#o:13|Key|114|Abre alguna puerta|0|1|-1|8|0
+#o:14|Beer|143|Cura toda la vida|10|1|-1|-1|0
+#o:15|Grenade|115|Mata de un bombazo|-10|1|-1|-1|0
+#o:16|Bomb|113|Game over|-10|1|-1|-1|0
+#o:17|Campfire|133|Cura toda la vida|10|0|-1|-1|0
+#o:18|TNT|143|Abre una pared|0|1|-1|8|0
+#o:19|Omelette|123|+7 de vida|7|1|-1|-1|0
+#o:20|Potato|111|Cura toda la vida|10|1|-1|-1|0
 
 OBJECTS_END
 
@@ -42,10 +42,10 @@ OBJECTS_END
 CHARACTER_START
 NUM_CHARACTERS=4
 
-character_id=100;name=Antlion;location=153;gdesc= ^0m  ;health=10;friendly=1;message=Hello!;following=-1
-character_id=200;name=Worm;location=111;gdesc=*0o8o ;health=10;friendly=1;message=Welcome!;following=-1
-character_id=300;name=Spider;location=114;gdesc=/\00/\;health=10;friendly=0;message=!!!!!!;following=-1
-character_id=400;name=Hugo;location=123;gdesc=_/-.-\;health=10;friendly=0;message=Moriras.;following=-1
+#c:100|Antlion| ^0m  |153|10|1|Hello!|-1
+#c:200|Worm|*0o8o |111|10|1|Welcome!|-1
+#c:300|Spider|/\00/\|114|10|0|!!!!!!|-1
+#c:400|Hugo|_/-.-\|123|10|0|Moriras.|-1
 
 CHARACTERS_END
 
@@ -102,32 +102,32 @@ SPACES_END
 LINKS_START
 NUM_LINKS=26
 
-link_id=1;name=Entry_P1;origin=111;destination=112;dir=3;open=1
-link_id=2;name=P1_Entry;origin=112;destination=111;dir=1;open=1
-link_id=3;name=P1_P2;origin=112;destination=113;dir=3;open=1
-link_id=4;name=P2_P1;origin=113;destination=112;dir=1;open=1
-link_id=5;name=P2_P3;origin=113;destination=114;dir=3;open=1
-link_id=6;name=P2_P5;origin=113;destination=123;dir=2;open=1
-link_id=7;name=P3_P2;origin=114;destination=113;dir=1;open=1
-link_id=8;name=Door;origin=114;destination=115;dir=3;open=0
-link_id=9;name=P4_P3;origin=115;destination=114;dir=1;open=1
-link_id=10;name=P4_A;origin=115;destination=116;dir=3;open=1
-link_id=11;name=P5_P2;origin=123;destination=113;dir=4;open=1
-link_id=12;name=P5_P6;origin=123;destination=133;dir=2;open=1
-link_id=13;name=P6_P5;origin=133;destination=123;dir=4;open=1
-link_id=14;name=P6_P7;origin=133;destination=143;dir=2;open=1
-link_id=15;name=P7_P6;origin=143;destination=133;dir=4;open=1
-link_id=16;name=P7_D;origin=143;destination=153;dir=2;open=1
-link_id=17;name=D_P7;origin=153;destination=143;dir=4;open=1
-link_id=18;name=D_A;origin=153;destination=116;dir=3;open=1
-link_id=19;name=A_P4;origin=116;destination=115;dir=1;open=1
-link_id=20;name=P5_E2;origin=123;destination=223;dir=5;open=1
-link_id=21;name=E2_P5;origin=223;destination=123;dir=6;open=1
-link_id=22;name=h;origin=223;destination=213;dir=4;open=1
-link_id=24;name=i;origin=213;destination=223;dir=2;open=1
-link_id=25;name=j;origin=223;destination=222;dir=1;open=1
-link_id=26;name=k;origin=222;destination=223;dir=3;open=1
-link_id=27;name=l;origin=222;destination=322;dir=5;open=1
+#l:1|Entry_P1|111|112|3|1
+#l:2|P1_Entry|112|111|1|1
+#l:3|P1_P2|112|113|3|1
+#l:4|P2_P1|113|112|1|1
+#l:5|P2_P3|113|114|3|1
+#l:6|P2_P5|113|123|2|1
+#l:7|P3_P2|114|113|1|1
+#l:8|Door|114|115|3|0
+#l:9|P4_P3|115|114|1|1
+#l:10|P4_A|115|116|3|1
+#l:11|P5_P2|123|113|4|1
+#l:12|P5_P6|123|133|2|1
+#l:13|P6_P5|133|123|4|1
+#l:14|P6_P7|133|143|2|1
+#l:15|P7_P6|143|133|4|1
+#l:16|P7_D|143|153|2|1
+#l:17|D_P7|153|143|4|1
+#l:18|D_A|153|116|3|1
+#l:19|A_P4|116|115|1|1
+#l:20|P5_E2|123|223|5|1
+#l:21|E2_P5|223|123|6|1
+#l:22|h|223|213|4|1
+#l:24|i|213|223|2|1
+#l:25|j|223|222|1|1
+#l:26|k|222|223|3|1
+#l:27|l|222|322|5|1
 
 LINKS_END
 
