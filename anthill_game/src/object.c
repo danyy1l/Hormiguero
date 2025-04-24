@@ -15,8 +15,7 @@
 #include <string.h>
  
 /**
- * @brief Objetos de la partida
- * 
+ * @brief Object 
  * Esta estructura define los elementos del objeto 
  */
 struct _Object{
@@ -50,7 +49,7 @@ Object* object_create(Id id){
 
   return newObject;
 }
-
+ 
 Status object_destroy(Object* object){
   if(object){  
     free(object);

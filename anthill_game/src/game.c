@@ -42,7 +42,7 @@ struct _Game{
    Game interface implementation
 */
 
-Game* game_create() {
+Game* game_create() { 
   int i;
   Game* game = NULL;
 
@@ -142,8 +142,12 @@ int game_get_n_players(Game *game){
   return game == NULL ? -1 : game->n_players;
 }
 
+int game_get_n_spaces(Game *game){
+  return game == NULL ? -1 : game->n_spaces;
+}
+
 Status game_add_player(Game *game, Player* player){
-  if( !game || !player ) return ERROR;
+  if( !game || !player ) return ERROR; 
 
   game->players[ game->n_players ] = player;
   game->last_cmd[ game->n_players ] = command_create();
@@ -204,6 +208,34 @@ Object* game_get_object(Game *game, Id id){
   }
 
   return NULL;
+}
+
+Object **game_get_objects(Game *game) {
+  if(!game)
+  return NULL;
+
+  return game->objects;
+}
+
+Character **game_get_characters(Game *game) {
+  if(!game)
+  return NULL;
+
+  return game->characters;
+}
+
+Space **game_get_spaces(Game *game) {
+  if(!game)
+  return NULL;
+
+  return game->spaces;
+}
+
+Link **game_get_links(Game *game) {
+  if(!game)
+  return NULL;
+
+  return game->links;
 }
 
 Object* game_get_object_by_name(Game *game, char* name){
@@ -267,7 +299,7 @@ Status game_remove_character(Game *game, Id character_id){
 }
 
 Character* game_get_character(Game *game, Id id){
-  int i;
+  int i; 
   if( !game )
   return NULL;
   

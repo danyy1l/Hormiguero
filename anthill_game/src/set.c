@@ -5,7 +5,7 @@
 * @version 1
 * @date 24-04-2025
 * @copyright GNU Public License
-*/
+*/ 
 
 
 #include <stdio.h>
@@ -20,7 +20,7 @@ struct _Set{
   Id ids[MAX_IDS];    /*!< Array de ids de los objetos del conjunto */
   int n_ids;          /*!< El número de objetos del conjunto */
 };
-
+ 
 Set *set_create(){
   
   int i;

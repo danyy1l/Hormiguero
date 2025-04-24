@@ -10,7 +10,7 @@
 
 #ifndef GAME_H
 #define GAME_H
-
+ 
 #include "character.h"
 #include "player.h"
 #include "object.h"
@@ -152,6 +152,46 @@ Status game_remove_object(Game *game, Id object_id);
 Object* game_get_object(Game *game, Id id);
 
 /**
+ * @brief Obtiene los objetos del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Puntero al array de objetos del juego
+ */
+Object **game_get_objects(Game *game);
+
+/**
+ * @brief Obtiene los characters del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Puntero al array de characters del juego
+ */
+Character **game_get_characters(Game *game);
+
+/**
+ * @brief Obtiene los espacios del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Puntero al array de espacios del juego
+ */
+Space **game_get_spaces(Game *game);
+
+/**
+ * @brief Obtiene los links del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Puntero al array de links del juego
+ */
+Link **game_get_links(Game *game);
+
+/**
+ * @brief Devuelve el numero de espacios del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Numero de espacios del juego
+ */
+int game_get_n_spaces(Game *game);
+
+/**
  * @brief Obtiene el puntero de un objeto con cierto nombre de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game
@@ -194,6 +234,15 @@ Status game_add_character(Game* game, Character* character);
  * @return OK en caso de exito, ERROR en caso contrario 
  */
 Status game_remove_character(Game *game, Id character_id);
+
+/**
+ * @brief Reduce el numero de objetos en 1 de la partida
+ * @author Danyyil Shykerynets
+ * @param game Un puntero a Game
+ * @param object_id ID del objeto a destruir
+ * @return OK en caso de exito, ERROR en caso contrario 
+ */
+Status game_remove_object(Game *game, Id object_id);
 
 /**
  * @brief Devuelve el numero de personajes en la partida

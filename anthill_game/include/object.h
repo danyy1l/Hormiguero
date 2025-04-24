@@ -5,11 +5,11 @@
  * @version 22
  * @date 24-04-2024
  * @copyright GNU Public License
- */
+ */ 
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <stdio.h> 
+#include <stdio.h>  
 #include "types.h"
 
 /**
