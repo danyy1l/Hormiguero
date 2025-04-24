@@ -1,5 +1,5 @@
 EXE=anthill
-CFLAGS=-g -c -Wall -pedantic
+CFLAGS=-c -Wall -ansi -pedantic -g
 CC=gcc
 CLIB=-lscreen -L./lib/
 OBJDIR=obj

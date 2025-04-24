@@ -205,7 +205,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     if( n_chars > 0 ){
       sprintf(str, "   Followers: ");
       screen_area_puts(ge->descript, str);
-      for(int i=0; i<n_chars; i++){
+      for( i=0; i<n_chars; i++){
         if( !(character = game_get_character(game, set_id_object(player_get_followers(player))[i])) ) break;
         sprintf(str, "    ");
         strcat(str, character_get_name(character));
@@ -506,7 +506,7 @@ void print_south(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_sou
   Player* player;
   char gdesc[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for( i=0; i<game_get_n_players(game); i++){
     player = game_players(game)[i];
     if( player_get_location(player) == id_south ){
       strcpy(gdesc, player_get_gdesc(player));
@@ -558,7 +558,7 @@ void print_sw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_sw, Sp
   Player* player1;
   char gdesc1[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_sw ){
@@ -620,7 +620,7 @@ void print_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_se, Sp
   Player* player1;
   char gdesc1[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_se ){
@@ -684,7 +684,7 @@ void print_south_and_sw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id
   Player* player2;
   char gdesc2[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_south ){
@@ -693,7 +693,7 @@ void print_south_and_sw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player2 = game_players(game)[i];
     if( player == player2 ) continue;
     if( player_get_location(player2) == id_sw ){
@@ -811,7 +811,7 @@ void print_south_and_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id
   Player* player2;
   char gdesc2[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_south ){
@@ -820,7 +820,7 @@ void print_south_and_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player2 = game_players(game)[i];
     if( player == player2 ) continue;
     if( player_get_location(player2) == id_se ){
@@ -939,7 +939,7 @@ void print_sw_and_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id
   Player* player2;
   char gdesc2[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_sw ){
@@ -948,7 +948,7 @@ void print_sw_and_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player2 = game_players(game)[i];
     if( player == player2 ) continue;
     if( player_get_location(player2) == id_se ){
@@ -1087,7 +1087,7 @@ void print_bot(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south
     break;
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_se ){
@@ -1096,7 +1096,7 @@ void print_bot(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player2 = game_players(game)[i];
     if( player == player2 ) continue;
     if( player_get_location(player2) == id_sw ){
@@ -1105,7 +1105,7 @@ void print_bot(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player3 = game_players(game)[i];
     if( player == player3 ) continue;
     if( player_get_location(player3) == id_south ){
@@ -1358,7 +1358,7 @@ void print_north(Graphic_engine* ge, Game* game, char* str, Id id_act, Id id_nor
   Player* player;
   char gdesc[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player = game_players(game)[i];
     if( player_get_location(player) == id_north ){
       strcpy(gdesc, player_get_gdesc(player));
@@ -1411,7 +1411,7 @@ void print_nw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_nw, Sp
   Player* player1;
   char gdesc1[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_nw ){
@@ -1472,7 +1472,7 @@ void print_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_ne, Sp
   Player* player1;
   char gdesc1[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_ne ){
@@ -1536,7 +1536,7 @@ void print_north_and_nw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id
   Player* player2;
   char gdesc2[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_north ){
@@ -1545,7 +1545,7 @@ void print_north_and_nw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player2 = game_players(game)[i];
     if( player == player2 ) continue;
     if( player_get_location(player2) == id_nw ){
@@ -1663,7 +1663,7 @@ void print_north_and_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id
   Player* player2;
   char gdesc2[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_north ){
@@ -1672,7 +1672,7 @@ void print_north_and_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player2 = game_players(game)[i];
     if( player == player2 ) continue;
     if( player_get_location(player2) == id_ne ){
@@ -1791,7 +1791,7 @@ void print_nw_and_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id
   Player* player2;
   char gdesc2[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_nw ){
@@ -1800,7 +1800,7 @@ void print_nw_and_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player2 = game_players(game)[i];
     if( player == player2 ) continue;
     if( player_get_location(player2) == id_ne ){
@@ -1940,7 +1940,7 @@ void print_top(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north
     break;
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_ne ){
@@ -1949,7 +1949,7 @@ void print_top(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player2 = game_players(game)[i];
     if( player == player2 ) continue;
     if( player_get_location(player2) == id_nw ){
@@ -1958,7 +1958,7 @@ void print_top(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player3 = game_players(game)[i];
     if( player == player3 ) continue;
     if( player_get_location(player3) == id_north ){
@@ -2297,7 +2297,7 @@ void print_east(Graphic_engine* ge, Game *game, char* str, Id id_east, Id id_act
   Player* player1;
   char gdesc[PLY_GDESC + 1] = "    ";
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_east ){
@@ -2379,6 +2379,11 @@ void print_mid(Graphic_engine* ge, Game *game, char* str, Id id_west, Id id_east
   Player* player = game_get_player(game);
   char character_gdesc[CHAR_GDESC + 1], foo, foo1;
   char updown;
+  
+  Player* player1;
+  char gdesc1[PLY_GDESC + 1] = "    ";
+  Player* player2;
+  char gdesc2[PLY_GDESC + 1] = "    ";
 
   if( ( id_east == NO_ID ) && ( id_west == NO_ID ) ) {
     print_act(ge, game, str, id_act, space_act); 
@@ -2391,12 +2396,7 @@ void print_mid(Graphic_engine* ge, Game *game, char* str, Id id_west, Id id_east
     return;
   }
 
-  Player* player1;
-  char gdesc1[PLY_GDESC + 1] = "    ";
-  Player* player2;
-  char gdesc2[PLY_GDESC + 1] = "    ";
-
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player1 = game_players(game)[i];
     if( player == player1 ) continue;
     if( player_get_location(player1) == id_west ){
@@ -2405,7 +2405,7 @@ void print_mid(Graphic_engine* ge, Game *game, char* str, Id id_west, Id id_east
     }
   }
 
-  for(int i=0; i<game_get_n_players(game); i++){
+  for(i=0; i<game_get_n_players(game); i++){
     player2 = game_players(game)[i];
     if( player == player2 ) continue;
     if( player_get_location(player2) == id_east ){

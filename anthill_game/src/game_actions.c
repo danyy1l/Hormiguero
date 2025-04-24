@@ -134,8 +134,6 @@ Status game_actions_abandon(Game* game, Command* command);
 */
  
 Status game_actions_update(Game *game, Command *command) {
-  if( !game || !command ) return ERROR;
-  
   int i;
   Player *player=game_get_player(game);                                  /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                       /*Inventario del jugador del game*/
@@ -145,6 +143,8 @@ Status game_actions_update(Game *game, Command *command) {
   Object *object=NULL;
   Character* character = NULL;
   CommandCode cmd;
+  
+  if( !game || !command ) return ERROR;
   
   cmd = command_get_code(command);
   game_set_prev_player_location(game, player_get_location(game_get_player(game)));
@@ -354,25 +354,24 @@ Status game_actions_drop(Game *game, Command *command){
 }
 
 Status game_actions_attack(Game *game, Command *command) {
-  if (!game || !command) {
-    return ERROR;
-  }
-
   const char *target_name = command_get_arguments(command);
-  if (!target_name) {
-    return ERROR;
-  }
-
   Player *player = game_get_player(game);
   Id player_loc = player_get_location(player);
   Id player_id = player_get_id(player);
   int num_chars = game_get_n_characters(game);
-  int n_followers = 0, num, damage, n_attackers, attacker;
-  Character *followers[num_chars], *hit_follower = NULL, *target = NULL, *character = NULL, *follower = NULL; 
+  int n_followers = 0, num, damage, n_attackers, attacker, i;
+  Character *followers[MAX_CHARACTERS], *hit_follower = NULL, *target = NULL, *character = NULL, *follower = NULL; 
+  
+  if (!game || !command) {
+    return ERROR;
+  }
+  if (!target_name) {
+    return ERROR;
+  }
 
   damage = player_get_strength(player);
 
-  for (int i = 0; i < num_chars; i++) {
+  for ( i = 0; i < num_chars; i++) {
     character = game_get_character_at(game, i);
     if (!character) continue;
 
@@ -414,7 +413,7 @@ Status game_actions_attack(Game *game, Command *command) {
     game_remove_character(game, character_get_id(target));
   }
 
-  for (int i = 0; i < n_followers; i++) {
+  for ( i = 0; i < n_followers; i++) {
     follower = followers[i];
     if (character_get_health(follower) <= 0) {
       game_remove_character(game, character_get_id(follower));
@@ -425,16 +424,16 @@ Status game_actions_attack(Game *game, Command *command) {
 
 
 Status game_actions_chat(Game *game, Command* command){
-  if( !command || !game ) return ERROR;
-  
   Player* player = game_get_player(game);
   Character* character;
   char str[WORD_SIZE], *char_name;
-  int n_chars = game_get_n_characters(game);
-
+  int n_chars = game_get_n_characters(game), i;
+  
+  if( !command || !game ) return ERROR;
+  
   char_name = command_get_arguments(command);
 
-  for(int i=0; i<n_chars; i++){
+  for(i=0; i<n_chars; i++){
     character = game_get_character_at(game, i);
 
     if (!character) 
@@ -457,19 +456,15 @@ Status game_actions_chat(Game *game, Command* command){
 void game_actions_look(Game *game) {}
 
 Status game_actions_inspect(Game *game, Command *command) {
-  if (!game || !command) {
-    return ERROR;
-  }
-
+  
   Player *player=game_get_player(game);
   Inventory *backpack=player_get_objects(player);
   Object *object=game_get_object_by_name(game, command_get_arguments(command));
+  
+  if (!game || !command) return ERROR;
 
-  if (player_get_location(player)!=object_get_location(object) && inventory_find_object(backpack, object_get_id(object))==FALSE) {
-    return ERROR;
-  } else {
-    return OK;
-  }
+  if (player_get_location(player)!=object_get_location(object) && inventory_find_object(backpack, object_get_id(object))==FALSE) return ERROR;
+  else return OK;
 
   return ERROR;
 }
@@ -555,21 +550,21 @@ Status game_actions_open(Game *game, Command* command) {
 }
 
 Status game_actions_recruit(Game* game, Command *command){
+  const char *char_name = command_get_arguments(command);
+  Player *player = game_get_player(game);
+  Id player_loc = player_get_location(player);
+  int num_chars = game_get_n_characters(game), i;
+  Character *character = NULL;
+  
   if (!game || !command) {
     return ERROR;
   }
 
-  const char *char_name = command_get_arguments(command);
   if (!char_name) {
     return ERROR;
   }
 
-  Player *player = game_get_player(game);
-  Id player_loc = player_get_location(player);
-  int num_chars = game_get_n_characters(game);
-  Character *character = NULL;
-
-  for (int i = 0; i < num_chars; i++) {
+  for ( i = 0; i < num_chars; i++) {
     character = game_get_character_at(game, i);
 
     if (!character) 
@@ -594,23 +589,23 @@ Status game_actions_recruit(Game* game, Command *command){
 }
 
 Status game_actions_abandon(Game* game, Command *command){
-  if (!game || !command) {
-    return ERROR;
-  }
-
   Player *player = game_get_player(game);
   Id player_id = player_get_id(player);
   Id player_loc = player_get_location(player);
 
-  int num_chars = set_get_nids(player_get_followers(player));
-  Character *character = NULL;
-
+  int num_chars = set_get_nids(player_get_followers(player)), i;
+  Character *character = NULL;  
   const char *char_name = command_get_arguments(command);
+
+  if (!game || !command) {
+    return ERROR;
+  }
+
   if (!char_name) {
     return ERROR;
   }
 
-  for (int i = 0; i < num_chars; i++) {
+  for (i = 0; i < num_chars; i++) {
     character = game_get_character(game, set_id_object(player_get_followers(player))[i]);
 
     if (!character) 
