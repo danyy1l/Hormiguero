@@ -3,8 +3,8 @@
  *
  * @file character.h
  * @author Danyyil Shykerynets
- * @version 1
- * @date 18-02-2025
+ * @version 22
+ * @date 24-04-2025
  * @copyright GNU Public License
  */
 
@@ -12,7 +12,7 @@
 
 /**
  * @brief Estructura character con campos:
- * ID, name, descripcion grafica, vida, friendly y un mensaje
+ * ID, name, descripcion grafica, vida, fuerza, friendly, mensaje e ID de jugador al que sigue
  * @author Danyyil Shykerynets
  */
 typedef struct _Character Character;

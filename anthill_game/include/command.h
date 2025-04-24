@@ -4,7 +4,7 @@
  * @file command.h
  * @author Anthony Eduardo Alvarado Carbajal
  * @version 7
- * @date 11-02-2025
+ * @date 24-04-2025
  * @copyright GNU Public License
  */
 
@@ -16,8 +16,14 @@
 #define N_CMDT 2
 #define N_CMD 14
 
+/**
+ * Enumeracion que representa la palabra de llamada al comando, CMDS es para la corta y CMDL para la palabra completa
+ */
 typedef enum { CMDS, CMDL } CommandType;
 
+/**
+ * Enumeracion de posibles comandos
+ */
 typedef enum { 
   NO_CMD = -1,  /*!<-Representa ningun comando recibido*/
   UNKNOWN,      /*!<-Comando desconocido*/

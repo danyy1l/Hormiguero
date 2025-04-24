@@ -3,8 +3,8 @@
  *
  * @file game_reader.c
  * @author Danyyil Shykerynets
- * @version 7
- * @date 03-02-2025
+ * @version 22
+ * @date 24-04-2025
  * @copyright GNU Public License
  */
 

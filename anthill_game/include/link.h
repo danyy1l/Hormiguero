@@ -12,7 +12,7 @@
 
 /**
  * @brief Link
- * Esta estructura almacena toda la información del enlace
+ * Estructura enlace con campos: ID, nombre, ID origen, ID destino, Direccion del enlace y booleano de apertura
  */
 typedef struct _Link Link;
 

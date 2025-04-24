@@ -2,9 +2,9 @@
  * @brief Funcionalidad relacionada al jugador
  *
  * @file player.h
- * @author Hugo Martín
- * @version 7
- * @date 05-02-2025
+ * @author Danyyil Shykerynets
+ * @version 22
+ * @date 24-04-2025
  * @copyright GNU Public License
  */
 

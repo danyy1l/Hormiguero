@@ -3,8 +3,8 @@
  * 
  * @file game_reader.h
  * @author Danyyil Shykerynets
- * @version 7
- * @date 05-02-2025
+ * @version 22
+ * @date 24-04-2025
  * @copyright GNU Public License
  */
 
@@ -12,36 +12,6 @@
 #define GAME_READER_H
 
 #include "game.h"
-
-/**
- * @brief Crea el array de espacios del mapa, tomando el archivo proporcionado
- * El nombre del archivo se especifica en makefile EXE
- * @author Danyyil Shykerynets
- * @param game Estructura de la partida actual
- * @param filename Nombre del archivo del que extraer el mapa
- * @return OK en caso de exito, ERROR en caso contrario
- */
-Status game_load_spaces(Game *game, char *filename);
-
-/**
- * @brief Crea el array de objetos del mapa, tomando el archivo proporcionado
- * anthill.dat esta como predeterminado
- * @author Hugo Martín
- * @param game Estructura de la partida actual
- * @param filename Nombre del archivo del que extraer el mapa
- * @return OK en caso de exito, ERROR en caso contrario
- */
-Status game_load_objects(Game *game, char *filename);
-
-/**
- * @brief Crea el array de personajes del mapa, tomando el archivo proporcionado
- * anthill.dat esta como predeterminado
- * @author Danyyil Shykerynets
- * @param game Estructura de la partida actual
- * @param filename Nombre del archivo del que extraer el mapa
- * @return OK en caso de exito, ERROR en caso contrario
- */
-Status game_load_characters(Game *game, char *filename);
 
 /**
  * @brief Crea el juego partiendo de un fichero

@@ -13,6 +13,9 @@
 #include <stdlib.h>
 #include <string.h> 
 
+/**
+ * @brief Inventario del jugador
+ */
 struct _Inventory{
   Set *objects;
   int max_objects; 

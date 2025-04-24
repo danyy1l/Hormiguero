@@ -2,8 +2,8 @@
  * @brief It implements the space module
  * @file space.c
  * @author Anthony Eduardo Alvarado
- * @version 17
- * @date 26-03-2025
+ * @version 22
+ * @date 24-04-2025
  * @copyright GNU Public License
 */
 
@@ -16,7 +16,7 @@
 /*TO DO: Print*/
 
 /**
- * @brief Space
+ * @brief Espacios
  *
  * This struct stores all the information of a space.
 */
@@ -24,7 +24,6 @@ struct _Space {
   Id id;                              /*!<-Id number of the space, it must be unique */
   char name[WORD_SIZE];               /*!<-Name of the space */
   Set* characters;                    /*!<-Array of characters*/
-  Id character_id;                    /*!<-Id of the character in the space, NO_ID if no characters*/
   Set *objects;                       /*!<-Array of objects*/
   char gdesc[GDESC_MAX][GDESC_SIZE];  /*!<-5x9 Array containing space's graphic desc*/
   Bool discovered;                    /*!<-Si el espacio ha sido descubierto o no*/
@@ -52,7 +51,6 @@ Space* space_create(Id id) {
   newSpace->name[0] = '\0';
   newSpace->message1[0] = '\0';
   newSpace->message2[0] = '\0';
-  newSpace->character_id=NO_ID;
   newSpace->objects = set_create();
   if(newSpace->objects==NULL){
     free(newSpace);

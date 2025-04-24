@@ -2,9 +2,9 @@
  * @brief It defines the textual graphic engine interface
  *
  * @file graphic_engine.h
- * @author Anthony Eduardo Alvarado Carbajal
- * @version 7
- * @date 11-02-2025
+ * @author Danyyil Shykerynets
+ * @version 22
+ * @date 24-04-2025
  * @copyright GNU Public License
  */
 
@@ -30,14 +30,14 @@ Graphic_engine *graphic_engine_create();
 
 /**
  * @brief Destruye el motor gráfico liberando su memoria 
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Danyyil Shykerynets
  * @param ge Un puntero a Graphic_engine
  */
 void graphic_engine_destroy(Graphic_engine *ge);
 
 /**
  * @brief Dibuja el motor gráfico
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Danyyil Shykerynets
  * @param ge Un puntero a Graphic_engine 
  * @param game Un puntero a Game
  * @param command Puntero al ultimo comando

@@ -14,6 +14,9 @@
 #include <stdlib.h> 
 #include <string.h>
 
+/**
+ * @brief Enlaces que unen los espacios
+ */
 struct _Link{
   Id id;                  /*!<-ID del enlace*/
   char name[WORD_SIZE];   /*!<-Nombre del enlace*/

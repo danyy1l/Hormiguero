@@ -3,8 +3,8 @@
  *
  * @file command.c
  * @author Danyyil Shykerynets 
- * @version 7
- * @date 11-02-2025
+ * @version 22
+ * @date 20-04-2025
  * @copyright GNU Public License
  */
 

@@ -3,8 +3,8 @@
  *
  * @file game_actions.c
  * @author Hugo Martín
- * @version 7
- * @date 11-02-2025
+ * @version 22
+ * @date 24-04-2025
  * @copyright GNU Public License
  */
 

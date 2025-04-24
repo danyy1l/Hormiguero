@@ -9,12 +9,15 @@
 
 #ifndef SET_H
 #define SET_H
-#define MAX_IDS 100
+
 #include "types.h"
- 
+
+#define MAX_IDS 100
+
 /**
  * @brief Define la estrcura Set
  * @author Anthony Eduardo Alvarado Carbajal
+ * Estructura set con campos: array de IDs contenidos, numero de IDs que contiene
  */
 typedef struct _Set Set;
 

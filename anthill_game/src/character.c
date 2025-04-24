@@ -3,8 +3,8 @@
  *
  * @file character.c
  * @author Danyyil Shykerynets
- * @version 2
- * @date 27-02-2025
+ * @version 22
+ * @date 23-04-2025
  * @copyright GNU Public License
  */
 
@@ -28,7 +28,7 @@ struct _Character{
   int strength;             /*!< Int containing strength of character*/
   Bool friendly;            /*!< Sympathy of the character*/
   char message[WORD_SIZE];  /*!< String containing message of the character*/
-  Id following;             /*!< Id of the player he follow or NO_ID if he do not follow anyone*/
+  Id following;             /*!< Id of the followed player, NO_ID by default*/
 };
 
 Character* character_create(){

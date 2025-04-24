@@ -3,8 +3,8 @@
  *
  * @file graphic_engine.c
  * @author Danyyil Shykerynets
- * @version 7
- * @date 11-02-2025
+ * @version 22
+ * @date 22-04-2025
  * @copyright GNU Public License
  */
 
@@ -32,6 +32,9 @@
 
 #define LINE_SPACE 16
 
+/**
+ * @brief Interfaz grafica
+ */
 struct _Graphic_engine {
   Area *map, *descript, *banner, *help, *feedback;
 };

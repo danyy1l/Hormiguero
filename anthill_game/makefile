@@ -44,6 +44,8 @@ runv:
 runlog:
 	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG).dat
 
+#TO DO: Actualizar las pruebas de integracion y unitarias
+
 #RUN WITH CMD1
 runcmd1:
 	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG).dat < game1.cmd

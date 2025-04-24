@@ -2,8 +2,8 @@
  * @brief Define los interfaces del objeto
  * @file object.h
  * @author Hugo Martín
- * @version 7
- * @date 05-02-2024
+ * @version 22
+ * @date 24-04-2024
  * @copyright GNU Public License
  */
 #ifndef OBJECT_H
@@ -14,7 +14,7 @@
 
 /**
  * @brief Object
- * Esta estructura almacena toda la información del objeto
+ * Estructura objeto con campos: ID, nombre, ubicacion, descripcion, si ha sido tomado por un jugador, vida, fuerza, si es movible, ID del que depende e ID del enlace que abre
  */
 typedef struct _Object Object;
 

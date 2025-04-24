@@ -3,8 +3,8 @@
  *
  * @file game.c
  * @author Danyyil Shykerynets
- * @version 15
- * @date 19-03-2025
+ * @version 22
+ * @date 22-04-2025
  * @copyright GNU Public License
  */
 

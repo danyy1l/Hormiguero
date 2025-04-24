@@ -3,7 +3,7 @@
 * @file set.c
 * @author Anthony Eduardo Alvarado Carbajal
 * @version 1
-* @date 18-02-2025
+* @date 24-04-2025
 * @copyright GNU Public License
 */
 
@@ -12,7 +12,10 @@
 #include <stdlib.h> 
 #include <string.h>
 #include "../include/set.h"
- 
+
+/**
+ * @brief Conjuntos
+ */
 struct _Set{
   Id ids[MAX_IDS];    /*!< Array de ids de los objetos del conjunto */
   int n_ids;          /*!< El número de objetos del conjunto */

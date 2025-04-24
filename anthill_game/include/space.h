@@ -17,6 +17,7 @@
  
 /**
  * @brief Space struct declaration
+ * Estructura space con campos: ID, nombre, set de personajes, set de objetos, desc grafica, booleano si ha sido visitado, mensaje primario, mensaje secundario
  */
 typedef struct _Space Space;
   

@@ -3,8 +3,8 @@
  *
  * @file player.c
  * @author Danyyil Shykerynets
- * @version 7
- * @date 05-02-2025
+ * @version 22
+ * @date 24-04-2025
  * @copyright GNU Public License
  */  
  
@@ -15,6 +15,9 @@
 #include <stdlib.h>
 #include <string.h>  
 
+/**
+ * @brief Jugadores (usuarios)
+ */
 struct _Player {
   Id id;                      /*!<-ID del jugador*/
   Id location;                /*!<-ID del espacio en el que se ubica el jugador*/
