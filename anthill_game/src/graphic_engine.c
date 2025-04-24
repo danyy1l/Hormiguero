@@ -43,7 +43,7 @@ void print_blank(char* str, Graphic_engine* ge);
 void print_objects(Game* game, Id id, char* str);
 void print_act(Graphic_engine* ge, Game* game, char* str, Id id_act, Space* space_act);
 
-void print_south(Graphic_engine* ge, Game *game, char* str, Id id_south, Space* space_south);
+void print_south(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south, Space* space_south);
 void print_sw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_sw, Space* space_sw);
 void print_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_se, Space* space_se);
 void print_south_and_sw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south, Id id_sw, Space* space_south, Space* space_sw);
@@ -51,7 +51,7 @@ void print_south_and_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id
 void print_sw_and_se(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_se, Id id_sw, Space* space_se, Space* space_sw);
 void print_bot(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south, Id id_se, Id id_sw, Space* space_south, Space* space_se, Space* space_sw);
 
-void print_north(Graphic_engine* ge, Game* game, char* str, Id id_north, Space* space_north);
+void print_north(Graphic_engine* ge, Game* game, char* str, Id id_act, Id id_north, Space* space_north);
 void print_nw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_nw, Space* space_nw);
 void print_ne(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_ne, Space* space_ne);
 void print_north_and_nw(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north, Id id_nw, Space* space_north, Space* space_nw);
@@ -165,8 +165,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     }
 
     print_top(ge, game, str, id_act, id_north, id_ne, id_nw, space_north, space_ne, space_nw);
+    printf("Top\n");
     print_mid(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
+    printf("Mid\n");
     print_bot(ge, game, str, id_act, id_south, id_se, id_sw, space_south, space_se, space_sw);
+    printf("Bot\n");
   }
 
   /* Paint in the description area */
@@ -498,7 +501,7 @@ void print_act(Graphic_engine* ge, Game* game, char* str, Id id_act, Space* spac
 }
 
 /*BOTTOM PRINTING*/
-void print_south(Graphic_engine* ge, Game *game, char* str, Id id_south, Space* space_south){
+void print_south(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south, Space* space_south){
   int i;
   Player* player;
   char gdesc[PLY_GDESC + 1] = "    ";
@@ -511,7 +514,7 @@ void print_south(Graphic_engine* ge, Game *game, char* str, Id id_south, Space* 
     }
   }
   
-  if(game_connection_is_open(game, game_get_connection(game, id_south, N), S))
+  if(game_connection_is_open(game, id_act, S))
     sprintf(str, "                                 v");
   else
     sprintf(str, "                                 X");
@@ -1066,7 +1069,7 @@ void print_bot(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south
     print_se(ge, game, str, id_act, id_se, space_se);
     return;
   case 2:
-    print_south(ge, game, str, id_south, space_south);
+    print_south(ge, game, str, id_act, id_south, space_south);
     return;
   case 3:
     print_south_and_se(ge, game, str, id_act, id_south, id_se, space_south, space_se);
@@ -1350,7 +1353,7 @@ void print_bot(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_south
 }
 
 /*TOP PRINTING*/
-void print_north(Graphic_engine* ge, Game* game, char* str, Id id_north, Space* space_north){
+void print_north(Graphic_engine* ge, Game* game, char* str, Id id_act, Id id_north, Space* space_north){
   int i;
   Player* player;
   char gdesc[PLY_GDESC + 1] = "    ";
@@ -1393,7 +1396,7 @@ void print_north(Graphic_engine* ge, Game* game, char* str, Id id_north, Space* 
     screen_area_puts(ge->map, str);
   }
 
-  if(game_connection_is_open(game, game_get_connection(game, id_north, S), N))
+  if(game_connection_is_open(game, id_act, N))
       sprintf(str, "                                 ^");
     else
       sprintf(str, "                                 X");
@@ -1919,7 +1922,7 @@ void print_top(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_north
     print_ne(ge, game, str, id_act, id_ne, space_ne);
     return;
   case 2:
-    print_north(ge, game, str, id_north, space_north);
+    print_north(ge, game, str, id_act, id_north, space_north);
     return;
   case 3:
     print_north_and_ne(ge, game, str, id_act, id_north, id_ne, space_north, space_ne);
