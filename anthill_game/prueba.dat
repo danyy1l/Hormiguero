@@ -2,38 +2,37 @@ GAME_START
 
 
 PLAYERS_START
-NUM_PLAYERS=2
+NUM_PLAYERS=1
 #p:1|Hormiga|m0^ |211|10|3|0|
-Objects: #p:2|Gusano|o0o8|213|10|4|0|
-Objects: 
+
 
 PLAYERS_END
-
+ 
 
 OBJECTS_START
 NUM_OBJECTS=21
 
-#o:1|GoldKey|112|Abre algo importante|0|0|1|-1|93
-#o:2|Skull|131|Creepy|0|0|1|-1|-1
-#o:3|RedPoti|215|Es roja y brilla|5|2|1|-1|-1
-#o:4|Seed|212|Es una semilla|0|0|1|-1|-1
-#o:5|Kit|253|+5 de vida|5|0|1|-1|-1
-#o:6|GreenPoti|215|Verde y burbujeante|-5|2|1|-1|-1
-#o:7|Torch|253|Antorcha|0|0|1|8|-1
-#o:8|Fire|323|Fuego para antorcha|0|0|1|-1|-1
-#o:9|Nuke|3332|Termina la partida|-100|0|1|-1|-1
-#o:10|Serrano|211|+3 de vida|3|0|1|-1|-1
-#o:11|Pidgeon|343|Cuidado que pica|-3|0|1|-1|-1
-#o:12|Mine|216|Ojito|-100|0|0|-1|-1
-#o:13|Key|421|Abre alguna puerta|0|0|1|-1|81
-#o:14|Beer|512|Cura toda la vida|100|-1|1|-1|-1
-#o:15|Needle|513|Ouch|-10|0|1|-1|-1
-#o:16|WhiteOrb|554|Brilla bastante|0|0|1|-1|-1
-#o:17|BlackOrb|432|Absorbe la luz|0|0|1|-1|-1
-#o:18|TNT|243|Abre una pared|0|0|1|8|8
-#o:19|Trap|423|Cuidado!!|-7|0|1|-1|-1
-#o:20|Knife|513|Parece un buen arma|0|3|1|-1|-1
-#o:21|Treasure|611|Genial!|0|0|1|-1|-1
+#o:1|GoldKey|112|Abre algo importante|0|1|-1|93|0
+#o:2|Skull|131|Creepy|0|1|-1|-1|0
+#o:3|RedPoti|215|Es roja y brilla|5|1|-1|-1|0
+#o:4|Seed|212|Es una semilla|0|1|-1|-1|0
+#o:5|Kit|253|+5 de vida|5|1|-1|-1|0
+#o:6|GreenPoti|215|Verde y burbujeante|-5|1|-1|-1|0
+#o:7|Torch|253|Antorcha|0|1|8|-1|0
+#o:8|Fire|322|Fuego para antorcha|0|1|-1|-1|0
+#o:9|Nuke|332|Termina la partida|-100|1|-1|-1|0
+#o:10|Serrano|211|+3 de vida|3|1|-1|-1|0
+#o:11|Pidgeon|343|Cuidado que pica|-3|1|-1|-1|0
+#o:12|Mine|216|Ojito|-100|0|-1|-1|0
+#o:13|Key|421|Abre alguna puerta|0|1|-1|81|0
+#o:14|Beer|512|Cura toda la vida|100|1|-1|-1|0
+#o:15|Needle|513|Ouch|-10|1|-1|-1|0
+#o:16|WhiteOrb|554|Brilla bastante|0|1|-1|-1|0
+#o:17|BlackOrb|432|Absorbe la luz|0|1|-1|-1|0
+#o:18|TNT|243|Abre una pared|0|1|8|31|0
+#o:19|Trap|423|Cuidado!!|-7|1|-1|-1|0
+#o:20|Knife|513|Parece un buen arma|0|1|-1|-1|0
+#o:21|Treasure|611|Genial!|0|1|-1|-1|0
 
 OBJECTS_END
 
@@ -92,7 +91,7 @@ Characters: id=2;
 space_id=212;name=Camino01;discovered=0;num_objects=1;num_characters=0
 Objects: id=4;
 Characters: 
-space_id=213;name=SpawnP02;discovered=1;num_objects=0;num_characters=1
+space_id=213;name=SpawnP02;discovered=0;num_objects=0;num_characters=1
 Objects: 
 Characters: id=1;
 space_id=214;name=Enemigo1;discovered=0;num_objects=0;num_characters=1
@@ -125,11 +124,11 @@ Characters:
 space_id=313;name=Enemigo4;discovered=0;num_objects=0;num_characters=0
 Objects: 
 Characters: 
-space_id=322;name=Entrando;discovered=0;num_objects=0;num_characters=0
-Objects: 
+space_id=322;name=Entrando;discovered=0;num_objects=1;num_characters=0
+Objects: id=8;
 Characters: 
-space_id=332;name=PuntoMed;discovered=0;num_objects=0;num_characters=0
-Objects: 
+space_id=332;name=PuntoMed;discovered=0;num_objects=1;num_characters=0
+Objects: id=9;
 Characters: 
 space_id=341;name=RutaBuen;discovered=0;num_objects=0;num_characters=0
 Objects: 
@@ -311,7 +310,7 @@ LAST_COMMAND
 code=11;output=0;arguments=prueba.dat;argumments1=;arguments2=
 
 
-TURN=1
+TURN=0
 
 
 GAME_END

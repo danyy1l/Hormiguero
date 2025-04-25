@@ -1,58 +1,59 @@
-#s:112|Subida1a| _______ |/       \|! $#$##$!|! $$$$$ !|!_______!|Wow! Esto parece importante|
-#s:121|Basemen0|  _O_    |   !     |  / \    | _[#]_   |_________|Sacame de aqui por favor!|
-#s:122|Basemen1|
-#s:123|Basemen2|
-#s:131|Basemen3|
-#s:132|Basemen4|
-#s:133|Basemen5|
-#s:141|Basemen6|
-#s:142|Basemen7|
-#s:143|Basemen8|  .   .  |    o    |   /!\   |   _/\_  |_________|Vaya... Mejor no tocarlo|
-#s:152|Basement|  .   .  |   \!/   |--[#X#]--| .  !  . |_________|Esta bastante oscuro|
+#s:112|Subida1a| _______ |/       \|! $#$##$!|! $$$$$ !|!_______!|Wow! Esto parece importante| |0| | |
+#s:121|Basemen0|  _O_    |   !     |  / \    | _[#]_   |_________|Sacame de aqui por favor!| |0| | |
+#s:122|Basemen1| | | | | | | |0| | |
+#s:123|Basemen2| | | | | | | |0| | |
+#s:131|Basemen3| | | | | | | |0| | |
+#s:132|Basemen4| | | | | | | |0| | |
+#s:133|Basemen5| | | | | | | |0| | |
+#s:141|Basemen6| | | | | | | |0| | |
+#s:142|Basemen7| | | | | | | |0| | |
+#s:143|Basemen8|  .   .  |    o    |   /!\   |   _/\_  |_________|Vaya... Mejor no tocarlo| |0| | |
+#s:152|Basement|  .   .  |   \!/   |--[#X#]--| .  !  . |_________|Esta bastante oscuro| |0| | |
 
-#s:211|SpawnP01| _  _  _ |[ ][_][ ]|!   _  o!|!  ! ! I!|!__!_!__!|Ves un castillo a lo lejos al sudeste|
-#s:212|Camino01|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |Hay algo emocionante en el aire|
-#s:213|SpawnP02|   /     |   \___  |    mo'\_|\ @  _   | \  / \__|El camino se separa. Hay un cartel: EAST - Castillo, SOUTH - ???|
-#s:214|Enemigo1| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |Se cierra la puerta tras de ti!|La puerta se abrio, menos mal|
-#s:215|PotionB1|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |Poca cosa aqui|
-#s:216|Agujero1|  !   !  | /     \ | \ c>  / |  \___/  |         |Hay un agujero, no se ve el fondo|
-#s:223|CaminoC1|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|El castillo no esta muy lejos|
-#s:233|CaminoC2|         |\/   \__ |    o o \|mo^_  0o |__/ \___/|
-#s:243|MiniBoss|  _______| /       |/  o8o0* |____     |    \____|
-#s:253|Subida2a|    V    |  \(")/  |  -(_)-  |o/(_-_)\o|o o\_/o o|
+#s:211|SpawnP01| _  _  _ |[ ][_][ ]|!   _  o!|!  ! ! I!|!__!_!__!|Ves un castillo a lo lejos al sudeste| |0| | |
+#s:212|Camino01|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |Hay algo emocionante en el aire| |0| | |
+#s:213|SpawnP02|   /     |   \___  |    mo'\_|\ @  _   | \  / \__|El camino se separa. Hay un cartel: EAST - Castillo, SOUTH - ???| |0| | |
+#s:214|Enemigo1| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |Se cierra la puerta tras de ti!|La puerta se abrio, menos mal|0| | |
+#s:215|PotionB1|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |Poca cosa aqui| |0| | |
+#s:216|Agujero1|  !   !  | /     \ | \ c>  / |  \___/  |         |Hay un agujero, no se ve el fondo| |0| | |
+#s:223|CaminoC1|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|El castillo no esta muy lejos| |0| | |
+#s:233|CaminoC2|         |\/   \__ |    o o \|mo^_  0o |__/ \___/| | |0| | |
+#s:243|MiniBoss|  _______| /       |/  o8o0* |____     |    \____| | |0| | |
+#s:253|Subida2a|    V    |  \(")/  |  -(_)-  |o/(_-_)\o|o o\_/o o| | |0| | |
 
-#s:311|PolvosMa| | | | | |Ves unos polvos brillando| |
-#s:312|Bajada1a|
-#s:313|Enemigo4|
-#s:322|Entrando|
-#s:332|PuntoMed|    -    |  Nada   |   que   |   ver   |   aqui  |
-#s:341|RutaBuen| | | | | |
-#s:343|RutaMala| | | | | |
-#s:351|PreSalid| | | | | |
-#s:353|EasterEg| | | | | |
-#s:361|Subida3a| | | | | |
-#s:363|UnTioAki| | | | | |"No hay salida por este camino"|Se levanta un puente|
+#s:311|PolvosMa| | | | | |Ves unos polvos brillando| |0| | |
+#s:312|Bajada1a| | | | | | | |0| | |
+#s:313|Enemigo4| | | | | | | |0| | |
+#s:322|Entrando| | | | | | | |0| | |
+#s:332|PuntoMed|    -    |  Nada   |   que   |   ver   |   aqui  | | |0| | |
+#s:341|RutaBuen| | | | | | | |0| | |
+#s:343|RutaMala| | | | | | | |0| | |
+#s:351|PreSalid| | | | | | | |0| | |
+#s:353|EasterEg| | | | | | | |0| | |
+#s:361|Subida3a| | | | | |  | |0| | |
+#s:363|UnTioAki| | | | | |"No hay salida por este camino"|Se levanta un puente|0| | |
 
-#s:413|Enemigo2| | | | | |
-#s:414|Subida4a| | | | | |
-#s:421|MinaAqui| | | | | |
-#s:423|TrampAki| | | | | |
-#s:432|OrbeMalo| | | | | |Parece que no hay vuelta|
-#s:442|CaminoAA| | | | | |Sigue adelante|
-#s:452|SubeBaja| | | | | |Hay una trampilla (tramp) pero parece cerrada|Bien hecho!|
+#s:413|Enemigo2| | | | | | | |0| | |
+#s:414|Subida4a| | | | | | | |0| | |
+#s:421|MinaAqui| | | | | | | |0| | |
+#s:423|TrampAki| | | | | | | |0| | |
+#s:432|OrbeMalo| | | | | |Parece que no hay vuelta| |0| | |
+#s:442|CaminoAA| | | | | |Sigue adelante| |0| | |
+#s:452|SubeBaja| | | | | |Hay una trampilla (tramp) pero parece cerrada|Bien hecho!|0| | |
 
-#s:511|Subida5a| | | | | |
-#s:512|CaminoAB| | | | | |
-#s:513|Enemigo?| | | | | |
-#s:514|CaminoAC| | | | | |
-#s:515|Bajada3a| | | | | |
-#s:554|WhiteOrb|  *   *  |. _\_/_  | . / \   |i  ___  i|   #-#   |Hay algo magico en el aire|
+#s:511|Subida5a| | | | | | | |0| | |
+#s:512|CaminoAB| | | | | | | |0| | |
+#s:513|Enemigo?| | | | | | | |0| | |
+#s:514|CaminoAC| | | | | | | |0| | |
+#s:515|Bajada3a| | | | | | | |0| | |
+#s:554|WhiteOrb|  *   *  |. _\_/_  | . / \   |i  ___  i|   #-#   |Hay algo magico en el aire| |0| | |
 
-#s:611|FinalYea| | | | | |Enhorabuena! Coge la corona para terminar|
-#s:612|AquiBoss| | | | | |
-#s:613|Bajada4a| | | | | |Vaya, no tienes la llave|Ya no hay vuelta atras|
+#s:611|FinalYea| | | | | |Enhorabuena! Coge la corona para terminar| |0| | |
+#s:612|AquiBoss| | | | | | | |0| | |
+#s:613|Bajada4a| | | | | |Vaya, no tienes la llave|Ya no hay vuelta atras|0| | |
 
-#s:999|DevsAqui| 0 0 0 0 | ! ! ! ! |_!_!_!_!_|/\/\/\/\ |
+#s:999|DevsAqui| 0 0 0 0 | ! ! ! ! |_!_!_!_!_|/\/\/\/\ | | | |0| | |
+
 
 #p:1|Hormiga|m0^ |211|10|3|
 
