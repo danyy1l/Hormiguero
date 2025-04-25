@@ -208,8 +208,8 @@ Status game_load_objects(Game *game, char *filename){
   Id id = NO_ID, location = NO_ID, dependency = NO_ID, open = NO_ID; 
   Object *object = NULL;
   Status status = OK;
-  int health;
-  Bool movable, taken;
+  int health, strength;
+  Bool movable;
 
   if (!filename) {
     return ERROR;
@@ -233,25 +233,25 @@ Status game_load_objects(Game *game, char *filename){
       toks = strtok(NULL, "|");
       health = atoi(toks);
       toks = strtok(NULL, "|");
+      strength = atoi(toks);
+      toks = strtok(NULL, "|");
       movable = atoi(toks);
       toks = strtok(NULL, "|");
       dependency = atol(toks);
       toks = strtok(NULL, "|");
       open = atol(toks);
-      toks = strtok(NULL, "|");
-      taken = atol(toks);
   #ifdef DEBUG
-      printf("Leido: %ld|%s|%ld|%s|%d|%d|%ld|%ld|%d|\n", id, name, location, description, health, movable, dependency, open, taken);
+      printf("Leido: %ld|%s|%ld|%s|%d|%d|%ld|%ld|%d|\n", id, name, location, description, health, strength, movable, dependency, open);
   #endif
       if( !(object = object_create(id))) return ERROR;
       object_set_name(object, name);
       object_set_location(object, location);
       object_set_description(object, description);
       object_set_health(object, health);
+      object_set_strength(object, strength);
       object_set_movable(object, movable);
       object_set_dependency(object, dependency);
       object_set_open(object, open);
-      object_set_taken(object, taken);
       game_add_object(game, object);
       space_add_object(game_get_space(game, location), id);
     }

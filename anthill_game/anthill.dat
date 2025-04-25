@@ -55,7 +55,6 @@
 #s:999|DevsAqui| 0 0 0 0 | ! ! ! ! |_!_!_!_!_|/\/\/\/\ |
 
 #p:1|Hormiga|m0^ |211|10|3|
-#p:2|Gusano|o0o8|213|10|4|
 
 #c:1|Antlion| ^0m  |213|5|1|1|Hello!|-1|
 #c:2|Worm|*0o8o |211|6|1|1|Welcome!|-1|
@@ -172,8 +171,8 @@
 #o:5|Kit|253|+5 de vida|5|0|1|-1|-1|
 #o:6|GreenPoti|215|Verde y burbujeante|-5|2|1|-1|-1|
 #o:7|Torch|253|Antorcha|0|0|1|8|-1|
-#o:8|Fire|323|Fuego para antorcha|0|0|1|-1|-1|
-#o:9|Nuke|3332|Termina la partida|-100|0|1|-1|-1|
+#o:8|Fire|322|Fuego para antorcha|0|0|1|-1|-1|
+#o:9|Nuke|332|Termina la partida|-100|0|1|-1|-1|
 #o:10|Serrano|211|+3 de vida|3|0|1|-1|-1|
 #o:11|Pidgeon|343|Cuidado que pica|-3|0|1|-1|-1|
 #o:12|Mine|216|Ojito|-100|0|0|-1|-1|
@@ -182,7 +181,7 @@
 #o:15|Needle|513|Ouch|-10|0|1|-1|-1|
 #o:16|WhiteOrb|554|Brilla bastante|0|0|1|-1|-1|
 #o:17|BlackOrb|432|Absorbe la luz|0|0|1|-1|-1|
-#o:18|TNT|243|Abre una pared|0|0|1|8|8|
+#o:18|TNT|243|Abre una pared|0|0|1|8|31|
 #o:19|Trap|423|Cuidado!!|-7|0|1|-1|-1|
 #o:20|Knife|513|Parece un buen arma|0|3|1|-1|-1|
 #o:21|Treasure|611|Genial!|0|0|1|-1|-1|
