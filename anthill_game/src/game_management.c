@@ -134,11 +134,12 @@ Status game_load_players(Game *game, char *filename){
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
   char gdesc[PLY_GDESC] = "";
-  int health, bag_max, n_objects;
+  int health, bag_max, n_objects, i;
   char *toks = NULL;
-  Id id = NO_ID, location = NO_ID;
+  Id id = NO_ID, location = NO_ID, object_id = NO_ID;
   Player* player = NULL;
   Status status = OK;
+  Object *object=NULL;
 
   if (!filename) {
     return ERROR;
@@ -163,7 +164,9 @@ Status game_load_players(Game *game, char *filename){
       health = atoi(toks);
       toks = strtok(NULL, "|");
       bag_max = atoi(toks);
-      toks = strtok(NULL, "|");
+      if (!(toks = strtok(NULL, "|"))) {
+        n_objects=0;
+      }
       n_objects = atoi(toks);
   #ifdef DEBUG
       printf("Leido: %ld|%s|%ld\n", id, name, location);
@@ -178,6 +181,12 @@ Status game_load_players(Game *game, char *filename){
       set_set_nids(inventory_get_objects(player_get_objects(player)), n_objects);
       game_add_player(game, player);
       space_player_arrive(game_get_space(game, location));
+      for (i=0;i<n_objects;i++) {
+        toks = strtok(NULL, "|");
+        object_id = atoi(toks);
+        object=object_create(object_id);
+        player_add_object(player, object);
+      }
     }
   }
 
@@ -371,13 +380,12 @@ Status game_management_save(Game *game, char *filename) {
 
   for (i=0;i<game_get_n_players(game);i++) {
     game_next_turn(game, i);
-    fprintf(f, "#p:%ld|%s|%s|%ld|%d|%d|\n", player_get_id(game_get_player(game)), player_get_name(game_get_player(game)), player_get_gdesc(game_get_player(game)), player_get_location(game_get_player(game)), player_get_health(game_get_player(game)), inventory_get_max_objects(player_get_objects(game_get_player(game))));
-    fprintf(f, "Objects: ");
+    fprintf(f, "#p:%ld|%s|%s|%ld|%d|%d|%d|", player_get_id(game_get_player(game)), player_get_name(game_get_player(game)), player_get_gdesc(game_get_player(game)), player_get_location(game_get_player(game)), player_get_health(game_get_player(game)), inventory_get_max_objects(player_get_objects(game_get_player(game))), set_get_nids(inventory_get_objects(player_get_objects(game_get_player(game)))));
     ids=set_id_object(inventory_get_objects(player_get_objects(game_get_player(game))));
     for (j=0;j<set_get_nids(inventory_get_objects(player_get_objects(game_get_player(game))));j++) {
-      fprintf(f, "id=%ld;", ids[j]);
-      fprintf(f, "\n");
+      fprintf(f, "%ld|", ids[j]);
     }
+    fprintf(f, "\n");
   }
 
   fprintf(f, "\n\nPLAYERS_END\n\n\n");
