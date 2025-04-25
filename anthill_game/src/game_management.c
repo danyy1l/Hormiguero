@@ -26,6 +26,7 @@ Status game_load_spaces(Game *game, char *filename) {
   Id id = NO_ID;
   Space *space = NULL;
   Status status = OK;
+  Bool discovered;
   int i, num_objects, num_characters;
   
   if (!filename) {
@@ -54,9 +55,10 @@ Status game_load_spaces(Game *game, char *filename) {
       toks = strtok(NULL, "|");
       space_set_message1(space, toks);
       toks = strtok(NULL, "|");
-      pace_set_message2(space, toks);
+      space_set_message2(space, toks);
       toks = strtok(NULL, "|");
-      space_set_discovered(space, toks);
+      discovered = atoi(toks);
+      space_set_discovered(space, discovered);
       if (!(toks = strtok(NULL, "|"))) {
         num_objects=0;
       } else {
@@ -226,7 +228,7 @@ Status game_load_objects(Game *game, char *filename){
   Object *object = NULL;
   Status status = OK;
   int health, strength;
-  Bool movable;
+  Bool movable, taken;
 
   if (!filename) {
     return ERROR;
@@ -257,6 +259,8 @@ Status game_load_objects(Game *game, char *filename){
       dependency = atol(toks);
       toks = strtok(NULL, "|");
       open = atol(toks);
+      toks = strtok(NULL, "|");
+      taken = atoi(toks);
   #ifdef DEBUG
       printf("Leido: %ld|%s|%ld|%s|%d|%d|%ld|%ld|%d|\n", id, name, location, description, health, strength, movable, dependency, open);
   #endif
@@ -269,6 +273,7 @@ Status game_load_objects(Game *game, char *filename){
       object_set_movable(object, movable);
       object_set_dependency(object, dependency);
       object_set_open(object, open);
+      object_set_taken(object, taken);
       game_add_object(game, object);
       space_add_object(game_get_space(game, location), id);
     }
@@ -411,7 +416,7 @@ Status game_management_save(Game *game, char *filename) {
 
   for (i=0;i<game_get_n_objects(game);i++) {
     object=objects[i];
-    fprintf(f, "#o:%ld|%s|%ld|%s|%d|%d|%ld|%ld|%d\n", object_get_id(object), object_get_name(object), object_get_location(object), object_get_description(object), object_get_health(object), object_get_movable(object), object_get_dependency(object), object_get_open(object), object_get_taken(object));
+    fprintf(f, "#o:%ld|%s|%ld|%s|%d|%d|%d|%ld|%ld|%d\n", object_get_id(object), object_get_name(object), object_get_location(object), object_get_description(object), object_get_health(object), object_get_strength(object), object_get_movable(object), object_get_dependency(object), object_get_open(object), object_get_taken(object));
   }
 
   fprintf(f, "\nOBJECTS_END\n\n\n");
@@ -429,7 +434,16 @@ Status game_management_save(Game *game, char *filename) {
 
   for (i=0;i<game_get_n_spaces(game);i++) {
     space=spaces[i];
-    fprintf(f, "#s:%ld|%s;discovered=%d;num_objects=%d;num_characters=%d\n", space_get_id(space), space_get_name(space), space_get_discovered(space), set_get_nids(space_get_set_objects(space)), set_get_nids(space_get_set_characters(space)));
+    fprintf(f, "#s:%ld|%s|", space_get_id(space), space_get_name(space));
+    /*DA CORE DUMPED ESTOY DE DESCANSO JAJAJAJ
+    for (j=0;i<GDESC_MAX;j++) {
+      fprintf(f, "%s|", space_get_gdesc(space, j));
+    }
+    */
+    fprintf(f, "%s|%s|%d|%d|%d|", space_get_message1(space), space_get_message2(space), space_get_discovered(space), set_get_nids(space_get_set_objects(space)), set_get_nids(space_get_set_characters(space)));
+
+    
+
     fprintf(f, "Objects: ");
     ids=set_id_object(space_get_set_objects(space));
     for (j=0;j<set_get_nids(space_get_set_objects(space));j++) {

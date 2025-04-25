@@ -165,24 +165,24 @@
 #l:95|Q613_612|613|612|1|0|
 #l:96|Q613_511|613|511|10|1|
 
-#o:1|GoldKey|112|Abre algo importante|0|0|1|-1|93|
-#o:2|Skull|131|Creepy|0|0|1|-1|-1|
-#o:3|RedPoti|215|Es roja y brilla|5|2|1|-1|-1|
-#o:4|Seed|212|Es una semilla|0|0|1|-1|-1|
-#o:5|Kit|253|+5 de vida|5|0|1|-1|-1|
-#o:6|GreenPoti|215|Verde y burbujeante|-5|2|1|-1|-1|
-#o:7|Torch|253|Antorcha|0|0|1|8|-1|
-#o:8|Fire|322|Fuego para antorcha|0|0|1|-1|-1|
-#o:9|Nuke|332|Termina la partida|-100|0|1|-1|-1|
-#o:10|Serrano|211|+3 de vida|3|0|1|-1|-1|
-#o:11|Pidgeon|343|Cuidado que pica|-3|0|1|-1|-1|
-#o:12|Mine|216|Ojito|-100|0|0|-1|-1|
-#o:13|Key|421|Abre alguna puerta|0|0|1|-1|81|
-#o:14|Beer|512|Cura toda la vida|100|-1|1|-1|-1|
-#o:15|Needle|513|Ouch|-10|0|1|-1|-1|
-#o:16|WhiteOrb|554|Brilla bastante|0|0|1|-1|-1|
-#o:17|BlackOrb|432|Absorbe la luz|0|0|1|-1|-1|
-#o:18|TNT|243|Abre una pared|0|0|1|8|31|
-#o:19|Trap|423|Cuidado!!|-7|0|1|-1|-1|
-#o:20|Knife|513|Parece un buen arma|0|3|1|-1|-1|
-#o:21|Treasure|611|Genial!|0|0|1|-1|-1|
+#o:1|GoldKey|112|Abre algo importante|0|0|1|-1|93|0|
+#o:2|Skull|131|Creepy|0|0|1|-1|-1|0|
+#o:3|RedPoti|215|Es roja y brilla|5|2|1|-1|-1|0|
+#o:4|Seed|212|Es una semilla|0|0|1|-1|-1|0|
+#o:5|Kit|253|+5 de vida|5|0|1|-1|-1|0|
+#o:6|GreenPoti|215|Verde y burbujeante|-5|2|1|-1|-1|0|
+#o:7|Torch|253|Antorcha|0|0|1|8|-1|0|
+#o:8|Fire|322|Fuego para antorcha|0|0|1|-1|-1|0|
+#o:9|Nuke|332|Termina la partida|-100|0|1|-1|-1|0|
+#o:10|Serrano|211|+3 de vida|3|0|1|-1|-1|0|
+#o:11|Pidgeon|343|Cuidado que pica|-3|0|1|-1|-1|0|
+#o:12|Mine|216|Ojito|-100|0|0|-1|-1|0|
+#o:13|Key|421|Abre alguna puerta|0|0|1|-1|81|0|
+#o:14|Beer|512|Cura toda la vida|100|-1|1|-1|-1|0|
+#o:15|Needle|513|Ouch|-10|0|1|-1|-1|0|
+#o:16|WhiteOrb|554|Brilla bastante|0|0|1|-1|-1|0|
+#o:17|BlackOrb|432|Absorbe la luz|0|0|1|-1|-1|0|
+#o:18|TNT|243|Abre una pared|0|0|1|8|31|0|
+#o:19|Trap|423|Cuidado!!|-7|0|1|-1|-1|0|
+#o:20|Knife|513|Parece un buen arma|0|3|1|-1|-1|0|
+#o:21|Treasure|611|Genial!|0|0|1|-1|-1|0|
