@@ -14,7 +14,7 @@
 #include "types.h"
 
 #define N_CMDT 2
-#define N_CMD 16
+#define N_CMD 16 
 
 /**
  * Enumeracion que representa la palabra de llamada al comando, CMDS es para la corta y CMDL para la palabra completa
@@ -127,5 +127,35 @@ char* command_get_arguments1(Command *command);
  * Ejemplo: si el comando es take grain, devuelve grain
  */
 char* command_get_arguments2(Command *command);
+
+/**
+ * @brief Establece el argumento adicional del último comando
+ * @author Hugo Martín
+ * @param command Un puntero a Command
+ * @param arguments Un string con los argumentos que se quieran añadir al comando
+ * @return OK si se ha realizado correctamente, ERROR en caso contrario
+ * Ejemplo: si el comando es take grain, arguments sería "grain" 
+ */
+Status command_set_arguments(Command *command, const char *arguments);
+
+/**
+ * @brief Establece el argumento adicional del segundo campo del comando
+ * @author Hugo Martín
+ * @param command Un puntero a Command
+ * @param arguments1 Un string con los argumentos que se quieran añadir al comando
+ * @return OK si se ha realizado correctamente, ERROR en caso contrario
+ * Ejemplo: si el comando es use key over door, arguments1 sería "over"
+ */
+Status command_set_arguments1(Command *command, const char *arguments1);
+
+/**
+ * @brief Establece el argumento adicional del tercer campo del comando
+ * @author Hugo Martín
+ * @param command Un puntero a Command
+ * @param arguments2 Un string con los argumentos que se quieran añadir al comando
+ * @return OK si se ha realizado correctamente, ERROR en caso contrario
+ * Ejemplo: si el comando es use key over door, arguments2 sería "door"
+ */
+Status command_set_arguments2(Command *command, const char *arguments2);
 
 #endif

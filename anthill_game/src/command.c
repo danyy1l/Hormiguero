@@ -103,7 +103,7 @@ Status command_get_user_input(Command* command) {
 
   if (!command) { 
     return ERROR;
-  }
+  } 
 
   if (fgets(input, CMD_LENGHT, stdin)) {
     token = strtok(input, " \n");
@@ -176,4 +176,31 @@ char* command_get_arguments2(Command *command){
     return NULL;
 
   return command->arguments2;
+}
+
+Status command_set_arguments(Command *command, const char *arguments) {
+  if( !command || !arguments)
+    return  ERROR;
+
+  strcpy(command->arguments, arguments);
+
+  return OK;
+}
+
+Status command_set_arguments1(Command *command, const char *arguments1) {
+  if (!command || !arguments1)
+    return ERROR;
+
+  strcpy(command->arguments1, arguments1);
+
+  return OK;
+}
+
+Status command_set_arguments2(Command *command, const char *arguments2) {
+  if (!command || !arguments2)
+    return ERROR;
+
+  strcpy(command->arguments2, arguments2);
+
+  return OK;
 }

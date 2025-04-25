@@ -138,6 +138,15 @@ Player* game_get_player(Game *game){
   return game->players[ game->turn ];
 } 
 
+Status game_set_turn(Game *game, int turn) {
+  if(!game )
+    return ERROR;
+
+  game->turn=turn;
+
+  return OK;
+}
+
 int game_get_n_players(Game *game){
   return game == NULL ? -1 : game->n_players;
 }
@@ -263,6 +272,42 @@ Status game_set_n_objects(Game* game, int n_objects){
     return ERROR;
 
   game->n_objects = n_objects;
+
+  return OK;
+}
+
+Status game_set_n_spaces(Game* game, int n_spaces){
+  if(!game)
+    return ERROR;
+
+  game->n_spaces = n_spaces;
+
+  return OK;
+}
+
+Status game_set_n_players(Game* game, int n_players){
+  if(!game)
+    return ERROR;
+
+  game->n_players = n_players;
+
+  return OK;
+}
+
+Status game_set_n_characters(Game* game, int n_characters){
+  if(!game)
+    return ERROR;
+
+  game->n_characters = n_characters;
+
+  return OK;
+}
+
+Status game_set_n_links(Game* game, int n_links){
+  if(!game)
+    return ERROR;
+
+  game->n_links = n_links;
 
   return OK;
 }

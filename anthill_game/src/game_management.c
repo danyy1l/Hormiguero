@@ -23,12 +23,12 @@ Status game_load_spaces(Game *game, char *filename) {
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
   char *toks = NULL;
-  Id id = NO_ID;
+  Id id = NO_ID, object_id = NO_ID, character_id = NO_ID;
   Space *space = NULL;
   Status status = OK;
   Bool discovered;
   int i, num_objects, num_characters;
-  
+
   if (!filename) {
     return ERROR;
   }
@@ -71,6 +71,16 @@ Status game_load_spaces(Game *game, char *filename) {
         num_characters=atoi(toks);
       }
       set_set_nids(space_get_set_characters(space), num_characters);
+      for (i=0;i<set_get_nids(space_get_set_objects(space));i++) {
+        toks = strtok(NULL, "|");
+        object_id = atoi(toks);
+        space_add_object(space, object_id);
+      }
+      for (i=0;i<set_get_nids(space_get_set_characters(space));i++) {
+        toks = strtok(NULL, "|");
+        character_id = atoi(toks);
+        space_add_character(space, character_id);
+      }
       #ifdef DEBUG
       printf("Leido: %ld|%s|\n", id, name);
       #endif
@@ -391,14 +401,50 @@ Status game_management_save(Game *game, char *filename) {
   Space **spaces=game_get_spaces(game), *space=NULL;
   Link **links=game_get_links(game), *link=NULL;
   Command *command=game_get_last_command(game);
+  char *gdesc = NULL;
 
   if (!game || !filename || !(f=fopen(filename, "w"))) {
     return ERROR;
   }
 
-  fprintf(f, "GAME_START\n\n\n");
-  fprintf(f, "PLAYERS_START\n");
-  fprintf(f, "NUM_PLAYERS=%d\n", game_get_n_players(game));
+  fprintf(f, "#ns:%d\n", game_get_n_spaces(game));
+
+  fprintf(f, "#np:%d\n", game_get_n_players(game));
+
+  fprintf(f, "#nc:%d\n", game_get_n_characters(game));
+
+  fprintf(f, "#nl:%d\n", game_get_n_links(game));
+
+  fprintf(f, "#no:%d\n", game_get_n_objects(game));
+
+  fprintf(f, "#lc:%d|%d|%s|%s|%s\n", command_get_code(command), command_get_output(command), command_get_arguments(command), command_get_arguments1(command), command_get_arguments2(command));
+
+  fprintf(f, "#t:%d\n\n", game_get_turn(game));
+
+  for (i=0;i<game_get_n_spaces(game);i++) {
+    space=spaces[i];
+    fprintf(f, "#s:%ld|%s|", space_get_id(space), space_get_name(space));
+    for (j=0; j<GDESC_MAX; j++) {
+      gdesc=space_get_gdesc(space, j);
+      if (gdesc == NULL || strlen(gdesc) == 0) {
+          fprintf(f, " |");
+      } else {
+          fprintf(f, "%s|", gdesc);
+      }
+    }
+    fprintf(f, "%s|%s|%d|%d|%d|", space_get_message1(space), space_get_message2(space), space_get_discovered(space), set_get_nids(space_get_set_objects(space)), set_get_nids(space_get_set_characters(space)));
+    ids=set_id_object(space_get_set_objects(space));
+    for (j=0;j<set_get_nids(space_get_set_objects(space));j++) {
+      fprintf(f, "%ld|", ids[j]);
+    }
+    ids=set_id_object(space_get_set_characters(space));
+    for (j=0;j<set_get_nids(space_get_set_characters(space));j++) {
+      fprintf(f, "%ld|", ids[j]);
+    }
+    fprintf(f, "\n");
+  }
+
+  fprintf(f, "\n");
 
   for (i=0;i<game_get_n_players(game);i++) {
     game_next_turn(game, i);
@@ -410,68 +456,26 @@ Status game_management_save(Game *game, char *filename) {
     fprintf(f, "\n");
   }
 
-  fprintf(f, "\n\nPLAYERS_END\n\n\n");
-  fprintf(f, "OBJECTS_START\n");
-  fprintf(f, "NUM_OBJECTS=%d\n\n", game_get_n_objects(game));
-
-  for (i=0;i<game_get_n_objects(game);i++) {
-    object=objects[i];
-    fprintf(f, "#o:%ld|%s|%ld|%s|%d|%d|%d|%ld|%ld|%d\n", object_get_id(object), object_get_name(object), object_get_location(object), object_get_description(object), object_get_health(object), object_get_strength(object), object_get_movable(object), object_get_dependency(object), object_get_open(object), object_get_taken(object));
-  }
-
-  fprintf(f, "\nOBJECTS_END\n\n\n");
-  fprintf(f, "CHARACTER_START\n");
-  fprintf(f, "NUM_CHARACTERS=%d\n\n", game_get_n_characters(game));
+  fprintf(f, "\n");
 
   for (i=0;i<game_get_n_characters(game);i++) {
     character=characters[i];
     fprintf(f, "#c:%ld|%s|%s|%ld|%d|%d|%s|%ld\n", character_get_id(character), character_get_name(character), character_get_gdesc(character), character_get_location(character), character_get_health(character), character_get_friendly(character), character_get_message(character), character_get_following(character));
   }
 
-  fprintf(f, "\nCHARACTERS_END\n\n\n");
-  fprintf(f, "SPACES_START\n");
-  fprintf(f, "NUM_SPACES=%d\n", game_get_n_spaces(game));
-
-  for (i=0;i<game_get_n_spaces(game);i++) {
-    space=spaces[i];
-    fprintf(f, "#s:%ld|%s|", space_get_id(space), space_get_name(space));
-    /*DA CORE DUMPED ESTOY DE DESCANSO JAJAJAJ
-    for (j=0;i<GDESC_MAX;j++) {
-      fprintf(f, "%s|", space_get_gdesc(space, j));
-    }
-    */
-    fprintf(f, "%s|%s|%d|%d|%d|", space_get_message1(space), space_get_message2(space), space_get_discovered(space), set_get_nids(space_get_set_objects(space)), set_get_nids(space_get_set_characters(space)));
-
-    
-
-    fprintf(f, "Objects: ");
-    ids=set_id_object(space_get_set_objects(space));
-    for (j=0;j<set_get_nids(space_get_set_objects(space));j++) {
-      fprintf(f, "id=%ld;", ids[j]);
-    }
-    fprintf(f, "\nCharacters: ");
-    ids=set_id_object(space_get_set_characters(space));
-    for (j=0;j<set_get_nids(space_get_set_characters(space));j++) {
-      fprintf(f, "id=%ld;", ids[j]);
-    }
-  }
-
-  fprintf(f, "\n\nSPACES_END\n\n\n");
-  fprintf(f, "LINKS_START\n");
-  fprintf(f, "NUM_LINKS=%d\n\n", game_get_n_links(game));
+  fprintf(f, "\n");
 
   for (i=0;i<game_get_n_links(game);i++) {
     link=links[i];
     fprintf(f, "#l:%ld|%s|%ld|%ld|%d|%d\n", link_get_id(link), link_get_name(link), link_get_origin(link), link_get_destination(link), link_get_direction(link), link_get_open(link));
   }
 
-  fprintf(f, "\nLINKS_END\n\n\n");
-  fprintf(f, "LAST_COMMAND\n");
-  fprintf(f, "code=%d;output=%d;arguments=%s;argumments1=%s;arguments2=%s\n", command_get_code(command), command_get_output(command), command_get_arguments(command), command_get_arguments1(command), command_get_arguments2(command));
+  fprintf(f, "\n");
 
-  fprintf(f, "\n\nTURN=%d", game_get_turn(game));
-
-  fprintf(f, "\n\n\nGAME_END");
+  for (i=0;i<game_get_n_objects(game);i++) {
+    object=objects[i];
+    fprintf(f, "#o:%ld|%s|%ld|%s|%d|%d|%d|%ld|%ld|%d\n", object_get_id(object), object_get_name(object), object_get_location(object), object_get_description(object), object_get_health(object), object_get_strength(object), object_get_movable(object), object_get_dependency(object), object_get_open(object), object_get_taken(object));
+  }
 
   fclose(f);
 
@@ -480,13 +484,67 @@ Status game_management_save(Game *game, char *filename) {
 
 Status game_management_load(Game *game, char *filename) {
   FILE *f=NULL;
-  int i, j;
+  char line[WORD_SIZE] = "";
+  char *toks = NULL;
+  int ns = 0, np = 0, nc = 0, nl = 0, no = 0, t = 0;
+  char arguments[WORD_SIZE] = "", arguments1[WORD_SIZE] = "", arguments2[WORD_SIZE] = "";
+  CommandCode code;
+  Status output;
+  Command *cmd=game_get_last_command(game);
 
   if (!game || !filename || !(f=fopen(filename, "r"))) {
     return ERROR;
   }
 
+  while (fgets(line, WORD_SIZE, f)) {
+    if (strncmp("#ns:", line, 4) == 0) {
+      ns = atoi(line + 4);
+    } else if (strncmp("#np:", line, 4) == 0) {
+      np = atoi(line + 4);
+    } else if (strncmp("#nc:", line, 4) == 0) {
+      nc = atoi(line + 4);
+    } else if (strncmp("#nl:", line, 4) == 0) {
+      nl = atoi(line + 4);
+    } else if (strncmp("#no:", line, 4) == 0) {
+      no = atoi(line + 4);
+    } else if (strncmp("#lc:", line, 4) == 0) {
+      toks = strtok(line + 3, "|");
+      if (toks) code = atoi(toks);
+      command_set_code(cmd, code);
+      toks = strtok(NULL, "|");
+      if (toks) output = atoi(toks);
+      command_set_output(cmd, output);
+      toks = strtok(NULL, "|");
+      if (toks) strcpy(arguments, toks);
+      command_set_arguments(cmd, arguments);
+      toks = strtok(NULL, "|");
+      if (toks) strcpy(arguments1, toks);
+      command_set_arguments(cmd, arguments1);
+      toks = strtok(NULL, "|");
+      if (toks) strcpy(arguments2, toks);
+      command_set_arguments(cmd, arguments2);
+    } else if (strncmp("#t:", line, 3) == 0) {
+      t = atoi(line + 3);
+    } else if (line[0] == '#' && line[1] == 's' && line[2] == ':') {
+      break;
+    }
+  }
 
+  game_set_n_spaces(game, ns);
+  game_set_n_players(game, np);
+  game_set_n_characters(game, nc);
+  game_set_n_links(game, nl);
+  game_set_n_objects(game, no);
+
+  game_set_turn(game, t);
+
+  game_load_spaces(game, filename);
+  game_load_players(game, filename);
+  game_load_characters(game, filename);
+  game_load_links(game, filename);
+  game_load_objects(game, filename);
+
+  fclose(f);
 
   return OK;
 }

@@ -192,6 +192,60 @@ Link **game_get_links(Game *game);
 int game_get_n_spaces(Game *game);
 
 /**
+ * @brief Establece el número de jugadores del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @param n_players Número de jugadores a establecer
+ * @return OK si se ha realizado correctamente, ERROR en caso contrario
+ */
+Status game_set_n_players(Game *game, int n_players);
+
+/**
+ * @brief Establece el número de personajes del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @param n_characters Número de personajes a establecer
+ * @return OK si se ha realizado correctamente, ERROR en caso contrario
+ */
+Status game_set_n_characters(Game *game, int n_characters);
+
+/**
+ * @brief Establece el número de enlaces del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @param n_links Número de enlaces a establecer
+ * @return OK si se ha realizado correctamente, ERROR en caso contrario
+ */
+Status game_set_n_links(Game *game, int n_links);
+
+/**
+ * @brief Establece el número de espacios del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @param n_spaces Número de espacios a establecer
+ * @return OK si se ha realizado correctamente, ERROR en caso contrario
+ */
+Status game_set_n_spaces(Game *game, int n_spaces);
+
+/**
+ * @brief Establece el número de objetos del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @param n_objects Número de objetos a establecer
+ * @return OK si se ha realizado correctamente, ERROR en caso contrario
+ */
+Status game_set_n_objects(Game *game, int n_objects);
+
+/**
+ * @brief Establece el turno del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @param turn Turno del juego
+ * @return OK si se ha realizado correctamente, ERROR en caso contrario
+ */
+Status game_set_turn(Game *game, int turn);
+
+/**
  * @brief Obtiene el puntero de un objeto con cierto nombre de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game
