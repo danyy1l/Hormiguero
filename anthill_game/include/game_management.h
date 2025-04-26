@@ -1,15 +1,15 @@
 /**
  * @brief Contiene la funcionalidad necesaria para la carga de los espacios
  * 
- * @file game_reader.h
+ * @file game_management.h
  * @author Hugo Martín
  * @version 7
  * @date 05-02-2025
  * @copyright GNU Public License
  */
 
-#ifndef GAME_READER_H
-#define GAME_READER_H
+#ifndef GAME_MANAGEMENT_H
+#define GAME_MANAGEMENT_H
 
 #include "game.h"
 

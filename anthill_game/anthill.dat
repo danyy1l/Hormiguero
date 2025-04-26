@@ -31,7 +31,7 @@
 #s:351|PreSalid| | | | | |
 #s:353|EasterEg| | | | | |
 #s:361|Subida3a| | | | | |
-#s:363|UnTioAki| | | | | |"No hay salida por este camino"|Se levanta un puente|
+#s:363|UnTioAki|       _ |      ! !|  ____! !| (     .'|  )   (  |"No hay salida por este camino"|Se levanta un puente|
 
 #s:413|Enemigo2| | | | | |
 #s:414|Subida4a| | | | | |
@@ -48,13 +48,13 @@
 #s:515|Bajada3a| | | | | |
 #s:554|WhiteOrb|  *   *  |. _\_/_  | . / \   |i  ___  i|   #-#   |Hay algo magico en el aire|
 
-#s:611|FinalYea| | | | | |Enhorabuena! Coge la corona para terminar|
+#s:611|FinalYea| .-===-. | ! . . ! | ! .'. ! |()_____()|II_____II|Enhorabuena! Coge la corona para terminar|
 #s:612|AquiBoss| | | | | |
 #s:613|Bajada4a| | | | | |Vaya, no tienes la llave|Ya no hay vuelta atras|
 
-#s:999|DevsAqui| 0 0 0 0 | ! ! ! ! |_!_!_!_!_|/\/\/\/\ |
+#s:999|DevsAqui| 0 0 0 0 |_!_!_!_!_| ! ! ! ! |/\/\ /\/\| |"Hola, somos los devs, gracias por jugar a nuestro juego!"|
 
-#p:1|Hormiga|m0^ |211|10|3|
+#p:1|Hormiga|m0^ |211|10|1|5|
 
 #c:1|Antlion| ^0m  |213|5|1|1|Hello!|-1|
 #c:2|Worm|*0o8o |211|6|1|1|Welcome!|-1|
@@ -163,6 +163,8 @@
 #l:94|Q612_613|612|613|5|0|
 #l:95|Q613_612|613|612|1|0|
 #l:96|Q613_511|613|511|10|1|
+
+#l:97|S999_353|999|353|5|1|
 
 #o:1|GoldKey|112|Abre algo importante|0|0|1|-1|93|
 #o:2|Skull|131|Creepy|0|0|1|-1|-1|

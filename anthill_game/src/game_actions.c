@@ -9,6 +9,7 @@
  */
 
 #include "../include/game.h"
+#include "../include/game_rules.h"
 #include "../include/game_actions.h"
 #include "../include/game_management.h"
 
@@ -164,6 +165,8 @@ Status game_actions_update(Game *game, Command *command) {
   
   cmd = command_get_code(command);
   game_set_prev_player_location(game, player_get_location(game_get_player(game)));
+
+  if( game_rules_update(game, command) == ERROR ) return ERROR;
 
   switch (cmd) {
     case UNKNOWN:

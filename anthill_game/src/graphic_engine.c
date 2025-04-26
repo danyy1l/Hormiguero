@@ -1361,6 +1361,11 @@ void print_north(Graphic_engine* ge, Game* game, char* str, Id id_act, Id id_nor
   Player* player;
   char gdesc[PLY_GDESC + 1] = "    ";
 
+  if( id_north == 999 ){
+    print_blank(str, ge);
+    return;
+  }
+
   for(i=0; i<game_get_n_players(game); i++){
     player = game_players(game)[i];
     if( player_get_location(player) == id_north ){
