@@ -55,6 +55,7 @@
 #s:999|DevsAqui| 0 0 0 0 |_!_!_!_!_| ! ! ! ! |/\/\ /\/\| |"Hola, somos los devs, gracias por jugar a nuestro juego!"|
 
 #p:1|Hormiga|m0^ |211|10|1|5|
+#p:2|Gusano|o08o|213|10|2|5|
 
 #c:1|Antlion| ^0m  |213|5|1|1|Hello!|-1|
 #c:2|Worm|*0o8o |211|6|1|1|Welcome!|-1|
