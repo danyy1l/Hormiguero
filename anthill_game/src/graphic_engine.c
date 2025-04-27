@@ -209,7 +209,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
       sprintf(str, "   Followers: ");
       screen_area_puts(ge->descript, str);
       for( i=0; i<n_chars; i++){
-        if( !(character = game_get_character(game, set_id_object(player_get_followers(player))[i])) ) break;
+        if( !(character = game_get_character(game, set_id_object(player_get_followers(player))[i])) ) continue;
         sprintf(str, "    ");
         strcat(str, character_get_name(character));
         strcat(str, ": ");

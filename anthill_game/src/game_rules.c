@@ -16,6 +16,12 @@
 
 #include "../include/game.h"
 
+#define BOSS_ID 10
+
+/**
+ * GAME RULES DECLARATION
+ */
+
 /**
  * @brief Si hay un enemigo en la habitacion, no puedes salir
  * @author Danyyil Shykerynets
@@ -25,10 +31,22 @@
  */
 Status game_rule_enemies(Game *game, Command *command);
 
+/**
+ * @brief Cuando muera el boss, abre las puertas
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ */
+void game_rule_final_boss(Game *game);
+
+/**
+ * GAME RULES IMPLEMENTATION
+ */
+
 Status game_rules_update(Game* game, Command *last_cmd){ 
   Status output = OK;
 
   output = game_rule_enemies(game, last_cmd);
+  game_rule_final_boss(game);
 
   return output;
 }
@@ -56,4 +74,18 @@ Status game_rule_enemies(Game *game, Command *last_cmd){
   }
 
   return OK;
+}
+
+void game_rule_final_boss(Game *game){
+  Player* player = game_get_player(game);
+  Character* boss = game_get_character(game, BOSS_ID);
+
+  if( !boss ) return;
+
+  if( player_get_location(player) == character_get_location(boss) ){
+    if( character_get_health(boss) <= 0 ){
+      link_set_open(game_get_link(game, 612, 611), TRUE);
+      link_set_open(game_get_link(game, 612, 613), TRUE);
+    }
+  }
 }

@@ -277,18 +277,25 @@ Status game_add_character(Game *game, Character* character){
 }
 
 Status game_remove_character(Game *game, Id character_id){  
-  int j = character_id - 1;
-  
+  int i;
+  Character* target = NULL;
+
   if( !game )
     return ERROR;
 
+  for(i=0; i<game_get_n_characters(game); i++){
+    target = game_get_character_at(game, i);
+    if( character_get_id(target) == character_id ) break;
+  }
+
+  set_del_value(player_get_followers(game_get_player(game)), character_id);
   space_del_character( game_get_space(game, player_get_location(game_get_player(game))), character_id );
   character_set_id( game_get_character(game, character_id), NO_ID );
-  character_destroy(game->characters[ j ]);
+  character_destroy(target);
 
   /*Desplaza todos los elementos a la izq, de esta manera, no quedan huecos libres*/
-  for(; j<game->n_characters; j++){
-    game->characters[j] = game->characters[j+1];
+  for(; i<game->n_characters; i++){
+    game->characters[i] = game->characters[i+1];
   }
 
   game->characters[ game->n_characters ] = NULL;
