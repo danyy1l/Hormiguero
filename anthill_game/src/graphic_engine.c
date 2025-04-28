@@ -168,11 +168,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     }
 
     print_top(ge, game, str, id_act, id_north, id_ne, id_nw, space_north, space_ne, space_nw);
-    printf("Top\n");
     print_mid(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
-    printf("Mid\n");
     print_bot(ge, game, str, id_act, id_south, id_se, id_sw, space_south, space_se, space_sw);
-    printf("Bot\n");
   }
 
   /* Paint in the description area */
@@ -203,11 +200,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     sprintf(str, "   Health: %d", player_get_health(player));
     screen_area_puts(ge->descript, str);
     
-     strength += player_get_strength(player);
-     sprintf(str, "   St: %d", strength);
-     screen_area_puts(ge->descript, str);
-     screen_area_puts(ge->descript, " ");
-    
     n_chars = set_get_nids(player_get_followers(player));
     
     if( n_chars > 0 ){
@@ -223,8 +215,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
         strength += character_get_strength(character);
         screen_area_puts(ge->descript, str);
       }
-      screen_area_puts(ge->descript, " ");
     }
+
+    strength += player_get_strength(player);
+    sprintf(str, "   St: %d", strength);
+    screen_area_puts(ge->descript, str);
+    screen_area_puts(ge->descript, " ");
+
   }
 
   sprintf(str, "  Characters: ");
@@ -280,7 +277,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     else
     strcpy(action_return,"Error");
     
-    sprintf(str, " P%d - %s (%s): %s", (game_get_turn(game)+1), cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
+    sprintf(str, " P%d - %s (%s): %s", ((game_get_turn(game)+1)%game_get_n_players(game))+1, cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
     screen_area_puts(ge->feedback, str);
   }
   
