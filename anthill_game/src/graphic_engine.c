@@ -117,7 +117,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   char action_return[STATUS_SIZE];
   char str[WORD_SIZE], friendly[WORD_SIZE/2], str1[WORD_SIZE/2];
   extern char *cmd_to_str[N_CMD][N_CMDT];
-  int i, id_count, n_objs, n_chars;
+  int i, id_count, n_objs, n_chars, strength = 0;
 
   Player *player=game_get_player(game);                               /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
@@ -203,6 +203,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     sprintf(str, "   Health: %d", player_get_health(player));
     screen_area_puts(ge->descript, str);
     
+     strength += player_get_strength(player);
+     sprintf(str, "   St: %d", strength);
+     screen_area_puts(ge->descript, str);
+     screen_area_puts(ge->descript, " ");
+    
     n_chars = set_get_nids(player_get_followers(player));
     
     if( n_chars > 0 ){
@@ -215,11 +220,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
         strcat(str, ": ");
         sprintf(str1, "%d HP",character_get_health(character));
         strcat(str, str1);
+        strength += character_get_strength(character);
         screen_area_puts(ge->descript, str);
       }
+      screen_area_puts(ge->descript, " ");
     }
-    
-    screen_area_puts(ge->descript, " ");
   }
 
   sprintf(str, "  Characters: ");
@@ -241,7 +246,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     sprintf(str, "  Player has no object");
     screen_area_puts(ge->descript, str);
   } else {
-    sprintf(str, "  Player has these objects: %d", set_get_nids(inventory_get_objects(player_get_objects(player))));
+    sprintf(str, "  Player has %d objects:", set_get_nids(inventory_get_objects(player_get_objects(player))));
     screen_area_puts(ge->descript, str);
     for (i=0;i<n_ids;i++) {
       object=game_get_object(game, set_ids[i]);       /*Cada uno de los objetos de la mochila del jugador*/

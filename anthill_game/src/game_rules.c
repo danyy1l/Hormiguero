@@ -23,7 +23,7 @@
  */
 
 /**
- * @brief Si hay un enemigo en la habitacion, no puedes salir
+ * @brief Si hay un enemigo en la habitacion, recibes daño ante cualquier comando distinto de attack
  * @author Danyyil Shykerynets
  * @param game Puntero a la partida
  * @param command Puntero al comando
@@ -89,3 +89,9 @@ void game_rule_final_boss(Game *game){
     }
   }
 }
+
+/*
+void game_rule_fall_trap_423(Game* game, Command *last_cmd){
+  Player* player = game_get_player(game);
+}
+  */
