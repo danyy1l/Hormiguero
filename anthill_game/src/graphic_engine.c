@@ -117,7 +117,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   char action_return[STATUS_SIZE];
   char str[WORD_SIZE], friendly[WORD_SIZE/2], str1[WORD_SIZE/2];
   extern char *cmd_to_str[N_CMD][N_CMDT];
-  int i, id_count, n_objs, n_chars;
+  int i, id_count, n_objs, n_chars, strength = 0;
 
   Player *player=game_get_player(game);                               /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
@@ -168,11 +168,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     }
 
     print_top(ge, game, str, id_act, id_north, id_ne, id_nw, space_north, space_ne, space_nw);
-    printf("Top\n");
     print_mid(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
-    printf("Mid\n");
     print_bot(ge, game, str, id_act, id_south, id_se, id_sw, space_south, space_se, space_sw);
-    printf("Bot\n");
   }
 
   /* Paint in the description area */
@@ -209,17 +206,22 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
       sprintf(str, "   Followers: ");
       screen_area_puts(ge->descript, str);
       for( i=0; i<n_chars; i++){
-        if( !(character = game_get_character(game, set_id_object(player_get_followers(player))[i])) ) break;
+        if( !(character = game_get_character(game, set_id_object(player_get_followers(player))[i])) ) continue;
         sprintf(str, "    ");
         strcat(str, character_get_name(character));
         strcat(str, ": ");
         sprintf(str1, "%d HP",character_get_health(character));
         strcat(str, str1);
+        strength += character_get_strength(character);
         screen_area_puts(ge->descript, str);
       }
     }
-    
+
+    strength += player_get_strength(player);
+    sprintf(str, "   St: %d", strength);
+    screen_area_puts(ge->descript, str);
     screen_area_puts(ge->descript, " ");
+
   }
 
   sprintf(str, "  Characters: ");
@@ -241,7 +243,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     sprintf(str, "  Player has no object");
     screen_area_puts(ge->descript, str);
   } else {
-    sprintf(str, "  Player has these objects: %d", set_get_nids(inventory_get_objects(player_get_objects(player))));
+    sprintf(str, "  Player has %d objects:", set_get_nids(inventory_get_objects(player_get_objects(player))));
     screen_area_puts(ge->descript, str);
     for (i=0;i<n_ids;i++) {
       object=game_get_object(game, set_ids[i]);       /*Cada uno de los objetos de la mochila del jugador*/
@@ -275,7 +277,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     else
     strcpy(action_return,"Error");
     
-    sprintf(str, " P%d - %s (%s): %s", (game_get_turn(game)+1), cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
+    sprintf(str, " P%d - %s (%s): %s", ((game_get_turn(game)+1)%game_get_n_players(game))+1, cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], action_return);
     screen_area_puts(ge->feedback, str);
   }
   
@@ -1360,6 +1362,11 @@ void print_north(Graphic_engine* ge, Game* game, char* str, Id id_act, Id id_nor
   int i;
   Player* player;
   char gdesc[PLY_GDESC + 1] = "    ";
+
+  if( id_north == 999 ){
+    print_blank(str, ge);
+    return;
+  }
 
   for(i=0; i<game_get_n_players(game); i++){
     player = game_players(game)[i];

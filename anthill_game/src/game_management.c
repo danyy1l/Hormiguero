@@ -162,7 +162,7 @@ Status game_load_players(Game *game, char *filename){
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
   char gdesc[PLY_GDESC] = "";
-  int health, bag_max, n_objects, i;
+  int health, strength, bag_max, n_objects, i;
   char *toks = NULL;
   Id id = NO_ID, location = NO_ID, object_id = NO_ID;
   Player* player = NULL;
@@ -191,6 +191,8 @@ Status game_load_players(Game *game, char *filename){
       toks = strtok(NULL, "|");
       health = atoi(toks);
       toks = strtok(NULL, "|");
+      strength = atoi(toks);
+      toks = strtok(NULL, "|");
       bag_max = atoi(toks);
       if (!(toks = strtok(NULL, "|"))) {
         n_objects=0;
@@ -206,6 +208,7 @@ Status game_load_players(Game *game, char *filename){
       player_set_gdesc(player, gdesc);
       player_set_location(player, location);
       player_set_health(player, health);
+      player_set_strength(player, strength);
       inventory_set_max_objects(player_get_objects(player), bag_max);
       set_set_nids(inventory_get_objects(player_get_objects(player)), n_objects);
       game_add_player(game, player);
@@ -305,7 +308,7 @@ Status game_load_characters(Game *game, char *filename){
   char gdesc[GDESC_SIZE] = "";
   char message[WORD_SIZE] = "";
   char *toks = NULL;
-  int health;
+  int health, strength;
   Bool friendly;
   Id id = NO_ID, location = NO_ID, following = NO_ID;
 
@@ -334,6 +337,8 @@ Status game_load_characters(Game *game, char *filename){
       toks = strtok(NULL, "|");
       health = atoi(toks);
       toks = strtok(NULL, "|");
+      strength = atoi(toks);
+      toks = strtok(NULL, "|");
       friendly = atoi(toks);
       toks = strtok(NULL, "|");
       strcpy(message, toks);
@@ -348,6 +353,7 @@ Status game_load_characters(Game *game, char *filename){
       character_set_name(character, name);
       character_set_gdesc(character, gdesc);
       character_set_health(character, health);
+      character_set_strength(character, strength);
       character_set_friendly(character, friendly);
       character_set_message(character, message);
       character_set_following(character,following);
