@@ -260,25 +260,33 @@ Status space_set_message2(Space* space, char* message2){
 }
 
 Status space_print(Space* space) {
-  Id idaux = NO_ID;
- 
+  int i;
+
   /* Error Control */
   if (!space) {
     return ERROR;
   }
  
   /* 1. Print the id and the name of the space */
-  fprintf(stdout, "--> Space (Id: %ld; Name: %s)\n", space->id, space->name);
- 
-  /* 3. Print if there is an object in the space or not */
-  if (space_find_object(space,idaux)) {
-   fprintf(stdout, "---> Object in the space.\n");
-  } else {
-   fprintf(stdout, "---> No object in the space.\n");
+  fprintf(stdout, "--> Space (Id: %ld; Name: %s; Discovered: %d)\n", space->id, space->name, space->discovered);
+
+  /*2. Print space's sets*/
+  for(i=0; i<set_get_nids(space->characters); i++){
+    fprintf(stdout, "--->Character %d: %ld\n", i+1, set_id_object(space->characters)[i]);
+  }
+
+  for(i=0; i<set_get_nids(space->objects); i++){
+    fprintf(stdout, "--->Object %d: %ld\n", i+1, set_id_object(space->objects)[i]);
+  }
+
+  /* 3. Print space gdesc*/
+  for(i=0; i<GDESC_MAX; i++){
+    fprintf(stdout, "%s\n", space_get_gdesc(space, i));
   }
  
-  /* 4. Print if there is a character in the space or not*/
-  
+  /* 4. Print space messages*/
+  if( strcmp(space->message1, "\0" ) ) fprintf(stdout, "Message 1: \"%s\"\n", space->message1);
+  if( strcmp(space->message2, "\0" ) )fprintf(stdout, "Message 2: \"%s\"\n", space->message2);
   
   return OK;
 }

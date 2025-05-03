@@ -187,5 +187,5 @@ void character_print(Character* c){
   if( !c )
     return;
 
-  fprintf(stdout,"Character with ID: %ld\nName: %s\nGraphic Desc: %s\nHealth: %d\nFriendliness: %d\nMessage: %s\n", c->id, c->name, c->gdesc, c->health, c->friendly, c->message);
+  fprintf(stdout,"Character with ID: %ld\nName: %s\nGraphic Desc: %s\nHealth: %d\nStrength: %d\nFriendliness: %d\nMessage: %s\n", c->id, c->name, c->gdesc, c->health, c->strength, c->friendly, c->message);
 }
