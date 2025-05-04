@@ -147,6 +147,13 @@ Status game_actions_save(Game *game, Command* command);
 Status game_actions_load(Game *game, Command* command);
 
 /**
+ * @brief Realiza la accion al recibir un comando "TEAM" 
+ * @author Anthony Eduardo Alvarado Carbajal
+ * @param game Estructura de la partida actual
+ */
+Status game_actions_team(Game* game, Command* command);
+
+/**
    Game actions implementation
 */
  
@@ -266,6 +273,13 @@ Status game_actions_update(Game *game, Command *command) {
       else
         command_set_output(command, OK);
       break;
+
+     case TEAM:
+        if(game_actions_team(game,command)==ERROR)
+           command_set_output(command,ERROR);
+        else
+           command_set_output(command,OK);
+        break;
 
     default: 
       break;
@@ -686,4 +700,24 @@ Status game_actions_abandon(Game* game, Command *command){
   }
 
   return ERROR;
+}
+
+Status game_actions_team(Game* game, Command *command){
+
+  Player *player1= game_get_player(game), *player2=NULL;
+  const char* player_name= command_get_arguments(command);
+  Inventory* *inventory1=player_get_objects(player1),*inventory2=player_get_objects(player2);
+
+  player2=game_get_player_by_name(game,player_name);
+
+
+  if(!game||!command){
+    return ERROR;
+  }
+  
+  if(player1==player2){
+    return ERROR;
+  }
+
+  return OK;
 }
