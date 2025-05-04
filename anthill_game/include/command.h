@@ -14,7 +14,7 @@
 #include "types.h"
 
 #define N_CMDT 2
-#define N_CMD 16
+#define N_CMD 17
 
 /**
  * Enumeracion que representa la palabra de llamada al comando, CMDS es para la corta y CMDL para la palabra completa
@@ -41,6 +41,7 @@ typedef enum {
   LOAD,         /*!<-Carga una partida guardada*/
   RECRUIT,      /*!<Recruits a friendly character>*/
   ABANDON       /*!<Abandons a friendly character>*/
+  TEAM          /*!<Teams with another player>*/
 }CommandCode;
 
 typedef struct _Command Command;
