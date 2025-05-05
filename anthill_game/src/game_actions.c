@@ -345,6 +345,9 @@ Status game_actions_move(Game *game, Command *command) {
   }else
     return ERROR;
 
+  space_player_arrive(game_get_space(game, player_get_location(game_get_player(game))));
+
+
   return OK;
 }
 

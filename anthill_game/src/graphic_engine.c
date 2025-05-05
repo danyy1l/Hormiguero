@@ -262,7 +262,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   screen_area_puts(ge->help, str);
   sprintf(str, " Move(m), Take(t), Drop(d), Attack(a), Chat(c), Look (l), Inspect(i), Use(u), Open(o), Save(sg)");
   screen_area_puts(ge->help, str);
-  sprintf(str, " Load(lg), Recruit(r), Abandon(ab), Team(te) Quit(q)");
+  sprintf(str, " Load(lg), Recruit(r), Abandon(ab), Team(te), Quit(q)");
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */

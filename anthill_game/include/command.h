@@ -40,7 +40,7 @@ typedef enum {
   SAVE,         /*!<-Guarda la partida*/
   LOAD,         /*!<-Carga una partida guardada*/
   RECRUIT,      /*!<Recruits a friendly character>*/
-  ABANDON       /*!<Abandons a friendly character>*/
+  ABANDON,      /*!<Abandons a friendly character>*/
   TEAM          /*!<Teams with another player>*/
 }CommandCode;
 
