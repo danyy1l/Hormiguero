@@ -446,14 +446,6 @@ Status game_management_save(Game *game, char *filename) {
 }
 
 Status game_management_load(Game *game, char *filename) {
-  FILE *f=NULL;
-  int i, j;
-
-  if (!game || !filename || !(f=fopen(filename, "r"))) {
-    return ERROR;
-  }
-
-
 
   return OK;
 }

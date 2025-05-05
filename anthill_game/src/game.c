@@ -142,6 +142,19 @@ int game_get_n_players(Game *game){
   return game == NULL ? -1 : game->n_players;
 }
 
+Player* game_get_player_by_name(Game *game, char* name){
+  int i;
+  if( !game )
+    return NULL;
+
+  for(i=0; i<game->n_players; i++){
+    if( !strcasecmp(player_get_name(game->players[i]), name) )
+      return game->players[i];
+  }
+
+  return NULL;
+}
+
 int game_get_n_spaces(Game *game){
   return game == NULL ? -1 : game->n_spaces;
 }
