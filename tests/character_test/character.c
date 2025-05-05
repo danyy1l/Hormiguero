@@ -3,8 +3,8 @@
  *
  * @file character.c
  * @author Danyyil Shykerynets
- * @version 2
- * @date 27-02-2025
+ * @version 22
+ * @date 23-04-2025
  * @copyright GNU Public License
  */
 
@@ -14,14 +14,21 @@
  #include <stdlib.h>
  #include <string.h>
  
+ /**
+  * @brief Character
+  *
+  * This struct stores all the information related to a character.
+  */
  struct _Character{
    Id id;                    /*!< ID of the character*/
    Id location;              /*!< ID of the locations of this character*/
    char name[WORD_SIZE];     /*!< String containing name of the character*/
-   char gdesc[GDESC_SIZE];   /*!< String containing gdesc of the character*/
+   char gdesc[CHAR_GDESC];   /*!< String containing gdesc of the character*/
    int health;               /*!< Int containing health of character*/
+   int strength;             /*!< Int containing strength of character*/
    Bool friendly;            /*!< Sympathy of the character*/
    char message[WORD_SIZE];  /*!< String containing message of the character*/
+   Id following;             /*!< Id of the followed player, NO_ID by default*/
  };
  
  Character* character_create(){
@@ -32,19 +39,19 @@
  
    character->id = NO_ID;
    character->health = 1;
+   character->strength = 1;
    character->friendly = TRUE;
-   /*No hace falta inicializar los strings porque calloc inicializa a \0 todas sus entradas*/
+   character->following = NO_ID;
+   /* Calloc inicializa gdesc a \0 */
    return character;
  }
  
  Status character_destroy(Character* character){
-   if(character){
+   if( character ){
      free(character);
      character = NULL;
-     return OK;
    }
-   else
-     return ERROR;
+   return OK;
  }
  
  Id character_get_id(Character* character){ 
@@ -90,7 +97,7 @@
  }
  
  char* character_get_gdesc(Character* character){ 
-   if( !character ){ return NULL; }
+   if( !character ){ return "      "; }
    return character->gdesc; 
  }
  
@@ -113,6 +120,20 @@
      return ERROR;
      
    character->health = health;
+ 
+   return OK;
+ }
+ 
+ int character_get_strength(Character* character){ 
+   if( !character ){ return -1; }
+   return character->strength; 
+ }
+ 
+ Status character_set_strength(Character* character, int strength){
+   if(!character)
+     return ERROR;
+     
+   character->strength = strength;
  
    return OK;
  }
@@ -143,6 +164,23 @@
    strcpy(character->message, message);
    
    return OK;  
+ }
+ 
+ Id character_get_following(Character *character){
+   if (!character)
+   {
+     return NO_ID;
+   }
+   return character->following;
+ }
+ 
+ Status character_set_following(Character *character, Id id){
+   if (!character || id == NO_ID)
+   {
+     return ERROR;
+   }
+   character->following = id;
+   return OK;
  }
  
  void character_print(Character* c){
