@@ -244,7 +244,7 @@ char* space_get_message2(Space* space){
 }
 
 Status space_set_message1(Space* space, char* message1){
-  if(!space) return ERROR;
+  if(!space|||!message1) return ERROR;
 
   strcpy(space->message1, message1);
 
@@ -252,7 +252,7 @@ Status space_set_message1(Space* space, char* message1){
 }
 
 Status space_set_message2(Space* space, char* message2){
-  if(!space) return ERROR;
+  if(!space||!message2) return ERROR;
 
   strcpy(space->message2, message2);
 
