@@ -355,4 +355,80 @@
   */
  void test2_space_set_discovered();
 
+/**
+ * @test Test function for space get message1
+ * @pre pointer to space
+ * @post a string
+ */
+ void test1_space_get_message1();
+
+ /**
+ * @test Test function for space get message1
+ * @pre pointer to space=NULL
+ * @post a string=NULL
+ */
+void test2_space_get_message1();
+
+/**
+ * @test Test function for space set message1
+ * @pre pointer to space
+ * @pre a string name
+ * @post Output==OK
+ */
+void test1_space_set_message1();
+
+/**
+ * @test Test function for space set message1
+ * @pre pointer to space=NULL
+ * @pre a string name
+ * @post Output==ERROR
+ */
+void test2_space_set_message1();
+
+/**
+ * @test Test function for space set message1
+ * @pre pointer to space
+ * @pre a string name=NULL
+ * @post Output==ERROR
+ */
+void test3_space_set_message1();
+
+/**
+ * @test Test function for space get message2
+ * @pre pointer to space
+ * @post a string
+ */
+void test1_space_get_message2();
+
+/**
+* @test Test function for space get message2
+* @pre pointer to space=NULL
+* @post a string=NULL
+*/
+void test2_space_get_message2();
+
+/**
+ * @test Test function for space set message1
+ * @pre pointer to space
+ * @pre a string name
+ * @post Output==OK
+ */
+void test1_space_set_message2();
+
+/**
+ * @test Test function for space set message1
+ * @pre pointer to space=NULL
+ * @pre a string name
+ * @post Output==ERROR
+ */
+void test2_space_set_message2();
+
+/**
+ * @test Test function for space set message1
+ * @pre pointer to space
+ * @pre a string name=NULL
+ * @post Output==ERROR
+ */
+void test3_space_set_message2();
+
  #endif
