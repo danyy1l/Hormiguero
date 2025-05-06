@@ -7,7 +7,7 @@
  * @copyright GNU Public License
 */
 
-#include "../include/space.h"
+#include "space.h"
 
 #include <stdio.h>
 #include <stdlib.h>
