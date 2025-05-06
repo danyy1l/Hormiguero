@@ -14,7 +14,7 @@
 #include "space_test.h"
 #include "test.h"
 
-#define MAX_TESTS 37
+#define MAX_TESTS 38
 
 /** 
  * @brief Main function for SPACE unit tests. 
@@ -285,8 +285,8 @@ void test3_space_set_message1(){
 void test1_space_get_message2(){
   Space *s;
   s=space_create(5);
-  space_set_name(s,"Mensaje 2");
-  PRINT_TEST_RESULT(strcmp(space_get_message1(s),"Mensaje 2")==0);
+  space_set_message2(s,"Mensaje 2");
+  PRINT_TEST_RESULT(strcmp(space_get_message2(s),"Mensaje 2")==0);
   space_destroy(s);
 }
 
