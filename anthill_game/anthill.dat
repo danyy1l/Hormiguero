@@ -25,7 +25,7 @@
 #s:312|Bajada1a|
 #s:313|Enemigo4|
 #s:322|Entrando|
-#s:332|PuntoMed|    -    |  Nada   |   que   |   ver   |   aqui  |
+#s:332|PuntoMed|    -    |  Nada   |   que   |   ver   |   aqui  |  |Parece que habia un agujero encima|
 #s:341|RutaBuen| | | | | |
 #s:343|RutaMala| | | | | |
 #s:351|PreSalid| | | | | |
@@ -50,18 +50,19 @@
 
 #s:611|FinalYea| .-===-. | ! . . ! | ! .'. ! |()_____()|II_____II|Enhorabuena! Coge la corona para terminar|
 #s:612|AquiBoss| | | | | |
-#s:613|Bajada4a| | | | | |Vaya, no tienes la llave|Ya no hay vuelta atras|
+#s:613|Bajada4a| | | | | |Necesitas la llave de la PuertaFinal|Ya no hay vuelta atras|
 
 #s:999|DevsAqui| 0 0 0 0 |_!_!_!_!_| ! ! ! ! |/\/\ /\/\| |"Hola, somos los devs, gracias por jugar a nuestro juego!"|
 
 #p:1|Hormiga|m0^ |211|10|1|5|
-#p:2|Gusano|o0o8|213|10|1|5|
+#p:2|Gusano|o0o8|213|8|2|5|
 
 #c:1|Antlion| ^0m  |213|5|1|1|Hello!|-1|
 #c:2|Worm|*0o8o |211|6|1|1|Welcome!|-1|
 #c:3|Spider|/\00/\|214|10|1|0|!!!!!!|-1|
-#c:4|Hugo| /-.-\|253|20|2|0|No entraras|-1|
+#c:4|Hugo| /`-`\|253|20|2|0|No entraras|-1|
 #c:5|Mage|*_/''\|323|12|2|1|Anda con cuidado|-1|
+#c:6|Witch|/._.\*|513|20|5|1|Dame el orbe|-1|
 #c:10|Boss|$$$$$$|612|100|10|0|No debiste entrar|-1|
 
 #l:01|B112_213|112|213|9|1|
@@ -160,15 +161,16 @@
 #l:90|C515_414|515|414|10|1|
 #l:91|C554_452|554|452|10|1|
 
-#l:92|Q611_612|611|612|5|0|
+#l:92|Q611_612|611|612|5|1|
 #l:93|Q612_611|612|611|1|0|
 #l:94|Q612_613|612|613|5|0|
 #l:95|PuertaFinal|613|612|1|0|
 #l:96|Q613_511|613|511|10|1|
 
 #l:97|S999_353|999|353|5|1|
+#l:98|T423_332|423|332|10|0|
 
-#o:1|GoldKey|112|Abre algo importante|0|0|1|-1|93|
+#o:1|GoldKey|112|Abre algo importante|0|0|1|-1|95|
 #o:2|Skull|131|Creepy|0|0|1|-1|-1|
 #o:3|RedPoti|215|Es roja y brilla|5|2|1|-1|-1|
 #o:4|Seed|212|Es una semilla|0|0|1|-1|-1|
@@ -182,11 +184,9 @@
 #o:12|Mine|216|Ojito|-100|0|0|-1|-1|
 #o:13|Ladder|421|Abre alguna puerta|0|0|1|-1|81|
 #o:14|Beer|512|Cura toda la vida|100|-1|1|-1|-1|
-#o:15|Needle|513|Ouch|-5|0|1|-1|-1|
 #o:16|WhiteOrb|554|Brilla bastante|0|0|1|-1|-1|
 #o:17|BlackOrb|432|Absorbe la luz|0|0|1|-1|-1|
 #o:18|TNT|243|Abre una pared|0|0|1|8|31|
-#o:19|Trap|423|Cuidado!!|-7|0|1|-1|-1|
-#o:20|Knife|513|Parece un buen arma|0|3|1|-1|-1|
+#o:19|Trap|423|Cuidado!!|-5|0|-1|-1|-1|
 #o:21|Treasure|611|Genial!|0|0|1|-1|-1|
 #o:22|Key|112|A saber que abre|0|0|1|-1|30|

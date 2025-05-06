@@ -262,7 +262,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   screen_area_puts(ge->help, str);
   sprintf(str, " Move(m), Take(t), Drop(d), Attack(a), Chat(c), Look (l), Inspect(i), Use(u), Open(o), Save(sg)");
   screen_area_puts(ge->help, str);
-  sprintf(str, " Load(lg), Recruit(r), Abandon(ab), Quit(q)");
+  sprintf(str, " Load(lg), Recruit(r), Abandon(ab), Team(te), Quit(q)");
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
@@ -270,7 +270,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   /*Impresion del ultimo comando*/
   screen_area_clear(ge->feedback);
   last_cmd = command_get_code(command);
-  if(last_cmd >= NO_CMD && last_cmd <= ABANDON ){
+  if(last_cmd >= NO_CMD && last_cmd <= TEAM ){
     last_cmd_status = command_get_output(command);
     if( last_cmd_status )
     strcpy(action_return,"Ok");

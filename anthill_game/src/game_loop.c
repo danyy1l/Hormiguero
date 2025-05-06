@@ -102,13 +102,13 @@ void game_loop_run(Game *game, Graphic_engine *gengine, FILE *log_file)
   while ((command_get_code(last_cmd) != QUIT) && (game_get_finished(game) == FALSE))
   {
     game_next_turn(game, turn);
+    game_rules_update(game, last_cmd);
     graphic_engine_paint_game(gengine, game, last_cmd);
     command_get_user_input(last_cmd);
     game_actions_update(game, last_cmd);
     if( command_get_output(last_cmd) == OK && (command_get_code(last_cmd) != ATTACK) ){
       turn = (turn + 1) % game_get_n_players(game);
     }
-    space_player_arrive(game_get_space(game, player_get_location(game_get_player(game))));
     
     if (log_file)
     {

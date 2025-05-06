@@ -2,9 +2,9 @@
  * @brief It tests character module
  * 
  * @file character_test.c
- * @author Danyyil Shykerynets
- * @version 0.0 
- * @date 24-02-2025
+ * @author Álvaro Rodríguez
+ * @version 2.0 
+ * @date 21-04-2025
  * @copyright GNU Public License
  */
 
@@ -15,7 +15,7 @@
  #include "character_test.h"
  #include "test.h"
  
- #define MAX_TESTS 34
+ #define MAX_TESTS 42
  
  /** 
   * @brief Main function for CHARACTER unit tests. 
@@ -78,7 +78,14 @@
    if (all || test == 32) test2_character_get_location();
    if (all || test == 33) test1_character_set_location();
    if (all || test == 34) test2_character_set_location();
- 
+   if (all || test == 35) test1_character_get_strength();
+   if (all || test == 36) test2_character_get_strength();
+   if (all || test == 37) test1_character_set_strength();
+   if (all || test == 38) test2_character_set_strength();
+   if (all || test == 39) test1_character_get_following();
+   if (all || test == 40) test2_character_get_following();
+   if (all || test == 41) test1_character_set_following();
+   if (all || test == 42) test2_character_set_following();
    PRINT_PASSED_PERCENTAGE;
  
    return 1;
@@ -173,7 +180,7 @@
  
  void test2_character_get_gdesc() {
    Character *s = NULL;
-   PRINT_TEST_RESULT(character_get_gdesc(s) == NULL);
+   PRINT_TEST_RESULT(strcmp(character_get_gdesc(s),"      ")==0);
  }
  
  void test1_character_set_gdesc() {
@@ -305,3 +312,47 @@
   Character *s = NULL;
   PRINT_TEST_RESULT(character_set_location(s, 10) == ERROR);
  }
+
+void test1_character_get_strength() {
+  Character *s = NULL;
+  s = character_create();
+  PRINT_TEST_RESULT(character_get_strength(s) == 1);
+  character_destroy(s);
+}
+void test2_character_get_strength(){
+  Character *s = NULL;
+  PRINT_TEST_RESULT(character_get_strength(s) == -1);
+}
+void test1_character_set_strength(){
+  Character *s = NULL;
+  s =character_create();
+  PRINT_TEST_RESULT(character_set_strength(s,2) == OK);
+  character_destroy(s);
+}
+void test2_character_set_strength(){
+  Character *s = NULL;
+  PRINT_TEST_RESULT(character_set_strength(s,2) == ERROR);
+}
+void test1_character_get_following(){
+  Character *s = NULL;
+  s =character_create();
+  character_set_following(s, 10);
+  PRINT_TEST_RESULT(character_get_following(s) == 10);
+  character_destroy(s);
+}
+void test2_character_get_following(){
+  Character *s = NULL;
+  character_set_following(s, 10);
+  PRINT_TEST_RESULT(character_get_following(s) == NO_ID);
+}
+void test1_character_set_following(){
+  Character *s = NULL;
+  s = character_create();
+  PRINT_TEST_RESULT(character_set_following(s, 10) == OK);
+  character_destroy(s);
+
+}
+void test2_character_set_following(){
+  Character *s = NULL;
+  PRINT_TEST_RESULT(character_set_following(s, 10) == ERROR);
+}

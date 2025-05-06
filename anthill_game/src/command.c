@@ -33,7 +33,8 @@ char *cmd_to_str[N_CMD][N_CMDT] = {
   {"sg", "Save"},
   {"lg", "Load"},
   {"r", "Recruit"},
-  {"ab", "Abandon"}
+  {"ab", "Abandon"},
+  {"te","Team"}
 };
 
 /**

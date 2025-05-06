@@ -208,10 +208,11 @@ Status object_set_open(Object *object, Id open) {
   return OK;
 }
 
-Status object_print(Object* object){
-  if (!object)
+Status object_print(Object *object){
+  if( object ){
+    fprintf(stdout, "Object ID: %ld\nObject location: %ld\nObject name: %s\nObject health: %dObject strength: %d\n", object->id, object->location, object->name, object->health, object->strength);
+    fprintf(stdout, "Object taken: %d\nObject dependency: %ld\nObject movable: %d\nObject opens: %ld\n", object->taken, object->dependency, object->movable, object->open);
+    return OK;
+  }else
     return ERROR;
-
-  fprintf(stdout, "-->object (id: %ld; name: %s; location id: %ld)", object->id, object->name, object->location);
-  return OK;
-}
+} 

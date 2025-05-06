@@ -2,9 +2,9 @@
  * @brief It declares the tests for the character module
  * 
  * @file character_test.h
- * @author Danyyil Shykerynets
- * @version 1.0
- * @date 25-02-2025
+ * @author Álvaro Rodríguez
+ * @version 2.0
+ * @date 21-04-2025
  * @copyright GNU Public License
  */
 
@@ -140,5 +140,35 @@ void test2_character_get_location();
  */
 void test1_character_set_location();
 void test2_character_set_location();
+/**
+ * @test Test strength get
+ * @pre Pointer to character
+ * @post int whit the strength or -1 in case of error 
+ */
+void test1_character_get_strength();
+void test2_character_get_strength();
+/**
+ * @test Test strength setting
+ * @pre Pointer to character
+ * @pre New strength to set
+ * @post Status command, OK if triumph, ERROR otherwise 
+ */
+void test1_character_set_strength();
+void test2_character_set_strength();
+/**
+ * @test Test following get
+ * @pre Pointer to character
+ * @post id whit the following or no in case of error 
+ */
+void test1_character_get_following();
+void test2_character_get_following();
+/**
+ * @test Test following setting
+ * @pre Pointer to character
+ * @pre New following to set
+ * @post Status command, OK if triumph, ERROR otherwise 
+ */
+void test1_character_set_following();
+void test2_character_set_following();
 
 #endif
