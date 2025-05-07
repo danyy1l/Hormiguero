@@ -14,7 +14,7 @@
 #include "space_test.h"
 #include "test.h"
 
-#define MAX_TESTS 27
+#define MAX_TESTS 38
 
 /** 
  * @brief Main function for SPACE unit tests. 
@@ -69,7 +69,16 @@ int main(int argc, char** argv) {
   if (all || test == 25) test2_space_get_discovered();
   if (all || test == 26) test1_space_set_discovered();
   if (all || test == 27) test2_space_set_discovered();
-  
+  if (all || test == 28) test1_space_get_message1();
+  if (all || test == 29) test2_space_get_message1();
+  if (all || test == 30) test1_space_set_message1();
+  if (all || test == 31) test2_space_set_message1();
+  if (all || test == 32) test3_space_set_message1();
+  if (all || test == 33) test1_space_get_message2();
+  if (all || test == 34) test2_space_get_message2();
+  if (all || test == 35) test1_space_set_message2();
+  if (all || test == 36) test2_space_set_message2();
+  if (all || test == 37) test3_space_set_message2();
 
   PRINT_PASSED_PERCENTAGE;
 
@@ -239,4 +248,68 @@ void test1_space_set_discovered(){
 void test2_space_set_discovered(){
   Space *s=NULL;
   PRINT_TEST_RESULT(space_set_discovered(s,TRUE)==ERROR);
+}
+
+void test1_space_get_message1(){
+  Space *s;
+  s=space_create(5);
+  space_set_message1(s,"Mensaje 1");
+  PRINT_TEST_RESULT(strcmp(space_get_message1(s),"Mensaje 1")==0);
+  space_destroy(s);
+}
+
+void test2_space_get_message1(){
+  Space *s=NULL;
+  PRINT_TEST_RESULT(space_get_message1(s)==NULL);
+}
+
+void test1_space_set_message1(){
+  Space *s;
+  s = space_create(5);
+  PRINT_TEST_RESULT(space_set_message1(s, "Mensaje 1") == OK);
+  space_destroy(s);
+}
+
+void test2_space_set_message1(){
+  Space *s = NULL;
+  PRINT_TEST_RESULT(space_set_message1(s, "Mensaje 1") == ERROR);
+}
+
+void test3_space_set_message1(){
+  Space *s;
+  s = space_create(5);
+  PRINT_TEST_RESULT(space_set_message1(s, NULL) == ERROR);
+  space_destroy(s);
+}
+
+void test1_space_get_message2(){
+  Space *s;
+  s=space_create(5);
+  space_set_message2(s,"Mensaje 2");
+  PRINT_TEST_RESULT(strcmp(space_get_message2(s),"Mensaje 2")==0);
+  space_destroy(s);
+}
+
+void test2_space_get_message2(){
+  Space *s=NULL;
+  PRINT_TEST_RESULT(space_get_message2(s)==NULL);
+}
+
+void test1_space_set_message2(){
+  Space *s;
+  s = space_create(5);
+  PRINT_TEST_RESULT(space_set_message2(s, "Mensaje 2") == OK);
+  space_destroy(s);
+}
+
+void test2_space_set_message2(){
+  Space *s = NULL;
+  PRINT_TEST_RESULT(space_set_message2(s, "Mensaje 2") == ERROR);
+}
+
+void test3_space_set_message2(){
+  Space *s;
+  s = space_create(5);
+  PRINT_TEST_RESULT(space_set_message2(s, NULL) == ERROR);
+  space_destroy(s);
 }
