@@ -193,6 +193,14 @@ Space **game_get_spaces(Game *game);
 Link **game_get_links(Game *game);
 
 /**
+ * @brief Obtiene los players del juego
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @return Puntero al array de players del juego
+ */
+Player **game_get_players(Game *game);
+
+/**
  * @brief Devuelve el numero de espacios del juego
  * @author Hugo Martín
  * @param game Un puntero a Game
@@ -253,6 +261,24 @@ Status game_set_n_objects(Game *game, int n_objects);
  * @return OK si se ha realizado correctamente, ERROR en caso contrario
  */
 Status game_set_turn(Game *game, int turn);
+
+/**
+ * @brief Obtiene un link por su id
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @param id Un id de un link
+ * @return NULL o el puntero al link
+ */
+Link *game_get_link_by_id(Game *game, Id id);
+
+/**
+ * @brief Obtiene un player por su id
+ * @author Hugo Martín
+ * @param game Un puntero a Game
+ * @param id Un id de un player
+ * @return NULL o el puntero al player
+ */
+Player *game_get_player_by_id(Game *game, Id id);
 
 /**
  * @brief Obtiene el puntero de un objeto con cierto nombre de la estructura game

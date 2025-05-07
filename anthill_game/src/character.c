@@ -108,7 +108,7 @@ Status character_set_gdesc(Character* character, char* gdesc){
   strcpy(character->gdesc, gdesc);
   
   return OK;
-}
+} 
 
 int character_get_health(Character* character){ 
   if( !character ){ return -1; }

@@ -260,6 +260,13 @@ Link **game_get_links(Game *game) {
   return game->links;
 }
 
+Player **game_get_players(Game *game) {
+  if(!game)
+  return NULL;
+
+  return game->players;
+}
+
 Object* game_get_object_by_name(Game *game, char* name){
   int i;
   if( !game )
@@ -509,6 +516,36 @@ Link* game_get_link_by_name(Game *game, char* name) {
   for(i=0; i<game->n_links; i++){
     if( !strcasecmp(link_get_name(game->links[i]), name) )
     return game->links[i];
+  }
+
+  return NULL;
+}
+
+Link *game_get_link_by_id(Game *game, Id id) {
+  int i;
+  Link **links=game_get_links(game);
+  if( !game )
+    return NULL;
+
+  for(i=0; i<game->n_links; i++){
+    if (id==link_get_id(links[i])) {
+      return links[i];
+    }
+  }
+
+  return NULL;
+}
+
+Player *game_get_player_by_id(Game *game, Id id) {
+  int i;
+  Player **players=game_get_players(game);
+  if( !game )
+    return NULL;
+
+  for(i=0; i<game->n_players; i++){
+    if (id==player_get_id(players[i])) {
+      return players[i];
+    }
   }
 
   return NULL;

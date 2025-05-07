@@ -44,7 +44,7 @@ Space* space_create(Id id) {
   newSpace = (Space*)malloc(sizeof(Space));
   if (newSpace == NULL) {
     return NULL;
-  }
+  } 
  
   /* Initialization of an empty space*/
   newSpace->id = id;

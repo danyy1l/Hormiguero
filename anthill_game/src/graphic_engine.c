@@ -269,7 +269,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
 
   /*Impresion del ultimo comando*/
   screen_area_clear(ge->feedback);
-  last_cmd = command_get_code(command);
+  last_cmd = command_get_code(command); 
   if(last_cmd >= NO_CMD && last_cmd <= TEAM ){
     last_cmd_status = command_get_output(command);
     if( last_cmd_status )

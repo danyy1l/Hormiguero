@@ -26,8 +26,9 @@ Status game_load_spaces(Game *game, char *filename) {
   Id id = NO_ID, object_id = NO_ID, character_id = NO_ID;
   Space *space = NULL;
   Status status = OK;
-  Bool discovered;
+  Bool discovered, create;
   int i, num_objects, num_characters;
+  Space **spaces=game_get_spaces(game);
 
   if (!filename) {
     return ERROR;
@@ -43,8 +44,20 @@ Status game_load_spaces(Game *game, char *filename) {
       toks = strtok(line + 3, "|");
       id = atol(toks);
       
-      if( !(space = space_create(id)))
-      return ERROR;
+      create=TRUE;
+      for (i=0;i<game_get_n_spaces(game);i++) {
+        if (id==space_get_id(spaces[i])) {
+          create=FALSE;
+          break;
+        }
+      }
+
+      if (create==TRUE) {
+        if( !(space = space_create(id)))
+        return ERROR;
+      } else if (create==FALSE) {
+        space=game_get_space(game, id);
+      }
       
       toks = strtok(NULL, "|");
       strcpy(name, toks);
@@ -71,7 +84,7 @@ Status game_load_spaces(Game *game, char *filename) {
         num_characters=atoi(toks);
       }
       set_set_nids(space_get_set_characters(space), num_characters);
-      for (i=0;i<set_get_nids(space_get_set_objects(space));i++) {
+      /*for (i=0;i<set_get_nids(space_get_set_objects(space));i++) {
         toks = strtok(NULL, "|");
         object_id = atoi(toks);
         space_add_object(space, object_id);
@@ -80,12 +93,14 @@ Status game_load_spaces(Game *game, char *filename) {
         toks = strtok(NULL, "|");
         character_id = atoi(toks);
         space_add_character(space, character_id);
-      }
+      }*/
       #ifdef DEBUG
       printf("Leido: %ld|%s|\n", id, name);
       #endif
       space_set_name(space, name);
-      game_add_space(game, space);
+      if (create==TRUE) {
+        game_add_space(game, space);
+      }
     }
   }
   
@@ -104,10 +119,11 @@ Status game_load_links(Game *game, char *filename){
   char name[WORD_SIZE] = "";
   Id id = NO_ID, origin = NO_ID, destination = NO_ID;
   Direction direction;
-  Bool open;
+  Bool open, create;
   char *toks = NULL;
+  int i;
 
-  Link *link = NULL;
+  Link *link = NULL, **links=game_get_links(game);
   Status status = OK;
 
   if (!filename) {
@@ -123,6 +139,21 @@ Status game_load_links(Game *game, char *filename){
     if (strncmp("#l:", line, 3) == 0) {
       toks = strtok(line + 3, "|");
       id = atol(toks);
+
+      create=TRUE;
+      for (i=0;i<game_get_n_links(game);i++) {
+        if (id==link_get_id(links[i])) {
+          create=FALSE;
+          break;
+        }
+      }
+
+      if (create==TRUE) {
+        if( !(link = link_create()) ){ return ERROR; }
+      } else if (create==FALSE) {
+        link=game_get_link_by_id(game, id);
+      }
+
       toks = strtok(NULL, "|");
       strcpy(name, toks);
       toks = strtok(NULL, "|");
@@ -136,7 +167,6 @@ Status game_load_links(Game *game, char *filename){
   #ifdef DEBUG
       printf("Leido: %ld|%s|%ld|%ld|%d|%d\n", id, name, origin, destination, direction, open);
   #endif
-      if( !(link = link_create()) ){ return ERROR; }
       link_set_id(link, id);
       link_set_name(link, name);
       link_set_origin(link, origin);
@@ -144,7 +174,9 @@ Status game_load_links(Game *game, char *filename){
       link_set_direction(link, direction);
       link_set_open(link, open);
 
-      game_add_link(game, link);
+      if (create==TRUE) {
+        game_add_link(game, link);
+      }
     }
   }
 
@@ -168,6 +200,8 @@ Status game_load_players(Game *game, char *filename){
   Player* player = NULL;
   Status status = OK;
   Object *object=NULL;
+  Bool create;
+  Player **players=game_get_players(game);
 
   if (!filename) {
     return ERROR;
@@ -182,6 +216,21 @@ Status game_load_players(Game *game, char *filename){
     if (strncmp("#p:", line, 3) == 0) {
       toks = strtok(line + 3, "|");
       id = atol(toks);
+
+      create=TRUE;
+      for (i=0;i<game_get_n_players(game);i++) {
+        if (id==player_get_id(players[i])) {
+          create=FALSE;
+          break;
+        }
+      }
+
+      if (create==TRUE) {
+        if( !(player = player_create()) ) return ERROR;
+      } else if (create==FALSE) {
+        player=game_get_player_by_id(game, id);
+      }
+
       toks = strtok(NULL, "|");
       strcpy(name, toks);
       toks = strtok(NULL, "|");
@@ -202,7 +251,6 @@ Status game_load_players(Game *game, char *filename){
   #ifdef DEBUG
       printf("Leido: %ld|%s|%ld\n", id, name, location);
   #endif
-      if( !(player = player_create()) ) return ERROR;
       player_set_id(player, id);
       player_set_name(player, name);
       player_set_gdesc(player, gdesc);
@@ -211,8 +259,10 @@ Status game_load_players(Game *game, char *filename){
       player_set_strength(player, strength);
       inventory_set_max_objects(player_get_objects(player), bag_max);
       set_set_nids(inventory_get_objects(player_get_objects(player)), n_objects);
-      game_add_player(game, player);
-      space_player_arrive(game_get_space(game, location));
+      if (create==TRUE) {
+        game_add_player(game, player);
+        space_player_arrive(game_get_space(game, location));
+      }
       for (i=0;i<n_objects;i++) {
         toks = strtok(NULL, "|");
         object_id = atoi(toks);
@@ -240,8 +290,9 @@ Status game_load_objects(Game *game, char *filename){
   Id id = NO_ID, location = NO_ID, dependency = NO_ID, open = NO_ID; 
   Object *object = NULL;
   Status status = OK;
-  int health, strength;
-  Bool movable, taken;
+  int health, strength, i;
+  Bool movable, taken, create;
+  Object **objects=game_get_objects(game);
 
   if (!filename) {
     return ERROR;
@@ -256,6 +307,21 @@ Status game_load_objects(Game *game, char *filename){
     if (strncmp("#o:", line, 3) == 0) {
       toks = strtok(line + 3, "|");
       id = atol(toks);
+
+      create=TRUE;
+      for (i=0;i<game_get_n_objects(game);i++) {
+        if (id==object_get_id(objects[i])) {
+          create=FALSE;
+          break;
+        }
+      }
+
+      if (create==TRUE) {
+        if( !(object = object_create(id))) return ERROR;
+      } else if (create==FALSE) {
+        object=game_get_object(game, id);
+      }
+
       toks = strtok(NULL, "|");
       strcpy(name, toks);
       toks = strtok(NULL, "|");
@@ -277,7 +343,6 @@ Status game_load_objects(Game *game, char *filename){
   #ifdef DEBUG
       printf("Leido: %ld|%s|%ld|%s|%d|%d|%ld|%ld|%d|\n", id, name, location, description, health, strength, movable, dependency, open);
   #endif
-      if( !(object = object_create(id))) return ERROR;
       object_set_name(object, name);
       object_set_location(object, location);
       object_set_description(object, description);
@@ -287,8 +352,10 @@ Status game_load_objects(Game *game, char *filename){
       object_set_dependency(object, dependency);
       object_set_open(object, open);
       object_set_taken(object, taken);
-      game_add_object(game, object);
-      space_add_object(game_get_space(game, location), id);
+      if (create==TRUE) {
+        game_add_object(game, object);
+        space_add_object(game_get_space(game, location), id);
+      }
     }
   }
 
@@ -308,10 +375,10 @@ Status game_load_characters(Game *game, char *filename){
   char gdesc[GDESC_SIZE] = "";
   char message[WORD_SIZE] = "";
   char *toks = NULL;
-  int health, strength;
-  Bool friendly;
+  int health, strength, i;
+  Bool friendly, create;
   Id id = NO_ID, location = NO_ID, following = NO_ID;
-
+  Character **characters=game_get_characters(game);
   Character *character = NULL;
   Status status = OK;
 
@@ -328,6 +395,21 @@ Status game_load_characters(Game *game, char *filename){
     if (strncmp("#c:", line, 3) == 0) {
       toks = strtok(line + 3, "|");
       id = atol(toks);
+
+      create=TRUE;
+      for (i=0;i<game_get_n_characters(game);i++) {
+        if (id==character_get_id(characters[i])) {
+          create=FALSE;
+          break;
+        }
+      }
+
+      if (create==TRUE) {
+        if( !(character = character_create()) ){ return ERROR; }
+      } else if (create==FALSE) {
+        character=game_get_character(game, id);
+      }
+
       toks = strtok(NULL, "|");
       strcpy(name, toks);
       toks = strtok(NULL, "|");
@@ -347,7 +429,6 @@ Status game_load_characters(Game *game, char *filename){
   #ifdef DEBUG
       printf("Leido: %ld|%s|%s|%d|%d|%s|%ld|%ld\n", id, name, gdesc, health, friendly, message, location,following);
   #endif
-      if( !(character = character_create()) ){ return ERROR; }
       character_set_id(character, id);
       character_set_location(character, location);
       character_set_name(character, name);
@@ -358,8 +439,10 @@ Status game_load_characters(Game *game, char *filename){
       character_set_message(character, message);
       character_set_following(character,following);
 
-      game_add_character(game, character);
-      space_add_character(game_get_space(game, location), id);
+      if (create==TRUE) {
+        game_add_character(game, character);
+        space_add_character(game_get_space(game, location), id);
+      }
     }
   }
 
@@ -439,14 +522,14 @@ Status game_management_save(Game *game, char *filename) {
       }
     }
     fprintf(f, "%s|%s|%d|%d|%d|", space_get_message1(space), space_get_message2(space), space_get_discovered(space), set_get_nids(space_get_set_objects(space)), set_get_nids(space_get_set_characters(space)));
-    ids=set_id_object(space_get_set_objects(space));
+    /*ids=set_id_object(space_get_set_objects(space));
     for (j=0;j<set_get_nids(space_get_set_objects(space));j++) {
       fprintf(f, "%ld|", ids[j]);
     }
     ids=set_id_object(space_get_set_characters(space));
     for (j=0;j<set_get_nids(space_get_set_characters(space));j++) {
       fprintf(f, "%ld|", ids[j]);
-    }
+    }*/
     fprintf(f, "\n");
   }
 
@@ -454,7 +537,7 @@ Status game_management_save(Game *game, char *filename) {
 
   for (i=0;i<game_get_n_players(game);i++) {
     game_next_turn(game, i);
-    fprintf(f, "#p:%ld|%s|%s|%ld|%d|%d|%d|", player_get_id(game_get_player(game)), player_get_name(game_get_player(game)), player_get_gdesc(game_get_player(game)), player_get_location(game_get_player(game)), player_get_health(game_get_player(game)), inventory_get_max_objects(player_get_objects(game_get_player(game))), set_get_nids(inventory_get_objects(player_get_objects(game_get_player(game)))));
+    fprintf(f, "#p:%ld|%s|%s|%ld|%d|%d|%d|%d|", player_get_id(game_get_player(game)), player_get_name(game_get_player(game)), player_get_gdesc(game_get_player(game)), player_get_location(game_get_player(game)), player_get_health(game_get_player(game)), player_get_strength(game_get_player(game)), inventory_get_max_objects(player_get_objects(game_get_player(game))), set_get_nids(inventory_get_objects(player_get_objects(game_get_player(game)))));
     ids=set_id_object(inventory_get_objects(player_get_objects(game_get_player(game))));
     for (j=0;j<set_get_nids(inventory_get_objects(player_get_objects(game_get_player(game))));j++) {
       fprintf(f, "%ld|", ids[j]);
@@ -466,21 +549,21 @@ Status game_management_save(Game *game, char *filename) {
 
   for (i=0;i<game_get_n_characters(game);i++) {
     character=characters[i];
-    fprintf(f, "#c:%ld|%s|%s|%ld|%d|%d|%s|%ld\n", character_get_id(character), character_get_name(character), character_get_gdesc(character), character_get_location(character), character_get_health(character), character_get_friendly(character), character_get_message(character), character_get_following(character));
+    fprintf(f, "#c:%ld|%s|%s|%ld|%d|%d|%s|%ld|\n", character_get_id(character), character_get_name(character), character_get_gdesc(character), character_get_location(character), character_get_health(character), character_get_friendly(character), character_get_message(character), character_get_following(character));
   }
 
   fprintf(f, "\n");
 
   for (i=0;i<game_get_n_links(game);i++) {
     link=links[i];
-    fprintf(f, "#l:%ld|%s|%ld|%ld|%d|%d\n", link_get_id(link), link_get_name(link), link_get_origin(link), link_get_destination(link), link_get_direction(link), link_get_open(link));
+    fprintf(f, "#l:%ld|%s|%ld|%ld|%d|%d|\n", link_get_id(link), link_get_name(link), link_get_origin(link), link_get_destination(link), link_get_direction(link), link_get_open(link));
   }
 
   fprintf(f, "\n");
 
   for (i=0;i<game_get_n_objects(game);i++) {
     object=objects[i];
-    fprintf(f, "#o:%ld|%s|%ld|%s|%d|%d|%d|%ld|%ld|%d\n", object_get_id(object), object_get_name(object), object_get_location(object), object_get_description(object), object_get_health(object), object_get_strength(object), object_get_movable(object), object_get_dependency(object), object_get_open(object), object_get_taken(object));
+    fprintf(f, "#o:%ld|%s|%ld|%s|%d|%d|%d|%ld|%ld|%d|\n", object_get_id(object), object_get_name(object), object_get_location(object), object_get_description(object), object_get_health(object), object_get_strength(object), object_get_movable(object), object_get_dependency(object), object_get_open(object), object_get_taken(object));
   }
 
   fclose(f);
@@ -544,11 +627,11 @@ Status game_management_load(Game *game, char *filename) {
 
   game_set_turn(game, t);
 
-  game_load_spaces(game, filename);
+  game_load_objects(game, filename);
   game_load_players(game, filename);
   game_load_characters(game, filename);
   game_load_links(game, filename);
-  game_load_objects(game, filename);
+  game_load_spaces(game, filename);
 
   fclose(f);
 

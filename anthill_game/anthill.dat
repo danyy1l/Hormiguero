@@ -57,13 +57,13 @@
 #p:1|Hormiga|m0^ |211|10|1|5|
 #p:2|Gusano|o0o8|213|8|2|5|
 
-#c:1|Antlion| ^0m  |213|5|1|1|Hello!|-1|
-#c:2|Worm|*0o8o |211|6|1|1|Welcome!|-1|
-#c:3|Spider|/\00/\|214|10|1|0|!!!!!!|-1|
-#c:4|Hugo| /`-`\|253|20|2|0|No entraras|-1|
-#c:5|Mage|*_/''\|323|12|2|1|Anda con cuidado|-1|
-#c:6|Witch|/._.\*|513|20|5|1|Dame el orbe|-1|
-#c:10|Boss|$$$$$$|612|100|10|0|No debiste entrar|-1|
+#c:1|Antlion| ^0m  |213|5|1|1|Hello!|0|
+#c:2|Worm|*0o8o |211|6|1|1|Welcome!|0|
+#c:3|Spider|/\00/\|214|10|1|0|!!!!!!|0|
+#c:4|Hugo| /`-`\|253|20|2|0|No entraras|0|
+#c:5|Mage|*_/''\|323|12|2|1|Anda con cuidado|0|
+#c:6|Witch|/._.\*|513|20|5|1|Dame el orbe|0|
+#c:10|Boss|$$$$$$|612|100|10|0|No debiste entrar|0|
 
 #l:01|B112_213|112|213|9|1|
 #l:02|B121_122|121|122|5|1|
