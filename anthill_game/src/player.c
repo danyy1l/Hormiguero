@@ -97,7 +97,7 @@ Status player_set_location(Player *player, Id id) {
 }
 
 Status player_add_object(Player *player, Object* object){
-  if( !player || !object ){ return ERROR; }
+  if( !player || !object ){ return ERROR; } 
 
   if (inventory_is_full(player->backpack)==TRUE) {
     return ERROR;

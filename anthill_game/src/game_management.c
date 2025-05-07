@@ -23,7 +23,7 @@ Status game_load_spaces(Game *game, char *filename) {
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
   char *toks = NULL;
-  Id id = NO_ID, object_id = NO_ID, character_id = NO_ID;
+  Id id = NO_ID;
   Space *space = NULL;
   Status status = OK;
   Bool discovered, create;
@@ -84,16 +84,6 @@ Status game_load_spaces(Game *game, char *filename) {
         num_characters=atoi(toks);
       }
       set_set_nids(space_get_set_characters(space), num_characters);
-      /*for (i=0;i<set_get_nids(space_get_set_objects(space));i++) {
-        toks = strtok(NULL, "|");
-        object_id = atoi(toks);
-        space_add_object(space, object_id);
-      }
-      for (i=0;i<set_get_nids(space_get_set_characters(space));i++) {
-        toks = strtok(NULL, "|");
-        character_id = atoi(toks);
-        space_add_character(space, character_id);
-      }*/
       #ifdef DEBUG
       printf("Leido: %ld|%s|\n", id, name);
       #endif
@@ -248,6 +238,12 @@ Status game_load_players(Game *game, char *filename){
       } else {
         n_objects = atoi(toks);
       }
+      for (i=0;i<n_objects;i++) {
+        toks = strtok(NULL, "|");
+        object_id = atol(toks);
+        object=game_get_object(game, object_id);
+        player_add_object(player, object);
+      }
   #ifdef DEBUG
       printf("Leido: %ld|%s|%ld\n", id, name, location);
   #endif
@@ -262,12 +258,6 @@ Status game_load_players(Game *game, char *filename){
       if (create==TRUE) {
         game_add_player(game, player);
         space_player_arrive(game_get_space(game, location));
-      }
-      for (i=0;i<n_objects;i++) {
-        toks = strtok(NULL, "|");
-        object_id = atoi(toks);
-        object=object_create(object_id);
-        player_add_object(player, object);
       }
     }
   }
@@ -522,14 +512,6 @@ Status game_management_save(Game *game, char *filename) {
       }
     }
     fprintf(f, "%s|%s|%d|%d|%d|", space_get_message1(space), space_get_message2(space), space_get_discovered(space), set_get_nids(space_get_set_objects(space)), set_get_nids(space_get_set_characters(space)));
-    /*ids=set_id_object(space_get_set_objects(space));
-    for (j=0;j<set_get_nids(space_get_set_objects(space));j++) {
-      fprintf(f, "%ld|", ids[j]);
-    }
-    ids=set_id_object(space_get_set_characters(space));
-    for (j=0;j<set_get_nids(space_get_set_characters(space));j++) {
-      fprintf(f, "%ld|", ids[j]);
-    }*/
     fprintf(f, "\n");
   }
 

@@ -2,7 +2,7 @@
 #np:2
 #nc:7
 #nl:98
-#no:20 
+#no:20
 #lc:11|1|prueba.dat||
 #t:0
 
@@ -18,7 +18,7 @@
 #s:143|Basemen8|  .   .  |    o    |   /!\   |   _/\_  |_________|Vaya... Mejor no tocarlo| |0|0|0|
 #s:152|Basement|  .   .  |   \!/   |--[#X#]--| .  !  . |_________|Esta bastante oscuro| |0|0|0|
 #s:211|SpawnP01| _  _  _ |[ ][_][ ]|!   _  o!|!  ! ! I!|!__!_!__!|Ves un castillo a lo lejos al sudeste| |1|0|1|
-#s:212|Camino01|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |Hay algo emocionante en el aire| |1|1|0|
+#s:212|Camino01|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |Hay algo emocionante en el aire| |1|0|0|
 #s:213|SpawnP02|   /     |   \___  |    mo'\_|\ @  _   | \  / \__|El camino se separa. Hay un cartel: EAST - Castillo, SOUTH - ???| |1|0|1|
 #s:214|Enemigo1| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |Se cierra la puerta tras de ti!|La puerta se abrio, menos mal|0|0|1|
 #s:215|PotionB1|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |Poca cosa aqui| |0|2|0|
@@ -56,7 +56,7 @@
 #s:613|Bajada4a| | | | | |Necesitas la llave de la PuertaFinal|Ya no hay vuelta atras|0|0|0|
 #s:999|DevsAqui| 0 0 0 0 |_!_!_!_!_| ! ! ! ! |/\/\ /\/\| |"Hola, somos los devs, gracias por jugar a nuestro juego!"| |0|0|0|
 
-#p:1|Hormiga|m0^ |212|10|1|5|1|10|
+#p:1|Hormiga|m0^ |213|10|1|5|2|10|4|
 #p:2|Gusano|o0o8|213|8|2|5|0|
 
 #c:1|Antlion| ^0m  |213|5|1|Hello!|0|
@@ -169,13 +169,13 @@
 #o:1|GoldKey|112|Abre algo importante|0|0|1|-1|95|0|
 #o:2|Skull|131|Creepy|0|0|1|-1|-1|0|
 #o:3|RedPoti|215|Es roja y brilla|5|2|1|-1|-1|0|
-#o:4|Seed|212|Es una semilla|0|0|1|-1|-1|0|
+#o:4|Seed|213|Es una semilla|0|0|1|-1|-1|1|
 #o:5|Kit|253|+5 de vida|5|0|1|-1|-1|0|
 #o:6|GreenPoti|215|Verde y rara|-5|-2|1|-1|-1|0|
 #o:7|Torch|253|Antorcha|0|0|1|8|-1|0|
 #o:8|Fire|322|Fuego para antorcha|0|0|1|-1|-1|0|
 #o:9|Nuke|332|Termina la partida|-100|0|1|-1|-1|0|
-#o:10|Serrano|212|+3 de vida|3|0|1|-1|-1|1|
+#o:10|Serrano|213|+3 de vida|3|0|1|-1|-1|1|
 #o:11|Pidgeon|343|Cuidado que pica|-3|0|1|-1|-1|0|
 #o:12|Mine|216|Ojito|-100|0|0|-1|-1|0|
 #o:13|Ladder|421|Abre alguna puerta|0|0|1|-1|81|0|
