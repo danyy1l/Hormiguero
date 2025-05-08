@@ -609,8 +609,6 @@ Status game_actions_save(Game *game, Command* command) {
 
   game_management_save(game, filename);
 
-  game_set_finished(game, TRUE);
-
   return OK;
 }
 
