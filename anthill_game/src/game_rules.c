@@ -137,7 +137,7 @@ Status game_rules_witch_orbs(Game* game, Command *last_cmd){
   Character *witch = game_get_character(game, 6);
   Object *white = NULL, *black = NULL;
 
-  if( command_get_code(last_cmd) == DROP ){
+  if( command_get_code(last_cmd) == USE && !strcasecmp(command_get_arguments2(last_cmd), "Witch") ){
     if( !strcmp(command_get_arguments(last_cmd), "whiteorb") ){
       character_set_message(witch, "Decision correcta");
       character_set_friendly(witch, TRUE);
@@ -151,6 +151,9 @@ Status game_rules_witch_orbs(Game* game, Command *last_cmd){
       game_add_object(game, white);
       game_remove_object(game, object_get_id(game_get_object_by_name(game, "WhiteOrb")));
     }else if( !strcmp(command_get_arguments(last_cmd), "blackorb") ){
+      character_set_following(witch, NO_ID);
+      set_del_value(player_get_followers(game_get_player(game)), 6);
+      space_add_character(game_get_space(game, player_get_location(game_get_player(game))), 6);
       character_set_message(witch, "Grave error");
       character_set_friendly(witch, FALSE);
       black = object_create(15);
