@@ -3,8 +3,8 @@
 #nc:7|
 #nl:98|
 #no:20|
-#lc:11|1|prueba.dat| | |
-#t:0|
+#lc:-1|0| | | |
+#t:1|
 
 #s:112|Subida1a| _______ |/       \|! $#$##$!|! $$$$$ !|!_______!|Wow! Esto parece importante| |0|2|0|
 #s:121|Basemen0|  _O_    |   !     |  / \    | _[#]_   |_________|Sacame de aqui por favor!| |0|0|0|
@@ -23,8 +23,8 @@
 #s:214|Enemigo1| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |Se cierra la puerta tras de ti!|La puerta se abrio, menos mal|0|0|1|
 #s:215|PotionB1|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |Poca cosa aqui| |0|2|0|
 #s:216|Agujero1|  !   !  | /     \ | \ c>  / |  \___/  |         |Hay un agujero, no se ve el fondo| |0|1|0|
-#s:223|CaminoC1|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|El castillo no esta muy lejos| |0|0|0|
-#s:233|CaminoC2|         |\/   \__ |    o o \|mo^_  0o |__/ \___/| | |0|0|0|
+#s:223|CaminoC1|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|El castillo no esta muy lejos| |1|0|0|
+#s:233|CaminoC2|         |\/   \__ |    o o \|mo^_  0o |__/ \___/| | |1|0|0|
 #s:243|MiniBoss|  _______| /       |/  o8o0* |____     |    \____| | |0|1|0|
 #s:253|Subida2a|    V    |  \(")/  |  -(_)-  |o/(_-_)\o|o o\_/o o| | |0|2|1|
 #s:311|PolvosMa| | | | | |Ves unos polvos brillando| |0|0|0|
@@ -56,16 +56,16 @@
 #s:613|Bajada4a| | | | | |Necesitas la llave de la PuertaFinal|Ya no hay vuelta atras|0|0|0|
 #s:999|DevsAqui| 0 0 0 0 |_!_!_!_!_| ! ! ! ! |/\/\ /\/\| |"Hola, somos los devs, gracias por jugar a nuestro juego!"| |0|0|0|
 
-#p:1|Hormiga|m0^ |213|10|1|5|2|10|4|
-#p:2|Gusano|o0o8|213|8|2|5|0|
+#p:1|Hormiga|m0^ |212|10|1|5|2|10|4|
+#p:2|Gusano|o0o8|233|8|2|5|0|
 
-#c:1|Antlion| ^0m  |213|5|1|Hello!|0|
-#c:2|Worm|*0o8o |211|6|1|Welcome!|0|
-#c:3|Spider|/\00/\|214|10|0|!!!!!!|0|
-#c:4|Hugo| /`-`\|253|20|0|No entraras|0|
-#c:5|Mage|*_/''\|323|12|1|Anda con cuidado|0|
-#c:6|Witch|/._.\*|513|20|1|Dame el orbe|0|
-#c:10|Boss|$$$$$$|612|100|0|No debiste entrar|0|
+#c:1|Antlion| ^0m  |213|5|1|1|Hello!|0|
+#c:2|Worm|*0o8o |211|6|1|1|Welcome!|0|
+#c:3|Spider|/\00/\|214|10|1|0|!!!!!!|0|
+#c:4|Hugo| /`-`\|253|20|2|0|No entraras|0|
+#c:5|Mage|*_/''\|323|12|2|1|Anda con cuidado|0|
+#c:6|Witch|/._.\*|513|20|5|1|Dame el orbe|0|
+#c:10|Boss|$$$$$$|612|100|10|0|No debiste entrar|0|
 
 #l:1|B112_213|112|213|9|1|
 #l:2|B121_122|121|122|5|1|
@@ -169,13 +169,13 @@
 #o:1|GoldKey|112|Abre algo importante|0|0|1|-1|95|0|
 #o:2|Skull|131|Creepy|0|0|1|-1|-1|0|
 #o:3|RedPoti|215|Es roja y brilla|5|2|1|-1|-1|0|
-#o:4|Seed|213|Es una semilla|0|0|1|-1|-1|1|
+#o:4|Seed|212|Es una semilla|0|0|1|-1|-1|1| 
 #o:5|Kit|253|+5 de vida|5|0|1|-1|-1|0|
 #o:6|GreenPoti|215|Verde y rara|-5|-2|1|-1|-1|0|
-#o:7|Torch|253|Antorcha|0|0|1|8|-1|0|
-#o:8|Fire|322|Fuego para antorcha|0|0|1|-1|-1|0|
+#o:7|Torch|253|Antorcha|0|0|1|-1|-1|0|
+#o:8|Fire|322|Fuego para antorcha|0|0|1|7|-1|0|
 #o:9|Nuke|332|Termina la partida|-100|0|1|-1|-1|0|
-#o:10|Serrano|213|+3 de vida|3|0|1|-1|-1|1|
+#o:10|Serrano|212|+3 de vida|3|0|1|-1|-1|1|
 #o:11|Pidgeon|343|Cuidado que pica|-3|0|1|-1|-1|0|
 #o:12|Mine|216|Ojito|-100|0|0|-1|-1|0|
 #o:13|Ladder|421|Abre alguna puerta|0|0|1|-1|81|0|

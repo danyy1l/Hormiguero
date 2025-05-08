@@ -549,7 +549,7 @@ Status game_management_save(Game *game, char *filename) {
 
   for (i=0;i<game_get_n_characters(game);i++) {
     character=characters[i];
-    fprintf(f, "#c:%ld|%s|%s|%ld|%d|%d|%s|%ld|\n", character_get_id(character), character_get_name(character), character_get_gdesc(character), character_get_location(character), character_get_health(character), character_get_friendly(character), character_get_message(character), character_get_following(character));
+    fprintf(f, "#c:%ld|%s|%s|%ld|%d|%d|%d|%s|%ld|\n", character_get_id(character), character_get_name(character), character_get_gdesc(character), character_get_location(character), character_get_health(character), character_get_strength(character), character_get_friendly(character), character_get_message(character), character_get_following(character));
   }
 
   fprintf(f, "\n");

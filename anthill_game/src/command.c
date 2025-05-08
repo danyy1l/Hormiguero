@@ -110,7 +110,7 @@ Status command_get_user_input(Command* command) {
     token = strtok(input, " \n");
     if (!token) {
       return command_set_code(command, UNKNOWN);
-    }
+    } 
 
     cmd = UNKNOWN;
     while (cmd == UNKNOWN && i < N_CMD) {

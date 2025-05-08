@@ -236,7 +236,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     }else
       i--;
   }
-
+ 
   screen_area_puts(ge->descript, " ");
 
   if(inventory_is_empty(player_get_objects(player))==TRUE) {

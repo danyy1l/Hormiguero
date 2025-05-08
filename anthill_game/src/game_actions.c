@@ -24,11 +24,11 @@
 
 /**
  * @brief Realiza la accion al recibir un commando "UNKNOWN"
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Hugo Martín
  * @param game Estructura de la partida actual
  * No hace nada
  */
-Status game_actions_unknown(Game *game);
+void game_actions_unknown(Game *game);
 
 /**
  * @brief Realiza la accion al recibir un commando "QUIT"
@@ -178,6 +178,7 @@ Status game_actions_update(Game *game, Command *command) {
   switch (cmd) {
     case UNKNOWN:
       game_actions_unknown(game);
+      command_set_output(command, OK);
       break;
 
     case QUIT:
@@ -305,7 +306,7 @@ Status game_actions_update(Game *game, Command *command) {
    Calls implementation for each action
 */
 
-Status game_actions_unknown(Game *game) { return ERROR; }
+void game_actions_unknown(Game *game) {}
 
 void game_actions_quit(Game *game) {}
 

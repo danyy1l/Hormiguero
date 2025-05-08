@@ -176,8 +176,8 @@
 #o:4|Seed|212|Es una semilla|0|0|1|-1|-1|
 #o:5|Kit|253|+5 de vida|5|0|1|-1|-1|
 #o:6|GreenPoti|215|Verde y rara|-5|-2|1|-1|-1|
-#o:7|Torch|253|Antorcha|0|0|1|8|-1|
-#o:8|Fire|322|Fuego para antorcha|0|0|1|-1|-1|
+#o:7|Torch|253|Antorcha|0|0|1|-1|-1|
+#o:8|Fire|322|Fuego para antorcha|0|0|1|7|-1|
 #o:9|Nuke|332|Termina la partida|-100|0|1|-1|-1|
 #o:10|Serrano|211|+3 de vida|3|0|1|-1|-1|
 #o:11|Pidgeon|343|Cuidado que pica|-3|0|1|-1|-1|
