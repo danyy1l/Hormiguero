@@ -486,19 +486,37 @@ Status game_management_save(Game *game, char *filename) {
     return ERROR;
   }
 
-  fprintf(f, "#ns:%d\n", game_get_n_spaces(game));
+  fprintf(f, "#ns:%d|\n", game_get_n_spaces(game));
 
-  fprintf(f, "#np:%d\n", game_get_n_players(game));
+  fprintf(f, "#np:%d|\n", game_get_n_players(game));
 
-  fprintf(f, "#nc:%d\n", game_get_n_characters(game));
+  fprintf(f, "#nc:%d|\n", game_get_n_characters(game));
 
-  fprintf(f, "#nl:%d\n", game_get_n_links(game));
+  fprintf(f, "#nl:%d|\n", game_get_n_links(game));
 
-  fprintf(f, "#no:%d\n", game_get_n_objects(game));
+  fprintf(f, "#no:%d|\n", game_get_n_objects(game));
 
-  fprintf(f, "#lc:%d|%d|%s|%s|%s\n", command_get_code(command), command_get_output(command), command_get_arguments(command), command_get_arguments1(command), command_get_arguments2(command));
+  fprintf(f, "#lc:%d|%d|", command_get_code(command), command_get_output(command));
 
-  fprintf(f, "#t:%d\n\n", game_get_turn(game));
+  if (command_get_arguments(command)==NULL || strlen(command_get_arguments(command))==0) {
+    fprintf(f, " |");
+  } else {
+    fprintf(f, "%s|", command_get_arguments(command));
+  }
+
+  if (command_get_arguments1(command)==NULL || strlen(command_get_arguments1(command))==0) {
+    fprintf(f, " |");
+  } else {
+    fprintf(f, "%s|", command_get_arguments1(command));
+  }
+
+  if (command_get_arguments2(command)==NULL || strlen(command_get_arguments2(command))==0) {
+    fprintf(f, " |\n");
+  } else {
+    fprintf(f, "%s|\n", command_get_arguments2(command));
+  }
+
+  fprintf(f, "#t:%d|\n\n", game_get_turn(game));
 
   for (i=0;i<game_get_n_spaces(game);i++) {
     space=spaces[i];
@@ -590,10 +608,10 @@ Status game_management_load(Game *game, char *filename) {
       command_set_arguments(cmd, arguments);
       toks = strtok(NULL, "|");
       if (toks) strcpy(arguments1, toks);
-      command_set_arguments(cmd, arguments1);
+      command_set_arguments1(cmd, arguments1);
       toks = strtok(NULL, "|");
       if (toks) strcpy(arguments2, toks);
-      command_set_arguments(cmd, arguments2);
+      command_set_arguments2(cmd, arguments2);
     } else if (strncmp("#t:", line, 3) == 0) {
       t = atoi(line + 3);
     } else if (line[0] == '#' && line[1] == 's' && line[2] == ':') {
@@ -609,13 +627,13 @@ Status game_management_load(Game *game, char *filename) {
 
   game_set_turn(game, t);
 
+  fclose(f);
+
   game_load_objects(game, filename);
   game_load_players(game, filename);
   game_load_characters(game, filename);
   game_load_links(game, filename);
   game_load_spaces(game, filename);
-
-  fclose(f);
 
   return OK;
 }

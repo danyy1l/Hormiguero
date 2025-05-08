@@ -1,10 +1,10 @@
-#ns:49
-#np:2
-#nc:7
-#nl:98
-#no:20
-#lc:11|1|prueba.dat||
-#t:0
+#ns:49|
+#np:2|
+#nc:7|
+#nl:98|
+#no:20|
+#lc:11|1|prueba.dat| | |
+#t:0|
 
 #s:112|Subida1a| _______ |/       \|! $#$##$!|! $$$$$ !|!_______!|Wow! Esto parece importante| |0|2|0|
 #s:121|Basemen0|  _O_    |   !     |  / \    | _[#]_   |_________|Sacame de aqui por favor!| |0|0|0|
