@@ -138,4 +138,29 @@ void test2_player_del_object();
 void test1_player_find_object();
 void test2_player_find_object();
 
+/**
+ * @test Test health getting
+ * @pre Pointer to player
+ * @post Non negative int
+ */
+void test1_player_get_strength();
+void test2_player_get_strength();
+
+/**
+ * @test Test health setting
+ * @pre Pointer to player
+ * @pre new strength to set
+ * @post Status command, OK if triumph, ERROR otherwise 
+ */
+void test1_player_set_strength();
+void test2_player_set_strength();
+
+
+/**
+ * @test Test followers obtaining
+ * @pre Pointer to player
+ * @post a set of followers
+ */
+void test1_player_get_followers();
+void test2_player_get_followers();
 #endif
