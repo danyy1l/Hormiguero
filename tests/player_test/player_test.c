@@ -15,7 +15,7 @@
  #include "player_test.h"
  #include "test.h"
  
- #define MAX_TESTS 34
+ #define MAX_TESTS 40
  
  /** 
   * @brief Main function for PLAYER unit tests. 
@@ -77,6 +77,13 @@
    if (all || test == 31) test2_player_del_object();
    if (all || test == 32) test1_player_find_object();
    if (all || test == 33) test2_player_find_object();
+   if (all || test == 34) test1_player_get_strength();
+   if (all || test == 35) test2_player_get_strength();
+   if (all || test == 36) test1_player_set_strength();
+   if (all || test == 37) test2_player_set_strength();
+   if (all || test == 38) test1_player_get_followers();
+   if (all || test == 39) test2_player_get_followers();
+   
  
    PRINT_PASSED_PERCENTAGE;
  
@@ -304,4 +311,40 @@
   Player *s = NULL;
   Object *o = NULL;
   PRINT_TEST_RESULT(player_find_object(s, o) == FALSE);
+ }
+
+ void test1_player_get_strength(){
+   Player *s; 
+   s = player_create();
+   PRINT_TEST_RESULT(player_get_strength(s) == 1);
+   player_destroy(s);
+ }
+
+ void test2_player_get_strength(){
+  Player *s = NULL;
+   PRINT_TEST_RESULT(player_get_strength(s) == -1);
+ }
+
+ void test1_player_set_strength(){
+   Player *s;
+   s = player_create();
+   PRINT_TEST_RESULT(player_set_strength(s, 10) == OK);
+   player_destroy(s);
+ }
+
+ void test2_player_set_strength(){
+   Player *s = NULL;
+   PRINT_TEST_RESULT(player_set_strength(s, 10) == ERROR);
+ }
+
+ void test1_player_get_followers(){
+  Player *s;
+  s=player_create();
+  PRINT_TEST_RESULT(player_get_followers(s)!=NULL);
+  player_destroy(s);
+ }
+
+ void test2_player_get_followers(){
+  Player *s=NULL;
+  PRINT_TEST_RESULT(player_get_followers(s)==NULL);
  }
