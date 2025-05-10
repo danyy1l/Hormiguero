@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
   Graphic_engine *gengine;
   int i, seed=INIT, log=INIT;
 
-
   if (argc < 2)
   {
     fprintf(stderr, "Use: %s <game_data_file>\n", argv[0]);
@@ -56,7 +55,7 @@ int main(int argc, char *argv[])
 
   if (seed == INIT) seed = time(NULL);
   srand(seed);
-  
+
   if (!game_loop_init(&game, &gengine, argv[1]))
   {
     game_loop_run(game, gengine, log_file);
@@ -68,11 +67,26 @@ int main(int argc, char *argv[])
 
 int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name)
 {
+  Graphic_engine *g = NULL;
+  char p1[PLY_NAME], p2[PLY_NAME], enter[PLY_NAME];
+
   if (!(*game = game_create_from_file(file_name)))
   {
     fprintf(stderr, "Error while initializing game.\n");
     return EXIT_FAILURE;
   }
+
+  /*Game start screen */
+  g = graphic_engine_start();
+  graphic_engine_paint_start(g, *game);
+  fscanf(stdin, "%s", p1);
+  player_set_name(game_get_players(*game)[0], p1);
+  graphic_engine_paint_start(g, *game);
+  fscanf(stdin, "%s", p2);
+  player_set_name(game_get_players(*game)[1], p2);
+  graphic_engine_paint_start(g, *game);
+  fscanf(stdin, "%s", enter);
+  graphic_engine_destroy_start(g);
 
   if ((*gengine = graphic_engine_create()) == NULL)
   {
@@ -91,14 +105,14 @@ void game_loop_run(Game *game, Graphic_engine *gengine, FILE *log_file)
   Status cmd_output;
   char *result;
   extern char *cmd_to_str[N_CMD][N_CMDT];
-  
+
   if (!gengine || !game)
   {
     return;
   }
-  
-  last_cmd = game_get_last_command(game);
-  
+
+  last_cmd = game_get_last_command(game);  
+
   while ((command_get_code(last_cmd) != QUIT) && (game_get_finished(game) == FALSE))
   {
     game_next_turn(game, turn);

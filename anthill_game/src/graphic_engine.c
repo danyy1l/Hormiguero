@@ -67,6 +67,23 @@ void print_east(Graphic_engine* ge, Game *game, char* str, Id id_east, Id id_act
 void print_mid(Graphic_engine* ge, Game *game, char* str, Id id_west, Id id_east, Id id_act, Space* space_west, Space* space_east, Space* space_act);
 
 /*GE*/
+Graphic_engine *graphic_engine_start(){
+  Graphic_engine *ge = NULL;
+
+  if (ge) {
+    return ge;
+  }
+
+  screen_init(HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + HEIGHT_FDB + 4, WIDTH_MAP + WIDTH_DES + 3);
+  ge = (Graphic_engine *)malloc(sizeof(Graphic_engine));
+  if (ge == NULL) {
+    return NULL;
+  }
+
+  ge->map = screen_area_init(1, 1, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + HEIGHT_FDB + 2);
+  return ge;
+}
+
 Graphic_engine *graphic_engine_create() {
   static Graphic_engine *ge = NULL;
 
@@ -92,13 +109,22 @@ Graphic_engine *graphic_engine_create() {
 void graphic_engine_destroy(Graphic_engine *ge) {
   if (!ge) return;
 
-  screen_area_destroy(ge->map);
-  screen_area_destroy(ge->descript);
-  screen_area_destroy(ge->banner);
-  screen_area_destroy(ge->help);
-  screen_area_destroy(ge->feedback);
+  if(ge->map)       screen_area_destroy(ge->map);
+  if(ge->descript)  screen_area_destroy(ge->descript);
+  if(ge->banner)    screen_area_destroy(ge->banner);
+  if(ge->help)      screen_area_destroy(ge->help);
+  if(ge->feedback)  screen_area_destroy(ge->feedback);
+  
 
   screen_destroy();
+  free(ge);
+}
+
+void graphic_engine_destroy_start(Graphic_engine *ge) {
+  if (!ge) return;
+
+  screen_area_destroy(ge->map);
+
   free(ge);
 }
 
@@ -109,7 +135,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL, *prev_space = NULL;
   Space *space_ne = NULL, *space_se = NULL, *space_sw = NULL, *space_nw = NULL;
   
-  Object* object=NULL;
+  Object* object=NULL, *lantern = game_get_object_by_name(game, "Linterna");
   Character* character = NULL;
   CommandCode last_cmd = UNKNOWN;
   Status last_cmd_status;
@@ -167,9 +193,16 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
         space_set_gdesc(space_sw, "         ", i);
     }
 
-    print_top(ge, game, str, id_act, id_north, id_ne, id_nw, space_north, space_ne, space_nw);
-    print_mid(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
-    print_bot(ge, game, str, id_act, id_south, id_se, id_sw, space_south, space_se, space_sw);
+    if( inventory_find_object(player_get_objects(player), object_get_id(lantern)) ){ 
+      print_top(ge, game, str, id_act, id_north, id_ne, id_nw, space_north, space_ne, space_nw);
+      print_mid(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
+      print_bot(ge, game, str, id_act, id_south, id_se, id_sw, space_south, space_se, space_sw);
+    }else{
+      print_north(ge, game, str, id_act, id_north, space_north);
+      print_mid(ge, game, str, id_west, id_east, id_act, space_west, space_east, space_act);
+      print_south(ge, game, str, id_act, id_south, space_south);
+    }
+
   }
 
   /* Paint in the description area */
@@ -254,7 +287,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   screen_area_puts(ge->descript, " ");
 
   /* Paint in the banner area */
-  screen_area_puts(ge->banner, "    The anthill game ");
+  screen_area_puts(ge->banner, "   The blackout game  ");
 
   /* Paint in the help area */
   screen_area_clear(ge->help);
@@ -264,8 +297,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   screen_area_puts(ge->help, str);
   sprintf(str, " Load(lg), Recruit(r), Abandon(ab), Team(te), Quit(q)");
   screen_area_puts(ge->help, str);
-
-  /* Paint in the feedback area */
 
   /*Impresion del ultimo comando*/
   screen_area_clear(ge->feedback);
@@ -376,6 +407,71 @@ void graphic_engine_paint_game_over(Graphic_engine* ge, Game *game){
   screen_paint(game_get_turn(game));
 }
 
+void graphic_engine_paint_start(Graphic_engine* ge, Game* game){
+  char str[WORD_SIZE];
+
+  screen_area_clear(ge->map);
+  screen_area_puts(ge->map, "");
+
+  sprintf(str, "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "{}                                                                                            {}");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "{}         .o.       ooooooooo.         .o.         .oooooo.      .oooooo.   ooooo      ooo   {}");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "{}        .888.      `888   `Y88.      .888.       d8P'  `Y8b    d8P'  `Y8b  `888b.     `8'   {}");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "{}       .8\"888.      888   .d88'     .8\"888.     888           888      888  8 `88b.    8    {}");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "{}      .8' `888.     888ooo88P'     .8' `888.    888           888      888  8   `88b.  8    {}");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "{}     .88ooo8888.    888           .88ooo8888.   888     ooooo 888      888  8     `88b.8    {}");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "{}    .8'     `888.   888          .8'     `888.  `88.    .88'  `88b    d88'  8       `888    {}");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "{}   o88o     o8888o o888o        o88o     o8888o  `Y8bood8P'    `Y8bood8P'  o8o        `8    {}");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "{}                                                                                            {}");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}");
+  screen_area_puts(ge->map, str);
+
+  screen_area_puts(ge->map, " ");
+  screen_area_puts(ge->map, " ");
+  sprintf(str, "                           Hace 6 horas que se fue la luz en el pais.");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "                 Vuelves del bar porque a todos les ha vuelto la electricidad,");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "                     pero ves desde lejos que en tu bloque no hay ni una luz.");
+  screen_area_puts(ge->map, str);
+  sprintf(str, "                                     Tocara ver que pasa");
+  screen_area_puts(ge->map, str);
+  screen_area_puts(ge->map, " ");
+
+  sprintf(str, "                                  Inserte nombre Jugador 1: ");
+  screen_area_puts(ge->map, str);
+  if( strcmp(player_get_name(game_get_players(game)[0]), "Player1") != 0 ){ 
+    sprintf(str, "                                            %s", player_get_name(game_get_players(game)[0]));
+    screen_area_puts(ge->map, str);
+    sprintf(str, "                                  Inserte nombre Jugador 2: ");
+    screen_area_puts(ge->map, str);
+  }else{
+    sprintf(str, " ");
+    screen_area_puts(ge->map, str);    
+  }
+
+  if( strcmp(player_get_name(game_get_players(game)[1]), "Player2") != 0 ){
+    sprintf(str, "                                            %s", player_get_name(game_get_players(game)[1]));
+    screen_area_puts(ge->map, str);
+    screen_area_puts(ge->map, " ");
+    screen_area_puts(ge->map, " ");
+    screen_area_puts(ge->map, "                                 Escriba START para comenzar");
+  }
+
+  screen_area_puts(ge->map, " ");
+
+  screen_paint(game_get_turn(game));
+}
 
 /* ================================== IMPLEMENTACION DE FUNCIONES DE IMPRESION ============================== */
 
@@ -439,8 +535,8 @@ void print_objects(Game* game, Id id, char* str){
 
   for(i=0; i<id_count; i++){
     
-    object = game_get_object(game, ids[i]);
-    
+    if( !(object = game_get_object(game, ids[i]))) continue;
+
     if( player_find_object(game_get_player(game), object)==TRUE )
       continue;
     
@@ -510,6 +606,11 @@ void print_south(Graphic_engine* ge, Game *game, char* str, Id id_act, Id id_sou
   int i;
   Player* player;
   char gdesc[PLY_GDESC + 1] = "    ";
+  
+  if(id_south == NO_ID) {
+    print_blank(str, ge);
+    return;
+  }
 
   for( i=0; i<game_get_n_players(game); i++){
     player = game_players(game)[i];
@@ -1364,6 +1465,11 @@ void print_north(Graphic_engine* ge, Game* game, char* str, Id id_act, Id id_nor
   char gdesc[PLY_GDESC + 1] = "    ";
 
   if( id_north == 999 ){
+    print_blank(str, ge);
+    return;
+  }
+  
+  if(id_north == NO_ID) {
     print_blank(str, ge);
     return;
   }

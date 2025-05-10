@@ -257,8 +257,8 @@ Status game_load_players(Game *game, char *filename){
       set_set_nids(inventory_get_objects(player_get_objects(player)), n_objects);
       if (create==TRUE) {
         game_add_player(game, player);
-        space_player_arrive(game_get_space(game, location));
       }
+      space_player_arrive(game_get_space(game, location));
     }
   }
 
@@ -334,7 +334,11 @@ Status game_load_objects(Game *game, char *filename){
       printf("Leido: %ld|%s|%ld|%s|%d|%d|%ld|%ld|%d|\n", id, name, location, description, health, strength, movable, dependency, open);
   #endif
       object_set_name(object, name);
-      object_set_location(object, location);
+      if( create == FALSE ){
+        space_del_object(game_get_space(game, object_get_location(object)), id);
+        object_set_location(object, location);
+        space_add_object(game_get_space(game, location), id);
+      }else object_set_location(object, location);
       object_set_description(object, description);
       object_set_health(object, health);
       object_set_strength(object, strength);
@@ -420,7 +424,17 @@ Status game_load_characters(Game *game, char *filename){
       printf("Leido: %ld|%s|%s|%d|%d|%s|%ld|%ld\n", id, name, gdesc, health, friendly, message, location,following);
   #endif
       character_set_id(character, id);
-      character_set_location(character, location);
+      if( create == FALSE ){
+        if( following == 0 || following == NO_ID){
+          space_del_character(game_get_space(game, character_get_location(character)), id);
+          character_set_location(character, location);
+          space_add_character(game_get_space(game, location), id);
+        }else{
+          character_set_location(character, player_get_location(game_get_player_by_id(game,following)));
+          set_add_value(player_get_followers(game_get_player_by_id(game, following)), id);
+          space_del_character(game_get_space(game, location), id);
+        }
+      }else character_set_location(character, location);
       character_set_name(character, name);
       character_set_gdesc(character, gdesc);
       character_set_health(character, health);
@@ -558,9 +572,9 @@ Status game_management_save(Game *game, char *filename) {
     link=links[i];
     fprintf(f, "#l:%ld|%s|%ld|%ld|%d|%d|\n", link_get_id(link), link_get_name(link), link_get_origin(link), link_get_destination(link), link_get_direction(link), link_get_open(link));
   }
-
+  
   fprintf(f, "\n");
-
+  
   for (i=0;i<game_get_n_objects(game);i++) {
     object=objects[i];
     fprintf(f, "#o:%ld|%s|%ld|%s|%d|%d|%d|%ld|%ld|%d|\n", object_get_id(object), object_get_name(object), object_get_location(object), object_get_description(object), object_get_health(object), object_get_strength(object), object_get_movable(object), object_get_dependency(object), object_get_open(object), object_get_taken(object));
@@ -575,7 +589,7 @@ Status game_management_load(Game *game, char *filename) {
   FILE *f=NULL;
   char line[WORD_SIZE] = "";
   char *toks = NULL;
-  int ns = 0, np = 0, nc = 0, nl = 0, no = 0, t = 0;
+  int ns = 0, np = 0, nc = 0, nl = 0, no = 0, t = 0, i = 0;
   char arguments[WORD_SIZE] = "", arguments1[WORD_SIZE] = "", arguments2[WORD_SIZE] = "";
   CommandCode code;
   Status output;
@@ -629,11 +643,14 @@ Status game_management_load(Game *game, char *filename) {
 
   fclose(f);
 
+  for(i=0; i<nc; i++) space_del_character(game_get_space(game, character_get_id(game_get_characters(game)[i])), character_get_location(game_get_characters(game)[i]));
+  for(i=0; i<no; i++) space_del_object(game_get_space(game, object_get_id(game_get_objects(game)[i])), object_get_location(game_get_objects(game)[i]));
+
+  game_load_spaces(game, filename);
+  game_load_links(game, filename);
   game_load_objects(game, filename);
   game_load_players(game, filename);
   game_load_characters(game, filename);
-  game_load_links(game, filename);
-  game_load_spaces(game, filename);
 
   return OK;
 }

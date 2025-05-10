@@ -20,6 +20,7 @@
 #define STATUS_SIZE 6
 #define NO_ID -1
 
+#define PLY_NAME 8
 #define PLY_GDESC 4
 #define CHAR_GDESC 6
 

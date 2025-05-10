@@ -178,7 +178,7 @@ Status game_actions_update(Game *game, Command *command) {
   switch (cmd) {
     case UNKNOWN:
       game_actions_unknown(game);
-      command_set_output(command, OK);
+      command_set_output(command, ERROR);
       break;
 
     case QUIT:
@@ -649,8 +649,7 @@ Status game_actions_recruit(Game* game, Command *command){
       continue;
     }
 
-
-    if (character_get_location(character) != player_loc || !character_get_friendly(character) || character_get_following(character) != NO_ID) {
+    if (character_get_location(character) != player_loc || !character_get_friendly(character) || character_get_following(character) != 0) {
       return ERROR;
     }
 
@@ -694,7 +693,7 @@ Status game_actions_abandon(Game* game, Command *command){
       return ERROR;
     }
 
-    character_set_following(character, NO_ID);
+    character_set_following(character, 0);
     set_del_value(player_get_followers(player), character_get_id(character));
     space_add_character(game_get_space(game, player_loc), character_get_id(character));
 
