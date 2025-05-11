@@ -27,6 +27,7 @@ struct _Player {
   int health;                 /*!<-Vida del jugador*/
   int strength;               /*!<-Fuerza del jugador*/
   Set* followers;             /*!<-Seguidores del jugador*/
+  Set* teammates;             /*!Compañeros de equipo*/
 };
 
 Player *player_create(){
@@ -43,6 +44,7 @@ Player *player_create(){
   output->health = 0;
   output->strength = 1;
   output->followers = set_create();
+  output->teammates =set_create();
 
   return output;
 }
@@ -51,6 +53,7 @@ Status player_destroy(Player *player){
   if( player ){
     inventory_destroy(player->backpack);
     set_destroy(player->followers);
+    set_destroy(player->teammates);
     free(player);
     player = NULL;
   }
@@ -176,6 +179,10 @@ char* player_get_gdesc(Player* player){
 
 Set* player_get_followers(Player* player){
   return player == NULL ? NULL : player->followers;
+}
+
+Set* player_get_teammates(Player* player){
+  return player == NULL ? NULL : player->teammates;
 }
 
 Status player_print(Player *player){
