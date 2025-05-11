@@ -704,21 +704,42 @@ Status game_actions_abandon(Game* game, Command *command){
 }
 
 Status game_actions_team(Game* game, Command *command){
-/*
-  Player *player1= game_get_player(game), *player2=NULL;
-  char* player_name= command_get_arguments(command);
-  Inventory *inventory1=player_get_objects(player1),*inventory2=player_get_objects(player2);
 
-  player2=game_get_player_by_name(game,player_name);
+  const char* player_name= command_get_arguments(command);
+  Player *player1= game_get_player(game), *player2=NULL;
+  Id player_id= player_get_id(player1);
+  Id player_loc=player_get_location(player1);
+  int num_players=set_get_nids(player_get_teammates(player1)),i;
+  Inventory *inventory1=player_get_objects(player1),*inventory2=player_get_objects(player2);
 
 
   if(!game||!command){
     return ERROR;
   }
-  
-  if(player1==player2){
+
+  if(!player_name){
     return ERROR;
   }
-*/
-  return OK;
+  for(i=0;i<num_players;i++){
+    player2=game_get_player_at(game,i);
+
+    if(!player2)
+      continue;
+    
+    if(strcasecmp(player_get_name(player2),player_name)!=0){
+      continue;
+    }
+
+    if(player_get_location(player2)!=player_loc)
+      return ERROR;
+
+    set_add_value(player_get_teammates(player1),player_get_id(player2));
+    set_add_value(player_get_teammates(player2),player_loc);
+    return OK;
+  }
+  
+
+
+
+  return ERROR;
 }
