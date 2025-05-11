@@ -111,11 +111,10 @@ Status game_add_player(Game *game, Player* player);
  * @brief Obtiene el puntero de un jugador con cierto nombre de la estructura game
  * @author Danyyil Shykerynets
  * @param game Un puntero a Game
- * @param name Nombre del jugador que se quiere obtener
- * @return Puntero a la estructura jugador de la partida "game" 
+ * @param i  índice del personaje (0 <= i < n_characters)
+ * @return puntero al jugador o NULL si hay error
  */
-Player* game_get_player_by_name(Game *game, char* name);
-
+Player* game_get_player_at(Game *game, int i);
 /**
  * @brief Obtiene turno de la estructura game
  * @author Danyyil Shykerynets
