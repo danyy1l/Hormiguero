@@ -200,6 +200,14 @@ char* player_get_gdesc(Player* player);
  */
 Set* player_get_followers(Player* player);
 
+/** @brief Obtiene los compañeros de un jugador
+ * @author Anthony Eduardo Alvarado Carbajal
+ * 
+ * @param player
+ * @return Set de compañeros de equipo del player
+ */
+Set* player_get_teammates(Player *player);
+
 /**
  * @brief Imprime los datos del jugador
  * @author Hugo Martín
