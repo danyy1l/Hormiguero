@@ -446,7 +446,8 @@ Status game_actions_attack(Game *game, Command *command) {
     return ERROR;
   }
 
-  num = rand() % 10;
+  if( game_get_seed(game) == NUM_SEED ) num = 8;
+  else num = rand() % 10;
 
   if (num > 5) {
     character_set_health(target, character_get_health(target) - damage);

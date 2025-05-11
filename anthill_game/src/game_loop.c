@@ -21,7 +21,7 @@
 #include "../include/game.h"
 #include "../include/graphic_engine.h"
 
-int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name);
+int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name, int seed);
 
 void game_loop_run(Game *game, Graphic_engine *gengine, FILE *log_file);
 
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
   if (seed == INIT) seed = time(NULL);
   srand(seed);
 
-  if (!game_loop_init(&game, &gengine, argv[1]))
+  if (!game_loop_init(&game, &gengine, argv[1], seed))
   {
     game_loop_run(game, gengine, log_file);
     game_loop_cleanup(game, gengine, log_file);
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
   return 0;
 }
 
-int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name)
+int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name, int seed)
 {
   Graphic_engine *g = NULL;
   char p1[PLY_NAME], p2[PLY_NAME], enter[PLY_NAME];
@@ -98,6 +98,7 @@ int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name)
     return EXIT_FAILURE;
   }
 
+  game_set_seed(*game, seed);
   return 0;
 }
 

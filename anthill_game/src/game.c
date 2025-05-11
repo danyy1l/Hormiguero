@@ -36,6 +36,7 @@ struct _Game{
   Bool finished;                          /*!< Determina si la partida esta terminada*/
   char message[WORD_SIZE];                /*!< Almacena el ultimo mensaje de personaje*/
   Id prev_player_location;                /*!< La ubicacion del anterior jugador en el array*/
+  int seed;                               /*!< Game seed*/
 };
 
 /**
@@ -560,6 +561,18 @@ Status game_set_prev_player_location(Game* game, Id location){
 
   game->prev_player_location = location;
   return OK;
+}
+
+Status game_set_seed(Game* game, int seed){
+  if( !game ) return ERROR;
+
+  game->seed = seed;
+
+  return OK;
+}
+
+int game_get_seed(Game* game){
+  return game == NULL ? -1 : game->seed;
 }
 
 void game_print(Game *game) {

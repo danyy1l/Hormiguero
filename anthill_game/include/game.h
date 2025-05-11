@@ -459,6 +459,23 @@ Status game_set_prev_player_location(Game* game, Id location);
 Id game_get_prev_player_location(Game* game);
 
 /**
+ * @brief Establece la semilla del juego
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @param seed semilla a establecer
+ * @return OK si hubo exito, ERROR en caso contrario
+ */
+Status game_set_seed(Game* game, int seed);
+
+/**
+ * @brief Obtiene la semilla del juego
+ * @author Danyyil Shykerynets
+ * @param game Puntero a la partida
+ * @return entero con la semilla
+ */
+int game_get_seed(Game* game);
+
+/**
  * @brief Imprime el juego
  * @author Anthony Eduardo Alvarado Carbajal
  * @param game Un puntero a Game 

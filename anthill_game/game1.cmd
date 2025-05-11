@@ -83,10 +83,12 @@ m w
 m sw
 m w
 m s
+c vecinomajo
+r vecinomajo
 m u
 m n
 m n
-c vecinomajo
+c vecinoarriba
 u manzana over vecinoarriba
 l
 u cuchillo
