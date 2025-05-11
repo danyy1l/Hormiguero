@@ -115,7 +115,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine, FILE *log_file)
 
   while ((command_get_code(last_cmd) != QUIT) && (game_get_finished(game) == FALSE))
   {
-    game_next_turn(game, turn);
+    if( !set_find_object(player_get_teammates(game_get_player(game)), player_get_id(game_players(game)[turn])) ) game_next_turn(game, turn);
     game_rules_update(game, last_cmd);
     graphic_engine_paint_game(gengine, game, last_cmd);
     command_get_user_input(last_cmd);
@@ -132,13 +132,14 @@ void game_loop_run(Game *game, Graphic_engine *gengine, FILE *log_file)
       fprintf(log_file, "%s(%s) %s %s %s: %s (P%ld)\n", cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDL], cmd_to_str[command_get_code(last_cmd) - NO_CMD][CMDS], command_get_arguments(last_cmd), command_get_arguments1(last_cmd), command_get_arguments2(last_cmd), result,player_get_id(game_get_player(game)));
     }
   }
-  
+
   if (game_get_finished(game) == TRUE)
     graphic_engine_paint_game_over(gengine, game);
 }
 
 void game_loop_cleanup(Game *game, Graphic_engine *gengine, FILE *log_file)
 {
+  if( game_get_n_players(game) < 2 ) game_set_n_players(game, 2);
   game_destroy(game);
   graphic_engine_destroy(gengine);
   if (log_file)

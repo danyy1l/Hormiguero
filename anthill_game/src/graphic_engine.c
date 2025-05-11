@@ -135,6 +135,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   Space *space_act = NULL, *space_north = NULL, *space_south = NULL, *space_east = NULL, *space_west = NULL, *prev_space = NULL;
   Space *space_ne = NULL, *space_se = NULL, *space_sw = NULL, *space_nw = NULL;
   
+  Player* dummy = NULL;
   Object* object=NULL, *lantern = game_get_object_by_name(game, "Linterna");
   Character* character = NULL;
   CommandCode last_cmd = UNKNOWN;
@@ -233,6 +234,21 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     sprintf(str, "   Health: %d", player_get_health(player));
     screen_area_puts(ge->descript, str);
     
+    if( set_get_nids(player_get_teammates(player)) > 0 ){
+      sprintf(str, "   Teammates: ");
+      screen_area_puts(ge->descript, str);
+      for( i=0; i<game_get_n_players(game)+1; i++){
+        dummy = game_players(game)[i];
+        if( player_get_id(dummy) == player_get_id(player) || !set_find_object(player_get_teammates(player), player_get_id(dummy)) ) continue;
+        sprintf(str, "    ");
+        strcat(str, player_get_name(dummy));
+        strcat(str, ": ");
+        sprintf(str1, "%d HP",player_get_health(dummy));
+        strcat(str, str1);
+        screen_area_puts(ge->descript, str);
+      }
+    }
+
     n_chars = set_get_nids(player_get_followers(player));
     
     if( n_chars > 0 ){
@@ -333,6 +349,18 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
       strcat(str, object_get_description(object));
       screen_area_puts(ge->descript, str);
     }
+
+    for(i=0; i<game_get_n_players(game)+1; i++){
+      dummy = game_players(game)[i];
+      if( player_get_location(dummy) != player_get_location(player) || player_get_id(dummy) == player_get_id(player) ) continue;
+      sprintf(str, "  ");
+      strcat(str, player_get_name(player));
+      strcat(str, ": ");
+      sprintf(str1, "%d HP, Strength: %d ",player_get_health(player), player_get_strength(player));
+      strcat(str, str1);
+      screen_area_puts(ge->descript, str);
+    }
+
     n_chars = set_get_nids(space_get_set_characters(prev_space));
     for(i=0; i<n_chars; i++){
       if( !(character = game_get_character(game, set_id_object(space_get_set_characters(prev_space))[i])) ) break;
@@ -343,6 +371,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
       strcat(str, str1);
       screen_area_puts(ge->descript, str);
     }
+
     sprintf(str, "  Open links:");
     screen_area_puts(ge->descript, str);
     sprintf(str, "  ");

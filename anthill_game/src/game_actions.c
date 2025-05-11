@@ -159,7 +159,7 @@ Status game_actions_team(Game* game, Command* command);
  
 Status game_actions_update(Game *game, Command *command) {
   int i;
-  Player *player=game_get_player(game);                                  /*Jugador del game*/
+  Player *player=game_get_player(game), *dummy = NULL;                   /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                       /*Inventario del jugador del game*/
   Set* player_bag = inventory_get_objects(player_get_objects(player));   /*Set con objetos de la mochila*/
   int n_ids=set_get_nids(player_bag);                                    /*Numero de objetos que porta el jugador*/
@@ -298,7 +298,13 @@ Status game_actions_update(Game *game, Command *command) {
     character=game_get_character(game, set_id_object(player_get_followers(player))[i]);
     character_set_location(character, player_get_location(player));
   }
-  
+
+  for(i=0; i<game_get_n_players(game)+1; i++){
+    if( !(dummy = game_players(game)[i])) continue;
+    if( set_find_object(player_get_teammates(player), player_get_id(dummy)) ) 
+      player_set_location(dummy, player_get_location(player));
+  }
+
   return OK;
 }
 
@@ -664,6 +670,7 @@ Status game_actions_recruit(Game* game, Command *command){
 
 Status game_actions_abandon(Game* game, Command *command){
   Player *player = game_get_player(game);
+  Player* teammate = NULL;
   Id player_id = player_get_id(player);
   Id player_loc = player_get_location(player);
 
@@ -700,6 +707,20 @@ Status game_actions_abandon(Game* game, Command *command){
     return OK;
   }
 
+  for(i=0; i<game_get_n_players(game)+1; i++){
+    teammate = game_get_players(game)[i];
+
+    if( player_get_id(teammate) == player_id ) continue;
+    if( strcasecmp(player_get_name(teammate), char_name) != 0 ) continue;
+    
+    set_del_value(player_get_teammates(player),player_get_id(teammate));
+    set_del_value(player_get_teammates(teammate),player_get_id(player));
+    game_set_n_players(game, game_get_n_players(game)+1);
+    player_set_strength(player, player_get_strength(player)-player_get_strength(teammate));
+    return OK;
+
+  }
+
   return ERROR;
 }
 
@@ -707,10 +728,9 @@ Status game_actions_team(Game* game, Command *command){
 
   const char* player_name= command_get_arguments(command);
   Player *player1= game_get_player(game), *player2=NULL;
-  Id player_id= player_get_id(player1);
   Id player_loc=player_get_location(player1);
-  int num_players=set_get_nids(player_get_teammates(player1)),i;
-  Inventory *inventory1=player_get_objects(player1),*inventory2=player_get_objects(player2);
+  int num_players=game_get_n_players(game),i;
+  Inventory *inventory1=player_get_objects(player1),*inventory2= NULL;
 
 
   if(!game||!command){
@@ -721,7 +741,7 @@ Status game_actions_team(Game* game, Command *command){
     return ERROR;
   }
   for(i=0;i<num_players;i++){
-    player2=game_get_player_at(game,i);
+    player2=game_get_players(game)[i];
 
     if(!player2)
       continue;
@@ -733,13 +753,21 @@ Status game_actions_team(Game* game, Command *command){
     if(player_get_location(player2)!=player_loc)
       return ERROR;
 
+    inventory2 = player_get_objects(player2);
     set_add_value(player_get_teammates(player1),player_get_id(player2));
-    set_add_value(player_get_teammates(player2),player_loc);
+    set_add_value(player_get_teammates(player2),player_get_id(player1));
+    game_set_n_players(game, game_get_n_players(game)-1);
+    for(i=0; i<set_get_nids(inventory_get_objects(inventory2)); i++){
+      inventory_add_object(inventory1, set_id_object(inventory_get_objects(inventory2))[i]);
+      inventory_del_object(inventory2, set_id_object(inventory_get_objects(inventory2))[i]);
+    }
+    for(i=0; i<set_get_nids(player_get_followers(player1)); i++){
+      set_add_value(player_get_followers(player1), set_id_object(player_get_followers(player2))[i]);
+      set_del_value(player_get_followers(player2), set_id_object(player_get_followers(player2))[i]);
+    }
+    player_set_strength(player1, player_get_strength(player1)+player_get_strength(player2));
     return OK;
   }
   
-
-
-
   return ERROR;
 }
