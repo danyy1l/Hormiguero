@@ -10,16 +10,16 @@
 #s:143|Basemen8|  .   .  |    o    |   /!\   |   _/\_  |_________|Vaya... Mejor no tocarlo| | | | | 
 #s:152|Basement|  .   .  |   \!/   |--[#X#]--| .  !  . |_________|Esta bastante oscuro| | | | | 
 
-#s:211|SpawnP01| _  _  _ |[ ][_][ ]|!   _  o!|!  ! ! I!|!__!_!__!|Ves un castillo a lo lejos al sudeste| | | | | 
-#s:212|Camino01|  !0  !  |  !8  !  |  !0* !  | /   /   |/   /    |Hay algo emocionante en el aire| | | | | 
-#s:213|SpawnP02|   /     |   \___  |    mo'\_|\ @  _   | \  / \__|El camino se separa. Hay un cartel: EAST - Castillo, SOUTH - ???| | | | | 
-#s:214|Enemigo1| !   \   | !o   !  |/  o o \ |m0^ 8o0o!|       / |Se cierra la puerta tras de ti!|La puerta se abrio, menos mal| | | 
-#s:215|PotionB1|nnn^   / |\   ##/  |! .  (   | \    \  |  \   /  |Poca cosa aqui| | | | | 
-#s:216|Agujero1|  !   !  | /     \ | \ c>  / |  \___/  |         |Hay un agujero, no se ve el fondo| | | | | 
-#s:223|CaminoC1|         | /   \_/ |/    o 0 |mo'_ 0o8o|__/ \___/|El castillo no esta muy lejos| | | | | 
-#s:233|CaminoC2|         |\/   \__ |    o o \|mo^_  0o |__/ \___/| | | | | | 
-#s:243|MiniBoss|  _______| /       |/  o8o0* |____     |    \____| | | | | | 
-#s:253|Subida2a|    V    |  \(")/  |  -(_)-  |o/(_-_)\o|o o\_/o o| | | | | | 
+#s:211|SpawnP01| _  _  _ |[ ][_][ ]|!   _  o!|!  ! ! I!|!__!_!__!|Ves el bloque a lo lejos, sin luz|Tira para casa hombre| | | | | 
+#s:212|Camino01|  !   !  |  !   !  |  !   !  | /   /   |/   /    |Huele feillo| | | | | 
+#s:213|SpawnP02|   /     |   \___  |     o \_|\ @  _   | \  / \__|El camino se separa. Hay un cartel: EAST - Bloque 33, SOUTH - ???| | | | | 
+#s:214|Enemigo1| !   \   | !    !  |/      \ |        !|       / |Te ataca una arana!| | | | 
+#s:215|PotionB1|       / |\     /  |!    (   | \    \  |  \   /  |Poca cosa aqui| | | | | 
+#s:216|Agujero1|  !   !  | /     \ | \     / |  \___/  |         |Hay un agujero, no se ve el fondo| | | | | 
+#s:223|CaminoC1|         | /   \_/ |/        |    _    |__/ \___/|El bloque no esta muy lejos| | | | | 
+#s:233|CaminoC2|         |\/   \__ |    o o \|m0^      |__/ \___/| | | | | | 
+#s:243|MiniBoss|  _______| /       |/        |____     |    \____| | | | | | 
+#s:253|Subida2a|+-------+|! !   ! !|! !   ! !|!   o   !|+-------+|He aqui la puerta del bloque|He aqui la puerta del bloque| | | | 
 
 #s:311|PolvosMa| | | | | |Ves unos polvos brillando| | | | | | | 
 #s:312|Bajada1a| | | | | | | | | | | | | 
@@ -37,9 +37,9 @@
 #s:414|Subida4a| | | | | | | | | | | | | 
 #s:421|MinaAqui| | | | | | | | | | | | | 
 #s:423|TrampAki| | | | | | | | | | | | | 
-#s:432|OrbeMalo| | | | | | | | | | | | |Parece que no hay vuelta| 
-#s:442|CaminoAA| | | | | | | | | | | | |Sigue adelante| 
-#s:452|SubeBaja| | | | | | | | | | | | |Hay una trampilla (tramp) pero parece cerrada|Bien hecho!| 
+#s:432|OrbeMalo| | | | | |Parece que no hay vuelta| | | | | | | |
+#s:442|CaminoAA| | | | | |Quien pone minas en un pasillo???| | | | | | | | 
+#s:452|SubeBaja| | | | | |Hay una trampilla (tramp) pero parece cerrada|Bien hecho!| | | | | | | 
 
 #s:511|Subida5a| | | | | | | | | | | | | 
 #s:512|CaminoAB| | | | | | | | | | | | | 
@@ -48,22 +48,29 @@
 #s:515|Bajada3a| | | | | | | | | | | | | 
 #s:554|WhiteOrb|  *   *  |. _\_/_  | . / \   |i  ___  i|   #-#   |Hay algo magico en el aire| | | | | 
 
-#s:611|FinalYea| .-===-. | ! . . ! | ! .'. ! |()_____()|II_____II|Enhorabuena! Coge la corona para terminar| | | | | 
+#s:611|FinalYea|+-------+|! -#-#- !|! !===! !|! !===! !|+-------+|Encontraste el generador! Presiona el boton correcto para ganar| | | | | 
 #s:612|AquiBoss| | | | | | | | | | | | | 
 #s:613|Bajada4a| | | | | |Necesitas la llave de la PuertaFinal|Ya no hay vuelta atras| | | | | 
 
 #s:999|DevsAqui| 0 0 0 0 |_!_!_!_!_| ! ! ! ! |/\/\ /\/\| |"Hola, somos los devs, gracias por jugar a nuestro juego!"| | | | | 
 
-#p:1|Player1|0_0 |211|10|1|5|
-#p:2|Player2|o0o8|213|10|2|5|
+#p:1|Player1|0_0 |152|10|3|5|
+#p:2|Player2|;-; |211|10|3|5|
 
-#c:1|Antlion| ^0m  |213|5|1|1|Hello!|0|
-#c:2|Worm|*0o8o |211|6|1|1|Welcome!|0|
+#c:1|Vecino1B|\o_o\ |213|5|3|1|Hello!|0|
+#c:2|Desconocido|\(*_*)|211|6|2|1|Welcome!|0|
 #c:3|Spider|/\00/\|214|10|1|0|!!!!!!|0|
 #c:4|Hugo| /`-`\|253|20|2|0|No entraras|0|
-#c:5|Mage|*_/''\|323|12|2|1|Anda con cuidado|0|
-#c:6|Witch|/._.\*|513|20|5|1|Dame el orbe|0|
-#c:10|Boss|$$$$$$|612|100|10|0|No debiste entrar|0|
+#c:5|Vecino2C|*_/''\|363|10|2|1|Anda con cuidado|0|
+#c:6|VecinoArriba|/._.\*|513|20|5|1|Dame comida|0|
+#c:7|Vieja1A|(>_<)/|312|5|2|1|DEJAD DE HACER RUIDO|0|
+#c:8|HijoMari|(-_-)#|313|20|3|0|Dejadme tranquilo|0|
+#c:9|Raro|(^o^)*|341|25|2|0|No pasaras|0|
+#c:10|Pesao|\[o-o]|343|20|3|0|Password!|0|
+#c:11|VecinoMajo|\^v^/ |414|2|5|1|Hola!|0|
+#c:12|VecinoEncerrado|/;-;\ |554|2|5|1|Hey :'(|0|
+#c:13|Juan|\(*-*)|131|10|3|De aqui no salgo|0|
+#c:15|Casero|\>o</ |612|100|10|0|Pagame el alquiler|0|
 
 #l:01|B112_213|112|213|9|1|
 #l:02|B121_122|121|122|5|1|
@@ -170,23 +177,29 @@
 #l:97|S999_353|999|353|5|1|
 #l:98|T423_332|423|332|10|0|
 
-#o:1|GoldKey|112|Abre algo importante|0|0|1|-1|95|
-#o:2|Skull|131|Vaya...|0|0|1|-1|-1|
-#o:3|BocataLomo|215|Pintaza|5|2|1|-1|-1|
-#o:4|Seed|212|Es una semilla|0|0|1|-1|-1|
-#o:5|Kit|253|+5 de vida|5|0|1|-1|-1|
-#o:6|Rata|215|Cometela|-5|-2|1|-1|-1|
-#o:7|Linterna|253|Linterna sin más|0|0|1|8|-1|
-#o:8|Pilas|216|Pilas AA|0|0|1|-1|-1|
-#o:9|BotonRojo|332|Termina la partida|-100|0|1|-1|-1|
-#o:10|Serrano|211|+3 de vida|3|0|1|-1|-1|
-#o:11|Pidgeon|343|Cuidado que pica|-3|0|1|-1|-1|
-#o:12|Mine|216|Ojito|-100|0|0|-1|-1|
-#o:13|Ladder|421|Abre alguna puerta|0|0|1|-1|81|
-#o:14|Beer|512|Cura toda la vida|100|-1|1|-1|-1|
-#o:16|WhiteOrb|554|Brilla bastante|0|0|1|-1|-1|
-#o:17|BlackOrb|432|Absorbe la luz|0|0|1|-1|-1|
-#o:18|TNT|243|Abre una pared|0|0|1|8|31|
-#o:19|Trap|423|Cuidado!!|-5|0|-1|-1|-1|
-#o:21|Treasure|611|Genial!|0|0|1|-1|-1|
-#o:22|Key|112|A saber que abre|0|0|1|-1|30|
+#o:1|LlaveDorada|112|Brilla bastante|0|0|1|-1|95|0|
+#o:2|Calavera|131|Vaya...|0|0|1|-1|-1|0|
+#o:3|BocataLomo|215|Pintaza|5|2|1|-1|-1|0|
+#o:4|Pipa|212|Es una pipa|0|0|1|-1|-1|0|
+#o:5|Kit|253|+5 de vida|5|0|1|-1|-1|0|
+#o:6|Rata|121|Cometela|-5|-2|1|-1|-1|0|
+#o:7|Linterna|253|Linterna sin mas|0|0|1|8|-1|0|
+#o:8|Pilas|322|Pilas AA|0|0|1|-1|-1|0|
+#o:9|BotonRojo|611|Termina la partida|-100|0|1|-1|-1|0|
+#o:10|Serranito|211|+3 de vida|3|1|1|-1|-1|0|
+#o:11|Paloma|343|Cuidado que pica|-3|0|1|-1|-1|0|
+#o:12|Mina|442|Ojito|-100|0|0|-1|-1|0|
+#o:13|Escalera|421|Para subir|0|0|1|-1|81|0|
+#o:14|Cerveza|421|Cura toda la vida|100|-1|1|-1|-1|0|
+#o:16|Manzana|554|Mas amarilla que el platano|0|0|1|-1|-1|0|
+#o:17|Platano|432|Esta verdecillo aun|0|0|1|-1|-1|0|
+#o:18|TNT|243|Abre una pared|0|0|1|8|31|0|
+#o:19|Trap|423|Cuidado!!|-5|0|-1|-1|-1|0|
+#o:21|PapelesPiso|612|Genial!|0|0|0|-1|-1|0|
+#o:22|Llave|112|Abrira algo?|0|0|1|-1|30|0|
+#o:23|Destornillador|132|Puede ser util|0|0|1|-1|68|0|
+#o:24|Polvo|152|...|0|0|-1|-1|-1|0|
+#o:25|Hoguera|233|Un poco exagerado|5|1|-1|-1|-1|0|
+#o:26|LaMejor|511|Victoria Malaga|10|5|1|-1|-1|0|
+#o:27|Pelusa|311|Sin comentarios|0|0|0|-1|-1|0|
+#o:28|BotonVerde|611|Usalo para ganar|0|0|0|-1|-1|0|

@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 
 #include "../include/command.h"
 #include "../include/game_management.h"
@@ -23,8 +24,8 @@
 #include "../include/types.h"
 
 #define WIDTH_MAP 66
-#define WIDTH_DES 29
-#define WIDTH_BAN 23
+#define WIDTH_DES 33
+#define WIDTH_BAN 27
 #define HEIGHT_MAP 29
 #define HEIGHT_BAN 1
 #define HEIGHT_HLP 3
@@ -142,9 +143,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   Status last_cmd_status;
 
   char action_return[STATUS_SIZE];
-  char str[WORD_SIZE], friendly[WORD_SIZE/2], str1[WORD_SIZE/2];
+  char str[WORD_SIZE], str1[WORD_SIZE/2];
   extern char *cmd_to_str[N_CMD][N_CMDT];
-  int i, id_count, n_objs, n_chars, strength = 0;
+  int i, n_objs, n_chars, strength = 0;
 
   Player *player=game_get_player(game);                               /*Jugador del game*/
   Inventory *inventory=player_get_objects(player);                    /*Inventario del jugador del game*/
@@ -210,15 +211,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   screen_area_clear(ge->descript);
 
   screen_area_puts(ge->descript, " ");
-  sprintf(str, "          NW  N  NE");
+  sprintf(str, "            NW  N  NE");
   screen_area_puts(ge->descript, str);
-  sprintf(str, "            \\ ^ /");
+  sprintf(str, "              \\ ^ /");
   screen_area_puts(ge->descript, str);
-  sprintf(str, "          W < O > E");
+  sprintf(str, "            W < O > E");
   screen_area_puts(ge->descript, str);
-  sprintf(str, "            / v \\");
+  sprintf(str, "              / v \\");
   screen_area_puts(ge->descript, str);
-  sprintf(str, "          SW  S  SE");
+  sprintf(str, "            SW  S  SE");
   screen_area_puts(ge->descript, str);
   screen_area_puts(ge->descript, " ");
 
@@ -273,21 +274,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
 
   }
 
-  sprintf(str, "  Characters: ");
-  screen_area_puts(ge->descript, str);
-  id_count = 1;
-  for(i=0; i<game_get_n_characters(game); i++, id_count++){
-    if( (character = game_get_character(game, id_count)) ){
-      if( character_get_friendly(character) ){ strcpy(friendly, "Friend"); }
-      else{ strcpy(friendly, "Foe"); }
-      sprintf(str, "   %s: %d(%d HP) %s", character_get_gdesc(character), (int)character_get_location(character), character_get_health(character), friendly);
-      screen_area_puts(ge->descript, str);
-    }else
-      i--;
-  }
- 
-  screen_area_puts(ge->descript, " ");
-
   if(inventory_is_empty(player_get_objects(player))==TRUE) {
     sprintf(str, "  Player has no object");
     screen_area_puts(ge->descript, str);
@@ -302,8 +288,21 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
   }
   screen_area_puts(ge->descript, " ");
 
+  n_chars = set_get_nids(space_get_set_characters(space_act));
+  for(i=0; i<n_chars; i++){
+    character = game_get_character(game, set_id_object(space_get_set_characters(space_act))[i]);
+    sprintf(str, "  %s: %d HP, St: %d", character_get_gdesc(character), character_get_health(character), character_get_strength(character));
+    screen_area_puts(ge->descript, str);
+    if( character_get_friendly(character) ) strcpy(str1, "Friendly");
+    else strcpy(str1, "Enemy");
+    sprintf(str, "  %s: %s", character_get_name(character), str1);
+    screen_area_puts(ge->descript, str);
+  }
+
+  screen_area_puts(ge->descript, " ");
+
   /* Paint in the banner area */
-  screen_area_puts(ge->banner, "   The blackout game  ");
+  screen_area_puts(ge->banner, "   The Blackout game  ");
 
   /* Paint in the help area */
   screen_area_clear(ge->help);
@@ -328,7 +327,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     screen_area_puts(ge->feedback, str);
   }
   
-  /*Esto es un semi arreglo, hacer gamerule mejor*/
   if( (last_cmd == OPEN || last_cmd == USE) && last_cmd_status ) space_set_message1( game_get_space(game, game_get_prev_player_location(game)) , space_get_message2(game_get_space(game, game_get_prev_player_location(game))));
 
   /*Impresion del mensaje del espacio*/
@@ -356,7 +354,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
       sprintf(str, "  ");
       strcat(str, player_get_name(player));
       strcat(str, ": ");
-      sprintf(str1, "%d HP, Strength: %d ",player_get_health(player), player_get_strength(player));
+      sprintf(str1, "%d HP, St: %d ",player_get_health(player), player_get_strength(player));
       strcat(str, str1);
       screen_area_puts(ge->descript, str);
     }
@@ -367,7 +365,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
       sprintf(str, "  ");
       strcat(str, character_get_name(character));
       strcat(str, ": ");
-      sprintf(str1, "%d HP, Strength: %d ",character_get_health(character), character_get_strength(character));
+      sprintf(str1, "%d HP, St: %d ",character_get_health(character), character_get_strength(character));
       strcat(str, str1);
       screen_area_puts(ge->descript, str);
     }
@@ -395,6 +393,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game, Command *command)
     screen_area_puts(ge->descript, str);
     if( object_get_movable(object) ) sprintf(str, "  Movable");
     else sprintf(str, "  Non movable");
+
     if( object_get_health(object) != 0 ){
       sprintf(str, "  HP: %d", object_get_health(object));
       screen_area_puts(ge->descript, str);
@@ -421,15 +420,33 @@ void graphic_engine_paint_game_over(Graphic_engine* ge, Game *game){
   /* Paint the in the map area */
   screen_area_clear(ge->map);
 
-  for(i=0; i<HEIGHT_MAP; i++){
-    if( i == HEIGHT_MAP/2 ){
-      sprintf(str, "                        GAME OVER!                ");
-      screen_area_puts(ge->map, str);
-      sprintf(str, "                   Player \"%s\" has died :(        ", player_get_name(game_get_player(game)));
-      screen_area_puts(ge->map, str);
-    }else{
-      sprintf(str, "                                           ");
-      screen_area_puts(ge->map, str);
+  if( command_get_code(game_get_last_command(game)) == USE && !strcasecmp(command_get_arguments(game_get_last_command(game)), "BotonVerde") ){ 
+    for(i=0; i<HEIGHT_MAP; i++){
+      if( i == HEIGHT_MAP/2 ){
+        sprintf(str, "                             VICTORIA!                ");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "     Enhorabuena! Has restaurado la luz y derrotado a tu casero");
+        screen_area_puts(ge->map, str);
+        screen_area_puts(ge->map, " ");
+        screen_area_puts(ge->map, "                        Gracias por jugar!");
+      }else{
+        sprintf(str, "                                           ");
+        screen_area_puts(ge->map, str);
+      }
+    }
+  }else{
+    for(i=0; i<HEIGHT_MAP; i++){
+      if( i == HEIGHT_MAP/2 ){
+        sprintf(str, "                             GAME OVER!                ");
+        screen_area_puts(ge->map, str);
+        sprintf(str, "                       Player \"%s\" has died :(        ", player_get_name(game_get_player(game)));
+        screen_area_puts(ge->map, str);
+        screen_area_puts(ge->map, " ");
+        screen_area_puts(ge->map, "                        Gracias por jugar!");
+      }else{
+        sprintf(str, "                                           ");
+        screen_area_puts(ge->map, str);
+      }
     }
   }
   
@@ -442,47 +459,47 @@ void graphic_engine_paint_start(Graphic_engine* ge, Game* game){
   screen_area_clear(ge->map);
   screen_area_puts(ge->map, "");
 
-  sprintf(str, "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}");
+  sprintf(str, "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}");
   screen_area_puts(ge->map, str);
-  sprintf(str, "{}                                                                                            {}");
+  sprintf(str, "{}                                                                                                {}");
   screen_area_puts(ge->map, str);
-  sprintf(str, "{}         .o.       ooooooooo.         .o.         .oooooo.      .oooooo.   ooooo      ooo   {}");
+  sprintf(str, "{}            .o.       ooooooooo.         .o.         .oooooo.      .oooooo.   ooooo      ooo    {}");
   screen_area_puts(ge->map, str);
-  sprintf(str, "{}        .888.      `888   `Y88.      .888.       d8P'  `Y8b    d8P'  `Y8b  `888b.     `8'   {}");
+  sprintf(str, "{}           .888.      `888   `Y88.      .888.       d8P'  `Y8b    d8P'  `Y8b  `888b.     `8'    {}");
   screen_area_puts(ge->map, str);
-  sprintf(str, "{}       .8\"888.      888   .d88'     .8\"888.     888           888      888  8 `88b.    8    {}");
+  sprintf(str, "{}          .8\"888.      888   .d88'     .8\"888.     888           888      888  8 `88b.    8     {}");
   screen_area_puts(ge->map, str);
-  sprintf(str, "{}      .8' `888.     888ooo88P'     .8' `888.    888           888      888  8   `88b.  8    {}");
+  sprintf(str, "{}         .8' `888.     888ooo88P'     .8' `888.    888           888      888  8   `88b.  8     {}");
   screen_area_puts(ge->map, str);
-  sprintf(str, "{}     .88ooo8888.    888           .88ooo8888.   888     ooooo 888      888  8     `88b.8    {}");
+  sprintf(str, "{}        .88ooo8888.    888           .88ooo8888.   888     ooooo 888      888  8     `88b.8     {}");
   screen_area_puts(ge->map, str);
-  sprintf(str, "{}    .8'     `888.   888          .8'     `888.  `88.    .88'  `88b    d88'  8       `888    {}");
+  sprintf(str, "{}       .8'     `888.   888          .8'     `888.  `88.    .88'  `88b    d88'  8       `888     {}");
   screen_area_puts(ge->map, str);
-  sprintf(str, "{}   o88o     o8888o o888o        o88o     o8888o  `Y8bood8P'    `Y8bood8P'  o8o        `8    {}");
+  sprintf(str, "{}      o88o     o8888o o888o        o88o     o8888o  `Y8bood8P'    `Y8bood8P'  o8o        `8     {}");
   screen_area_puts(ge->map, str);
-  sprintf(str, "{}                                                                                            {}");
+  sprintf(str, "{}                                                                                                {}");
   screen_area_puts(ge->map, str);
-  sprintf(str, "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}");
+  sprintf(str, "{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}");
   screen_area_puts(ge->map, str);
 
   screen_area_puts(ge->map, " ");
   screen_area_puts(ge->map, " ");
-  sprintf(str, "                           Hace 6 horas que se fue la luz en el pais.");
+  sprintf(str, "                              Hace 6 horas que se fue la luz en el pais.");
   screen_area_puts(ge->map, str);
-  sprintf(str, "                 Vuelves del bar porque a todos les ha vuelto la electricidad,");
+  sprintf(str, "                    Vuelves del bar porque a todos les ha vuelto la electricidad,");
   screen_area_puts(ge->map, str);
-  sprintf(str, "                     pero ves desde lejos que en tu bloque no hay ni una luz.");
+  sprintf(str, "                        pero ves desde lejos que en tu bloque no hay ni una luz.");
   screen_area_puts(ge->map, str);
-  sprintf(str, "                                     Tocara ver que pasa");
+  sprintf(str, "                                        Tocara ver que pasa");
   screen_area_puts(ge->map, str);
   screen_area_puts(ge->map, " ");
 
-  sprintf(str, "                                  Inserte nombre Jugador 1: ");
+  sprintf(str, "                                     Inserte nombre Jugador 1: ");
   screen_area_puts(ge->map, str);
   if( strcmp(player_get_name(game_get_players(game)[0]), "Player1") != 0 ){ 
-    sprintf(str, "                                            %s", player_get_name(game_get_players(game)[0]));
+    sprintf(str, "                                               %s", player_get_name(game_get_players(game)[0]));
     screen_area_puts(ge->map, str);
-    sprintf(str, "                                  Inserte nombre Jugador 2: ");
+    sprintf(str, "                                     Inserte nombre Jugador 2: ");
     screen_area_puts(ge->map, str);
   }else{
     sprintf(str, " ");
@@ -490,11 +507,11 @@ void graphic_engine_paint_start(Graphic_engine* ge, Game* game){
   }
 
   if( strcmp(player_get_name(game_get_players(game)[1]), "Player2") != 0 ){
-    sprintf(str, "                                            %s", player_get_name(game_get_players(game)[1]));
+    sprintf(str, "                                               %s", player_get_name(game_get_players(game)[1]));
     screen_area_puts(ge->map, str);
     screen_area_puts(ge->map, " ");
     screen_area_puts(ge->map, " ");
-    screen_area_puts(ge->map, "                                 Escriba START para comenzar");
+    screen_area_puts(ge->map, "                                    Escriba START para comenzar");
   }
 
   screen_area_puts(ge->map, " ");

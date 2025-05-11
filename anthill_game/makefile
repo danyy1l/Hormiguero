@@ -48,11 +48,11 @@ runlog:
 
 #RUN WITH CMD1
 runcmd1:
-	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG).dat < game1.cmd
+	@$(MAKE) && ./$(EXE) $(EXE).dat -d -l $(LOG).dat < game1.cmd
 
 #RUN WITH CMD2
 runcmd2:
-	@$(MAKE) && ./$(EXE) $(EXE).dat -l $(LOG).dat < game2.cmd
+	@$(MAKE) && ./$(EXE) $(EXE).dat -d -l $(LOG).dat < game2.cmd
 
 #RUN WITH SEED
 runseed: 

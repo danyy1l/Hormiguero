@@ -79,12 +79,15 @@ int game_loop_init(Game **game, Graphic_engine **gengine, char *file_name)
   /*Game start screen */
   g = graphic_engine_start();
   graphic_engine_paint_start(g, *game);
+  fprintf(stdout, "Prompt => ");
   fscanf(stdin, "%s", p1);
   player_set_name(game_get_players(*game)[0], p1);
   graphic_engine_paint_start(g, *game);
+  fprintf(stdout, "Prompt => ");
   fscanf(stdin, "%s", p2);
   player_set_name(game_get_players(*game)[1], p2);
   graphic_engine_paint_start(g, *game);
+  fprintf(stdout, "Prompt => ");
   fscanf(stdin, "%s", enter);
   graphic_engine_destroy_start(g);
 
@@ -133,7 +136,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine, FILE *log_file)
     }
   }
 
-  if (game_get_finished(game) == TRUE)
+  if (game_get_finished(game) == TRUE  )
     graphic_engine_paint_game_over(gengine, game);
 }
 

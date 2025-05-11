@@ -451,14 +451,16 @@ Status game_actions_attack(Game *game, Command *command) {
   if (num > 5) {
     character_set_health(target, character_get_health(target) - damage);
   } else {
-    n_attackers = 1 + n_followers;  
+    n_attackers = 1 + n_followers + set_get_nids(player_get_teammates(player));
     attacker = rand() % n_attackers;
 
     if (attacker == 0) {
       player_set_health(player, player_get_health(player) - character_get_strength(target));
-    } else {
+    } else if( attacker < n_followers ) {
       hit_follower = followers[attacker - 1];
       character_set_health(hit_follower, character_get_health(hit_follower) - character_get_strength(target));
+    } else{
+      player_set_health( game_get_player_by_id(game, set_id_object(player_get_teammates(player))[0]), player_get_health(game_get_player_by_id(game, set_id_object(player_get_teammates(player))[0])) - character_get_strength(target) );
     }
   }
 
@@ -743,7 +745,7 @@ Status game_actions_team(Game* game, Command *command){
   for(i=0;i<num_players;i++){
     player2=game_get_players(game)[i];
 
-    if(!player2)
+    if(!player2 || player1 == player2)
       continue;
     
     if(strcasecmp(player_get_name(player2),player_name)!=0){
@@ -757,12 +759,16 @@ Status game_actions_team(Game* game, Command *command){
     set_add_value(player_get_teammates(player1),player_get_id(player2));
     set_add_value(player_get_teammates(player2),player_get_id(player1));
     game_set_n_players(game, game_get_n_players(game)-1);
+    inventory_set_max_objects(inventory1, inventory_get_max_objects(inventory1)+inventory_get_max_objects(inventory2));
     for(i=0; i<set_get_nids(inventory_get_objects(inventory2)); i++){
       inventory_add_object(inventory1, set_id_object(inventory_get_objects(inventory2))[i]);
       inventory_del_object(inventory2, set_id_object(inventory_get_objects(inventory2))[i]);
     }
-    for(i=0; i<set_get_nids(player_get_followers(player1)); i++){
+    for(i=0; i<set_get_nids(player_get_followers(player2)); i++){
       set_add_value(player_get_followers(player1), set_id_object(player_get_followers(player2))[i]);
+      character_set_following(game_get_character(game, set_id_object(player_get_followers(player2))[i]), player_get_id(player1));
+    }
+    for(i=0; i<set_get_nids(player_get_followers(player2)); i++){
       set_del_value(player_get_followers(player2), set_id_object(player_get_followers(player2))[i]);
     }
     player_set_strength(player1, player_get_strength(player1)+player_get_strength(player2));

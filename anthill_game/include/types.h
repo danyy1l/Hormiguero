@@ -2,9 +2,9 @@
  * @brief It defines common types for the whole project
  *
  * @file types.h
- * @author Anthony Eduardo Alvarado Carbajal
+ * @author Danyyil Shykerynets
  * @version 7
- * @date 04-02-2025
+ * @date 10-05-2025
  * @copyright GNU Public License
  */
 
@@ -30,7 +30,7 @@
 #define MAX_PLAYER_HEALTH 20
 #define MAX_CHARACTER_HEALTH 10
 
-#define NUM_SEED 1
+#define NUM_SEED 2
 #define INIT -1
 
 typedef long Id;
